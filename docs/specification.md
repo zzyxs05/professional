@@ -1,7 +1,9 @@
 # specification · 需求与检查项规格【design】
 
-> 交付类：design　｜　上游：总档.md §3/§5/§6　｜　版本：v0.1（2026-10-14 契约冻结稿）
+> 交付类：design　｜　上游：总档.md §3/§5/§6、`requirements.md`　｜　版本：v0.2（对齐规则包 0.1.3）
 > 实现唯一来源：`core/registry.py`（规则、阈值、正则全部登记于此）。本文档与 registry 不符时，以本文档为准并修 registry。
+> **需求锚点**：本文件 14 条规则服务于 `requirements.md` REQ-02；用户需求 UN-01—UN-06 见该文件 §3；
+> 追溯关系（REQ → 规则 → 验收 → 证据）见该文件 §5。
 
 ## 1. 数据源四层与降级口径
 
@@ -64,7 +66,7 @@ S 类字符串规则扫描全量 dex 字符串 + 资源字符串（库字符串�
 {
   "run_id": "RUN-<yyyymmdd-HHMMSS>",
   "target": {"apk_name": "...", "apk_sha256": "..."},
-  "versions": {"rule_pack": "0.1.2", "channel_b_model": "none|模型名"},
+  "versions": {"rule_pack": "0.1.3", "channel_b_model": "none|模型名"},
   "conclusions": [],
   "observations": [],   ← B 通道观察区（低置信/补充观察），**非结论、不计入三档**
   "coverage": {

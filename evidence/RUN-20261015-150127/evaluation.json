@@ -1,0 +1,9 @@
+{
+  "run_id": "RUN-20261015-150127",
+  "status": "PASS",
+  "mode": "deterministic",
+  "reason": "引用、版本、结构检查通过（范围：4 条结论）",
+  "llm_note": "",
+  "findings": [],
+  "text": "评价器输出 · RUN-20261015-150127\n- 状态：**PASS**（引用、版本、结构检查通过（范围：4 条结论））\n- 模式：deterministic\n- 审查范围：结论 4 条（待复核 4）\n- 引用校验：4 个 evidence_id，可回溯 4 个\n- findings：无阻断问题\n- 签署栏：本组（　　）｜对抗组（　　）｜教师（　　）"
+}
