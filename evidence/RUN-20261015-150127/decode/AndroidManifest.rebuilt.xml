@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest android:versionCode="1" android:versionName="1.0" android:compileSdkVersion="37" android:compileSdkVersionCodename="17" package="com.synth.good02" platformBuildVersionCode="37" platformBuildVersionName="17">
+    <uses-sdk android:minSdkVersion="35" android:targetSdkVersion="37"/>
+    <permission android:name="com.synth.good02.permission.INTERNAL" android:protectionLevel="0x00000002"/>
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="com.synth.good02.permission.INTERNAL"/>
+    <application android:theme="@0x01030237" android:label="@0x7f010000" android:allowBackup="false" android:extractNativeLibs="false">
+        <activity android:name="com.synth.good02.MainActivity" android:exported="false"/>
+        <service android:name="com.synth.good02.ProtectedService" android:permission="com.synth.good02.permission.INTERNAL" android:exported="true"/>
+        <receiver android:name="com.synth.good02.SyncReceiver" android:exported="false">
+            <intent-filter>
+                <action android:name="com.synth.good02.action.SYNC"/>
+            </intent-filter>
+        </receiver>
+    </application>
+</manifest>

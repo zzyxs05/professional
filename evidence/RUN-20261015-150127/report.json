@@ -1,0 +1,154 @@
+{
+  "run_id": "RUN-20261015-150127",
+  "target": {
+    "apk_name": "good02.apk",
+    "apk_sha256": "710b457d51f2b960d63470001105522e5eea24d63c4d09d9696d549b3978b1f2"
+  },
+  "versions": {
+    "rule_pack": "0.1.3",
+    "channel_b_model": "mimo-v2.6-flash"
+  },
+  "conclusions": [
+    {
+      "criterion_id": "R-B-001",
+      "status": "待复核",
+      "channel": "B",
+      "location": "com.synth.good2.ProtectedService (manifest <service>)",
+      "evidence_ids": [
+        "EV-20261015-150127-002"
+      ],
+      "scope": "ProtectedService 声明为 exported=True，可被外部应用访问，其访问控制完全依赖自定义权限 com.synth.good02.permission.INTERNAL",
+      "missing_evidence": [
+        "钉证据未通过：断言未被机械事实证实（候选规则 R-MAN-02, R-PERM-02 均无机械命中；claim 提及实体（INTERNAL、PROTECTEDSERVICE、com.synth.good02.permission.INTERNAL）未被机械命中覆盖）"
+      ],
+      "human_signoff": "pending",
+      "notes": [
+        "B 侧疑点（LLM 提疑），未经确定性钉证据，不得升级措辞"
+      ]
+    },
+    {
+      "criterion_id": "R-B-002",
+      "status": "待复核",
+      "channel": "B",
+      "location": "manifest <permission android:name=\"com.synth.good02.permission.INTERNAL\">",
+      "evidence_ids": [
+        "EV-20261015-150127-003"
+      ],
+      "scope": "自定义权限 com.synth.good02.permission.INTERNAL 的 protectionLevel 为 signature，需确认调用方与本应用同签名才能通过鉴权；若存在同签名共享或调试签名复用场景，防护可能被绕过",
+      "missing_evidence": [
+        "钉证据未通过：断言未被机械事实证实（候选规则 R-MAN-02, R-MAN-04 均无机械命中；claim 提及实体（INTERNAL、com.synth.good02.permission.INTERNAL）未被机械命中覆盖）"
+      ],
+      "human_signoff": "pending",
+      "notes": [
+        "B 侧疑点（LLM 提疑），未经确定性钉证据，不得升级措辞"
+      ]
+    },
+    {
+      "criterion_id": "R-B-003",
+      "status": "待复核",
+      "channel": "B",
+      "location": "manifest 自定义权限声明与 ProtectedService 引用处",
+      "evidence_ids": [
+        "EV-20261015-150127-004"
+      ],
+      "scope": "服务使用自定义权限而非系统权限进行保护，需人工确认该权限在 <permission> 中的声明先于任何使用它的组件解析，避免声明顺序导致权限降级为默认 normal 级别",
+      "missing_evidence": [
+        "钉证据未通过：断言未被机械事实证实（候选规则 R-MAN-02 均无机械命中）"
+      ],
+      "human_signoff": "pending",
+      "notes": [
+        "B 侧疑点（LLM 提疑），未经确定性钉证据，不得升级措辞"
+      ]
+    },
+    {
+      "criterion_id": "R-B-004",
+      "status": "待复核",
+      "channel": "B",
+      "location": "权限 INTERNET; URL https://example.com/api/profile, https://example.com/secure",
+      "evidence_ids": [
+        "EV-20261015-150127-005"
+      ],
+      "scope": "应用申请了 android.permission.INTERNET 权限，且存在两个自有 HTTPS 网络端点，需核查上报数据范围与 TLS 校验实现（是否校验证书/主机名）",
+      "missing_evidence": [
+        "钉证据未通过：断言未被机械事实证实（候选规则 R-MAN-02, R-NET-01 均无机械命中；claim 提及实体（ANDROID.PERMISSION.INTERNET、INTERNET、android.permission.INTERNET）未被机械命中覆盖）"
+      ],
+      "human_signoff": "pending",
+      "notes": [
+        "B 侧疑点（LLM 提疑），未经确定性钉证据，不得升级措辞"
+      ]
+    }
+  ],
+  "observations": [
+    {
+      "source": "B2",
+      "claim": "SyncReceiver 虽为 exported=False，但监听自定义 action com.synth.good02.action.SYNC，需确认该 action 是否仅由本应用内部广播触发，是否存在隐式广播可达的动态注册接收器",
+      "location": "com.synth.good02.SyncReceiver (action=com.synth.good02.action.SYNC)",
+      "confidence": "low",
+      "note": "LLM 观察（低置信），未经机械核查，不作为结论"
+    },
+    {
+      "source": "B2",
+      "claim": "网络端点硬编码于自有代码中（example.com 域名），需确认是否为占位/测试域名，以及是否存在后续动态下发可覆盖的配置",
+      "location": "自有代码 URL 列表",
+      "confidence": "low",
+      "note": "LLM 观察（低置信），未经机械核查，不作为结论"
+    }
+  ],
+  "coverage": {
+    "checked": [
+      "R-MAN-01(manifest)",
+      "R-MAN-02(manifest)",
+      "R-MAN-03(manifest+res_decoded)",
+      "R-MAN-04(manifest)",
+      "R-MAN-05(manifest)",
+      "R-PERM-01(smali_src)",
+      "R-PERM-02(manifest/smali_src)",
+      "R-PERM-03(manifest/smali_src)",
+      "R-STR-01(dex_strings)",
+      "R-STR-02(dex_strings)",
+      "R-CODE-01(dex_strings/smali_src)",
+      "R-CODE-02(smali_src)",
+      "R-NET-01(smali_src)",
+      "R-NET-02(smali_src)",
+      "通道B(模型:mimo-v2.6-flash)"
+    ],
+    "not_checked": [],
+    "decode_failed": false,
+    "decode_note": "",
+    "decode_reused": true,
+    "notes": []
+  },
+  "state": [
+    [
+      "PENDING",
+      null
+    ],
+    [
+      "DECODING",
+      ""
+    ],
+    [
+      "RULE_A",
+      ""
+    ],
+    [
+      "CHANNEL_B",
+      ""
+    ],
+    [
+      "FUSION",
+      ""
+    ],
+    [
+      "REPORT",
+      ""
+    ]
+  ],
+  "budget": {
+    "llm_calls_used": 1,
+    "llm_calls_max": 30,
+    "registered_tests_used": 0,
+    "registered_tests_max": 5,
+    "exhausted_notes": []
+  }
+}

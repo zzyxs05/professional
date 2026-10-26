@@ -1,0 +1,24 @@
+{
+  "apk": "lab/apks/good01.apk",
+  "sha256": "4cbacbdd6f878f7128ee4938f311ebac9a65e54e53f809a1b9b61634c17355dc",
+  "designed_by": "AI 草稿（待 周宗正/余俊辉 复核）",
+  "reviewed_by": "",
+  "expected": {
+    "R-MAN-01": "EXPECTED_SILENT",
+    "R-MAN-02": "EXPECTED_SILENT",
+    "R-MAN-03": "EXPECTED_SILENT",
+    "R-MAN-04": "EXPECTED_SILENT",
+    "R-MAN-05": "EXPECTED_SILENT",
+    "R-PERM-01": "EXPECTED_SILENT",
+    "R-PERM-02": "EXPECTED_SILENT",
+    "R-PERM-03": "EXPECTED_SILENT",
+    "R-STR-01": "EXPECTED_SILENT",
+    "R-STR-02": "EXPECTED_SILENT",
+    "R-CODE-01": "EXPECTED_SILENT",
+    "R-CODE-02": "EXPECTED_SILENT",
+    "R-NET-01": "EXPECTED_SILENT",
+    "R-NET-02": "EXPECTED_SILENT"
+  },
+  "criteria_used": ["K-2"],
+  "evidence_note": "R-MAN-01: 无可导出组件——唯一 Activity 显式 exported=false，无 Service/Receiver/Provider。\nR-MAN-02: 仅声明 INTERNET（非敏感），未声明录音/相机/定位等任何敏感权限。\nR-MAN-03: 未设置 usesCleartextTraffic，也未使用 networkSecurityConfig 放宽明文。\nR-MAN-04: allowBackup 显式 false，无 debuggable=true（须以 release 变体构建，见 BUILD.md）。\nR-MAN-05: 无静态注册 Receiver，无敏感广播监听。\nR-PERM-01: 只有 Handler.postDelayed 普通 UI 刷新，代码中无任何敏感 API，调度×敏感组合不成立。\nR-PERM-02: 无 Service/Receiver/Provider，不存在非交互组件中的敏感调用。\nR-PERM-03: 未声明任何敏感权限（INTERNET 非敏感），不存在过度声明。\nR-STR-01: 无 AWS/GitHub/Stripe 等 Key、无 JWT、无 PEM 私钥；仅一个公网 https 示例地址。\nR-STR-02: 唯一 URL 为 https://example.com（公网 https），无内网 http 地址。\nR-CODE-01: 无 DexClassLoader/PathClassLoader/InMemoryDexClassLoader/System.load 调用。\nR-CODE-02: 未使用 WebView，三重组合不存在。\nR-NET-01: 无自定义 TrustManager / HostnameVerifier，无 SSLSocketFactory 替换代码。\nR-NET-02: 无 WebView SSL 错误处理逻辑。"
+}

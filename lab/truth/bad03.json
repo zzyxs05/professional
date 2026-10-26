@@ -1,0 +1,24 @@
+{
+  "apk": "lab/apks/bad03.apk",
+  "sha256": "21cf5a06cc615b6e8ce71b66dbcda9386a136f63d861fcc258a195b98c4728aa",
+  "designed_by": "AI 草稿（待 周宗正/余俊辉 复核）",
+  "reviewed_by": "",
+  "expected": {
+    "R-MAN-01": "EXPECTED_SILENT",
+    "R-MAN-02": "EXPECTED_HIT:CONFIRMED",
+    "R-MAN-03": "EXPECTED_SILENT",
+    "R-MAN-04": "EXPECTED_SILENT",
+    "R-MAN-05": "EXPECTED_SILENT",
+    "R-PERM-01": "EXPECTED_HIT:REVIEW",
+    "R-PERM-02": "EXPECTED_HIT:CONFIRMED",
+    "R-PERM-03": "EXPECTED_SILENT",
+    "R-STR-01": "EXPECTED_SILENT",
+    "R-STR-02": "EXPECTED_SILENT",
+    "R-CODE-01": "EXPECTED_HIT:CONFIRMED",
+    "R-CODE-02": "EXPECTED_HIT:CONFIRMED",
+    "R-NET-01": "EXPECTED_HIT:CONFIRMED",
+    "R-NET-02": "EXPECTED_HIT:CONFIRMED"
+  },
+  "criteria_used": ["K-2"],
+  "evidence_note": "R-MAN-01: MainActivity 与 RecordingService 均 exported=false，无可导出组件。\nR-MAN-02: 声明 RECORD_AUDIO（录音）与 ACCESS_FINE_LOCATION（定位）两项敏感权限（已确认档）。\nR-MAN-03: 未开启明文许可。\nR-MAN-04: allowBackup=false，无 debuggable。\nR-MAN-05: 无静态注册 Receiver（服务由 PendingIntent 内部触发，不涉及广播）。\nR-PERM-01: AlarmManager.setRepeating 与 Handler.postDelayed 调度原语，与 RecordingService 内 MediaRecorder / requestLocationUpdates 敏感 API 共存；静态证据只到\"嫌疑组合\"，结论上限即待复核（REVIEW），禁止表述为真实执行时间。\nR-PERM-02: RecordingService（非交互组件）在 onStartCommand 中直接实例化 MediaRecorder 并调用 LocationManager.requestLocationUpdates，调用上下文明确（已确认档）。\nR-PERM-03: RECORD_AUDIO 与 ACCESS_FINE_LOCATION 均在代码中有真实使用，属\"声明与使用一致\"的安静点。\nR-STR-01: 无硬编码凭据。\nR-STR-02: 无内网 http 地址（loadUrl 使用公网 https://example.com）。\nR-CODE-01: MainActivity.loadPluginDex 真实调用 new DexClassLoader(...) 并 loadClass，具备完整调用上下文（已确认档）。\nR-CODE-02: setJavaScriptEnabled(true)、setAllowFileAccess(true)、addJavascriptInterface 三重组合齐备，且 WebView 已实际接线（已确认档）。\nR-NET-01: X509TrustManager 的 checkClientTrusted/checkServerTrusted 均为空实现、getAcceptedIssuers 返回空数组，HostnameVerifier.verify 恒 true，且均已安装到 SSLContext 与 HttpsURLConnection 默认设置（已确认档）。\nR-NET-02: InsecureWebViewClient.onReceivedSslError 直接调用 handler.proceed()，且该 client 已通过 setWebViewClient 实际设置（已确认档）。"
+}

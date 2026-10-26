@@ -1,0 +1,16 @@
+# 密钥与凭据（绝不入库）
+key.txt
+
+# apktool framework 缓存（可重建，指向项目可控路径）
+.tools/framework/
+
+# Python
+__pycache__/
+*.pyc
+
+# 解码缓存与临时产物（工作区外临时区之外，禁止入库任何解码树）
+evidence/raw/
+
+# 编辑器
+.vscode/
+.idea/

@@ -1,0 +1,598 @@
+{
+  "summary": {
+    "samples": {
+      "bad01": {
+        "PASS": 14,
+        "FP": 0,
+        "NOISE": 0,
+        "MISS": 0,
+        "TIER": 0,
+        "SKIP": 0
+      },
+      "bad02": {
+        "PASS": 14,
+        "FP": 0,
+        "NOISE": 0,
+        "MISS": 0,
+        "TIER": 0,
+        "SKIP": 0
+      },
+      "bad03": {
+        "PASS": 14,
+        "FP": 0,
+        "NOISE": 0,
+        "MISS": 0,
+        "TIER": 0,
+        "SKIP": 0
+      },
+      "bad04": {
+        "PASS": 14,
+        "FP": 0,
+        "NOISE": 0,
+        "MISS": 0,
+        "TIER": 0,
+        "SKIP": 0
+      },
+      "good01": {
+        "PASS": 14,
+        "FP": 0,
+        "NOISE": 0,
+        "MISS": 0,
+        "TIER": 0,
+        "SKIP": 0
+      },
+      "good02": {
+        "PASS": 14,
+        "FP": 0,
+        "NOISE": 0,
+        "MISS": 0,
+        "TIER": 0,
+        "SKIP": 0
+      }
+    },
+    "total": 84,
+    "pass": 84,
+    "fp": 0,
+    "noise": 0,
+    "miss": 0,
+    "tier": 0,
+    "skip": 0,
+    "hard_errors": 0
+  },
+  "details": [
+    {
+      "sample": "bad01",
+      "points": [
+        {
+          "rule": "R-MAN-01",
+          "expected": "EXPECTED_HIT:CONFIRMED",
+          "status": "已确认",
+          "result": "PASS"
+        },
+        {
+          "rule": "R-MAN-02",
+          "expected": "EXPECTED_HIT:CONFIRMED",
+          "status": "已确认",
+          "result": "PASS"
+        },
+        {
+          "rule": "R-MAN-03",
+          "expected": "EXPECTED_HIT:CONFIRMED",
+          "status": "已确认",
+          "result": "PASS"
+        },
+        {
+          "rule": "R-MAN-04",
+          "expected": "EXPECTED_HIT:CONFIRMED",
+          "status": "已确认",
+          "result": "PASS"
+        },
+        {
+          "rule": "R-MAN-05",
+          "expected": "EXPECTED_HIT:CONFIRMED",
+          "status": "已确认",
+          "result": "PASS"
+        },
+        {
+          "rule": "R-PERM-01",
+          "expected": "EXPECTED_SILENT",
+          "status": null,
+          "result": "PASS"
+        },
+        {
+          "rule": "R-PERM-02",
+          "expected": "EXPECTED_SILENT",
+          "status": null,
+          "result": "PASS"
+        },
+        {
+          "rule": "R-PERM-03",
+          "expected": "EXPECTED_HIT:REVIEW",
+          "status": "已确认",
+          "result": "PASS"
+        },
+        {
+          "rule": "R-STR-01",
+          "expected": "EXPECTED_SILENT",
+          "status": null,
+          "result": "PASS"
+        },
+        {
+          "rule": "R-STR-02",
+          "expected": "EXPECTED_SILENT",
+          "status": null,
+          "result": "PASS"
+        },
+        {
+          "rule": "R-CODE-01",
+          "expected": "EXPECTED_SILENT",
+          "status": null,
+          "result": "PASS"
+        },
+        {
+          "rule": "R-CODE-02",
+          "expected": "EXPECTED_SILENT",
+          "status": null,
+          "result": "PASS"
+        },
+        {
+          "rule": "R-NET-01",
+          "expected": "EXPECTED_SILENT",
+          "status": null,
+          "result": "PASS"
+        },
+        {
+          "rule": "R-NET-02",
+          "expected": "EXPECTED_SILENT",
+          "status": null,
+          "result": "PASS"
+        }
+      ]
+    },
+    {
+      "sample": "bad02",
+      "points": [
+        {
+          "rule": "R-MAN-01",
+          "expected": "EXPECTED_SILENT",
+          "status": null,
+          "result": "PASS"
+        },
+        {
+          "rule": "R-MAN-02",
+          "expected": "EXPECTED_SILENT",
+          "status": null,
+          "result": "PASS"
+        },
+        {
+          "rule": "R-MAN-03",
+          "expected": "EXPECTED_SILENT",
+          "status": null,
+          "result": "PASS"
+        },
+        {
+          "rule": "R-MAN-04",
+          "expected": "EXPECTED_SILENT",
+          "status": null,
+          "result": "PASS"
+        },
+        {
+          "rule": "R-MAN-05",
+          "expected": "EXPECTED_SILENT",
+          "status": null,
+          "result": "PASS"
+        },
+        {
+          "rule": "R-PERM-01",
+          "expected": "EXPECTED_SILENT",
+          "status": null,
+          "result": "PASS"
+        },
+        {
+          "rule": "R-PERM-02",
+          "expected": "EXPECTED_SILENT",
+          "status": null,
+          "result": "PASS"
+        },
+        {
+          "rule": "R-PERM-03",
+          "expected": "EXPECTED_SILENT",
+          "status": null,
+          "result": "PASS"
+        },
+        {
+          "rule": "R-STR-01",
+          "expected": "EXPECTED_HIT:CONFIRMED",
+          "status": "已确认",
+          "result": "PASS"
+        },
+        {
+          "rule": "R-STR-02",
+          "expected": "EXPECTED_HIT:CONFIRMED",
+          "status": "已确认",
+          "result": "PASS"
+        },
+        {
+          "rule": "R-CODE-01",
+          "expected": "EXPECTED_SILENT",
+          "status": null,
+          "result": "PASS"
+        },
+        {
+          "rule": "R-CODE-02",
+          "expected": "EXPECTED_SILENT",
+          "status": null,
+          "result": "PASS"
+        },
+        {
+          "rule": "R-NET-01",
+          "expected": "EXPECTED_SILENT",
+          "status": null,
+          "result": "PASS"
+        },
+        {
+          "rule": "R-NET-02",
+          "expected": "EXPECTED_SILENT",
+          "status": null,
+          "result": "PASS"
+        }
+      ]
+    },
+    {
+      "sample": "bad03",
+      "points": [
+        {
+          "rule": "R-MAN-01",
+          "expected": "EXPECTED_SILENT",
+          "status": null,
+          "result": "PASS"
+        },
+        {
+          "rule": "R-MAN-02",
+          "expected": "EXPECTED_HIT:CONFIRMED",
+          "status": "已确认",
+          "result": "PASS"
+        },
+        {
+          "rule": "R-MAN-03",
+          "expected": "EXPECTED_SILENT",
+          "status": null,
+          "result": "PASS"
+        },
+        {
+          "rule": "R-MAN-04",
+          "expected": "EXPECTED_SILENT",
+          "status": null,
+          "result": "PASS"
+        },
+        {
+          "rule": "R-MAN-05",
+          "expected": "EXPECTED_SILENT",
+          "status": null,
+          "result": "PASS"
+        },
+        {
+          "rule": "R-PERM-01",
+          "expected": "EXPECTED_HIT:REVIEW",
+          "status": "已确认",
+          "result": "PASS"
+        },
+        {
+          "rule": "R-PERM-02",
+          "expected": "EXPECTED_HIT:CONFIRMED",
+          "status": "已确认",
+          "result": "PASS"
+        },
+        {
+          "rule": "R-PERM-03",
+          "expected": "EXPECTED_SILENT",
+          "status": null,
+          "result": "PASS"
+        },
+        {
+          "rule": "R-STR-01",
+          "expected": "EXPECTED_SILENT",
+          "status": null,
+          "result": "PASS"
+        },
+        {
+          "rule": "R-STR-02",
+          "expected": "EXPECTED_SILENT",
+          "status": null,
+          "result": "PASS"
+        },
+        {
+          "rule": "R-CODE-01",
+          "expected": "EXPECTED_HIT:CONFIRMED",
+          "status": "已确认",
+          "result": "PASS"
+        },
+        {
+          "rule": "R-CODE-02",
+          "expected": "EXPECTED_HIT:CONFIRMED",
+          "status": "已确认",
+          "result": "PASS"
+        },
+        {
+          "rule": "R-NET-01",
+          "expected": "EXPECTED_HIT:CONFIRMED",
+          "status": "已确认",
+          "result": "PASS"
+        },
+        {
+          "rule": "R-NET-02",
+          "expected": "EXPECTED_HIT:CONFIRMED",
+          "status": "已确认",
+          "result": "PASS"
+        }
+      ]
+    },
+    {
+      "sample": "bad04",
+      "points": [
+        {
+          "rule": "R-MAN-01",
+          "expected": "EXPECTED_HIT:CONFIRMED",
+          "status": "已确认",
+          "result": "PASS"
+        },
+        {
+          "rule": "R-MAN-02",
+          "expected": "EXPECTED_SILENT",
+          "status": null,
+          "result": "PASS"
+        },
+        {
+          "rule": "R-MAN-03",
+          "expected": "EXPECTED_SILENT",
+          "status": null,
+          "result": "PASS"
+        },
+        {
+          "rule": "R-MAN-04",
+          "expected": "EXPECTED_SILENT",
+          "status": null,
+          "result": "PASS"
+        },
+        {
+          "rule": "R-MAN-05",
+          "expected": "EXPECTED_SILENT",
+          "status": null,
+          "result": "PASS"
+        },
+        {
+          "rule": "R-PERM-01",
+          "expected": "EXPECTED_SILENT",
+          "status": null,
+          "result": "PASS"
+        },
+        {
+          "rule": "R-PERM-02",
+          "expected": "EXPECTED_SILENT",
+          "status": null,
+          "result": "PASS"
+        },
+        {
+          "rule": "R-PERM-03",
+          "expected": "EXPECTED_SILENT",
+          "status": null,
+          "result": "PASS"
+        },
+        {
+          "rule": "R-STR-01",
+          "expected": "EXPECTED_HIT:CONFIRMED",
+          "status": "已确认",
+          "result": "PASS"
+        },
+        {
+          "rule": "R-STR-02",
+          "expected": "EXPECTED_SILENT",
+          "status": null,
+          "result": "PASS"
+        },
+        {
+          "rule": "R-CODE-01",
+          "expected": "EXPECTED_SILENT",
+          "status": null,
+          "result": "PASS"
+        },
+        {
+          "rule": "R-CODE-02",
+          "expected": "EXPECTED_SILENT",
+          "status": null,
+          "result": "PASS"
+        },
+        {
+          "rule": "R-NET-01",
+          "expected": "EXPECTED_SILENT",
+          "status": null,
+          "result": "PASS"
+        },
+        {
+          "rule": "R-NET-02",
+          "expected": "EXPECTED_SILENT",
+          "status": null,
+          "result": "PASS"
+        }
+      ]
+    },
+    {
+      "sample": "good01",
+      "points": [
+        {
+          "rule": "R-MAN-01",
+          "expected": "EXPECTED_SILENT",
+          "status": null,
+          "result": "PASS"
+        },
+        {
+          "rule": "R-MAN-02",
+          "expected": "EXPECTED_SILENT",
+          "status": null,
+          "result": "PASS"
+        },
+        {
+          "rule": "R-MAN-03",
+          "expected": "EXPECTED_SILENT",
+          "status": null,
+          "result": "PASS"
+        },
+        {
+          "rule": "R-MAN-04",
+          "expected": "EXPECTED_SILENT",
+          "status": null,
+          "result": "PASS"
+        },
+        {
+          "rule": "R-MAN-05",
+          "expected": "EXPECTED_SILENT",
+          "status": null,
+          "result": "PASS"
+        },
+        {
+          "rule": "R-PERM-01",
+          "expected": "EXPECTED_SILENT",
+          "status": null,
+          "result": "PASS"
+        },
+        {
+          "rule": "R-PERM-02",
+          "expected": "EXPECTED_SILENT",
+          "status": null,
+          "result": "PASS"
+        },
+        {
+          "rule": "R-PERM-03",
+          "expected": "EXPECTED_SILENT",
+          "status": null,
+          "result": "PASS"
+        },
+        {
+          "rule": "R-STR-01",
+          "expected": "EXPECTED_SILENT",
+          "status": null,
+          "result": "PASS"
+        },
+        {
+          "rule": "R-STR-02",
+          "expected": "EXPECTED_SILENT",
+          "status": null,
+          "result": "PASS"
+        },
+        {
+          "rule": "R-CODE-01",
+          "expected": "EXPECTED_SILENT",
+          "status": null,
+          "result": "PASS"
+        },
+        {
+          "rule": "R-CODE-02",
+          "expected": "EXPECTED_SILENT",
+          "status": null,
+          "result": "PASS"
+        },
+        {
+          "rule": "R-NET-01",
+          "expected": "EXPECTED_SILENT",
+          "status": null,
+          "result": "PASS"
+        },
+        {
+          "rule": "R-NET-02",
+          "expected": "EXPECTED_SILENT",
+          "status": null,
+          "result": "PASS"
+        }
+      ]
+    },
+    {
+      "sample": "good02",
+      "points": [
+        {
+          "rule": "R-MAN-01",
+          "expected": "EXPECTED_SILENT",
+          "status": null,
+          "result": "PASS"
+        },
+        {
+          "rule": "R-MAN-02",
+          "expected": "EXPECTED_SILENT",
+          "status": null,
+          "result": "PASS"
+        },
+        {
+          "rule": "R-MAN-03",
+          "expected": "EXPECTED_SILENT",
+          "status": null,
+          "result": "PASS"
+        },
+        {
+          "rule": "R-MAN-04",
+          "expected": "EXPECTED_SILENT",
+          "status": null,
+          "result": "PASS"
+        },
+        {
+          "rule": "R-MAN-05",
+          "expected": "EXPECTED_SILENT",
+          "status": null,
+          "result": "PASS"
+        },
+        {
+          "rule": "R-PERM-01",
+          "expected": "EXPECTED_SILENT",
+          "status": null,
+          "result": "PASS"
+        },
+        {
+          "rule": "R-PERM-02",
+          "expected": "EXPECTED_SILENT",
+          "status": null,
+          "result": "PASS"
+        },
+        {
+          "rule": "R-PERM-03",
+          "expected": "EXPECTED_SILENT",
+          "status": null,
+          "result": "PASS"
+        },
+        {
+          "rule": "R-STR-01",
+          "expected": "EXPECTED_SILENT",
+          "status": null,
+          "result": "PASS"
+        },
+        {
+          "rule": "R-STR-02",
+          "expected": "EXPECTED_SILENT",
+          "status": null,
+          "result": "PASS"
+        },
+        {
+          "rule": "R-CODE-01",
+          "expected": "EXPECTED_SILENT",
+          "status": null,
+          "result": "PASS"
+        },
+        {
+          "rule": "R-CODE-02",
+          "expected": "EXPECTED_SILENT",
+          "status": null,
+          "result": "PASS"
+        },
+        {
+          "rule": "R-NET-01",
+          "expected": "EXPECTED_SILENT",
+          "status": null,
+          "result": "PASS"
+        },
+        {
+          "rule": "R-NET-02",
+          "expected": "EXPECTED_SILENT",
+          "status": null,
+          "result": "PASS"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,56 @@
+{
+  "run_id": "RUN-20261015-145536",
+  "apk_name": "bad03.apk",
+  "apk_path": "lab/apks/bad03.apk",
+  "apk_sha256": "21cf5a06cc615b6e8ce71b66dbcda9386a136f63d861fcc258a195b98c4728aa",
+  "rule_pack": "0.1.3",
+  "channel_b_model": "mimo-v2.6-flash",
+  "toolchain": "java=openjdk version \"1.8.0_492\", apktool=apktool_3.0.3.jar",
+  "decode": {
+    "ok": true,
+    "reused": true,
+    "dir": "C:\\Users\\shixz\\AppData\\Local\\Temp\\apkaudit_decode\\21cf5a06cc615b6e",
+    "error": ""
+  },
+  "created": "2026-10-15T06:59:58Z",
+  "budget": {
+    "llm_calls_used": 8,
+    "llm_calls_max": 30,
+    "registered_tests_used": 0,
+    "registered_tests_max": 5,
+    "exhausted_notes": []
+  },
+  "state": {
+    "state": "DONE",
+    "history": [
+      [
+        "PENDING",
+        null
+      ],
+      [
+        "DECODING",
+        ""
+      ],
+      [
+        "RULE_A",
+        ""
+      ],
+      [
+        "CHANNEL_B",
+        ""
+      ],
+      [
+        "FUSION",
+        ""
+      ],
+      [
+        "REPORT",
+        ""
+      ],
+      [
+        "DONE",
+        ""
+      ]
+    ]
+  }
+}

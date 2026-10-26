@@ -1,0 +1,24 @@
+{
+  "apk": "lab/apks/good02.apk",
+  "sha256": "710b457d51f2b960d63470001105522e5eea24d63c4d09d9696d549b3978b1f2",
+  "designed_by": "AI 草稿（待 周宗正/余俊辉 复核）",
+  "reviewed_by": "",
+  "expected": {
+    "R-MAN-01": "EXPECTED_SILENT",
+    "R-MAN-02": "EXPECTED_SILENT",
+    "R-MAN-03": "EXPECTED_SILENT",
+    "R-MAN-04": "EXPECTED_SILENT",
+    "R-MAN-05": "EXPECTED_SILENT",
+    "R-PERM-01": "EXPECTED_SILENT",
+    "R-PERM-02": "EXPECTED_SILENT",
+    "R-PERM-03": "EXPECTED_SILENT",
+    "R-STR-01": "EXPECTED_SILENT",
+    "R-STR-02": "EXPECTED_SILENT",
+    "R-CODE-01": "EXPECTED_SILENT",
+    "R-CODE-02": "EXPECTED_SILENT",
+    "R-NET-01": "EXPECTED_SILENT",
+    "R-NET-02": "EXPECTED_SILENT"
+  },
+  "criteria_used": ["K-2"],
+  "evidence_note": "R-MAN-01: ProtectedService 虽 exported=true，但带 signature 级自定义权限保护（com.synth.good02.permission.INTERNAL），按\"带 permission 的导出组件不算\"口径应安静。\nR-MAN-02: 未声明任何敏感权限（INTERNET 与自定义权限均非敏感范畴）。\nR-MAN-03: 未开启明文许可。\nR-MAN-04: allowBackup=false，无 debuggable。\nR-MAN-05: SyncReceiver 静态注册，但监听自定义普通事件 com.synth.good02.action.SYNC 且 exported=false，普通事件监听不算。\nR-PERM-01: 无调度原语，无敏感 API。\nR-PERM-02: ProtectedService 仅日志，不调用敏感 API。\nR-PERM-03: 声明的权限（INTERNET、自定义签名权限）不在敏感清单内，无过度声明。\nR-STR-01: 无硬编码凭据。\nR-STR-02: 仅公网 https 地址（example.com），无内网地址。\nR-CODE-01: 无动态加载调用。\nR-CODE-02: WebView 仅 setJavaScriptEnabled(true)，无 addJavascriptInterface、无 setAllowFileAccess——按\"仅启用 JS、无接口注入不算\"口径应安静。\nR-NET-01: StrictTrustManager / StrictHostnameVerifier 均为\"委托系统默认实现\"的正确校验（checkServerTrusted 委托真实校验、verify 委托真实域名匹配），非空实现、非恒 true——正常校验实现应安静。\nR-NET-02: SafeWebViewClient.onReceivedSslError 正确调用 handler.cancel()，无 proceed()——正确实现应安静。"
+}

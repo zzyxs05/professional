@@ -1,0 +1,39 @@
+{
+  "generated_at": "2026-10-15T06:36:52Z",
+  "sample": "bad03",
+  "apk_sha256": "21cf5a06cc615b6e8ce71b66dbcda9386a136f63d861fcc258a195b98c4728aa",
+  "rule_pack": "0.1.3",
+  "b1_prompt": "b1-v0.3",
+  "b2_prompt": "b2-v0.4",
+  "runs": 2,
+  "records": {
+    "b1": {
+      "R-NET-01": [
+        {
+          "verdict": "确认可疑",
+          "reason": "checkClientTrusted/checkServerTrusted 方法体仅有 return-void，verify 恒返回 true，均为空实现且未委",
+          "has_observation": true
+        },
+        {
+          "verdict": "确认可疑",
+          "reason": "checkClientTrusted/checkServerTrusted 方法体仅含 return-void 空实现、verify 固定返回 true，属于主",
+          "has_observation": true
+        }
+      ]
+    },
+    "b2": []
+  },
+  "summary": {
+    "R-NET-01": {
+      "dist": {
+        "确认可疑": 2
+      },
+      "valid_dist": {
+        "确认可疑": 2
+      },
+      "consistency": 1.0,
+      "fully_stable": true,
+      "errors": 0
+    }
+  }
+}

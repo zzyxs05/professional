@@ -1,0 +1,56 @@
+{
+  "run_id": "RUN-20261015-150036",
+  "apk_name": "good01.apk",
+  "apk_path": "lab/apks/good01.apk",
+  "apk_sha256": "4cbacbdd6f878f7128ee4938f311ebac9a65e54e53f809a1b9b61634c17355dc",
+  "rule_pack": "0.1.3",
+  "channel_b_model": "mimo-v2.6-flash",
+  "toolchain": "java=openjdk version \"1.8.0_492\", apktool=apktool_3.0.3.jar",
+  "decode": {
+    "ok": true,
+    "reused": true,
+    "dir": "C:\\Users\\shixz\\AppData\\Local\\Temp\\apkaudit_decode\\4cbacbdd6f878f71",
+    "error": ""
+  },
+  "created": "2026-10-15T07:01:26Z",
+  "budget": {
+    "llm_calls_used": 1,
+    "llm_calls_max": 30,
+    "registered_tests_used": 0,
+    "registered_tests_max": 5,
+    "exhausted_notes": []
+  },
+  "state": {
+    "state": "DONE",
+    "history": [
+      [
+        "PENDING",
+        null
+      ],
+      [
+        "DECODING",
+        ""
+      ],
+      [
+        "RULE_A",
+        ""
+      ],
+      [
+        "CHANNEL_B",
+        ""
+      ],
+      [
+        "FUSION",
+        ""
+      ],
+      [
+        "REPORT",
+        ""
+      ],
+      [
+        "DONE",
+        ""
+      ]
+    ]
+  }
+}

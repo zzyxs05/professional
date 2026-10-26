@@ -1,0 +1,113 @@
+{
+  "run_id": "RUN-20261015-150036",
+  "target": {
+    "apk_name": "good01.apk",
+    "apk_sha256": "4cbacbdd6f878f7128ee4938f311ebac9a65e54e53f809a1b9b61634c17355dc"
+  },
+  "versions": {
+    "rule_pack": "0.1.3",
+    "channel_b_model": "mimo-v2.6-flash"
+  },
+  "conclusions": [
+    {
+      "criterion_id": "R-B-001",
+      "status": "待复核",
+      "channel": "B",
+      "location": "权限声明: android.permission.INTERNET",
+      "evidence_ids": [
+        "EV-20261015-150036-002"
+      ],
+      "scope": "样本声明了 android.permission.INTERNET，但摘要中未列出任何 URL、网络入口或已知的网络客户端组件，网络行为可能位于未被静态识别的代码路径中",
+      "missing_evidence": [
+        "钉证据未通过：断言未被机械事实证实（候选规则 R-MAN-02 均无机械命中；claim 提及实体（ANDROID.PERMISSION.INTERNET、INTERNET、android.permission.INTERNET）未被机械命中覆盖）"
+      ],
+      "human_signoff": "pending",
+      "notes": [
+        "B 侧疑点（LLM 提疑），未经确定性钉证据，不得升级措辞"
+      ]
+    },
+    {
+      "criterion_id": "R-B-002",
+      "status": "待复核",
+      "channel": "B",
+      "location": "com.synth.good1.MainActivity (activity)",
+      "evidence_ids": [
+        "EV-20261015-150036-003"
+      ],
+      "scope": "com.synth.good01.MainActivity 是当前唯一被列出的组件且 exported=False，其内是否包含 AsyncTask/Thread/WebView 等发起网络请求或动态加载的逻辑需人工确认",
+      "missing_evidence": [
+        "钉证据未通过：断言未被机械事实证实（候选规则 R-CODE-01, R-CODE-02 均无机械命中；claim 提及实体（MAINACTIVITY、MainActivity、com.synth.good01.MainActivity）未被机械命中覆盖）"
+      ],
+      "human_signoff": "pending",
+      "notes": [
+        "B 侧疑点（LLM 提疑），未经确定性钉证据，不得升级措辞"
+      ]
+    }
+  ],
+  "observations": [
+    {
+      "source": "B2",
+      "claim": "敏感区域摘要中未出现自定义权限声明、动态加载点与调度结构，样本可能通过其他入口（如 Provider/Service/Receiver）或被混淆的类实现敏感行为",
+      "location": "全局摘要",
+      "confidence": "low",
+      "note": "LLM 观察（低置信），未经机械核查，不作为结论"
+    }
+  ],
+  "coverage": {
+    "checked": [
+      "R-MAN-01(manifest)",
+      "R-MAN-02(manifest)",
+      "R-MAN-03(manifest+res_decoded)",
+      "R-MAN-04(manifest)",
+      "R-MAN-05(manifest)",
+      "R-PERM-01(smali_src)",
+      "R-PERM-02(manifest/smali_src)",
+      "R-PERM-03(manifest/smali_src)",
+      "R-STR-01(dex_strings)",
+      "R-STR-02(dex_strings)",
+      "R-CODE-01(dex_strings/smali_src)",
+      "R-CODE-02(smali_src)",
+      "R-NET-01(smali_src)",
+      "R-NET-02(smali_src)",
+      "通道B(模型:mimo-v2.6-flash)"
+    ],
+    "not_checked": [],
+    "decode_failed": false,
+    "decode_note": "",
+    "decode_reused": true,
+    "notes": []
+  },
+  "state": [
+    [
+      "PENDING",
+      null
+    ],
+    [
+      "DECODING",
+      ""
+    ],
+    [
+      "RULE_A",
+      ""
+    ],
+    [
+      "CHANNEL_B",
+      ""
+    ],
+    [
+      "FUSION",
+      ""
+    ],
+    [
+      "REPORT",
+      ""
+    ]
+  ],
+  "budget": {
+    "llm_calls_used": 1,
+    "llm_calls_max": 30,
+    "registered_tests_used": 0,
+    "registered_tests_max": 5,
+    "exhausted_notes": []
+  }
+}

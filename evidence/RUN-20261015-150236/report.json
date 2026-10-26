@@ -1,0 +1,127 @@
+{
+  "run_id": "RUN-20261015-150236",
+  "target": {
+    "apk_name": "bad04.apk",
+    "apk_sha256": "e11522640317bad12bafb2aecd880d348343b66234a42b1b28e206e7c846dab7"
+  },
+  "versions": {
+    "rule_pack": "0.1.3",
+    "channel_b_model": "mimo-v2.6-flash"
+  },
+  "conclusions": [
+    {
+      "criterion_id": "R-MAN-01",
+      "status": "已确认",
+      "channel": "fusion",
+      "location": "AndroidManifest.xml:5-5 [activity com.synth.bad04.MainActivity]",
+      "evidence_ids": [
+        "EV-20261015-150236-001"
+      ],
+      "scope": "导出组件无权限保护",
+      "missing_evidence": [],
+      "human_signoff": "pending",
+      "notes": [
+        "导出组件 com.synth.bad04.MainActivity 无权限保护（android:exported=\"true\"）"
+      ]
+    },
+    {
+      "criterion_id": "R-STR-01",
+      "status": "已确认",
+      "channel": "fusion",
+      "location": "classes.dex#str[3276] | classes.dex#str[11052]",
+      "evidence_ids": [
+        "EV-20261015-150236-002",
+        "EV-20261015-150236-003"
+      ],
+      "scope": "硬编码凭据",
+      "missing_evidence": [],
+      "human_signoff": "pending",
+      "notes": [
+        "凭据形式匹配：AWS Access Key（dex 字符串常量）",
+        "凭据形式匹配：AWS Access Key（dex 字符串常量）"
+      ]
+    }
+  ],
+  "observations": [
+    {
+      "source": "B2",
+      "claim": "敏感区域摘要中未列出任何权限调用点、自定义权限声明、网络入口或动态加载点，样本的敏感行为线索极少，可能是扫描覆盖不全或样本本身仅暴露了导出组件",
+      "location": "(全样本摘要)",
+      "confidence": "low",
+      "note": "LLM 观察（低置信），未经机械核查，不作为结论"
+    },
+    {
+      "source": "B1",
+      "rule_id": "R-MAN-01",
+      "claim": "命中位于 AndroidManifest.xml 第5行，导出组件为 com.synth.bad04.MainActivity，缺少权限声明；若该组件另有 intent-filter 或需结合用途评估风险等级，可进一步核查",
+      "location": "",
+      "confidence": "n/a",
+      "note": "B1 复核的补充观察（不构成判定），未经机械核查"
+    },
+    {
+      "source": "B1",
+      "rule_id": "R-STR-01",
+      "claim": "AKIAIOSFODNN7EXAMPLE 是 AWS 官方文档惯用的示例 key（后缀 EXAMPLE 为文档占位惯例），第二处命中还带日志上下文 /storage access key in use:，更像演示或日志输出代码；但按本规则口径这类值仍须上报，真伪与用途不在裁定范围内。",
+      "location": "",
+      "confidence": "n/a",
+      "note": "B1 复核的补充观察（不构成判定），未经机械核查"
+    }
+  ],
+  "coverage": {
+    "checked": [
+      "R-MAN-01(manifest)",
+      "R-MAN-02(manifest)",
+      "R-MAN-03(manifest+res_decoded)",
+      "R-MAN-04(manifest)",
+      "R-MAN-05(manifest)",
+      "R-PERM-01(smali_src)",
+      "R-PERM-02(manifest/smali_src)",
+      "R-PERM-03(manifest/smali_src)",
+      "R-STR-01(dex_strings)",
+      "R-STR-02(dex_strings)",
+      "R-CODE-01(dex_strings/smali_src)",
+      "R-CODE-02(smali_src)",
+      "R-NET-01(smali_src)",
+      "R-NET-02(smali_src)",
+      "通道B(模型:mimo-v2.6-flash)"
+    ],
+    "not_checked": [],
+    "decode_failed": false,
+    "decode_note": "",
+    "decode_reused": true,
+    "notes": []
+  },
+  "state": [
+    [
+      "PENDING",
+      null
+    ],
+    [
+      "DECODING",
+      ""
+    ],
+    [
+      "RULE_A",
+      ""
+    ],
+    [
+      "CHANNEL_B",
+      ""
+    ],
+    [
+      "FUSION",
+      ""
+    ],
+    [
+      "REPORT",
+      ""
+    ]
+  ],
+  "budget": {
+    "llm_calls_used": 3,
+    "llm_calls_max": 30,
+    "registered_tests_used": 0,
+    "registered_tests_max": 5,
+    "exhausted_notes": []
+  }
+}

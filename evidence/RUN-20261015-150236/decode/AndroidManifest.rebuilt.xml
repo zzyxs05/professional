@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest android:versionCode="1" android:versionName="1.0" android:compileSdkVersion="37" android:compileSdkVersionCodename="17" package="com.synth.bad04" platformBuildVersionCode="37" platformBuildVersionName="17">
+    <uses-sdk android:minSdkVersion="35" android:targetSdkVersion="37"/>
+    <application android:theme="@0x01030237" android:label="@0x7f010000" android:allowBackup="false" android:extractNativeLibs="false">
+        <activity android:name="com.synth.bad04.MainActivity" android:exported="true"/>
+    </application>
+</manifest>

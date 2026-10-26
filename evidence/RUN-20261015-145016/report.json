@@ -1,0 +1,274 @@
+{
+  "run_id": "RUN-20261015-145016",
+  "target": {
+    "apk_name": "bad01.apk",
+    "apk_sha256": "3356097a33fb044d848ee1930523924b2d08ba7bbfdf47f43c7dbad10aae1414"
+  },
+  "versions": {
+    "rule_pack": "0.1.3",
+    "channel_b_model": "mimo-v2.6-flash"
+  },
+  "conclusions": [
+    {
+      "criterion_id": "R-MAN-01",
+      "status": "已确认",
+      "channel": "fusion",
+      "location": "AndroidManifest.xml:16-16 [activity com.synth.bad01.MainActivity] | AndroidManifest.xml:17-17 [service com.synth.bad01.SyncService] | AndroidManifest.xml:18-24 [receiver com.synth.bad01.BootReceiver] | AndroidManifest.xml:25-25 [provider com.synth.bad01.LeakyProvider]",
+      "evidence_ids": [
+        "EV-20261015-145016-001",
+        "EV-20261015-145016-002",
+        "EV-20261015-145016-003",
+        "EV-20261015-145016-004"
+      ],
+      "scope": "导出组件无权限保护",
+      "missing_evidence": [],
+      "human_signoff": "pending",
+      "notes": [
+        "导出组件 com.synth.bad01.MainActivity 无权限保护（android:exported=\"true\"）",
+        "导出组件 com.synth.bad01.SyncService 无权限保护（android:exported=\"true\"）",
+        "导出组件 com.synth.bad01.BootReceiver 无权限保护（android:exported=\"true\"）",
+        "导出组件 com.synth.bad01.LeakyProvider 无权限保护（android:exported=\"true\"）"
+      ]
+    },
+    {
+      "criterion_id": "R-MAN-02",
+      "status": "已确认",
+      "channel": "fusion",
+      "location": "AndroidManifest.xml:4 [uses-permission] | AndroidManifest.xml:5 [uses-permission] | AndroidManifest.xml:6 [uses-permission] | AndroidManifest.xml:7 [uses-permission] | AndroidManifest.xml:8 [uses-permission] | AndroidManifest.xml:9 [uses-permission] | AndroidManifest.xml:10 [uses-permission] | AndroidManifest.xml:11 [uses-permission] | AndroidManifest.xml:12 [uses-permission] | AndroidManifest.xml:13 [uses-permission] | AndroidManifest.xml:14 [uses-permission]",
+      "evidence_ids": [
+        "EV-20261015-145016-005",
+        "EV-20261015-145016-006",
+        "EV-20261015-145016-007",
+        "EV-20261015-145016-008",
+        "EV-20261015-145016-009",
+        "EV-20261015-145016-010",
+        "EV-20261015-145016-011",
+        "EV-20261015-145016-012",
+        "EV-20261015-145016-013",
+        "EV-20261015-145016-014",
+        "EV-20261015-145016-015"
+      ],
+      "scope": "危险权限声明",
+      "missing_evidence": [],
+      "human_signoff": "pending",
+      "notes": [
+        "声明敏感权限：android.permission.RECORD_AUDIO（录音）",
+        "声明敏感权限：android.permission.CAMERA（相机）",
+        "声明敏感权限：android.permission.ACCESS_FINE_LOCATION（精确定位）",
+        "声明敏感权限：android.permission.READ_CONTACTS（读取通讯录）",
+        "声明敏感权限：android.permission.RECEIVE_SMS（接收短信）",
+        "声明敏感权限：android.permission.READ_PHONE_STATE（读取电话状态）",
+        "声明敏感权限：android.permission.CALL_PHONE（拨打电话）",
+        "声明敏感权限：android.permission.SYSTEM_ALERT_WINDOW（悬浮窗）",
+        "声明敏感权限：android.permission.REQUEST_INSTALL_PACKAGES（请求安装应用）",
+        "声明敏感权限：android.permission.QUERY_ALL_PACKAGES（查询所有包）",
+        "声明敏感权限：android.permission.RECEIVE_BOOT_COMPLETED（开机自启动）"
+      ]
+    },
+    {
+      "criterion_id": "R-MAN-03",
+      "status": "已确认",
+      "channel": "fusion",
+      "location": "AndroidManifest.xml [application] | res/xml/network_security_config.xml:3 [base-config]",
+      "evidence_ids": [
+        "EV-20261015-145016-016",
+        "EV-20261015-145016-017"
+      ],
+      "scope": "明文流量许可",
+      "missing_evidence": [],
+      "human_signoff": "pending",
+      "notes": [
+        "显式开启明文流量许可",
+        "networkSecurityConfig 允许明文流量"
+      ]
+    },
+    {
+      "criterion_id": "R-MAN-04",
+      "status": "已确认",
+      "channel": "fusion",
+      "location": "AndroidManifest.xml [application] | AndroidManifest.xml [application]",
+      "evidence_ids": [
+        "EV-20261015-145016-018",
+        "EV-20261015-145016-019"
+      ],
+      "scope": "调试与备份风险",
+      "missing_evidence": [],
+      "human_signoff": "pending",
+      "notes": [
+        "应用显式开启调试标记",
+        "允许备份（未设置限制）"
+      ]
+    },
+    {
+      "criterion_id": "R-MAN-05",
+      "status": "已确认",
+      "channel": "fusion",
+      "location": "AndroidManifest.xml:18-24 [receiver com.synth.bad01.BootReceiver]",
+      "evidence_ids": [
+        "EV-20261015-145016-020"
+      ],
+      "scope": "敏感广播监听",
+      "missing_evidence": [],
+      "human_signoff": "pending",
+      "notes": [
+        "静态注册监听敏感事件：android.intent.action.BOOT_COMPLETED（开机完成）、android.provider.Telephony.SMS_RECEIVED（短信接收）、android.intent.action.PHONE_STATE（电话状态）"
+      ]
+    },
+    {
+      "criterion_id": "R-PERM-03",
+      "status": "已确认",
+      "channel": "fusion",
+      "location": "AndroidManifest.xml:4-10 [uses-permission × 7]",
+      "evidence_ids": [
+        "EV-20261015-145016-021"
+      ],
+      "scope": "声明与使用不一致",
+      "missing_evidence": [],
+      "human_signoff": "pending",
+      "notes": [
+        "敏感权限声明后未发现使用：在当前 APK 自有代码范围内检索无对应调用，且样本未使用反射/JNI/动态加载等可隐藏调用的机制（不排除运行时动态下发的代码调用）"
+      ]
+    },
+    {
+      "criterion_id": "R-B-001",
+      "status": "待复核",
+      "channel": "B",
+      "location": "uses-permission: REQUEST_INSTALL_PACKAGES / CALL_PHONE",
+      "evidence_ids": [
+        "EV-20261015-145016-039"
+      ],
+      "scope": "REQUEST_INSTALL_PACKAGES 与 CALL_PHONE 同时存在，暗示可能静默拉起 APK 安装流程或发起付费通话，属于高风险可执行操作。",
+      "missing_evidence": [
+        "钉证据未通过：未识别到可核查断言（claim 无法映射到任何规则）"
+      ],
+      "human_signoff": "pending",
+      "notes": [
+        "B 侧疑点（LLM 提疑），未经确定性钉证据，不得升级措辞"
+      ]
+    },
+    {
+      "criterion_id": "R-B-002",
+      "status": "待复核",
+      "channel": "B",
+      "location": "uses-permission: SYSTEM_ALERT_WINDOW / QUERY_ALL_PACKAGES",
+      "evidence_ids": [
+        "EV-20261015-145016-040"
+      ],
+      "scope": "SYSTEM_ALERT_WINDOW + QUERY_ALL_PACKAGES 组合可用于覆盖层钓鱼界面与全量应用枚举，具备持久化与横向探测能力。",
+      "missing_evidence": [
+        "钉证据未通过：未识别到可核查断言（claim 无法映射到任何规则）"
+      ],
+      "human_signoff": "pending",
+      "notes": [
+        "B 侧疑点（LLM 提疑），未经确定性钉证据，不得升级措辞"
+      ]
+    }
+  ],
+  "observations": [
+    {
+      "source": "B1",
+      "rule_id": "R-MAN-01",
+      "claim": "MainActivity 与 SyncService 为无过滤器的裸导出；BootReceiver 同时注册 BOOT_COMPLETED、SMS_RECEIVED、PHONE_STATE 等系统广播；LeakyProvider 作为 provider 导出且未见 readPermission/writePermission，provider 风险面更高。",
+      "location": "",
+      "confidence": "n/a",
+      "note": "B1 复核的补充观察（不构成判定），未经机械核查"
+    },
+    {
+      "source": "B1",
+      "rule_id": "R-MAN-02",
+      "claim": "命中集中在 AndroidManifest.xml 连续 5 行，同时请求麦克风、摄像头、精确定位、联系人、短信五类敏感能力，权限组合面较广，若应用功能与之不匹配，可进一步评估其数据采集范围是否超出合理必要。",
+      "location": "",
+      "confidence": "n/a",
+      "note": "B1 复核的补充观察（不构成判定），未经机械核查"
+    },
+    {
+      "source": "B1",
+      "rule_id": "R-MAN-03",
+      "claim": "两处配置方向一致，base-config 未限定具体域名，意味着对所有未单独配置的域名默认放行明文 HTTP；即使 manifest 属性在 API 24+ 会被 network security config 覆盖，二者结论仍相同，不构成误报。",
+      "location": "",
+      "confidence": "n/a",
+      "note": "B1 复核的补充观察（不构成判定），未经机械核查"
+    },
+    {
+      "source": "B1",
+      "rule_id": "R-MAN-04",
+      "claim": "两者均显式设置为 true 且位于同一 <application> 标签，风险叠加：允许调试且允许应用数据被 adb 备份，建议改为 debuggable=false 并显式设置 allowBackup=false。",
+      "location": "",
+      "confidence": "n/a",
+      "note": "B1 复核的补充观察（不构成判定），未经机械核查"
+    },
+    {
+      "source": "B1",
+      "rule_id": "R-MAN-05",
+      "claim": "该 receiver 未附带任何 permission 属性，任意应用可向其发送伪造广播，加剧了敏感广播监听的风险面。",
+      "location": "",
+      "confidence": "n/a",
+      "note": "B1 复核的补充观察（不构成判定），未经机械核查"
+    },
+    {
+      "source": "B1",
+      "rule_id": "R-PERM-03",
+      "claim": "① 检索范围仅限自有代码 7 个文件，未见对内嵌第三方 SDK（jar/aar 合并代码）的同等扫描，RECORD_AUDIO/CAMERA/ACCESS_FINE_LOCATION 等常被 SDK 声明并调用，若 SDK 代码未纳入检索需在报告中显式声明该范围限制；② 建议补充核对字符串型权限检查（checkSelfPermission(\"android.permission.XXX\")）与权限",
+      "location": "",
+      "confidence": "n/a",
+      "note": "B1 复核的补充观察（不构成判定），未经机械核查"
+    }
+  ],
+  "coverage": {
+    "checked": [
+      "R-MAN-01(manifest)",
+      "R-MAN-02(manifest)",
+      "R-MAN-03(manifest+res_decoded)",
+      "R-MAN-04(manifest)",
+      "R-MAN-05(manifest)",
+      "R-PERM-01(smali_src)",
+      "R-PERM-02(manifest/smali_src)",
+      "R-PERM-03(manifest/smali_src)",
+      "R-STR-01(dex_strings)",
+      "R-STR-02(dex_strings)",
+      "R-CODE-01(dex_strings/smali_src)",
+      "R-CODE-02(smali_src)",
+      "R-NET-01(smali_src)",
+      "R-NET-02(smali_src)",
+      "通道B(模型:mimo-v2.6-flash)"
+    ],
+    "not_checked": [],
+    "decode_failed": false,
+    "decode_note": "",
+    "decode_reused": true,
+    "notes": []
+  },
+  "state": [
+    [
+      "PENDING",
+      null
+    ],
+    [
+      "DECODING",
+      ""
+    ],
+    [
+      "RULE_A",
+      ""
+    ],
+    [
+      "CHANNEL_B",
+      ""
+    ],
+    [
+      "FUSION",
+      ""
+    ],
+    [
+      "REPORT",
+      ""
+    ]
+  ],
+  "budget": {
+    "llm_calls_used": 7,
+    "llm_calls_max": 30,
+    "registered_tests_used": 0,
+    "registered_tests_max": 5,
+    "exhausted_notes": []
+  }
+}
