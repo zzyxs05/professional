@@ -1,0 +1,903 @@
+{
+  "experiment": "EXP-6 / datasource-ab",
+  "decision_anchor": "ADR-0002",
+  "rule": "R-CODE-01",
+  "protocol": "docs/experiment-protocol.md",
+  "generated_at": "2026-11-11T14:58:49Z",
+  "environment": {
+    "python": "3.13.14",
+    "platform": "Windows-11-10.0.26300-SP0",
+    "rule_pack": "0.1.4",
+    "channel_b": "未启用（不调用模型）",
+    "network": "无"
+  },
+  "fixed_conditions": {
+    "input_dataset": "lab/apks/ 6 个自建样本（sha256 见 lab/sha256.txt）",
+    "preprocessing": "apktool 解码产物复用 apkaudit_decode/<sha前16位>，不重复解码；解码耗时为一次性前置成本，不计入计时",
+    "scope": "只执行 R-CODE-01 一条规则，避免其他规则引入变量",
+    "timing": "build_context() 前 → 规则返回后；perf_counter；预热 1 次 + 计时 5 次",
+    "excluded": "报告渲染、证据落盘、模型调用、apktool 解码"
+  },
+  "metrics": [
+    "每样本命中数与命中明细（坐标 + 档位上限）",
+    "样本级检出一致性：两方法是否都发现目标（不做坐标级比对，两路径坐标格式不同）",
+    "解析 + 规则执行耗时中位数 / 最小 / 最大（ms）",
+    "轮次间命中稳定性",
+    "外部依赖：A 需 Java + apktool，B 零依赖"
+  ],
+  "samples": {
+    "bad01": {
+      "apk_sha256": "3356097a33fb044d848ee1930523924b2d08ba7bbfdf47f43c7dbad10aae1414",
+      "decode_cache": "C:\\Users\\shixz\\AppData\\Local\\Temp\\apkaudit_decode\\3356097a33fb044d",
+      "decode_cache_available": true,
+      "A_smali": {
+        "label": "smali_src 强模式",
+        "external_dep": "java + apktool",
+        "rounds": [
+          {
+            "round": 1,
+            "elapsed_ms": 78.907,
+            "hit_count": 0,
+            "hits": []
+          },
+          {
+            "round": 2,
+            "elapsed_ms": 78.342,
+            "hit_count": 0,
+            "hits": []
+          },
+          {
+            "round": 3,
+            "elapsed_ms": 77.948,
+            "hit_count": 0,
+            "hits": []
+          },
+          {
+            "round": 4,
+            "elapsed_ms": 78.236,
+            "hit_count": 0,
+            "hits": []
+          },
+          {
+            "round": 5,
+            "elapsed_ms": 80.846,
+            "hit_count": 0,
+            "hits": []
+          }
+        ],
+        "warmup": "1 次（不计时）",
+        "median_ms": 78.342,
+        "min_ms": 77.948,
+        "max_ms": 80.846,
+        "hit_count": 0,
+        "hits_stable_across_rounds": true,
+        "hits": [],
+        "status_ceiling": null
+      },
+      "B_dex": {
+        "label": "dex_strings 弱模式",
+        "external_dep": "无（仅标准库）",
+        "rounds": [
+          {
+            "round": 1,
+            "elapsed_ms": 26.862,
+            "hit_count": 0,
+            "hits": []
+          },
+          {
+            "round": 2,
+            "elapsed_ms": 24.02,
+            "hit_count": 0,
+            "hits": []
+          },
+          {
+            "round": 3,
+            "elapsed_ms": 24.558,
+            "hit_count": 0,
+            "hits": []
+          },
+          {
+            "round": 4,
+            "elapsed_ms": 25.154,
+            "hit_count": 0,
+            "hits": []
+          },
+          {
+            "round": 5,
+            "elapsed_ms": 24.917,
+            "hit_count": 0,
+            "hits": []
+          }
+        ],
+        "warmup": "1 次（不计时）",
+        "median_ms": 24.917,
+        "min_ms": 24.02,
+        "max_ms": 26.862,
+        "hit_count": 0,
+        "hits_stable_across_rounds": true,
+        "hits": [],
+        "status_ceiling": null,
+        "weak_mode_diagnostic": {
+          "type_descriptors_count": 1397,
+          "patterns": {
+            "Ldalvik/system/DexClassLoader;": {
+              "exact_membership": false,
+              "substring_present": false
+            },
+            "Ldalvik/system/PathClassLoader;": {
+              "exact_membership": false,
+              "substring_present": false
+            },
+            "Ldalvik/system/InMemoryDexClassLoader;": {
+              "exact_membership": false,
+              "substring_present": false
+            }
+          },
+          "note": "仅记录匹配口径事实；未修改任何规则、阈值或规则包版本。"
+        }
+      },
+      "both_detected": false,
+      "detection_agreement": true,
+      "median_ms_ratio_A_over_B": 3.144
+    },
+    "bad02": {
+      "apk_sha256": "232666b8c0bf411dd454f5ec0922a5795a5c594e0eff56cbecce9f376a4f0d4c",
+      "decode_cache": "C:\\Users\\shixz\\AppData\\Local\\Temp\\apkaudit_decode\\232666b8c0bf411d",
+      "decode_cache_available": true,
+      "A_smali": {
+        "label": "smali_src 强模式",
+        "external_dep": "java + apktool",
+        "rounds": [
+          {
+            "round": 1,
+            "elapsed_ms": 77.384,
+            "hit_count": 0,
+            "hits": []
+          },
+          {
+            "round": 2,
+            "elapsed_ms": 73.953,
+            "hit_count": 0,
+            "hits": []
+          },
+          {
+            "round": 3,
+            "elapsed_ms": 74.647,
+            "hit_count": 0,
+            "hits": []
+          },
+          {
+            "round": 4,
+            "elapsed_ms": 80.198,
+            "hit_count": 0,
+            "hits": []
+          },
+          {
+            "round": 5,
+            "elapsed_ms": 77.49,
+            "hit_count": 0,
+            "hits": []
+          }
+        ],
+        "warmup": "1 次（不计时）",
+        "median_ms": 77.384,
+        "min_ms": 73.953,
+        "max_ms": 80.198,
+        "hit_count": 0,
+        "hits_stable_across_rounds": true,
+        "hits": [],
+        "status_ceiling": null
+      },
+      "B_dex": {
+        "label": "dex_strings 弱模式",
+        "external_dep": "无（仅标准库）",
+        "rounds": [
+          {
+            "round": 1,
+            "elapsed_ms": 24.387,
+            "hit_count": 0,
+            "hits": []
+          },
+          {
+            "round": 2,
+            "elapsed_ms": 27.454,
+            "hit_count": 0,
+            "hits": []
+          },
+          {
+            "round": 3,
+            "elapsed_ms": 24.95,
+            "hit_count": 0,
+            "hits": []
+          },
+          {
+            "round": 4,
+            "elapsed_ms": 24.403,
+            "hit_count": 0,
+            "hits": []
+          },
+          {
+            "round": 5,
+            "elapsed_ms": 28.128,
+            "hit_count": 0,
+            "hits": []
+          }
+        ],
+        "warmup": "1 次（不计时）",
+        "median_ms": 24.95,
+        "min_ms": 24.387,
+        "max_ms": 28.128,
+        "hit_count": 0,
+        "hits_stable_across_rounds": true,
+        "hits": [],
+        "status_ceiling": null,
+        "weak_mode_diagnostic": {
+          "type_descriptors_count": 1386,
+          "patterns": {
+            "Ldalvik/system/DexClassLoader;": {
+              "exact_membership": false,
+              "substring_present": false
+            },
+            "Ldalvik/system/PathClassLoader;": {
+              "exact_membership": false,
+              "substring_present": false
+            },
+            "Ldalvik/system/InMemoryDexClassLoader;": {
+              "exact_membership": false,
+              "substring_present": false
+            }
+          },
+          "note": "仅记录匹配口径事实；未修改任何规则、阈值或规则包版本。"
+        }
+      },
+      "both_detected": false,
+      "detection_agreement": true,
+      "median_ms_ratio_A_over_B": 3.102
+    },
+    "bad03": {
+      "apk_sha256": "21cf5a06cc615b6e8ce71b66dbcda9386a136f63d861fcc258a195b98c4728aa",
+      "decode_cache": "C:\\Users\\shixz\\AppData\\Local\\Temp\\apkaudit_decode\\21cf5a06cc615b6e",
+      "decode_cache_available": true,
+      "A_smali": {
+        "label": "smali_src 强模式",
+        "external_dep": "java + apktool",
+        "rounds": [
+          {
+            "round": 1,
+            "elapsed_ms": 75.928,
+            "hit_count": 3,
+            "hits": [
+              {
+                "rule_id": "R-CODE-01",
+                "location": "smali/com/synth/bad03/MainActivity.smali:82（原始行 69）",
+                "raw_snippet": "new-instance v4, Ldalvik/system/DexClassLoader;",
+                "note": "动态代码加载调用：Ldalvik/system/DexClassLoader;",
+                "max_status": "已确认"
+              },
+              {
+                "rule_id": "R-CODE-01",
+                "location": "smali/com/synth/bad03/MainActivity.smali:101（原始行 73）",
+                "raw_snippet": "invoke-direct {v4, v2, v3, v5, p0}, Ldalvik/system/DexClassLoader;-><init>(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/ClassLoader;)V",
+                "note": "动态代码加载调用：Ldalvik/system/DexClassLoader;",
+                "max_status": "已确认"
+              },
+              {
+                "rule_id": "R-CODE-01",
+                "location": "smali/com/synth/bad03/MainActivity.smali:106（原始行 74）",
+                "raw_snippet": "invoke-virtual {v4, p0}, Ldalvik/system/DexClassLoader;->loadClass(Ljava/lang/String;)Ljava/lang/Class;",
+                "note": "动态代码加载调用：Ldalvik/system/DexClassLoader;",
+                "max_status": "已确认"
+              }
+            ]
+          },
+          {
+            "round": 2,
+            "elapsed_ms": 81.337,
+            "hit_count": 3,
+            "hits": [
+              {
+                "rule_id": "R-CODE-01",
+                "location": "smali/com/synth/bad03/MainActivity.smali:82（原始行 69）",
+                "raw_snippet": "new-instance v4, Ldalvik/system/DexClassLoader;",
+                "note": "动态代码加载调用：Ldalvik/system/DexClassLoader;",
+                "max_status": "已确认"
+              },
+              {
+                "rule_id": "R-CODE-01",
+                "location": "smali/com/synth/bad03/MainActivity.smali:101（原始行 73）",
+                "raw_snippet": "invoke-direct {v4, v2, v3, v5, p0}, Ldalvik/system/DexClassLoader;-><init>(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/ClassLoader;)V",
+                "note": "动态代码加载调用：Ldalvik/system/DexClassLoader;",
+                "max_status": "已确认"
+              },
+              {
+                "rule_id": "R-CODE-01",
+                "location": "smali/com/synth/bad03/MainActivity.smali:106（原始行 74）",
+                "raw_snippet": "invoke-virtual {v4, p0}, Ldalvik/system/DexClassLoader;->loadClass(Ljava/lang/String;)Ljava/lang/Class;",
+                "note": "动态代码加载调用：Ldalvik/system/DexClassLoader;",
+                "max_status": "已确认"
+              }
+            ]
+          },
+          {
+            "round": 3,
+            "elapsed_ms": 75.95,
+            "hit_count": 3,
+            "hits": [
+              {
+                "rule_id": "R-CODE-01",
+                "location": "smali/com/synth/bad03/MainActivity.smali:82（原始行 69）",
+                "raw_snippet": "new-instance v4, Ldalvik/system/DexClassLoader;",
+                "note": "动态代码加载调用：Ldalvik/system/DexClassLoader;",
+                "max_status": "已确认"
+              },
+              {
+                "rule_id": "R-CODE-01",
+                "location": "smali/com/synth/bad03/MainActivity.smali:101（原始行 73）",
+                "raw_snippet": "invoke-direct {v4, v2, v3, v5, p0}, Ldalvik/system/DexClassLoader;-><init>(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/ClassLoader;)V",
+                "note": "动态代码加载调用：Ldalvik/system/DexClassLoader;",
+                "max_status": "已确认"
+              },
+              {
+                "rule_id": "R-CODE-01",
+                "location": "smali/com/synth/bad03/MainActivity.smali:106（原始行 74）",
+                "raw_snippet": "invoke-virtual {v4, p0}, Ldalvik/system/DexClassLoader;->loadClass(Ljava/lang/String;)Ljava/lang/Class;",
+                "note": "动态代码加载调用：Ldalvik/system/DexClassLoader;",
+                "max_status": "已确认"
+              }
+            ]
+          },
+          {
+            "round": 4,
+            "elapsed_ms": 78.222,
+            "hit_count": 3,
+            "hits": [
+              {
+                "rule_id": "R-CODE-01",
+                "location": "smali/com/synth/bad03/MainActivity.smali:82（原始行 69）",
+                "raw_snippet": "new-instance v4, Ldalvik/system/DexClassLoader;",
+                "note": "动态代码加载调用：Ldalvik/system/DexClassLoader;",
+                "max_status": "已确认"
+              },
+              {
+                "rule_id": "R-CODE-01",
+                "location": "smali/com/synth/bad03/MainActivity.smali:101（原始行 73）",
+                "raw_snippet": "invoke-direct {v4, v2, v3, v5, p0}, Ldalvik/system/DexClassLoader;-><init>(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/ClassLoader;)V",
+                "note": "动态代码加载调用：Ldalvik/system/DexClassLoader;",
+                "max_status": "已确认"
+              },
+              {
+                "rule_id": "R-CODE-01",
+                "location": "smali/com/synth/bad03/MainActivity.smali:106（原始行 74）",
+                "raw_snippet": "invoke-virtual {v4, p0}, Ldalvik/system/DexClassLoader;->loadClass(Ljava/lang/String;)Ljava/lang/Class;",
+                "note": "动态代码加载调用：Ldalvik/system/DexClassLoader;",
+                "max_status": "已确认"
+              }
+            ]
+          },
+          {
+            "round": 5,
+            "elapsed_ms": 81.296,
+            "hit_count": 3,
+            "hits": [
+              {
+                "rule_id": "R-CODE-01",
+                "location": "smali/com/synth/bad03/MainActivity.smali:82（原始行 69）",
+                "raw_snippet": "new-instance v4, Ldalvik/system/DexClassLoader;",
+                "note": "动态代码加载调用：Ldalvik/system/DexClassLoader;",
+                "max_status": "已确认"
+              },
+              {
+                "rule_id": "R-CODE-01",
+                "location": "smali/com/synth/bad03/MainActivity.smali:101（原始行 73）",
+                "raw_snippet": "invoke-direct {v4, v2, v3, v5, p0}, Ldalvik/system/DexClassLoader;-><init>(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/ClassLoader;)V",
+                "note": "动态代码加载调用：Ldalvik/system/DexClassLoader;",
+                "max_status": "已确认"
+              },
+              {
+                "rule_id": "R-CODE-01",
+                "location": "smali/com/synth/bad03/MainActivity.smali:106（原始行 74）",
+                "raw_snippet": "invoke-virtual {v4, p0}, Ldalvik/system/DexClassLoader;->loadClass(Ljava/lang/String;)Ljava/lang/Class;",
+                "note": "动态代码加载调用：Ldalvik/system/DexClassLoader;",
+                "max_status": "已确认"
+              }
+            ]
+          }
+        ],
+        "warmup": "1 次（不计时）",
+        "median_ms": 78.222,
+        "min_ms": 75.928,
+        "max_ms": 81.337,
+        "hit_count": 3,
+        "hits_stable_across_rounds": true,
+        "hits": [
+          {
+            "rule_id": "R-CODE-01",
+            "location": "smali/com/synth/bad03/MainActivity.smali:82（原始行 69）",
+            "raw_snippet": "new-instance v4, Ldalvik/system/DexClassLoader;",
+            "note": "动态代码加载调用：Ldalvik/system/DexClassLoader;",
+            "max_status": "已确认"
+          },
+          {
+            "rule_id": "R-CODE-01",
+            "location": "smali/com/synth/bad03/MainActivity.smali:101（原始行 73）",
+            "raw_snippet": "invoke-direct {v4, v2, v3, v5, p0}, Ldalvik/system/DexClassLoader;-><init>(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/ClassLoader;)V",
+            "note": "动态代码加载调用：Ldalvik/system/DexClassLoader;",
+            "max_status": "已确认"
+          },
+          {
+            "rule_id": "R-CODE-01",
+            "location": "smali/com/synth/bad03/MainActivity.smali:106（原始行 74）",
+            "raw_snippet": "invoke-virtual {v4, p0}, Ldalvik/system/DexClassLoader;->loadClass(Ljava/lang/String;)Ljava/lang/Class;",
+            "note": "动态代码加载调用：Ldalvik/system/DexClassLoader;",
+            "max_status": "已确认"
+          }
+        ],
+        "status_ceiling": "已确认"
+      },
+      "B_dex": {
+        "label": "dex_strings 弱模式",
+        "external_dep": "无（仅标准库）",
+        "rounds": [
+          {
+            "round": 1,
+            "elapsed_ms": 25.34,
+            "hit_count": 1,
+            "hits": [
+              {
+                "rule_id": "R-CODE-01",
+                "location": "classes.dex#type[Ldalvik/system/DexClassLoader;]",
+                "raw_snippet": "Ldalvik/system/DexClassLoader;",
+                "note": "dex 类型引用（弱证据：无调用上下文）",
+                "max_status": "待复核"
+              }
+            ]
+          },
+          {
+            "round": 2,
+            "elapsed_ms": 24.558,
+            "hit_count": 1,
+            "hits": [
+              {
+                "rule_id": "R-CODE-01",
+                "location": "classes.dex#type[Ldalvik/system/DexClassLoader;]",
+                "raw_snippet": "Ldalvik/system/DexClassLoader;",
+                "note": "dex 类型引用（弱证据：无调用上下文）",
+                "max_status": "待复核"
+              }
+            ]
+          },
+          {
+            "round": 3,
+            "elapsed_ms": 25.213,
+            "hit_count": 1,
+            "hits": [
+              {
+                "rule_id": "R-CODE-01",
+                "location": "classes.dex#type[Ldalvik/system/DexClassLoader;]",
+                "raw_snippet": "Ldalvik/system/DexClassLoader;",
+                "note": "dex 类型引用（弱证据：无调用上下文）",
+                "max_status": "待复核"
+              }
+            ]
+          },
+          {
+            "round": 4,
+            "elapsed_ms": 24.532,
+            "hit_count": 1,
+            "hits": [
+              {
+                "rule_id": "R-CODE-01",
+                "location": "classes.dex#type[Ldalvik/system/DexClassLoader;]",
+                "raw_snippet": "Ldalvik/system/DexClassLoader;",
+                "note": "dex 类型引用（弱证据：无调用上下文）",
+                "max_status": "待复核"
+              }
+            ]
+          },
+          {
+            "round": 5,
+            "elapsed_ms": 24.537,
+            "hit_count": 1,
+            "hits": [
+              {
+                "rule_id": "R-CODE-01",
+                "location": "classes.dex#type[Ldalvik/system/DexClassLoader;]",
+                "raw_snippet": "Ldalvik/system/DexClassLoader;",
+                "note": "dex 类型引用（弱证据：无调用上下文）",
+                "max_status": "待复核"
+              }
+            ]
+          }
+        ],
+        "warmup": "1 次（不计时）",
+        "median_ms": 24.558,
+        "min_ms": 24.532,
+        "max_ms": 25.34,
+        "hit_count": 1,
+        "hits_stable_across_rounds": true,
+        "hits": [
+          {
+            "rule_id": "R-CODE-01",
+            "location": "classes.dex#type[Ldalvik/system/DexClassLoader;]",
+            "raw_snippet": "Ldalvik/system/DexClassLoader;",
+            "note": "dex 类型引用（弱证据：无调用上下文）",
+            "max_status": "待复核"
+          }
+        ],
+        "status_ceiling": "待复核",
+        "weak_mode_diagnostic": {
+          "type_descriptors_count": 1423,
+          "patterns": {
+            "Ldalvik/system/DexClassLoader;": {
+              "exact_membership": true,
+              "substring_present": true
+            },
+            "Ldalvik/system/PathClassLoader;": {
+              "exact_membership": false,
+              "substring_present": false
+            },
+            "Ldalvik/system/InMemoryDexClassLoader;": {
+              "exact_membership": false,
+              "substring_present": false
+            }
+          },
+          "note": "仅记录匹配口径事实；未修改任何规则、阈值或规则包版本。"
+        }
+      },
+      "both_detected": true,
+      "detection_agreement": true,
+      "median_ms_ratio_A_over_B": 3.185
+    },
+    "bad04": {
+      "apk_sha256": "e11522640317bad12bafb2aecd880d348343b66234a42b1b28e206e7c846dab7",
+      "decode_cache": "C:\\Users\\shixz\\AppData\\Local\\Temp\\apkaudit_decode\\e11522640317bad1",
+      "decode_cache_available": true,
+      "A_smali": {
+        "label": "smali_src 强模式",
+        "external_dep": "java + apktool",
+        "rounds": [
+          {
+            "round": 1,
+            "elapsed_ms": 74.81,
+            "hit_count": 0,
+            "hits": []
+          },
+          {
+            "round": 2,
+            "elapsed_ms": 77.301,
+            "hit_count": 0,
+            "hits": []
+          },
+          {
+            "round": 3,
+            "elapsed_ms": 77.343,
+            "hit_count": 0,
+            "hits": []
+          },
+          {
+            "round": 4,
+            "elapsed_ms": 74.701,
+            "hit_count": 0,
+            "hits": []
+          },
+          {
+            "round": 5,
+            "elapsed_ms": 83.965,
+            "hit_count": 0,
+            "hits": []
+          }
+        ],
+        "warmup": "1 次（不计时）",
+        "median_ms": 77.301,
+        "min_ms": 74.701,
+        "max_ms": 83.965,
+        "hit_count": 0,
+        "hits_stable_across_rounds": true,
+        "hits": [],
+        "status_ceiling": null
+      },
+      "B_dex": {
+        "label": "dex_strings 弱模式",
+        "external_dep": "无（仅标准库）",
+        "rounds": [
+          {
+            "round": 1,
+            "elapsed_ms": 28.338,
+            "hit_count": 0,
+            "hits": []
+          },
+          {
+            "round": 2,
+            "elapsed_ms": 31.937,
+            "hit_count": 0,
+            "hits": []
+          },
+          {
+            "round": 3,
+            "elapsed_ms": 29.764,
+            "hit_count": 0,
+            "hits": []
+          },
+          {
+            "round": 4,
+            "elapsed_ms": 31.539,
+            "hit_count": 0,
+            "hits": []
+          },
+          {
+            "round": 5,
+            "elapsed_ms": 36.173,
+            "hit_count": 0,
+            "hits": []
+          }
+        ],
+        "warmup": "1 次（不计时）",
+        "median_ms": 31.539,
+        "min_ms": 28.338,
+        "max_ms": 36.173,
+        "hit_count": 0,
+        "hits_stable_across_rounds": true,
+        "hits": [],
+        "status_ceiling": null,
+        "weak_mode_diagnostic": {
+          "type_descriptors_count": 1386,
+          "patterns": {
+            "Ldalvik/system/DexClassLoader;": {
+              "exact_membership": false,
+              "substring_present": false
+            },
+            "Ldalvik/system/PathClassLoader;": {
+              "exact_membership": false,
+              "substring_present": false
+            },
+            "Ldalvik/system/InMemoryDexClassLoader;": {
+              "exact_membership": false,
+              "substring_present": false
+            }
+          },
+          "note": "仅记录匹配口径事实；未修改任何规则、阈值或规则包版本。"
+        }
+      },
+      "both_detected": false,
+      "detection_agreement": true,
+      "median_ms_ratio_A_over_B": 2.451
+    },
+    "good01": {
+      "apk_sha256": "4cbacbdd6f878f7128ee4938f311ebac9a65e54e53f809a1b9b61634c17355dc",
+      "decode_cache": "C:\\Users\\shixz\\AppData\\Local\\Temp\\apkaudit_decode\\4cbacbdd6f878f71",
+      "decode_cache_available": true,
+      "A_smali": {
+        "label": "smali_src 强模式",
+        "external_dep": "java + apktool",
+        "rounds": [
+          {
+            "round": 1,
+            "elapsed_ms": 94.938,
+            "hit_count": 0,
+            "hits": []
+          },
+          {
+            "round": 2,
+            "elapsed_ms": 92.656,
+            "hit_count": 0,
+            "hits": []
+          },
+          {
+            "round": 3,
+            "elapsed_ms": 95.9,
+            "hit_count": 0,
+            "hits": []
+          },
+          {
+            "round": 4,
+            "elapsed_ms": 96.656,
+            "hit_count": 0,
+            "hits": []
+          },
+          {
+            "round": 5,
+            "elapsed_ms": 94.159,
+            "hit_count": 0,
+            "hits": []
+          }
+        ],
+        "warmup": "1 次（不计时）",
+        "median_ms": 94.938,
+        "min_ms": 92.656,
+        "max_ms": 96.656,
+        "hit_count": 0,
+        "hits_stable_across_rounds": true,
+        "hits": [],
+        "status_ceiling": null
+      },
+      "B_dex": {
+        "label": "dex_strings 弱模式",
+        "external_dep": "无（仅标准库）",
+        "rounds": [
+          {
+            "round": 1,
+            "elapsed_ms": 31.269,
+            "hit_count": 0,
+            "hits": []
+          },
+          {
+            "round": 2,
+            "elapsed_ms": 31.742,
+            "hit_count": 0,
+            "hits": []
+          },
+          {
+            "round": 3,
+            "elapsed_ms": 32.241,
+            "hit_count": 0,
+            "hits": []
+          },
+          {
+            "round": 4,
+            "elapsed_ms": 31.535,
+            "hit_count": 0,
+            "hits": []
+          },
+          {
+            "round": 5,
+            "elapsed_ms": 28.189,
+            "hit_count": 0,
+            "hits": []
+          }
+        ],
+        "warmup": "1 次（不计时）",
+        "median_ms": 31.535,
+        "min_ms": 28.189,
+        "max_ms": 32.241,
+        "hit_count": 0,
+        "hits_stable_across_rounds": true,
+        "hits": [],
+        "status_ceiling": null,
+        "weak_mode_diagnostic": {
+          "type_descriptors_count": 1390,
+          "patterns": {
+            "Ldalvik/system/DexClassLoader;": {
+              "exact_membership": false,
+              "substring_present": false
+            },
+            "Ldalvik/system/PathClassLoader;": {
+              "exact_membership": false,
+              "substring_present": false
+            },
+            "Ldalvik/system/InMemoryDexClassLoader;": {
+              "exact_membership": false,
+              "substring_present": false
+            }
+          },
+          "note": "仅记录匹配口径事实；未修改任何规则、阈值或规则包版本。"
+        }
+      },
+      "both_detected": false,
+      "detection_agreement": true,
+      "median_ms_ratio_A_over_B": 3.011
+    },
+    "good02": {
+      "apk_sha256": "710b457d51f2b960d63470001105522e5eea24d63c4d09d9696d549b3978b1f2",
+      "decode_cache": "C:\\Users\\shixz\\AppData\\Local\\Temp\\apkaudit_decode\\710b457d51f2b960",
+      "decode_cache_available": true,
+      "A_smali": {
+        "label": "smali_src 强模式",
+        "external_dep": "java + apktool",
+        "rounds": [
+          {
+            "round": 1,
+            "elapsed_ms": 95.481,
+            "hit_count": 0,
+            "hits": []
+          },
+          {
+            "round": 2,
+            "elapsed_ms": 92.575,
+            "hit_count": 0,
+            "hits": []
+          },
+          {
+            "round": 3,
+            "elapsed_ms": 93.594,
+            "hit_count": 0,
+            "hits": []
+          },
+          {
+            "round": 4,
+            "elapsed_ms": 88.92,
+            "hit_count": 0,
+            "hits": []
+          },
+          {
+            "round": 5,
+            "elapsed_ms": 97.98,
+            "hit_count": 0,
+            "hits": []
+          }
+        ],
+        "warmup": "1 次（不计时）",
+        "median_ms": 93.594,
+        "min_ms": 88.92,
+        "max_ms": 97.98,
+        "hit_count": 0,
+        "hits_stable_across_rounds": true,
+        "hits": [],
+        "status_ceiling": null
+      },
+      "B_dex": {
+        "label": "dex_strings 弱模式",
+        "external_dep": "无（仅标准库）",
+        "rounds": [
+          {
+            "round": 1,
+            "elapsed_ms": 30.044,
+            "hit_count": 0,
+            "hits": []
+          },
+          {
+            "round": 2,
+            "elapsed_ms": 27.519,
+            "hit_count": 0,
+            "hits": []
+          },
+          {
+            "round": 3,
+            "elapsed_ms": 33.939,
+            "hit_count": 0,
+            "hits": []
+          },
+          {
+            "round": 4,
+            "elapsed_ms": 33.065,
+            "hit_count": 0,
+            "hits": []
+          },
+          {
+            "round": 5,
+            "elapsed_ms": 34.161,
+            "hit_count": 0,
+            "hits": []
+          }
+        ],
+        "warmup": "1 次（不计时）",
+        "median_ms": 33.065,
+        "min_ms": 27.519,
+        "max_ms": 34.161,
+        "hit_count": 0,
+        "hits_stable_across_rounds": true,
+        "hits": [],
+        "status_ceiling": null,
+        "weak_mode_diagnostic": {
+          "type_descriptors_count": 1411,
+          "patterns": {
+            "Ldalvik/system/DexClassLoader;": {
+              "exact_membership": false,
+              "substring_present": false
+            },
+            "Ldalvik/system/PathClassLoader;": {
+              "exact_membership": false,
+              "substring_present": false
+            },
+            "Ldalvik/system/InMemoryDexClassLoader;": {
+              "exact_membership": false,
+              "substring_present": false
+            }
+          },
+          "note": "仅记录匹配口径事实；未修改任何规则、阈值或规则包版本。"
+        }
+      },
+      "both_detected": false,
+      "detection_agreement": true,
+      "median_ms_ratio_A_over_B": 2.831
+    }
+  },
+  "summary": {
+    "samples": 6,
+    "A_detected_samples": 1,
+    "B_detected_samples": 1,
+    "agreement_samples": 6,
+    "A_median_ms_across_samples": 78.282,
+    "B_median_ms_across_samples": 28.242,
+    "note": "统计由脚本对真实运行结果计算；结论与边界见 docs/experiments.md（EXP-6 / EXP-7）。"
+  }
+}

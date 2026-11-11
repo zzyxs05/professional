@@ -60,10 +60,25 @@ def _decode_mutf8(raw):
 
 
 def _read_string_at(data, pos):
-    end = data.find(b'\x00', pos)
+    """读取 DEX string_data_item：uleb128 utf16_size + MUTF-8 字节 + 0x00。
+
+    修复（规则包 0.1.4 / OBS-5）：旧实现从 pos 直接解码，把 uleb128 长度字节
+    当成了字符串首字节，导致 strings / type_descriptors / method_refs 全部带一个
+    控制字符前缀（例 '\x1eLdalvik/system/DexClassLoader;'）。R-STR-* 用正则子串
+    匹配故未暴露；R-CODE-01 弱模式与 find_type_refs 用精确集合判断，因而恒不命中。
+    """
+    p = pos
+    while p < len(data):
+        b = data[p]
+        p += 1
+        if not (b & 0x80):      # uleb128 最高位为 0 表示最后一个长度字节
+            break
+    if p >= len(data):
+        return '', len(data)
+    end = data.find(b'\x00', p)
     if end < 0:
         end = len(data)
-    return _decode_mutf8(data[pos:end]), end + 1
+    return _decode_mutf8(data[p:end]), end + 1
 
 
 def parse_dex(data, dex_name):

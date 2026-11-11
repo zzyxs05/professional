@@ -28,7 +28,7 @@
 |----|--------|
 | 输入数据集 | `lab/apks/` 6 个自建样本，指纹登记在 `lab/sha256.txt`，逐样本在结果 JSON 中回写 `apk_sha256` |
 | 前置数据处理 | apktool 解码产物复用 `%TEMP%/apkaudit_decode/<sha前16位>`；缓存缺失时先补齐解码再开跑，并在结果中记录 `decode_cache_available`。**解码是一次性前置成本，不计入计时** |
-| 规则与版本 | 规则包 `0.1.3`；只执行 `R-CODE-01` 一条规则，避免其余 13 条引入变量 |
+| 规则与版本 | 以运行时 `registry.RULE_PACK_VERSION` 为准，随结果 JSON 落盘（EXP-6 为 0.1.3、EXP-7 为 0.1.4）；只执行 `R-CODE-01` 一条规则，避免其余 13 条引入变量 |
 | 运行环境 | 同一台机器、同一 Python 进程、`time.perf_counter`；不启用通道 B、不调用模型、不联网 |
 | 产物边界 | 实验不产生 RUN、不写 `evidence/`；统计 JSON 只写 `review/` |
 

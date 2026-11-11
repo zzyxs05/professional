@@ -1,7 +1,7 @@
 # handoff · 交接包（对抗组 / 教师通道）
 
 > 用途：他人在干净环境复现本组结论、运行评价器、提出挑战。
-> 版本：规则包 **0.1.3** ｜ 报告版本锚点：见各 RUN 的 `meta.json`
+> 版本：规则包 **0.1.4** ｜ 报告版本锚点：见各 RUN 的 `meta.json`（历史正本为 0.1.3，不改写）
 
 ## 1. 启动（克隆即跑）
 
@@ -22,7 +22,7 @@ python cli.py analyze lab/apks/bad03.apk
 | 端到端验收 | `python scripts/e2e.py` | A-01 全样本受理；A-09 两次运行一致 |
 | 评价器 | `python cli.py evaluate --run <RUN>` | 四状态输出 + 引用校验 |
 | 六合一汇总 | `python cli.py summary` | `review/summary.md`（模型生成；`--no-llm` 走模板降级） |
-| 单元测试 | `python -m unittest discover -s tests` | 38 用例全过 |
+| 单元测试 | `python -m unittest discover -s tests` | 46 用例全过 |
 
 ## 3. 重置
 

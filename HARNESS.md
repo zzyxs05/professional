@@ -96,7 +96,7 @@
 | 规则实现 | 一条规则一文件：`core/rules/<类>/r_<类>_<序号>.py`；统一输出命中三元组 `{rule_id, location, raw_snippet}` |
 | 依赖 | 仅标准库；模型调用用标准库 HTTP，不引 SDK |
 | 子进程 | 一律经 `Runner.run_subprocess` 走白名单，不直接 `subprocess.run` |
-| 测试 | `unittest`，合成夹具放 `tests/fixtures/`，不依赖真实 APK；当前 38 用例，`python -m unittest discover -s tests` |
+| 测试 | `unittest`，合成夹具放 `tests/fixtures/`，不依赖真实 APK；当前 46 用例（含 8 个 OBS-5 回归），`python -m unittest discover -s tests` |
 | 质量门 | `scripts/truth_check.py`（84 判点）、`scripts/e2e.py`（A-01/A-09）；改规则后必须复跑 |
 
 ---
@@ -160,7 +160,7 @@
 1. 看 §1.1 环境 → 按 `handoff/README.md` 克隆即跑；
 2. 抽查任一 RUN 的 `meta.json` ↔ `report.json` ↔ `channel_a/hits.jsonl`（均在 `evidence/RUN-<id>/` 下，见 §5）三处是否对得上；
 3. 抽查 `docs/decision-log.md` 任一行 → ADR → 支撑证据文件是否真实存在；
-4. 跑 `python scripts/truth_check.py --no-run` 与 `python -m unittest discover -s tests` 复算（本仓库实测：84/84、38 用例全过）。
+4. 跑 `python scripts/truth_check.py --no-run` 与 `python -m unittest discover -s tests` 复算（本仓库实测：84/84、46 用例全过）。
 
 ---
 

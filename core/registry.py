@@ -5,7 +5,8 @@
 - 本文件是 specification.md §2 的机器可读实现；两者冲突时以 specification.md 为准并回改本文件。
 """
 
-RULE_PACK_VERSION = "0.1.3"   # 0.1.3：R-PERM-03 静态排除力分档 + 声明即生效排除集 + 权限清单扩至 Android 13+ + 自有代码范围兜底
+RULE_PACK_VERSION = "0.1.4"   # 0.1.4：剥离 DEX string_data 的 uleb128 长度前缀（OBS-5），恢复 R-CODE-01 弱模式 / find_type_refs / method_refs
+                              # 0.1.3：R-PERM-03 静态排除力分档 + 声明即生效排除集 + 权限清单扩至 Android 13+ + 自有代码范围兜底
 PROJECT_NAME = "apkaudit"
 
 # ---------------------------------------------------------------- 结论档位

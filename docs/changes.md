@@ -132,6 +132,9 @@
 | OBS-4 | 凭据模式宁宽勿漏（示例值照报），未设白名单 | 对抗组提出噪声挑战 |
 | OBS-5 | `R-CODE-01` 弱模式用精确集合成员匹配带 MUTF-8 长度前缀的 dex 类型描述符，降级分支在现有样本上从未触发（EXP-6 实测：bad03 `substring_present=1` / `exact_membership=0`） | Change 候选批准，或出现「apktool 不可用 + 样本含动态加载」的真实降级场景 |
 
+> **OBS-5 已闭环**：2026-11-11 随规则包 **0.1.4** 修复，详见下方「规则变更：0.1.3 → 0.1.4」；
+> 保留本行作为发现记录，不删除。
+
 ## 结构变更：补齐项目级治理文档（2026-11-11）
 
 > 性质：**文档结构变更，非规则变更**。不改 `RULE_PACK_VERSION`（仍 0.1.3）、不改判罚口径、
@@ -166,4 +169,28 @@
 
 **实验结论摘要**：A 组在唯一正例 bad03 检出 3 条、B 组 0 条；5 个安静点两组一致；
 耗时中位 A 78.787 ms / B 25.944 ms。漏检归因于匹配口径缺陷（OBS-5），**不是**设计取舍；
-本轮未修改规则，修复留待 Change 流程（bump 版本 + 重跑 84 判点 + 前后回归）。
+本轮未修改规则；**后续修复见下方「规则变更：0.1.3 → 0.1.4」**。
+
+## 规则变更：0.1.3 → **0.1.4**（2026-11-11，OBS-5 修复）
+
+> 触发：EXP-6 对照实验暴露 `R-CODE-01` 弱模式恒不命中。按「改规则 = 改版本」纪律执行：
+> bump `RULE_PACK_VERSION` → 本文件记录 → 重跑靶场真值 → 补回归用例与前后差异。
+> **历史报告与 0.1.3 成绩单不改写**；新成绩单另存 `review/truth_result_0_1_4.json`。
+
+| # | 项 | 内容 |
+|---|----|------|
+| C1 | 根因 | `core/dexscan.py::_read_string_at` 从 `string_data_item` 起始位置直接解码，把 ULEB128 长度前缀当成字符串首字节，导致 `strings` / `type_descriptors` / `method_refs` 全带控制字符前缀（例 `'\x1eLdalvik/system/DexClassLoader;'`） |
+| C2 | 修复 | 先跳过 ULEB128 长度字节再按 NUL 终止读取；**不改**任何规则的检测点、误报口径或档位上限 |
+| C3 | 为何此前未暴露 | `R-STR-01/02` 用正则子串匹配，前缀不影响；`R-CODE-01` 弱模式用 `pat in set` 精确判断，恒 False；84 判点走强模式（apktool 可用），降级分支从未执行 |
+| C4 | 版本 | `RULE_PACK_VERSION` 0.1.3 → **0.1.4**（`core/registry.py`） |
+| C5 | 回归用例 | 新增 `tests/test_dex_weak_mode.py` 8 例（单/多字节 ULEB128、MUTF-8 内嵌 NUL、截断保护、合成 dex 解析、弱模式命中与档位、安静点、`find_type_refs`），合计 **46 例全过** |
+| C6 | 真值回归 | 影子副本（不含 `key.txt`，B 通道自动降级）跑 `scripts/truth_check.py --no-evidence`：**84/84，硬错 0、噪声 0**；成绩单与 0.1.3 逐字节一致 |
+| C7 | 前后差异 | EXP-6（0.1.3）→ EXP-7（0.1.4）：B 组检出 0/6 → **1/6**，样本级一致 5/6 → **6/6**，bad03 `exact_membership` False → True；A 组与其余 5 样本结论不变 |
+| C8 | 影响面 | 正常路径结论不变；降级路径 `R-CODE-01` 现可给「待复核」弱证据；`DexFacts.find_type_refs` / `method_refs` 恢复可用（当前无规则依赖 `method_refs`） |
+| C9 | 状态 | **OBS-5 已闭环**；`TASKS.md` T-M4-07 标「已实施，待具名人复核」，不代签 |
+
+**未做的事**：不改 `evidence/RUN-*` 正本；不改 0.1.3 成绩单、汇总报告、真值表与签署台账；
+不重跑通道 B 在线模型（本轮无需）；不改 E2 候选 CHG-004 的提案内容——其「冻结基线 0.1.3」为提案时点取值，
+实施前须按当前规则包重新冻结基线。
+**版本锚点同步**：`GLOBAL.md`、`handoff/README.md`、`docs/specification.md` 头部与 schema 示例、
+`总档.md` v0.8、`docs/experiment-protocol.md` 改为以运行时版本为准。

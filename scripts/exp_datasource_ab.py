@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-"""exp_datasource_ab.py · 数据源实现 A/B 对照实验（EXP-6）
+"""exp_datasource_ab.py · 数据源实现 A/B 对照实验（EXP-6 / EXP-7 复测）
 
 技术决策锚点：ADR-0002（四层数据源分层、各自独立降级）。
 对照对象：R-CODE-01「动态代码加载」的两条独立实现路径——
@@ -230,7 +230,7 @@ def main():
         'agreement_samples': agree,
         'A_median_ms_across_samples': round(statistics.median(a_ms_all), 3) if a_ms_all else None,
         'B_median_ms_across_samples': round(statistics.median(b_ms_all), 3) if b_ms_all else None,
-        'note': '统计由脚本对真实运行结果计算；结论、取舍与边界见 docs/experiments.md 实验 6。',
+        'note': '统计由脚本对真实运行结果计算；结论与边界见 docs/experiments.md（EXP-6 / EXP-7）。',
     }
 
     print('')
