@@ -9,7 +9,7 @@
 
 ## 0. 这份文件回答什么
 
-问卷「项目级 Harness」列出的五类约定，本项目此前都有对应实践，但没有一份能直接交给老师/对抗组核查的入口。本文件按「开发规范 / AI 操作约定 / 代码规范 / 文档规范 / 日志规范 / 观测性约定」逐节给出**约定 + 落地位置 + 核查方式**。
+项目治理要求的六类工程约定，此前分散在总纲、入口指针与各模块实现中，缺少一份统一的可核查入口。本文件按「开发规范 / AI 操作约定 / 代码规范 / 文档规范 / 日志规范 / 观测性约定」逐节给出**约定 + 落地位置 + 核查方式**。
 
 一句话边界：**收拢不等于新造，提交不等于签署。** 涉及契约与决策的条目，仍以 `docs/decision-log.md`、`docs/signoff.md` 的签署状态为准；本规范自提交起用于约束后续工作。
 
@@ -47,6 +47,24 @@
 ### 1.4 禁止事项
 
 为通过检查而放宽契约、改判罚口径、删减规则；把对话里的口头决定当已批准契约；把真实样本/密钥/模型凭据写入仓库（`key.txt` 已在 `.gitignore`）；在 `evidence/` 写试错数据（用 `--no-evidence`）。
+
+### 1.5 自动化脚本配置
+
+| 脚本 | 作用 | 主要参数 | 产物 | 退出码 |
+|------|------|----------|------|--------|
+| `cli.py` | 唯一入口：`analyze` / `register` / `evaluate` / `summary` / `reset` | `analyze --out / --no-evidence / --force-decode`；`summary --no-llm`；`evaluate --llm` | `evidence/RUN-*/` 或临时区 | 0 / 1 / 2 |
+| `scripts/truth_check.py` | 靶场 84 判点一致性 | `--no-run`、`--no-evidence`、`--only`、`--out` | `review/truth_result.json` | 0 / 1 |
+| `scripts/e2e.py` | A-01 / A-09 端到端验收 | `--no-evidence` | 控制台 + 临时区 | 0 / 1 |
+| `scripts/b_stability.py` | B 通道稳定性（固定样本 × N 轮） | `--sample`、`--runs`、`--rules`、`--no-b2` | `review/b_stability_*.json` | 0 / 2 |
+| `scripts/exp_datasource_ab.py` | 数据源实现 A/B 对照（EXP-6） | `--runs`、`--samples`、`--out` | `review/exp_datasource_ab.json` | 0 |
+
+约定：
+
+1. 脚本默认参数即实验/质量门的固定条件，改动默认值等于改口径，须记 `docs/changes.md` 并复算；
+2. 实验性运行一律 `--no-evidence`，脚本只写 `review/` 或工作区外临时区，**不写 `evidence/`**；
+3. 统计类输出 JSON 必须带生成时间、规则包版本、输入指纹与逐轮明细，供第三方复算；
+4. 新增脚本同步更新本表、`AGENTS.md` 常用命令与 `docs/experiment-protocol.md`（若属对照实验）；
+5. 退出码非 0 时保留原始输出，不将失败轮次改写成「通过」。
 
 ---
 
@@ -91,6 +109,8 @@
 - **状态标注**：复核未签字写「待签署」，不得写「已批准」；抽验动作 ≠ 签署动作；未发生的事件写「材料就绪」，不预填结果。
 - **版本区分**：`总档` 文档版本 ≠ `RULE_PACK_VERSION` 规则包版本 ≠ B 通道 prompt 版本；报告绑定生成时的规则包与模型版本。
 - **变更留痕**：`docs/changes.md` 记录规则/结构变更；实验数据进 `docs/experiments.md`，允许并保留负结果。
+- **文档元数据**：新写文档头部标注项目名（APK 通用静态审计 / apkaudit）、文档版本与规则包版本；存量文档在下次实质修订时补齐，不批量倒填日期。
+- **实验记录**：对照实验沿用 `docs/experiment-protocol.md` 的变量控制与计时口径，实验卡进 `docs/experiments.md`，真实运行数据落 `review/`；历史结果 JSON 不改写，口径变更须升协议版本并重跑。
 
 ---
 
@@ -135,7 +155,7 @@
 
 ---
 
-## 7. 核查入口（给老师 / 对抗组）
+## 7. 核查入口（给复核者）
 
 1. 看 §1.1 环境 → 按 `handoff/README.md` 克隆即跑；
 2. 抽查任一 RUN 的 `meta.json` ↔ `report.json` ↔ `channel_a/hits.jsonl`（均在 `evidence/RUN-<id>/` 下，见 §5）三处是否对得上；
