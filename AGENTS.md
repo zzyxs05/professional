@@ -5,11 +5,13 @@
 ## 先读什么
 
 1. `总档.md` —— 唯一总纲：做什么、课程硬性要求、系统怎么运转、目录职责、当前进度。
-2. `docs/requirements.md` —— 需求层（谁、什么场景、系统要保证什么）。
-3. `docs/specification.md` —— 规格层（数据源、14 条规则契约、报告 schema、定位格式）。
-4. `docs/decision-log.md` —— 关键决策索引（决策 → ADR → 证据 → 决策人）。
-5. `docs/research/apk-audit-landscape.md` —— 领域调研与需求来源。
-6. `docs/events.md` + `review/{e1_challenge_pack,e3_attack_surface}.md` —— 对抗事件的输入材料与记录模板。
+2. `HARNESS.md` —— 项目级 Harness：开发 / AI / 代码 / 文档 / 日志 / 观测性约定（收拢索引）。
+3. `GLOBAL.md` / `PLAN.md` / `TASKS.md` —— 项目级目标、阶段计划归档、任务分解规范与台账。
+4. `docs/requirements.md` —— 需求层（谁、什么场景、系统要保证什么）。
+5. `docs/specification.md` —— 规格层（数据源、14 条规则契约、报告 schema、定位格式）。
+6. `docs/decision-log.md` —— 关键决策索引（决策 → ADR → 证据 → 决策人）。
+7. `docs/research/apk-audit-landscape.md` —— 领域调研与需求来源。
+8. `docs/events.md` + `review/{e1_challenge_pack,e3_attack_surface}.md` —— 对抗事件的输入材料与记录模板。
 
 ## 硬性纪律（违反即返工）
 
@@ -24,11 +26,13 @@
 ## 常用命令
 
 ```bash
-python cli.py analyze <apk>              # 完整审计
-python cli.py evaluate --run <RUN>       # 评价器（默认确定性）
-python scripts/truth_check.py            # 靶场真值一致性（84 判点）
-python scripts/e2e.py                    # 端到端验收 A-01/A-09
-python -m unittest discover -s tests     # 单元测试（38 用例）
+python cli.py analyze <apk>                  # 完整审计
+python cli.py analyze <apk> --no-evidence   # 演练：产物写临时区，不进 evidence/
+python cli.py evaluate --run <RUN>           # 评价器（默认确定性）
+python scripts/truth_check.py --no-run       # 只读复算真值（84 判点，不重跑样本）
+python scripts/truth_check.py --no-evidence  # 重跑全样本但不写 evidence/
+python scripts/e2e.py --no-evidence          # 端到端验收 A-01/A-09
+python -m unittest discover -s tests         # 单元测试（38 用例）
 ```
 
 ## 不要做的事
