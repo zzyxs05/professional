@@ -118,7 +118,8 @@
 ## 5. 日志规范
 
 > 事实口径：本项目**不引入 logging 框架，也不产生独立文本日志文件**（零第三方依赖 + 保持可复算）。运行可追溯性由结构化产物承担，不应事后补造日志。
-> 路径口径：下表 `channel_a/`、`fusion/`、`report.md`、`report.json`、`evaluation.json`、`meta.json` 等均相对 `evidence/RUN-<id>/`；`review/`、`docs/` 相对仓库根。
+> 路径口径：下表 `channel_a/`、`fusion/`、`report.md`、`report.json`、`meta.json` 等均相对 `evidence/RUN-<id>/`；`review/`、`docs/` 相对仓库根。
+> 评价产物自评价 Agent 起统一写 `review/evaluation/`（对事实的解释不进事实目录）；`evidence/RUN-<id>/evaluation.json` 仅作历史件保留，不再新增。
 
 | 层 | 落点 | 内容 |
 |----|------|------|
@@ -127,7 +128,7 @@
 | 通道 B | `channel_b/` | prompt 模板版本、模型标识、原始响应、输入片段哈希 |
 | 融合 | `fusion/` | 分歧记录与钉证据过程 |
 | 结论 | `report.md` / `report.json` | 同一事实本体的两种渲染 |
-| 评价器 | `evaluation.json` | 四状态输出、范围、引用校验、缺口 |
+| 评价 | `review/evaluation/EVAL-*.json` + 同名 `.trace.jsonl` | 四状态输出、范围、引用校验、缺口、模型观察、逐次工具轨迹 |
 | 解释与复核 | `review/` | 成绩单、复核底稿、挑战包、签署准备 |
 
 - 控制台只输出进度与汇总（例：`[bad03] 14/14 一致`、`=== 汇总：84 点 · 一致 84 ===`），不承载结论正本；
@@ -138,8 +139,8 @@
 
 ## 6. 观测性约定
 
-> 字段口径：本节 `meta.json` / `report.json` / `evaluation.json` 均为 `evidence/RUN-*/` 下的产物（路径见 §5）；
-> `review/truth_result.json` 相对仓库根。
+> 字段口径：本节 `meta.json` / `report.json` 为 `evidence/RUN-*/` 下的产物（路径见 §5）；
+> 评价产物在 `review/evaluation/`，成绩单 `review/truth_result_0_1_4.json` 相对仓库根。
 
 | 可观测对象 | 字段 / 位置 | 判定口径 |
 |------------|-------------|----------|
@@ -149,8 +150,8 @@
 | 定位 | `location`（smali 行 + 原始行 / manifest 行区间 / dex#str 索引）+ `raw_snippet` | 复核方按坐标直达原文，不需要重跑 |
 | 预算与熔断 | `meta.json.budget`（LLM ≤30 次/run、注册补测 ≤5 次）、`exhausted_notes` | 耗尽列未完成项，不填充无证据文字 |
 | 状态机 | `meta.json.state.history`（PENDING→…→DONE / FAILED） | 失败原因留痕 |
-| 评价器 | `evaluation.json` 四状态 + 引用校验 | PASS 只代表引用/版本/结构通过，**不代表结论内容正确** |
-| 质量门 | `review/truth_result.json`（84 判点，硬错 0 / 噪声 0） | 自评一致性，不是能力证明 |
+| 评价 | `review/evaluation/EVAL-*.json` 四状态 + 引用校验 + `.trace.jsonl` | PASS 只代表引用/版本/结构通过，**不代表结论内容正确**；模型观察只进 `observations` |
+| 质量门 | `review/truth_result_0_1_4.json`（84 判点，硬错 0 / 噪声 0） | 自评一致性，不是能力证明；`review/truth_result.json` 为 0.1.3 历史件，仅作前后对照 |
 
 **边界**：哈希证明完整性，不证明真实性；静态证据层级上限为 STATIC，报告不得暗示已完成动态验证；模型输出进入 `observations` 观察区，非结论、不计入三档。
 
