@@ -256,13 +256,15 @@ def cmd_register(args):
 
 # ------------------------------------------------------------------ evaluate
 def cmd_evaluate(args):
-    from evaluator.agent import evaluate_run
-    result = evaluate_run(PROJECT_ROOT, args.run, use_llm=args.llm)
+    from evaluator.agent import run_agent
+    target = os.path.abspath(args.target) if args.target else PROJECT_ROOT
+    result = run_agent(PROJECT_ROOT, target, args.run,
+                       mode=args.mode, contract_path=args.contract,
+                       use_llm=not args.no_llm,
+                       max_model_calls=args.max_model_calls,
+                       out_dir=args.out_dir)
     print(result['text'])
-    out_path = os.path.join(PROJECT_ROOT, 'evidence', args.run, 'evaluation.json')
-    with open(out_path, 'w', encoding='utf-8', newline='\n') as f:
-        json.dump(result, f, ensure_ascii=False, indent=2)
-    print('[evaluation] %s' % out_path)
+    print('[evaluation] %s' % result['out_path'])
     return 0
 
 
@@ -316,9 +318,17 @@ def main(argv=None):
     p_rg = sub.add_parser('register', help='登记样本（打印待粘贴条目，不写 registry）')
     p_rg.add_argument('apk')
 
-    p_ev = sub.add_parser('evaluate', help='运行评价器')
-    p_ev.add_argument('--run', required=True, help='run_id（如 RUN-20261014-223700）')
-    p_ev.add_argument('--llm', action='store_true', help='启用模型判读（默认确定性）')
+    p_ev = sub.add_parser('evaluate', help='运行评价 Agent（默认启用模型，失败自动降级）')
+    p_ev.add_argument('--run', required=True, help='run_id（如 RUN-20261015-145536）')
+    p_ev.add_argument('--target', default=None,
+                      help='目标仓库根目录（默认本仓库；互评指向对抗组只读快照）')
+    p_ev.add_argument('--mode', choices=['self', 'peer'], default='self')
+    p_ev.add_argument('--contract', default=None,
+                      help='批准契约路径（互评必填，或目标仓库内 evaluation/contract.json）')
+    p_ev.add_argument('--no-llm', action='store_true', help='禁用模型，走确定性降级路径')
+    p_ev.add_argument('--llm', action='store_true', help='兼容旧参数：启用模型（默认已启用）')
+    p_ev.add_argument('--max-model-calls', type=int, default=10)
+    p_ev.add_argument('--out-dir', default=None, help='输出目录（默认 review/evaluation/）')
 
     p_sm = sub.add_parser('summary', help='B3：六样本汇总报告（模型生成，失败自动降级模板）')
     p_sm.add_argument('--out', default=None, help='输出路径（默认 review/summary.md）')

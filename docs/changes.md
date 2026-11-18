@@ -194,3 +194,31 @@
 实施前须按当前规则包重新冻结基线。
 **版本锚点同步**：`GLOBAL.md`、`handoff/README.md`、`docs/specification.md` 头部与 schema 示例、
 `总档.md` v0.8、`docs/experiment-protocol.md` 改为以运行时版本为准。
+
+## 结构变更：评价器重构为评价 Agent（2026-11-18）
+
+> 性质：评价器架构重构，**不改 `RULE_PACK_VERSION`**（仍 0.1.4）、不动 `evidence/` 运行正本。
+> 课件材料已按约定从项目目录移除，只保留提取后的判据，不入库 PPT 原文。
+
+| # | 变更 | 说明 |
+|---|------|------|
+| S14 | 新增 `evaluator/skills/evidence-review/rubric.json` | 从 7 份课程 PPT（472 页）提取：项目评分构成 45/15/15/25 及细分、章节 9 维 Rubric、8 条最低质量红线、4 条评分校准、10 项可审查条目、四状态输出 Schema、证据来源/层级、预算、五道边界、K-1~K-6 与四类评价情境 |
+| S15 | 新增 `evaluator/skills/evidence-review/SKILL.md` | 模型加载的工作流：角色、四工具协议、判定契约、预算/停止、输出 Schema、降级与校准 |
+| S16 | 新增 `evaluator/contract.py` | 批准契约外置：互评必须显式契约；自评用本仓库规格层生成「未批准内部快照」 |
+| S17 | `evaluator/tools.py` 重写 | 四个受限工具真正接入主循环；目标参数化；路径白名单由程序强制；`precheck` 降级为注册测试 `verify_claims` |
+| S18 | `evaluator/agent.py` 重写 | 多轮 AgentLoop（自主选工具、预算、停止、append-only 轨迹）；四状态由机械核对收口，模型输出只进 `observations` |
+| S19 | `evaluator/llm.py` 改多轮 | `chat()` 支持多轮消息；模型固定读本仓库 `key.txt`；失败自动降级确定性路径 |
+| S20 | `cli.py evaluate` 参数化 | `--target / --mode self\|peer / --contract / --no-llm / --max-model-calls`；输出从 `evidence/<run>/evaluation.json` 搬到 `review/evaluation/`（历史评价件保留不改写） |
+| S21 | 新增 `scripts/eval_calibrate.py`、`tests/test_eval_agent.py` | K-1~K-6 校准记录落盘；7 个离线回归用例，合计 **53 例全过** |
+| S22 | 自评 6 个 RUN | 主样本走模型路径（`mimo-v2.6-flash`，7 次交互，输出 final + 8 条观察 + 6 条最小补查）；其余 5 个走确定性降级；轨迹与结果成对落 `review/evaluation/` |
+
+**模型在自评中发现并已如实记录的两个问题**（不掩盖、不自动修复）：
+
+1. **版本错配**：现有 6 个 RUN 正本是规则包 0.1.3 生成，当前契约为 0.1.4。按「旧证据不判新版本」，
+   评价结果整体为 `INSUFFICIENT_EVIDENCE`，补查建议是「按 0.1.4 生成新 RUN 正本，或提供版本豁免记录」，
+   历史正本不改写。
+2. **存在性 ≠ 内容合格**：原机械层只查锚点存在就给 PASS 过于宽松。已收紧：只有 `verify_claims`
+   机械核对通过的条目可给 PASS，其余标 `INSUFFICIENT_EVIDENCE` 并列出未做字段级内容核对的条目。
+
+**未做的事**：不使用 DeepSeek Harness（见 ADR-0011）；不装任何依赖；不代签；不评对抗组项目
+（材料与批准契约尚未交换，`--mode peer` 在无契约时返回 `INSUFFICIENT_EVIDENCE`）。

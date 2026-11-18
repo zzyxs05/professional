@@ -29,6 +29,7 @@
 | D-10 | 真值评分口径 | 硬错=FP+漏检+档位错；EXPECTED_SILENT 上的待复核单列噪声 | [ADR-0006](adr/0006-truth-scoring.md) | `scripts/truth_check.py`；`review/truth_result.json`（84/84） | 周宗正 / 余俊辉 | 待签署 |
 | D-11 | 需求与范围 | 6 条用户需求 + 18 条系统需求；范围外明确 6 项 | [requirements.md](requirements.md)、[brief.md](brief.md) §4 | 追溯矩阵 `requirements.md` §5 | 周宗正 / 余俊辉 | 待签署 |
 | D-12 | 样本边界 | 不含加固；不执行样本；不发布真实应用结论 | `brief.md` §4、`release.md` I-3/I-7 | 调研 §2.4（APKiD 说明加固使静态失效）；`total` §10 | 周宗正 | 待签署 |
+| D-13 | 评价 Agent 实现形态 | Python 标准库多轮受限循环 + 确定性收口；不引入 DeepSeek Harness | [ADR-0011](adr/0011-evaluation-agent.md) | `evaluator/agent.py`、`evaluator/tools.py`、`review/evaluation/`、`scripts/eval_calibrate.py` | 周宗正 / 余俊辉 | 待签署 |
 
 ---
 

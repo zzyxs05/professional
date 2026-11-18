@@ -22,7 +22,7 @@ python cli.py analyze lab/apks/bad03.apk
 | 端到端验收 | `python scripts/e2e.py` | A-01 全样本受理；A-09 两次运行一致 |
 | 评价器 | `python cli.py evaluate --run <RUN>` | 四状态输出 + 引用校验 |
 | 六合一汇总 | `python cli.py summary` | `review/summary.md`（模型生成；`--no-llm` 走模板降级） |
-| 单元测试 | `python -m unittest discover -s tests` | 46 用例全过 |
+| 单元测试 | `python -m unittest discover -s tests` | 53 用例全过 |
 
 ## 3. 重置
 

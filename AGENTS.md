@@ -13,6 +13,7 @@
 7. `docs/research/apk-audit-landscape.md` —— 领域调研与需求来源。
 8. `docs/events.md` + `review/{e1_challenge_pack,e3_attack_surface}.md` —— 对抗事件的输入材料与记录模板。
 9. `docs/experiment-protocol.md` + `docs/experiments.md` —— 对照实验的变量控制口径与逐次数据。
+10. `evaluator/skills/evidence-review/{SKILL.md,rubric.json}` —— 评价 Agent 的工作流与审查判据。
 
 ## 硬性纪律（违反即返工）
 
@@ -29,12 +30,14 @@
 ```bash
 python cli.py analyze <apk>                  # 完整审计
 python cli.py analyze <apk> --no-evidence   # 演练：产物写临时区，不进 evidence/
-python cli.py evaluate --run <RUN>           # 评价器（默认确定性）
+python cli.py evaluate --run <RUN>           # 评价 Agent 自评（默认用 key.txt 模型）
+python cli.py evaluate --run <RUN> --mode peer --contract <path>  # 互评（需对方批准契约）
+python scripts/eval_calibrate.py             # K-1~K-6 校准记录
 python scripts/truth_check.py --no-run       # 只读复算真值（84 判点，不重跑样本）
 python scripts/truth_check.py --no-evidence  # 重跑全样本但不写 evidence/
 python scripts/e2e.py --no-evidence          # 端到端验收 A-01/A-09
 python scripts/exp_datasource_ab.py --runs 5 # 数据源 A/B 对照（EXP-6，写 review/）
-python -m unittest discover -s tests         # 单元测试（46 用例）
+python -m unittest discover -s tests         # 单元测试（53 用例）
 ```
 
 ## 不要做的事
