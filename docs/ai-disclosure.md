@@ -64,7 +64,7 @@
 - [ ] `docs/research/ai-research-log.md` 中"被否决的 AI 输出"是否与实际记录一致
 - [ ] `docs/requirements.md` 的 UN/REQ 编号与 `brief.md`、`specification.md` 的引用是否一致
 - [ ] `docs/adr/0007`—`0010` 的"支撑证据"栏是否每条都能打开
-- [ ] `docs/decision-log.md` 的 12 条决策是否与实际实现一致（尤其 D-01/D-03）
+- [ ] `docs/decision-log.md` 的 13 条决策是否与实际实现一致（尤其 D-01/D-03）
 - [ ] `review/truth_review_worksheet.md` 的 17 条核对结论是否认可（尤其两条修正过的档位说明）
 - [ ] `review/e1_challenge_pack.md` 的 3 个 Claim 判定建议是否认可（Claim 1/3 预设为"限制采用"）
 - [ ] `review/e3_attack_surface.md` 的 16 条攻击面是否需要增删（尤其 A-01/A-13 两条疑似缺陷）

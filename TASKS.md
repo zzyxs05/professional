@@ -76,7 +76,8 @@ AI 代签、把对话口头决定当完成、把待签署写成已批准、为�
 | T-M4-06 | 本次治理文档复核 | 周宗正 / 余俊辉 | `HARNESS.md` §8 复核栏具名 | `HARNESS.md` | 周宗正已复核（2026-11-18），待余俊辉登记 |
 | T-M4-07 | OBS-5 弱模式匹配口径修复 | 周宗正 | bump 规则包 + 重跑 84 判点 + 前后差异回归 | `docs/changes.md` 规则变更节、`review/truth_result_0_1_4.json`、`review/exp_datasource_ab_v014.json` | 已实施，待具名人复核 |
 | T-M5-09 | 评价 Agent 重构与自评 | 周宗正 | 多轮工具编排 + 四状态机械收口 + K-1~K-6 校准 + 6 个 RUN 自评 | `evaluator/`、`review/evaluation/` | 已实施；周宗正复核 2026-11-18，待余俊辉复核 |
-| T-M5-13 | 评价 Agent 输出本组复核签署 | 周宗正 | 逐份确认四状态、缺口与补查清单 | `review/evaluation/SIGNOFF.md` | 已完成（2026-11-18，6 份；对抗组/教师未发生） |
+| T-M5-13 | 评价 Agent 输出本组复核签署 | 周宗正 | 逐份确认四状态、缺口与补查清单 | `review/evaluation/SIGNOFF.md` | 已完成（2026-11-18，05:26 批次 6 份；对抗组/教师未发生） |
+| T-M5-14 | 评价输出批次归一（05:26 确定性 / 08:58 全模型） | 周宗正 | 确认唯一登记批次；旧批次按 §4 先例移出仓库；`SIGNOFF.md` 与产物编号一致 | `review/evaluation/` | 待确认 |
 | T-M5-10 | 按 0.1.4 生成新 RUN 正本或提供版本豁免 | 周宗正 / 余俊辉 | 消除「历史正本 0.1.3 / 当前契约 0.1.4」错配；历史正本不改写 | `evidence/`、`docs/changes.md` | 待执行 |
 | T-M5-11 | 对抗组互评 | 周宗正 / 毛舒逸组 | 交换需求/规约/决策与批准契约后执行 `--mode peer --contract ...` | `review/evaluation/`、`docs/events.md` | 材料未到位，待排期 |
 | T-M5-12 | 字段级内容核对（10 项审查） | 余俊辉 | 逐条 `read_evidence` 核对字段，而非仅确认文件存在 | `review/evaluation/` | 待执行 |

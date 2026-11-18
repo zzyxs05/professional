@@ -174,7 +174,7 @@
 | 13 条关键决策复核签字 | 复核签字**已完成**（2026-11-18 余俊辉具名 + 日期）；残留待办：D-04 横向评测 R-1 未闭环 | `docs/decision-log.md` |
 | 6 份报告本组签署 | **已完成**（2026-11-18，余俊辉抽验 + 周宗正复核） | `docs/signoff.md` |
 | 6 份报告对抗组复核 / 教师复评 | pending（交互未发生） | `docs/signoff.md` |
-| 评价 Agent 输出复核 | 周宗正已复核 6 份（2026-11-18）；对抗组、教师未签 | `review/evaluation/SIGNOFF.md` |
+| 评价 Agent 输出复核 | 05:26 批次 6 份已由周宗正复核并登记于 `SIGNOFF.md`；08:58 全模型批次 6 份**未登记**，待本组确认后归一（T-M5-14）；对抗组、教师未签 | `review/evaluation/SIGNOFF.md` |
 | E1 / E2 / E3 结对交互 | 材料就绪，交互未发生 | `docs/events.md` |
 | 验证任务与角色轮换 | 待执行 | `docs/team-roster.md` |
 | 模型横向评测（R-1） | 未做 | `docs/adr/0010-model-selection.md`、`docs/release.md` I-8 |
