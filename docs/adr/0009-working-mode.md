@@ -2,7 +2,7 @@
 
 - 状态：已采纳
 - 决策人：周宗正（起草）、余俊辉（复核）
-- 关联：`requirements.md` REQ-05/REQ-06/REQ-18、`总档.md` §2.8、`release.md` §2
+- 关联：`requirements.md` REQ-05/REQ-06/REQ-18、`总档.md` §2.8、`handoff/README.md` 第 2 节
 
 ## 背景
 
@@ -46,7 +46,7 @@
 | 证据 | 位置 | 说明 |
 |------|------|------|
 | RUN 目录只增不改 | `evidence/RUN-*/` | 6 个批次各自独立，无覆盖 |
-| 实验隔离开关 | `release.md` §2（`--no-evidence`） | 试错运行不落正本 |
+| 实验隔离开关 | `handoff/README.md` 第 2 节（`--no-evidence`） | 试错运行不落正本 |
 | 签署台账 | `docs/signoff.md` | 报告需具名人签署 |
 | 变更记录 | `docs/changes.md` | 规则变更逐条留痕 |
 | 回归脚本 | `scripts/truth_check.py` | 自动化只做可复算检查 |

@@ -40,13 +40,13 @@
 
 **不自动加分**：规则条数、报告长度、Finding 数量、用了多贵的模型、题目多复杂。
 
-验收 ID 全表（A-01—A-10）见 `docs/acceptance-matrix.md`。
+验收 ID 全表（A-01—A-10）见 `docs/specification.md` 第 8 节。
 
 ## 5. 明确不做
 
 加固样本和脱壳、动态分析和执行样本、对真实上架应用的公开结论、MASVS 全量覆盖、比规则数量、GUI 和 Web 服务。
 
-理由在 `docs/requirements.md` 第 6 节和 `docs/brief.md` 第 4 节。
+理由在 `docs/requirements.md` 第 6 节和 `docs/requirements.md` 第 4 节。
 
 ## 6. 不能越的线
 

@@ -2,7 +2,7 @@
 
 - 状态：已采纳
 - 决策人：周宗正（起草）、余俊辉（复核）
-- 关联：`requirements.md` REQ-09/REQ-11/REQ-15/REQ-17、`release.md`、`handoff/README.md`
+- 关联：`requirements.md` REQ-09/REQ-11/REQ-15/REQ-17、`handoff/README.md`、`handoff/README.md`
 
 ## 背景
 
@@ -50,8 +50,8 @@
 | 入口实现 | `cli.py` | 五个子命令，无网络监听、无服务进程 |
 | 复现命令 | `handoff/README.md` §1—§2 | 克隆后直接跑，无需安装 |
 | 端到端验收 | `scripts/e2e.py` | 全样本受理 + 两次运行一致性 |
-| 依赖声明 | `release.md` §1 | Python 3.8+ / Java 8+，无 pip 依赖 |
-| 合规声明 | `release.md` §5 | 只读不执行、分析链路零网络调用 |
+| 依赖声明 | `handoff/README.md` 第 1 节 | Python 3.8+ / Java 8+，无 pip 依赖 |
+| 合规声明 | `handoff/README.md` 第 7 节 | 只读不执行、分析链路零网络调用 |
 
 ## 替代方案（被否）
 

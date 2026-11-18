@@ -23,7 +23,7 @@ Trajectory append-only 会话日志、沙箱、多种 preset）。
    （`get_approved_contract` / `list_evidence` / `read_evidence` / `request_registered_test`）；
    工具白名单与路径白名单由程序强制，不提供任意 Shell / URL；
 3. 原确定性预检 `precheck.py` 降级为注册测试 `verify_claims`，成为 Agent 可调用的机械核对工具；
-4. 判定由机械结果收口：`status` 由程序依据预检结果与 rubric 判定条件给出，
+4. 判定由机械结果给出：`status` 由程序依据预检结果与 rubric 判定条件给出，
    模型输出只进 `observations` / `suggested_checks`（ADR-0004、总档 §2.6）；
 5. 每次工具调用写 append-only 轨迹 JSONL 到 `review/evaluation/`，预算
    ≤10 次模型交互 / ≤5 次注册补测 / 8—12 个审查项；
@@ -40,7 +40,7 @@ Trajectory append-only 会话日志、沙箱、多种 preset）。
 - **隔离更难**：自评与互评要按目标加载不同批准契约，塞进同一通用运行时更容易串味；
   本方案用 `contract.py` 在数据层隔离。
 - **已有骨架**：确定性预检、四状态、注册补测白名单、K-1~K-6 校准判例都在，属于「补」不是「重做」。
-- **可复现**：评价器随仓库入库、零外部依赖、轨迹与结果成对落盘，对抗组可独立复跑。
+- **可复现**：评价器随仓库入库、零外部依赖、轨迹与结果成对存盘，对抗组可独立复跑。
 
 ## 后果
 

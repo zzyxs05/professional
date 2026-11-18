@@ -275,3 +275,20 @@ T-M5-12 字段级内容核对、E1/E2/E3 交互、R-1 模型横向评测。
 
 **没做的（下一批）**：`docs/` 层的合并还没动——`brief.md` 与 `requirements.md` 有重叠、`state-model.md` / `acceptance-matrix.md` 与 `specification.md` 有重叠、`experiment-protocol.md` 可并进 `experiments.md`、`release.md` 与 `handoff/README.md` 重复。
 这些涉及删文件或改交付物归属，等确认后再做。
+
+---
+
+## 文档合并（第二批）：把四组重复文档收成两处（2026-11-18）
+
+> 性质：合并与改写，**不改规则、不动 `evidence/` 正本、不 bump `RULE_PACK_VERSION`**（仍 0.1.4）。
+
+| # | 变更 | 说明 |
+|---|------|------|
+| S31 | `docs/brief.md` 并入 `docs/requirements.md` | 问题陈述、调研结论、做与不做直接写进需求文档开头；责任分工并到 `docs/team-roster.md`；`brief.md` 删除。课程要求的 brief 类内容由 `GLOBAL.md`（目标）+ `requirements.md`（问题与范围）承载 |
+| S32 | `docs/state-model.md`、`docs/acceptance-matrix.md` 并入 `docs/specification.md` | 作为第 7 节（状态机与预算）、第 8 节（A-01—A-10 验收）、第 9 节（K-1—K-6 校准判例）；两个文件删除。规约现在一份文档说清"规则、格式、状态、验收" |
+| S33 | `docs/release.md` 并入 `handoff/README.md` | 环境、启动、复现、重置、已知问题 I-1—I-8、合规、目录导航合并成一份交接包；`release.md` 删除。已知问题的编号 I-1—I-8 原样保留，避免其他文档的引用失效 |
+| S34 | `docs/experiment-protocol.md` 保留 | 复核后判定它和 `experiments.md` 是"方法 / 数据"分工，硬合并会变成 260 行的混合体。改为在 `experiments.md` 开头声明"变量与计时只看协议"，两边不重复 |
+| S35 | 全库术语替换 | `口径`→`规则`/`判定`、`落盘`→`存盘`、`收口`→`判定`、`锚点`→`位置`/`对应`、`事实本体`→`同一份结果`、`可核查`→`能核对`、`未闭环`→`未完成`；改完逐条抽查，修掉替换产生的病句（如"规则规则"） |
+| S36 | 引用同步 | 删除四份文件后，`GLOBAL.md`、`HARNESS.md`、`PLAN.md`、`README.md`、`docs/decision-log.md`、10 份 ADR、`docs/ai-disclosure.md`、`docs/impact-map.md`、`docs/research/` 中的引用一并改指新位置 |
+
+**结果**：md 文件从 43 份降到 39 份，`docs/` 从 17 份降到 13 份；需求、规约、交接三处各自只有一份正文。

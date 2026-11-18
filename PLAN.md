@@ -11,12 +11,12 @@
 
 | 阶段 | 做什么 | 产出 | 对应课程节点 |
 |---|---|---|---|
-| M0 | 冻结契约：14 条规则、报告格式、验收 ID、真值表 | `docs/specification.md`、`docs/acceptance-matrix.md`、`lab/truth/` | 开题 |
+| M0 | 冻结契约：14 条规则、报告格式、验收 ID、真值表 | `docs/specification.md`、`docs/specification.md` 第 8 节、`lab/truth/` | 开题 |
 | M1 | 搭骨架：适配器、状态机、证据库、通道 A 全部规则 | 能跑的单通道版本 | E1 前基线 |
 | M2 | 加通道 B（B1/B2）、融合层、钉证据 | 双通道版本 | E1 方案挑战 |
 | M3 | 做评价器：预检、判读、校准判例 | 通过 K-1~K-6 校准 | 评价 Agent 要求 |
 | M4 | 交接与对抗：handoff、E1/E2/E3 | `handoff/`、`review/` | E1—E3 |
-| M5 | 收尾：发布说明、复现清单、签署 | `docs/release.md`、`docs/signoff.md` | 期末验收 |
+| M5 | 收尾：发布说明、复现清单、签署 | `handoff/README.md`、`docs/signoff.md` | 期末验收 |
 
 ## 2. 现在到哪
 

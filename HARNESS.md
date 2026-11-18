@@ -1,15 +1,15 @@
 # HARNESS.md · 项目级开发 Harness（工程约定收拢）
 
 > 交付类：design（工程治理）｜版本：v1.0｜状态：已提交，复核栏见 §8
-> 定位：把项目里**已经存在、但分散**在 `总档.md`、`AGENTS.md`、`docs/` 与各模块实现中的开发约定，收拢成一份可核查的规范索引。
-> **本文件不新增契约、不改判罚口径、不放宽任何规则、不产生新结论**；与既有文档冲突时以 `总档.md` 为准，并回改本文件。
-> 依据：`总档.md` §0/§2.8/§7/§10、`AGENTS.md`、`docs/ai-disclosure.md`、`docs/changes.md`、`docs/state-model.md`、`core/registry.py`、`core/runner.py`。
+> 定位：把项目里**已经存在、但分散**在 `总档.md`、`AGENTS.md`、`docs/` 与各模块实现中的开发约定，收拢成一份能核对的规范索引。
+> **本文件不新增契约、不改判定规则、不放宽任何规则、不产生新结论**；与既有文档冲突时以 `总档.md` 为准，并回改本文件。
+> 依据：`总档.md` §0/§2.8/§7/§10、`AGENTS.md`、`docs/ai-disclosure.md`、`docs/changes.md`、`docs/specification.md` 第 7 节、`core/registry.py`、`core/runner.py`。
 
 ---
 
 ## 0. 这份文件回答什么
 
-项目治理要求的六类工程约定，此前分散在总纲、入口指针与各模块实现中，缺少一份统一的可核查入口。本文件按「开发规范 / AI 操作约定 / 代码规范 / 文档规范 / 日志规范 / 观测性约定」逐节给出**约定 + 落地位置 + 核查方式**。
+项目治理要求的六类工程约定，此前分散在总纲、入口指针与各模块实现中，缺少一个统一、能核对的入口。本文件按「开发规范 / AI 操作约定 / 代码规范 / 文档规范 / 日志规范 / 观测性约定」逐节给出**约定 + 落地位置 + 核查方式**。
 
 一句话边界：**收拢不等于新造，提交不等于签署。** 涉及契约与决策的条目，仍以 `docs/decision-log.md`、`docs/signoff.md` 的签署状态为准；本规范自提交起用于约束后续工作。
 
@@ -21,7 +21,7 @@
 
 | 项 | 约定 | 落地位置 |
 |----|------|----------|
-| 运行时 | Python 3.8+，**零第三方依赖**（标准库实现 HTTP 调用） | `docs/requirements.md` REQ-15、`docs/release.md` §1 |
+| 运行时 | Python 3.8+，**零第三方依赖**（标准库实现 HTTP 调用） | `docs/requirements.md` REQ-15、`handoff/README.md` 第 1 节 |
 | 可选工具链 | Java 8+；`.tools/apktool_3.0.3.jar` 随仓库入库，查找顺序：`.tools/` → 环境变量 → PATH | `总档.md` §10、`core/adapters.py` |
 | 唯一入口 | `cli.py`：`analyze` / `register` / `evaluate` / `summary` / `reset` | `cli.py`、`总档.md` §6.1 |
 | 子进程 | 白名单仅 `java`（apktool），名单外一律拒绝 | `core/runner.py`、`registry.SUBPROCESS_ALLOWED_BINARIES` |
@@ -41,12 +41,12 @@
 
 1. 改规则/阈值/schema → bump `RULE_PACK_VERSION` → 记 `docs/changes.md` → 重跑 `scripts/truth_check.py`（84 判点）；
 2. 改结构/接口/目录 → 同步 `总档.md` 并升其版本号 → 记 `docs/changes.md`；
-3. 改 UN/REQ → 同步 `docs/specification.md`、`docs/acceptance-matrix.md`，评估已有证据是否仍成立；
+3. 改 UN/REQ → 同步 `docs/specification.md`、`docs/specification.md` 第 8 节，评估已有证据是否仍成立；
 4. 历史报告保留原有解释，**不被新规则悄悄改写**；旧证据不判新版本。
 
 ### 1.4 禁止事项
 
-为通过检查而放宽契约、改判罚口径、删减规则；把对话里的口头决定当已批准契约；把真实样本/密钥/模型凭据写入仓库（`key.txt` 已在 `.gitignore`）；在 `evidence/` 写试错数据（用 `--no-evidence`）。
+为通过检查而放宽契约、改判定规则、删减规则；把对话里的口头决定当已批准契约；把真实样本/密钥/模型凭据写入仓库（`key.txt` 已在 `.gitignore`）；在 `evidence/` 写试错数据（用 `--no-evidence`）。
 
 ### 1.5 自动化脚本配置
 
@@ -61,7 +61,7 @@
 
 约定：
 
-1. 脚本默认参数即实验/质量门的固定条件，改动默认值等于改口径，须记 `docs/changes.md` 并复算；
+1. 脚本默认参数即实验/质量门的固定条件，改动默认值等于改规则，须记 `docs/changes.md` 并复算；
 2. 实验性运行一律 `--no-evidence`，脚本只写 `review/` 或工作区外临时区，**不写 `evidence/`**；
 3. 统计类输出 JSON 必须带生成时间、规则包版本、输入指纹与逐轮明细，供第三方复算；
 4. 新增脚本同步更新本表、`AGENTS.md` 常用命令与 `docs/experiment-protocol.md`（若属对照实验）；
@@ -104,30 +104,30 @@
 
 ## 4. 文档规范
 
-- **唯一总纲**：`总档.md`。其余文档只给锚点与链接，不复制正文；每类 1—2 页说明 + 3—5 个关键链接。
+- **唯一总纲**：`总档.md`。其余文档只给位置和链接，不复制正文；每类 1—2 页说明 + 3—5 个关键链接。
 - **六类交付物**：新增文件必须能挂到下面某一类，挂不上的不要建。
 
 | 交付类 | 本项目位置 |
 |---|---|
-| brief | `GLOBAL.md`、`PLAN.md`、`docs/brief.md`、`docs/requirements.md`、`docs/research/` |
-| design | `HARNESS.md`、`docs/specification.md`、`docs/adr/`、`docs/state-model.md`、`docs/ai-disclosure.md`、`docs/decision-log.md`、`docs/experiment-protocol.md`、`core/registry.py` |
-| eval | `docs/acceptance-matrix.md`、`scripts/`、`tests/` |
+| brief | `GLOBAL.md`、`PLAN.md`、`docs/requirements.md`、`docs/research/` |
+| design | `HARNESS.md`、`docs/specification.md`、`docs/adr/`、`docs/ai-disclosure.md`、`docs/decision-log.md`、`docs/experiment-protocol.md`、`core/registry.py` |
+| eval | `docs/specification.md`（第 8、9 节）、`scripts/`、`tests/` |
 | evidence | `evidence/RUN-*/` |
-| release | `handoff/`、`docs/release.md` |
+| release | `handoff/README.md` |
 | review | `TASKS.md`、`review/`、`docs/{experiments,changes,impact-map,events,signoff,team-roster}.md` |
 - **ADR**：一决策一文件，含背景、被否替代方案（理由必须具体）、后果；索引进 `docs/decision-log.md`（决策 → ADR → 证据 → 决策人）。
 - **状态标注**：复核未签字写「待签署」，不得写「已批准」；抽验动作 ≠ 签署动作；未发生的事件写「材料就绪」，不预填结果。
 - **版本区分**：`总档` 文档版本 ≠ `RULE_PACK_VERSION` 规则包版本 ≠ B 通道 prompt 版本；报告绑定生成时的规则包与模型版本。
 - **变更留痕**：`docs/changes.md` 记录规则/结构变更；实验数据进 `docs/experiments.md`，允许并保留负结果。
 - **文档元数据**：新写文档头部标注项目名（APK 通用静态审计 / apkaudit）、文档版本与规则包版本；存量文档在下次实质修订时补齐，不批量倒填日期。
-- **实验记录**：对照实验沿用 `docs/experiment-protocol.md` 的变量控制与计时口径，实验卡进 `docs/experiments.md`，真实运行数据落 `review/`；历史结果 JSON 不改写，口径变更须升协议版本并重跑。
+- **实验记录**：对照实验沿用 `docs/experiment-protocol.md` 的变量控制与计时规则，实验卡进 `docs/experiments.md`，真实运行数据落 `review/`；历史结果 JSON 不改写，规则变更须升协议版本并重跑。
 
 ---
 
 ## 5. 日志规范
 
-> 事实口径：本项目**不引入 logging 框架，也不产生独立文本日志文件**（零第三方依赖 + 保持可复算）。运行可追溯性由结构化产物承担，不应事后补造日志。
-> 路径口径：下表 `channel_a/`、`fusion/`、`report.md`、`report.json`、`meta.json` 等均相对 `evidence/RUN-<id>/`；`review/`、`docs/` 相对仓库根。
+> 事实规则：本项目**不引入 logging 框架，也不产生独立文本日志文件**（零第三方依赖 + 保持可复算）。运行可追溯性由结构化产物承担，不应事后补造日志。
+> 路径规则：下表 `channel_a/`、`fusion/`、`report.md`、`report.json`、`meta.json` 等均相对 `evidence/RUN-<id>/`；`review/`、`docs/` 相对仓库根。
 > 评价产物自评价 Agent 起统一写 `review/evaluation/`（对事实的解释不进事实目录）；`evidence/RUN-<id>/evaluation.json` 仅作历史件保留，不再新增。
 
 | 层 | 落点 | 内容 |
@@ -136,7 +136,7 @@
 | 通道 A | `channel_a/hits.jsonl` | 逐命中：规则 ID、坐标、原文片段 |
 | 通道 B | `channel_b/` | prompt 模板版本、模型标识、原始响应、输入片段哈希 |
 | 融合 | `fusion/` | 分歧记录与钉证据过程 |
-| 结论 | `report.md` / `report.json` | 同一事实本体的两种渲染 |
+| 结论 | `report.md` / `report.json` | 同一份结果的两种渲染 |
 | 评价 | `review/evaluation/EVAL-*.json` + 同名 `.trace.jsonl` | 四状态输出、范围、引用校验、缺口、模型观察、逐次工具轨迹 |
 | 解释与复核 | `review/` | 成绩单、复核底稿、挑战包、签署准备 |
 
@@ -148,10 +148,10 @@
 
 ## 6. 观测性约定
 
-> 字段口径：本节 `meta.json` / `report.json` 为 `evidence/RUN-*/` 下的产物（路径见 §5）；
+> 字段规则：本节 `meta.json` / `report.json` 为 `evidence/RUN-*/` 下的产物（路径见 §5）；
 > 评价产物在 `review/evaluation/`，成绩单 `review/truth_result_0_1_4.json` 相对仓库根。
 
-| 可观测对象 | 字段 / 位置 | 判定口径 |
+| 可观测对象 | 字段 / 位置 | 判定规则 |
 |------------|-------------|----------|
 | 身份冻结 | `meta.json`: apk_sha256 + rule_pack + channel_b_model + toolchain | 五环：目标版本 ↔ Fixture ↔ 契约 ↔ 评价器 ↔ 证据来源 |
 | 覆盖 | `report.json.coverage.checked / not_checked / decode_failed` | 「未发现」必须带覆盖声明 |
@@ -176,17 +176,17 @@
 
 ---
 
-## 8. 未闭环（如实列出，不因本文件而消失）
+## 8. 未完成（如实列出，不因本文件而消失）
 
 | 项 | 状态 | 位置 |
 |----|------|------|
-| 13 条关键决策复核签字 | 复核签字**已完成**（2026-11-18 余俊辉具名 + 日期）；残留待办：D-04 横向评测 R-1 未闭环 | `docs/decision-log.md` |
+| 13 条关键决策复核签字 | 复核签字**已完成**（2026-11-18 余俊辉具名 + 日期）；残留待办：D-04 横向评测 R-1 未完成 | `docs/decision-log.md` |
 | 6 份报告本组签署 | **已完成**（2026-11-18，余俊辉抽验 + 周宗正复核） | `docs/signoff.md` |
 | 6 份报告对抗组复核 / 教师复评 | pending（交互未发生） | `docs/signoff.md` |
 | 评价 Agent 输出复核 | 05:26 批次 6 份已由周宗正复核并登记于 `SIGNOFF.md`；08:58 全模型批次 6 份**未登记**，待本组确认后归一（T-M5-14）；对抗组、教师未签 | `review/evaluation/SIGNOFF.md` |
 | E1 / E2 / E3 结对交互 | 材料就绪，交互未发生 | `docs/events.md` |
 | 验证任务与角色轮换 | 待执行 | `docs/team-roster.md` |
-| 模型横向评测（R-1） | 未做 | `docs/adr/0010-model-selection.md`、`docs/release.md` I-8 |
+| 模型横向评测（R-1） | 未做 | `docs/adr/0010-model-selection.md`、`handoff/README.md` I-8 |
 | 本文件与新增三件套的复核 | 周宗正已复核（2026-11-18）；余俊辉待登记，登记前不作为「已批准契约」 | `TASKS.md` T-M4-06 |
 
 > 本文件为工程约定索引，不改变任何已有结论的签署状态；`human_signoff: pending` 的结论仍不生效。
