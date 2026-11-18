@@ -1,0 +1,268 @@
+{
+  "eval_id": "EVAL-20261118-090225Z-self-145503-e079",
+  "generated_at": "2026-11-18T09:02:25Z",
+  "target": "C:\\Users\\89111\\WorkBuddy\\2026-11-18-10-30-46\\_gitwork",
+  "owner": "C:\\Users\\89111\\WorkBuddy\\2026-11-18-10-30-46\\_gitwork",
+  "mode": "self",
+  "run_id": "RUN-20261015-145503",
+  "status": "INSUFFICIENT_EVIDENCE",
+  "reason": "引用、版本、结构检查通过（范围：3 条结论）",
+  "snapshot_status": "PASS",
+  "versions": {
+    "rule_pack": "0.1.4",
+    "rubric": "1.0",
+    "rubric_status": "从课件提取，待教师确认后冻结",
+    "skill": "v1.0"
+  },
+  "contract": {
+    "present": true,
+    "note": "使用内部契约快照（未批准，仅自评）",
+    "approved_by": "pending"
+  },
+  "version_check": {
+    "report_rule_pack": "0.1.3",
+    "contract_rule_pack": "0.1.4",
+    "mismatch": true,
+    "suggested_check": "按当前规则包生成新 RUN 正本，或提供版本豁免记录；历史正本不改写"
+  },
+  "coverage_note": "机械层完成 10 项锚点核对，其中 1 项做了引用级机械核对；字段级内容核对与版本对齐待补，结论不作为内容通过证明",
+  "model": {
+    "mode": "llm",
+    "name": "mimo-v2.6-flash",
+    "note": "模型输出只进 observations，不参与四状态判定"
+  },
+  "budget": {
+    "model_calls_used": 9,
+    "model_calls_max": 10,
+    "registered_tests_used": 1,
+    "registered_tests_max": 5,
+    "exhausted_notes": []
+  },
+  "trace_path": "C:\\Users\\89111\\WorkBuddy\\2026-11-18-10-30-46\\_gitwork\\review\\evaluation\\EVAL-20261118-090225Z-self-145503-e079.trace.jsonl",
+  "findings": [
+    {
+      "criterion_id": "E-01",
+      "criterion": "需求是否明确使用者、场景、用途、预期效果与附加体验要求，而非一句话概括",
+      "weight_ref": 6,
+      "status": "INSUFFICIENT_EVIDENCE",
+      "evidence_level": "STATIC",
+      "content_checked": false,
+      "evidence_ids": [
+        "docs/requirements.md",
+        "docs/brief.md"
+      ],
+      "finding": "报告规则包 0.1.3 与契约 0.1.4 不一致；旧证据不判新版本",
+      "scope": "目标 self 的 RUN-20261015-145503（C:\\Users\\89111\\WorkBuddy\\2026-11-18-10-30-46\\_gitwork）",
+      "missing_evidence": [],
+      "suggested_check": "补齐上述证据后复跑；内容正确性需人工抽验",
+      "score_suggestion": null,
+      "human_signoff": "pending"
+    },
+    {
+      "criterion_id": "E-02",
+      "criterion": "规格是否把核心目标细化到机器可验证，明确执行规则与验收 ID",
+      "weight_ref": 5,
+      "status": "INSUFFICIENT_EVIDENCE",
+      "evidence_level": "STATIC",
+      "content_checked": false,
+      "evidence_ids": [
+        "docs/specification.md",
+        "docs/acceptance-matrix.md",
+        "docs/state-model.md"
+      ],
+      "finding": "报告规则包 0.1.3 与契约 0.1.4 不一致；旧证据不判新版本",
+      "scope": "目标 self 的 RUN-20261015-145503（C:\\Users\\89111\\WorkBuddy\\2026-11-18-10-30-46\\_gitwork）",
+      "missing_evidence": [],
+      "suggested_check": "补齐上述证据后复跑；内容正确性需人工抽验",
+      "score_suggestion": null,
+      "human_signoff": "pending"
+    },
+    {
+      "criterion_id": "E-03",
+      "criterion": "关键决策是否有前置调研或明确依据，且决策→ADR→证据→决策人可追溯",
+      "weight_ref": 5,
+      "status": "INSUFFICIENT_EVIDENCE",
+      "evidence_level": "STATIC",
+      "content_checked": false,
+      "evidence_ids": [
+        "docs/research/",
+        "docs/decision-log.md",
+        "docs/adr/"
+      ],
+      "finding": "报告规则包 0.1.3 与契约 0.1.4 不一致；旧证据不判新版本",
+      "scope": "目标 self 的 RUN-20261015-145503（C:\\Users\\89111\\WorkBuddy\\2026-11-18-10-30-46\\_gitwork）",
+      "missing_evidence": [],
+      "suggested_check": "补齐上述证据后复跑；内容正确性需人工抽验",
+      "score_suggestion": null,
+      "human_signoff": "pending"
+    },
+    {
+      "criterion_id": "E-04",
+      "criterion": "项目级 Harness 与目标/计划/任务是否各自独立成文，含目录结构、编程风格、日志存储、自动化脚本配置",
+      "weight_ref": 4,
+      "status": "INSUFFICIENT_EVIDENCE",
+      "evidence_level": "STATIC",
+      "content_checked": false,
+      "evidence_ids": [
+        "HARNESS.md",
+        "GLOBAL.md",
+        "PLAN.md",
+        "TASKS.md"
+      ],
+      "finding": "报告规则包 0.1.3 与契约 0.1.4 不一致；旧证据不判新版本",
+      "scope": "目标 self 的 RUN-20261015-145503（C:\\Users\\89111\\WorkBuddy\\2026-11-18-10-30-46\\_gitwork）",
+      "missing_evidence": [],
+      "suggested_check": "补齐上述证据后复跑；内容正确性需人工抽验",
+      "score_suggestion": null,
+      "human_signoff": "pending"
+    },
+    {
+      "criterion_id": "E-05",
+      "criterion": "是否有可执行代码、测试用例与真实运行证据，且结论可按坐标回溯原文",
+      "weight_ref": 14,
+      "status": "INSUFFICIENT_EVIDENCE",
+      "evidence_level": "STATIC",
+      "content_checked": true,
+      "evidence_ids": [
+        "cli.py",
+        "core/",
+        "tests/",
+        "scripts/",
+        "evidence/RUN-20261015-145503/",
+        "review/truth_result_0_1_4.json"
+      ],
+      "finding": "报告规则包 0.1.3 与契约 0.1.4 不一致；旧证据不判新版本",
+      "scope": "目标 self 的 RUN-20261015-145503（C:\\Users\\89111\\WorkBuddy\\2026-11-18-10-30-46\\_gitwork）",
+      "missing_evidence": [],
+      "suggested_check": "补齐上述证据后复跑；内容正确性需人工抽验",
+      "score_suggestion": null,
+      "human_signoff": "pending"
+    },
+    {
+      "criterion_id": "E-06",
+      "criterion": "变更是否有影响分析、版本绑定与回归证据，历史报告不被改写",
+      "weight_ref": 8,
+      "status": "INSUFFICIENT_EVIDENCE",
+      "evidence_level": "STATIC",
+      "content_checked": false,
+      "evidence_ids": [
+        "docs/changes.md",
+        "docs/impact-map.md",
+        "core/registry.py"
+      ],
+      "finding": "报告规则包 0.1.3 与契约 0.1.4 不一致；旧证据不判新版本",
+      "scope": "目标 self 的 RUN-20261015-145503（C:\\Users\\89111\\WorkBuddy\\2026-11-18-10-30-46\\_gitwork）",
+      "missing_evidence": [],
+      "suggested_check": "补齐上述证据后复跑；内容正确性需人工抽验",
+      "score_suggestion": null,
+      "human_signoff": "pending"
+    },
+    {
+      "criterion_id": "E-07",
+      "criterion": "交接发布是否含启动、重置、已知限制、恢复与干净环境复现入口",
+      "weight_ref": 8,
+      "status": "INSUFFICIENT_EVIDENCE",
+      "evidence_level": "STATIC",
+      "content_checked": false,
+      "evidence_ids": [
+        "handoff/README.md",
+        "docs/release.md",
+        "docs/signoff.md"
+      ],
+      "finding": "报告规则包 0.1.3 与契约 0.1.4 不一致；旧证据不判新版本",
+      "scope": "目标 self 的 RUN-20261015-145503（C:\\Users\\89111\\WorkBuddy\\2026-11-18-10-30-46\\_gitwork）",
+      "missing_evidence": [],
+      "suggested_check": "补齐上述证据后复跑；内容正确性需人工抽验",
+      "score_suggestion": null,
+      "human_signoff": "pending"
+    },
+    {
+      "criterion_id": "E-08",
+      "criterion": "实验是否提前明确对比指标与不变量（输入数据、前置处理、计时起止），并留存真实运行输出",
+      "weight_ref": 15,
+      "status": "INSUFFICIENT_EVIDENCE",
+      "evidence_level": "STATIC",
+      "content_checked": false,
+      "evidence_ids": [
+        "docs/experiment-protocol.md",
+        "docs/experiments.md",
+        "review/exp_datasource_ab.json",
+        "review/exp_datasource_ab_v014.json"
+      ],
+      "finding": "报告规则包 0.1.3 与契约 0.1.4 不一致；旧证据不判新版本",
+      "scope": "目标 self 的 RUN-20261015-145503（C:\\Users\\89111\\WorkBuddy\\2026-11-18-10-30-46\\_gitwork）",
+      "missing_evidence": [],
+      "suggested_check": "补齐上述证据后复跑；内容正确性需人工抽验",
+      "score_suggestion": null,
+      "human_signoff": "pending"
+    },
+    {
+      "criterion_id": "E-09",
+      "criterion": "评价 Agent 是否有项目适配、四状态与证据层级输出、K1-K6 校准记录、预算/停止与人工签署",
+      "weight_ref": 15,
+      "status": "INSUFFICIENT_EVIDENCE",
+      "evidence_level": "STATIC",
+      "content_checked": false,
+      "evidence_ids": [
+        "evaluator/",
+        "docs/events.md",
+        "review/"
+      ],
+      "finding": "报告规则包 0.1.3 与契约 0.1.4 不一致；旧证据不判新版本",
+      "scope": "目标 self 的 RUN-20261015-145503（C:\\Users\\89111\\WorkBuddy\\2026-11-18-10-30-46\\_gitwork）",
+      "missing_evidence": [],
+      "suggested_check": "补齐上述证据后复跑；内容正确性需人工抽验",
+      "score_suggestion": null,
+      "human_signoff": "pending"
+    },
+    {
+      "criterion_id": "E-10",
+      "criterion": "是否只读不执行、凭据不入库、未覆盖如实声明、来源与层级分开记录",
+      "weight_ref": 2,
+      "status": "INSUFFICIENT_EVIDENCE",
+      "evidence_level": "STATIC",
+      "content_checked": false,
+      "evidence_ids": [
+        "AGENTS.md",
+        "HARNESS.md",
+        ".gitignore",
+        "docs/ai-disclosure.md"
+      ],
+      "finding": "报告规则包 0.1.3 与契约 0.1.4 不一致；旧证据不判新版本",
+      "scope": "目标 self 的 RUN-20261015-145503（C:\\Users\\89111\\WorkBuddy\\2026-11-18-10-30-46\\_gitwork）",
+      "missing_evidence": [],
+      "suggested_check": "补齐上述证据后复跑；内容正确性需人工抽验",
+      "score_suggestion": null,
+      "human_signoff": "pending"
+    }
+  ],
+  "precheck_findings": [],
+  "evidence_records_reviewed": 21,
+  "observations": [
+    "1. 版本错配（疑似 FAIL，范围：RUN-20261015-145503 的版本声明）：契约 rule_pack_version=0.1.4，但 meta.json 与 report.json 均声明 rule_pack=0.1.3。evaluate.json 却给出 PASS『版本检查通过』——说明该 PASS 未与本契约比对，属自述式通过，不能采信为版本一致。层级 STATIC，未独立验证。",
+    "2. 状态值域与规则表越界（疑似 FAIL，范围：report.json conclusions[2]）：criterion_id=R-B-001 不在契约规则表（R-MAN/R-PERM/R-STR/R-CODE/R-NET）内；其 status=待复核 不属 report 内已用值域（已确认/待复核混用英文未见映射表）。missing_evidence 已如实记录『钉证据未通过』，来源 B 侧、层级 CLAIM_ONLY，处理正确，但 ID 越界需解释或更正。",
+    "3. 评价记录自身存在不一致（疑点，范围：evidence/RUN-20261015-145503/evaluation.json）：声明引用校验『10 个 evidence_id 可回溯 10 个』且 findings=[]，但其 report.json 结论 evidence_ids 合计 10 个（6+3+1），数目自洽；不过 status=PASS 的理由文本为程序模板，且 human_signoff 全为 pending，PASS 只代表机械预检通过，不等于签署完成——属正常但需在报告中明确范围。",
+    "4. 静态门存在且合规（观察）：HARNESS.md/GLOBAL.md/PLAN.md/TASKS.md/AGENTS.md、evaluator/（agent/calibration/contract/precheck/tools）、docs/experiment-protocol.md、docs/requirements.md、docs/acceptance-matrix.md、review/evaluation/（多份 EVAL JSON + trace + calibration_k1_k6.json + SIGNOFF.md）均存在，指纹可取；覆盖声明 coverage.checked 列全 14 条规则+通道B，not_checked 为空。文件存在≠内容支持，未逐条语义核验。",
+    "5. 工具链与预算记录正常（观察）：decode.ok=true 且 reused=true，toolchain 记录了 jdk/apktool 版本，budget.llm_calls_used=3/30、registered_tests_used=0/5；本次审查消耗注册测试 1 次，仍在预算内。层级 STATIC。",
+    "6. 降级路径正确（观察）：evaluation.mode=deterministic，llm_note 为空，未把『未判读』写成『通过语义结论』，符合降级不降严格度。"
+  ],
+  "suggested_checks": [
+    "S1（最小补查，对应观察1）：确认本 run 应适用的规则包版本——若契约 0.1.4 为现行版，则需用 0.1.4 重跑 verify_claims 或提供版本变更说明；若 0.1.3 为该 run 的合法基线，则在 contract 或 report.versions 中显式绑定并说明与 0.1.4 的差异。禁止移动标准迁就结果。",
+    "S2（对应观察2）：核对 R-B-001 的来源——要求目标提供『B 侧候选 ID → 契约规则表』的映射或将其归入既有规则；同时给出 status 中英文值域（已确认/待复核/PASS…）的统一映射表，纳入 report schema 校验。",
+    "S3（对应观察3/4）：抽验 evaluation.json 的『10 个 evidence_id 可回溯』是否为程序计算结果而非模板文本——对 EV-20261015-145503-001~010 逐条 read_evidence 确认文件存在且内容支持对应结论（文件存在≠内容支持）。",
+    "S4：核对 review/evaluation/SIGNOFF.md 与各 human_signoff=pending 的一致性，确认自评签署链是否已由本组人工完成；未签署前不得作为最终评分依据。",
+    "S5：本契约 contract_id=internal-snapshot-0.1.4、approved_by=pending，仅可用于自评；跨组使用前需教师批准并冻结，勿引作已批准契约。"
+  ],
+  "not_checked": [
+    "按当前规则包生成新 RUN 正本，或提供版本豁免记录；历史正本不改写",
+    "未做字段级内容核对：E-01, E-02, E-03, E-04, E-06, E-07, E-08, E-09, E-10"
+  ],
+  "blocking_rules_checked": "static_only（8 条红线由人工复核，未自动判定）",
+  "signoff_chain": {
+    "self_review": "本组人工签署（pending）",
+    "peer_response": "不适用",
+    "teacher_review": "教师复评（最终成绩只在教师层）"
+  },
+  "score_suggestion": null,
+  "human_signoff": "pending"
+}
