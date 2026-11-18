@@ -1,12 +1,12 @@
 {
-  "eval_id": "EVAL-20261118-050934Z-self-150236-4b44",
-  "generated_at": "2026-11-18T05:09:34Z",
+  "eval_id": "EVAL-20261118-052759Z-self-145016-7e73",
+  "generated_at": "2026-11-18T05:27:59Z",
   "target": "C:\\Users\\shixz\\Desktop\\study\\zhuan",
   "owner": "C:\\Users\\shixz\\Desktop\\study\\zhuan",
   "mode": "self",
-  "run_id": "RUN-20261015-150236",
+  "run_id": "RUN-20261015-145016",
   "status": "INSUFFICIENT_EVIDENCE",
-  "reason": "引用、版本、结构检查通过（范围：2 条结论）",
+  "reason": "引用、版本、结构检查通过（范围：8 条结论）",
   "snapshot_status": "PASS",
   "versions": {
     "rule_pack": "0.1.4",
@@ -38,7 +38,7 @@
     "registered_tests_max": 5,
     "exhausted_notes": []
   },
-  "trace_path": "C:\\Users\\shixz\\Desktop\\study\\zhuan\\review\\evaluation\\EVAL-20261118-050934Z-self-150236-4b44.trace.jsonl",
+  "trace_path": "C:\\Users\\shixz\\Desktop\\study\\zhuan\\review\\evaluation\\EVAL-20261118-052759Z-self-145016-7e73.trace.jsonl",
   "findings": [
     {
       "criterion_id": "E-01",
@@ -52,7 +52,7 @@
         "docs/brief.md"
       ],
       "finding": "报告规则包 0.1.3 与契约 0.1.4 不一致；旧证据不判新版本",
-      "scope": "目标 self 的 RUN-20261015-150236（C:\\Users\\shixz\\Desktop\\study\\zhuan）",
+      "scope": "目标 self 的 RUN-20261015-145016（C:\\Users\\shixz\\Desktop\\study\\zhuan）",
       "missing_evidence": [],
       "suggested_check": "补齐上述证据后复跑；内容正确性需人工抽验",
       "score_suggestion": null,
@@ -71,7 +71,7 @@
         "docs/state-model.md"
       ],
       "finding": "报告规则包 0.1.3 与契约 0.1.4 不一致；旧证据不判新版本",
-      "scope": "目标 self 的 RUN-20261015-150236（C:\\Users\\shixz\\Desktop\\study\\zhuan）",
+      "scope": "目标 self 的 RUN-20261015-145016（C:\\Users\\shixz\\Desktop\\study\\zhuan）",
       "missing_evidence": [],
       "suggested_check": "补齐上述证据后复跑；内容正确性需人工抽验",
       "score_suggestion": null,
@@ -90,7 +90,7 @@
         "docs/adr/"
       ],
       "finding": "报告规则包 0.1.3 与契约 0.1.4 不一致；旧证据不判新版本",
-      "scope": "目标 self 的 RUN-20261015-150236（C:\\Users\\shixz\\Desktop\\study\\zhuan）",
+      "scope": "目标 self 的 RUN-20261015-145016（C:\\Users\\shixz\\Desktop\\study\\zhuan）",
       "missing_evidence": [],
       "suggested_check": "补齐上述证据后复跑；内容正确性需人工抽验",
       "score_suggestion": null,
@@ -110,7 +110,7 @@
         "TASKS.md"
       ],
       "finding": "报告规则包 0.1.3 与契约 0.1.4 不一致；旧证据不判新版本",
-      "scope": "目标 self 的 RUN-20261015-150236（C:\\Users\\shixz\\Desktop\\study\\zhuan）",
+      "scope": "目标 self 的 RUN-20261015-145016（C:\\Users\\shixz\\Desktop\\study\\zhuan）",
       "missing_evidence": [],
       "suggested_check": "补齐上述证据后复跑；内容正确性需人工抽验",
       "score_suggestion": null,
@@ -128,11 +128,11 @@
         "core/",
         "tests/",
         "scripts/",
-        "evidence/RUN-20261015-150236/",
+        "evidence/RUN-20261015-145016/",
         "review/truth_result_0_1_4.json"
       ],
       "finding": "报告规则包 0.1.3 与契约 0.1.4 不一致；旧证据不判新版本",
-      "scope": "目标 self 的 RUN-20261015-150236（C:\\Users\\shixz\\Desktop\\study\\zhuan）",
+      "scope": "目标 self 的 RUN-20261015-145016（C:\\Users\\shixz\\Desktop\\study\\zhuan）",
       "missing_evidence": [],
       "suggested_check": "补齐上述证据后复跑；内容正确性需人工抽验",
       "score_suggestion": null,
@@ -151,7 +151,7 @@
         "core/registry.py"
       ],
       "finding": "报告规则包 0.1.3 与契约 0.1.4 不一致；旧证据不判新版本",
-      "scope": "目标 self 的 RUN-20261015-150236（C:\\Users\\shixz\\Desktop\\study\\zhuan）",
+      "scope": "目标 self 的 RUN-20261015-145016（C:\\Users\\shixz\\Desktop\\study\\zhuan）",
       "missing_evidence": [],
       "suggested_check": "补齐上述证据后复跑；内容正确性需人工抽验",
       "score_suggestion": null,
@@ -170,7 +170,7 @@
         "docs/signoff.md"
       ],
       "finding": "报告规则包 0.1.3 与契约 0.1.4 不一致；旧证据不判新版本",
-      "scope": "目标 self 的 RUN-20261015-150236（C:\\Users\\shixz\\Desktop\\study\\zhuan）",
+      "scope": "目标 self 的 RUN-20261015-145016（C:\\Users\\shixz\\Desktop\\study\\zhuan）",
       "missing_evidence": [],
       "suggested_check": "补齐上述证据后复跑；内容正确性需人工抽验",
       "score_suggestion": null,
@@ -190,7 +190,7 @@
         "review/exp_datasource_ab_v014.json"
       ],
       "finding": "报告规则包 0.1.3 与契约 0.1.4 不一致；旧证据不判新版本",
-      "scope": "目标 self 的 RUN-20261015-150236（C:\\Users\\shixz\\Desktop\\study\\zhuan）",
+      "scope": "目标 self 的 RUN-20261015-145016（C:\\Users\\shixz\\Desktop\\study\\zhuan）",
       "missing_evidence": [],
       "suggested_check": "补齐上述证据后复跑；内容正确性需人工抽验",
       "score_suggestion": null,
@@ -209,7 +209,7 @@
         "review/"
       ],
       "finding": "报告规则包 0.1.3 与契约 0.1.4 不一致；旧证据不判新版本",
-      "scope": "目标 self 的 RUN-20261015-150236（C:\\Users\\shixz\\Desktop\\study\\zhuan）",
+      "scope": "目标 self 的 RUN-20261015-145016（C:\\Users\\shixz\\Desktop\\study\\zhuan）",
       "missing_evidence": [],
       "suggested_check": "补齐上述证据后复跑；内容正确性需人工抽验",
       "score_suggestion": null,
@@ -229,7 +229,7 @@
         "docs/ai-disclosure.md"
       ],
       "finding": "报告规则包 0.1.3 与契约 0.1.4 不一致；旧证据不判新版本",
-      "scope": "目标 self 的 RUN-20261015-150236（C:\\Users\\shixz\\Desktop\\study\\zhuan）",
+      "scope": "目标 self 的 RUN-20261015-145016（C:\\Users\\shixz\\Desktop\\study\\zhuan）",
       "missing_evidence": [],
       "suggested_check": "补齐上述证据后复跑；内容正确性需人工抽验",
       "score_suggestion": null,
@@ -237,7 +237,7 @@
     }
   ],
   "precheck_findings": [],
-  "evidence_records_reviewed": 7,
+  "evidence_records_reviewed": 50,
   "observations": [
     "降级原因：显式 --no-llm：确定性路径；四状态仍由机械核对收口"
   ],
