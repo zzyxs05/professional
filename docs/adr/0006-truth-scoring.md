@@ -2,7 +2,7 @@
 
 - 状态：已采纳（2026-10-14）
 - 决策人：周宗正、余俊辉
-- 关联：总档 §5.3、`docs/acceptance-matrix.md`、`scripts/truth_check.py`
+- 关联：`docs/specification.md` §6（真值一致性评分口径）、`docs/acceptance-matrix.md`、`scripts/truth_check.py`
 
 ## 背景
 

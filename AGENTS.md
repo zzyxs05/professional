@@ -1,48 +1,40 @@
-# AGENTS.md · 给 AI 协作者的入口指针
+# AGENTS.md · 给 AI 的入口
 
-> 本文件只做导航，不重复总纲。任何规则冲突，以 `总档.md` 为准。
+> 只做导航，不写规则。和 `HARNESS.md` 冲突时，以 `HARNESS.md` 为准；和 `总档.md` 冲突时，以 `总档.md` 为准。
 
-## 先读什么
+## 开工前读三份
 
-1. `总档.md` —— 唯一总纲：做什么、课程硬性要求、系统怎么运转、目录职责、当前进度。
-2. `HARNESS.md` —— 项目级 Harness：开发 / AI / 代码 / 文档 / 日志 / 观测性约定（收拢索引）。
-3. `GLOBAL.md` / `PLAN.md` / `TASKS.md` —— 项目级目标、阶段计划归档、任务分解规范与台账。
-4. `docs/requirements.md` —— 需求层（谁、什么场景、系统要保证什么）。
-5. `docs/specification.md` —— 规格层（数据源、14 条规则契约、报告 schema、定位格式）。
-6. `docs/decision-log.md` —— 关键决策索引（决策 → ADR → 证据 → 决策人）。
-7. `docs/research/apk-audit-landscape.md` —— 领域调研与需求来源。
-8. `docs/events.md` + `review/{e1_challenge_pack,e3_attack_surface}.md` —— 对抗事件的输入材料与记录模板。
-9. `docs/experiment-protocol.md` + `docs/experiments.md` —— 对照实验的变量控制口径与逐次数据。
-10. `evaluator/skills/evidence-review/{SKILL.md,rubric.json}` —— 评价 Agent 的工作流与审查判据。
+1. `总档.md`：项目是什么、系统怎么转、课程有哪些硬要求；
+2. `HARNESS.md`：目录怎么放、代码怎么写、产物和日志存哪；
+3. `TASKS.md`：现在在做什么，做到什么算完。
 
-## 硬性纪律（违反即返工）
+要改需求、规则或报告格式，先看 `docs/specification.md` 和 `docs/decision-log.md`，别自己发明。
 
-- **证据不可伪装**：`evidence/` 存运行事实，`review/` 存解释与复核；已签署的 RUN 不改写。
-- **没有证据的结论不出现**：先核证据再解释；拿不到证据写「无法判定」，不许写成「通过」。
-- **静态疑点不得升级措辞**：只断言结构，不断言行为（例：不得写"该应用在半夜录音"）。
-- **LLM 不得直接升级结论**：模型只提疑；升级必须经 `pin_evidence` 机械核对（ADR-0004）。
-- **改规则 = 改版本**：bump `RULE_PACK_VERSION` + 记 `docs/changes.md` + 重跑靶场真值。
-- **未覆盖就声明未覆盖**：`coverage.not_checked` 必须如实填写。
-- **人签署、人负责**：`human_signoff: pending` 的结论不生效；AI 不代签。
+## 六条不能违反的
+
+1. **证据不能编**：`evidence/` 放跑出来的事实，`review/` 放解释；签过字的正本不改。
+2. **没证据就写"无法判定"**，不许写"通过"。
+3. **静态疑点不许升级措辞**：只能说结构上存在什么，不能说这个应用实际在干什么。
+4. **模型只提疑，规则拿证据**：要升"已确认"，必须过 `pin_evidence`。
+5. **改规则就是改版本**：`RULE_PACK_VERSION` 加号 + 记 `docs/changes.md` + 重跑 84 判点。
+6. **人签署、人负责**：AI 不代签，不改别人的状态。
 
 ## 常用命令
 
 ```bash
 python cli.py analyze <apk>                  # 完整审计
-python cli.py analyze <apk> --no-evidence   # 演练：产物写临时区，不进 evidence/
-python cli.py evaluate --run <RUN>           # 评价 Agent 自评（默认用 key.txt 模型）
-python cli.py evaluate --run <RUN> --mode peer --contract <path>  # 互评（需对方批准契约）
-python scripts/eval_calibrate.py             # K-1~K-6 校准记录
-python scripts/truth_check.py --no-run       # 只读复算真值（84 判点，不重跑样本）
-python scripts/truth_check.py --no-evidence  # 重跑全样本但不写 evidence/
+python cli.py analyze <apk> --no-evidence    # 演练，产物不进 evidence/
+python cli.py evaluate --run <RUN>           # 评价 Agent 自评（默认用 key.txt 的模型）
+python cli.py evaluate --run <RUN> --no-llm  # 只走确定性路径
+python scripts/truth_check.py --no-run       # 复算 84 个判点
+python scripts/eval_calibrate.py             # K-1~K-6 校准
 python scripts/e2e.py --no-evidence          # 端到端验收 A-01/A-09
-python scripts/exp_datasource_ab.py --runs 5 # 数据源 A/B 对照（EXP-6，写 review/）
-python -m unittest discover -s tests         # 单元测试（53 用例）
+python -m unittest discover -s tests         # 53 个单测
 ```
 
-## 不要做的事
+## 不要做
 
-- 不要为通过检查而放宽契约、改判罚口径、删减规则；
-- 不要把对话里的口头决定当作已批准契约（契约以文档 + 签署为准）；
-- 不要把真实样本、密钥、模型凭据写入仓库（`key.txt` 已在 `.gitignore`）；
-- 不要在 `evidence/` 里写实验性运行（用 `--no-evidence`）。
+- 不要为了通过检查放宽契约、改判定标准、删规则；
+- 不要把聊天里的口头决定当成已批准的契约；
+- 不要把真实样本、密钥、模型凭据写进仓库（`key.txt` 在 `.gitignore` 里）；
+- 不要在 `evidence/` 里写实验数据（用 `--no-evidence`）。

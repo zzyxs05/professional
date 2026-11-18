@@ -79,7 +79,7 @@
 | 调研 | AI 铺开候选；人逐条打开原始页面核对 | 数字、排名、「最优/最流行」类断言无原始来源一律删 |
 
 - **人机责任四分**：决定 / 生成 / 检查 / 停止逐环节具名，见 `docs/ai-disclosure.md` §1；被拒绝的 AI 建议逐条记录（同文件 §3、§4）。
-- **新会话工作流**：读 `AGENTS.md` → 读 `总档.md` → 核对 §7 目录与代码实际差异 → 从 §9 找当前阶段 → 动手前先核证据。
+- **新会话工作流**：读 `AGENTS.md` → 读 `总档.md` → 核对 §1 目录职责与代码实际差异 → 从 `PLAN.md` 找当前阶段 → 动手前先核证据。
 - **结论措辞**：静态疑点只断言结构，不断言行为；没拿到证据写「无法判定」，不写「通过」；未覆盖就声明未覆盖。
 - **待复核态**：所有产物在签署前为 `human_signoff: pending`；模型不替代人的判断。
 
@@ -105,7 +105,16 @@
 ## 4. 文档规范
 
 - **唯一总纲**：`总档.md`。其余文档只给锚点与链接，不复制正文；每类 1—2 页说明 + 3—5 个关键链接。
-- **六类交付物**：brief / design / eval / evidence / release / review，映射见 `总档.md` §7 表；新增文件必须能挂到某一类。
+- **六类交付物**：新增文件必须能挂到下面某一类，挂不上的不要建。
+
+| 交付类 | 本项目位置 |
+|---|---|
+| brief | `GLOBAL.md`、`PLAN.md`、`docs/brief.md`、`docs/requirements.md`、`docs/research/` |
+| design | `HARNESS.md`、`docs/specification.md`、`docs/adr/`、`docs/state-model.md`、`docs/ai-disclosure.md`、`docs/decision-log.md`、`docs/experiment-protocol.md`、`core/registry.py` |
+| eval | `docs/acceptance-matrix.md`、`scripts/`、`tests/` |
+| evidence | `evidence/RUN-*/` |
+| release | `handoff/`、`docs/release.md` |
+| review | `TASKS.md`、`review/`、`docs/{experiments,changes,impact-map,events,signoff,team-roster}.md` |
 - **ADR**：一决策一文件，含背景、被否替代方案（理由必须具体）、后果；索引进 `docs/decision-log.md`（决策 → ADR → 证据 → 决策人）。
 - **状态标注**：复核未签字写「待签署」，不得写「已批准」；抽验动作 ≠ 签署动作；未发生的事件写「材料就绪」，不预填结果。
 - **版本区分**：`总档` 文档版本 ≠ `RULE_PACK_VERSION` 规则包版本 ≠ B 通道 prompt 版本；报告绑定生成时的规则包与模型版本。
