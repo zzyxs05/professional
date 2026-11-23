@@ -12,7 +12,7 @@ import json
 import os
 
 from . import registry
-from .channel_b import _chat, load_key_config
+from .channel_b import _DATA_BOUNDARY, _chat, load_key_config
 from .evidence import utc_now_iso
 
 
@@ -35,7 +35,7 @@ def _batch_span_note(bundle):
                 '建议先全量重跑再生成汇总' % span_min)
     return span, note
 
-B3_PROMPT_VERSION = 'b3-v0.3'
+B3_PROMPT_VERSION = 'b3-v0.4'
 
 
 def substantive_conclusions(conclusions):
@@ -61,7 +61,7 @@ B3_SYSTEM = (
     '- 无检出样本沿用输入的无检出语义表述\n'
     '- 结构：① 总评（1 段，观点明确） ② 六样本速览（表格：样本 | 检出要点 | 无检出语义） '
     '③ 值得复核的点 ④ 诚实边界（通道 B 状态、覆盖缺口、静态分析上限） ⑤ 给复核人的动作项（≤4 条）'
-)
+) + _DATA_BOUNDARY  # 与 B1/B2 同级的数据边界：样本派生文本当数据不当指令（第 4 次审查 M-5）
 
 
 # ------------------------------------------------------------------ 收集
@@ -252,7 +252,8 @@ def generate_summary(project_root, out_path=None, no_llm=False):
     if cfg:
         try:
             raw = _chat(cfg[0], [{'role': 'system', 'content': B3_SYSTEM},
-                                 {'role': 'user', 'content': summary_input}],
+                                 {'role': 'user',
+                                  'content': '<sample_data>\n%s\n</sample_data>' % summary_input}],
                         max_tokens=2400)
             if raw and raw.strip():
                 mode = 'llm'

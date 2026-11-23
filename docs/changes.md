@@ -350,3 +350,25 @@ T-M5-12 字段级内容核对、E1/E2/E3 交互、R-1 模型横向评测。
 - 12 项新权限的使用模式为静态模式扩充，靶场未使用，真值判点不变。
 
 **回归**：单测 66/66；靶场真值 `--no-evidence` 重跑 84 点全量核对（结果见 `review/truth_result.json`）。
+
+---
+
+## 第四次审查（mimo 直评）修复：语义失真与韧性（2026-11-23）
+
+> 性质：**实现修复 + B3 提示词版本**，`RULE_PACK_VERSION` 不变（0.1.6）——不动规则、判罚口径与三档语义。
+> 触发：`review/第四次审查_mimo输出_0.1.6.md`（mimo-v2.6-flash 直评，与 GLM 第 5 次技能审查交叉印证）。
+> 逐条核实记录见 `review/审查模型表.md`；误报（safezip 谎报头绕过、B3 无注入防线之外的臆造项）不采纳。
+
+| # | 变更 | 暴露渠道 | 影响 |
+|---|------|----------|------|
+| T1 | **覆盖声明语义失真修正**（`cli.py` sample_failed 分支）：`decode_failed` 改为 `not decode.ok`（原来恒 True，把 manifest 解析失败记成解码失败），`decode_note` 只记解码错误，样本失败原因移入 `not_checked` 说明 | 第四次审查 M-1：manifest 解析失败但 apktool 解码成功的样本，覆盖声明把失败归因到解码，违背「覆盖诚实」核心承诺 | 报告覆盖声明归因准确；precheck 在该场景多一条 W-NO-CHECKED 提示（事实性增强，不改变最终 INSUFFICIENT_EVIDENCE 判定） |
+| T2 | **`_chat` 超时/连接失败纳入退避重试**（`core/channel_b.py`）：`urlopen` 超时与连接失败（URLError/socket 超时，均 OSError 子类）原先直接外抛不重试，瞬时网络抖动即降级 B 通道 | 第四次审查 M-2：注释称"连接异常可恢复"但超时路径不在重试面内 | 与 HTTPException 同款退避重试；重试耗尽仍如实降级 |
+| T3 | **key.txt 解析加固**（`core/channel_b.py` + `evaluator/llm.py`）：`split(',')` → `split(',', 2)`（api_key 含逗号不再被截断）；捕获 `UnicodeDecodeError`（损坏/二进制 key.txt 不再逃逸出解析函数） | 第四次审查 M-3 / M-4 | 行为兼容（正常 key.txt 解析结果不变）；`chat` 的「任何失败由调用方降级」契约在 key.txt 损坏路径上也成立 |
+| T4 | **B3 数据边界**（`core/summary.py`）：B3_SYSTEM 追加 `_DATA_BOUNDARY`、用户输入以 `<sample_data>` 包裹，与 B1/B2 同级的「样本派生文本当数据不当指令」防线 | 第四次审查 M-5：B3 输入含样本派生文本（scope/claim），原先无数据边界声明 | B3 prompt 版本 b3-v0.3 → **v0.4**；不改变审计结论（B3 只写汇总报告） |
+| T5 | **单测**：66 → 70（新增 `tests/test_safezip.py` 4 项：正常读取、超限拒绝、谎报头运行时行为钉住、缺成员语义） | GLM 第 5 次审查（safezip 运行时假设需测试固化） | — |
+
+**未修（如实记录，不因审查消失）**：`networkSecurityConfig` 正则只匹配双引号写法（apktool 输出恒为双引号，低危）；
+`sources_note` 按组汇总可能虚高 + R-MAN-03 特判（需声明式重构，按治理规则升版本）；key 解析两模块重复（待抽公共 `_client`）；
+safezip 无跨成员累计上限（需调用方自律）；`mkdtemp` 演练目录不清理；`hits.jsonl` 命名与内容不符。
+
+**回归**：单测 70/70。

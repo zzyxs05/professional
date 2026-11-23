@@ -103,9 +103,9 @@ def cmd_analyze(args):
             })
         coverage = {
             'checked': [],
-            'not_checked': ['全部规则（manifest 数据源不可用）'],
-            'decode_failed': True,
-            'decode_note': fail_reason,
+            'not_checked': ['全部规则（manifest 数据源不可用：%s）' % fail_reason],
+            'decode_failed': not decode.ok,
+            'decode_note': decode.error if not decode.ok else '',
             'notes': [],
         }
         b_result = None

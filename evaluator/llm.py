@@ -22,10 +22,10 @@ def _load_cfg(owner_root):
                 line = raw.strip()
                 if not line or line.startswith('#'):
                     continue
-                parts = [p.strip() for p in line.split(',')]
+                parts = [p.strip() for p in line.split(',', 2)]
                 if len(parts) >= 3 and all(parts[:3]):
                     return tuple(parts[:3])
-    except OSError:
+    except (OSError, UnicodeDecodeError):
         return None
     return None
 
