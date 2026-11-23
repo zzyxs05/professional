@@ -85,7 +85,7 @@ def _chat(cfg, messages, timeout=None, max_tokens=None):
             raise
         except OSError:
             # 连接失败/超时（URLError、socket 超时均为 OSError 子类）：退避重试，
-            # 避免瞬时网络抖动直接把 B 通道降级（第 4 次审查 M-2）
+            # 避免瞬时网络抖动直接把 B 通道降级（第三次审查 M-2）
             if attempt < registry.LLM_RETRY:
                 time.sleep(registry.LLM_RETRY_BACKOFF_SECONDS)
                 continue
