@@ -274,7 +274,7 @@ def _tolerant_json(text, opener='{'):
         raise ValueError('响应中无 %s' % opener)
     s = text[start:]
     s = re.sub(r',\s*([}\]])', r'\1', s)            # 尾随逗号
-    s = re.sub(r',\s*"[^"]*"\s*([}\]])', r'\1', s)  # 尾部孤立字符串键
+    s = re.sub(r',\s*"[^"]*"\s*([}])', r'\1', s)    # 尾部孤立字符串键（仅对象；不能碰 ] ，否则误删字符串数组尾元素）
     obj, _end = json.JSONDecoder().raw_decode(s)
     return obj
 
