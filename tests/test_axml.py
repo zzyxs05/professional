@@ -117,5 +117,31 @@ class TestAxml(unittest.TestCase):
         self.assertEqual(len(hits05), 1)
 
 
+class TestMalformedSample(unittest.TestCase):
+    """敌对样本防御：畸形结构必须转成 AXMLParseError，不能留 RecursionError。"""
+
+    def test_deep_nesting_rejected(self):
+        from core import registry
+        from core.axml import AXMLParseError
+
+        node = Node('leaf')
+        for i in range(registry.MAX_XML_DEPTH + 10):
+            node = Node('n%03d' % i, children=[node])
+        data = AxmlBuilder().build(Node('manifest', children=[node]))
+        with self.assertRaises(AXMLParseError):
+            parse_manifest_bytes(data)
+
+    def test_depth_within_limit_accepted(self):
+        from core import registry
+
+        node = Node('leaf')
+        # 根 + (MAX-2) 个中间节点 + leaf = MAX 层，正好卡在上限内
+        for i in range(registry.MAX_XML_DEPTH - 2):
+            node = Node('n%03d' % i, children=[node])
+        data = AxmlBuilder().build(Node('manifest', children=[node]))
+        _doc, facts = parse_manifest_bytes(data)     # 不抛即通过
+        self.assertEqual(facts.package, '')
+
+
 if __name__ == '__main__':
     unittest.main()

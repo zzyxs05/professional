@@ -35,7 +35,20 @@ def _batch_span_note(bundle):
                 '建议先全量重跑再生成汇总' % span_min)
     return span, note
 
-B3_PROMPT_VERSION = 'b3-v0.2'
+B3_PROMPT_VERSION = 'b3-v0.3'
+
+
+def substantive_conclusions(conclusions):
+    """标准结论中「有实质检出」的部分（已确认 / 待复核）。
+
+    判点全量化后每条规则都会产出结论——无命中但已执行的规则是一条
+    「无法判定」占位。判定样本是否"干净"不能再看结论条数，必须看有没有
+    非 UNDECIDED 的实结论。本函数是唯一判据，输入组装与模板渲染共用，
+    避免两处语义再次分叉（第二次审查 M-1）。
+    """
+    return [c for c in conclusions
+            if not c.get('criterion_id', '').startswith('R-B-')
+            and c.get('status') in (registry.STATUS_CONFIRMED, registry.STATUS_REVIEW)]
 
 B3_SYSTEM = (
     '你是静态审计报告撰写者。\n'
@@ -111,12 +124,12 @@ def build_summary_input(project_root, bundle, truth_summary=None):
     quiet_names = []
     for b in bundle:
         concl = b['report'].get('conclusions', [])
-        std = [c for c in concl if not c['criterion_id'].startswith('R-B-')]
+        substantive = substantive_conclusions(concl)
         n_rb += len([c for c in concl if c['criterion_id'].startswith('R-B-')])
-        if not std:
+        if not substantive:
             n_quiet += 1
             quiet_names.append(b['sample'])
-        for c in std:
+        for c in substantive:
             if c['status'] == registry.STATUS_CONFIRMED:
                 n_conf += 1
             elif c['status'] == registry.STATUS_REVIEW:
@@ -134,17 +147,17 @@ def build_summary_input(project_root, bundle, truth_summary=None):
         rep = b['report']
         cov = rep.get('coverage', {})
         concl = rep.get('conclusions', [])
-        std = [c for c in concl if not c['criterion_id'].startswith('R-B-')]
+        substantive = substantive_conclusions(concl)
         rb = [c for c in concl if c['criterion_id'].startswith('R-B-')]
         lines.append('### %s.apk（run=%s，sha256 前缀 %s）'
                      % (b['sample'], b['run_id'], rep.get('target', {}).get('apk_sha256', '')[:12]))
-        conf = len([c for c in std if c['status'] == registry.STATUS_CONFIRMED])
-        rev = len([c for c in std if c['status'] == registry.STATUS_REVIEW])
+        conf = len([c for c in substantive if c['status'] == registry.STATUS_CONFIRMED])
+        rev = len([c for c in substantive if c['status'] == registry.STATUS_REVIEW])
         lines.append('- 本样本规则结论 %d 条（已确认 %d、待复核 %d），B 侧疑点 %d 条'
-                     % (len(std), conf, rev, len(rb)))
-        if not std and not rb:
+                     % (len(substantive), conf, rev, len(rb)))
+        if not substantive and not rb:
             lines.append('- 结论：无（未发现可检出违规）')
-        for c in std:
+        for c in substantive:
             lines.append('- %s [%s] %s（定位 %d 处）'
                          % (c['criterion_id'], c['status'], c.get('scope', ''),
                             len([p for p in (c.get('location') or '').split(' | ') if p])))
@@ -175,10 +188,10 @@ def _template_render(project_root, bundle, truth_summary, note):
     for b in bundle:
         rep = b['report']
         concl = rep.get('conclusions', [])
-        std = [c for c in concl if not c['criterion_id'].startswith('R-B-')]
+        substantive = substantive_conclusions(concl)
         rb = [c for c in concl if c['criterion_id'].startswith('R-B-')]
-        conf = len([c for c in std if c['status'] == registry.STATUS_CONFIRMED])
-        rev = len([c for c in std if c['status'] == registry.STATUS_REVIEW])
+        conf = len([c for c in substantive if c['status'] == registry.STATUS_CONFIRMED])
+        rev = len([c for c in substantive if c['status'] == registry.STATUS_REVIEW])
         lines.append('| %s | %d | %d | %d | %s |'
                      % (b['sample'], conf, rev, len(rb), b['run_id']))
     lines.append('')
@@ -191,10 +204,9 @@ def _template_render(project_root, bundle, truth_summary, note):
     for b in bundle:
         lines.append('')
         lines.append('### %s' % b['sample'])
-        std = [c for c in b['report'].get('conclusions', [])
-               if not c['criterion_id'].startswith('R-B-')]
-        if std:
-            for c in std:
+        substantive = substantive_conclusions(b['report'].get('conclusions', []))
+        if substantive:
+            for c in substantive:
                 lines.append('- %s：%s（%s）' % (c['criterion_id'], c.get('scope', ''), c['status']))
         else:
             lines.append('- 未发现可检出违规（覆盖范围见该样本 report.md 的覆盖声明）')

@@ -59,6 +59,11 @@ def normalize_report(d):
     标准规则结论与 B 侧疑点分离（B 侧波动属已声明特性，见 release.md I-6）。"""
     d = json.loads(json.dumps(d))
     d['run_id'] = 'RUN-X'
+    # observations 是 B 通道的模型原声（非结论），逐次必然不同。
+    # A-09 契约只要求「14 条规则的结论逐字段一致」；观察区按 handoff I-6
+    # 只比条数，不参与逐字段比较，否则每次都会假失败。
+    d['observations_count'] = len(d.get('observations') or [])
+    d['observations'] = []
     mapping = {}
 
     def remap(eid):
@@ -122,13 +127,21 @@ def main():
             b_open = r1.get('versions', {}).get('channel_b_model', 'none') != 'none'
             if b_open:
                 print('[mode] 通道 B 已开启：标准规则结论需逐字段一致；B 侧疑点波动按已声明特性（I-6）单列')
+            # B 侧疑点数与观察区条数都是 LLM 生成波动（release.md I-6），
+            # 不属于「14 条标准规则结论」，比较前从两份报告同时剔除，
+            # 但先取值用于下方 WARN 提示。避免用模型原声条数判定确定性失败。
             b1_count = r1.pop('_b_side_count', 0)
             b2_count = r2.pop('_b_side_count', 0)
+            obs1 = r1.pop('observations_count', 0)
+            obs2 = r2.pop('observations_count', 0)
             if r1 == r2:
                 print('[OK] 两次运行的标准规则结论一致（归一化后逐字段相同）')
                 if b_open and b1_count != b2_count:
                     print('[WARN] B 侧疑点数量波动：%d vs %d（LLM 生成特性，已声明 release.md I-6，不计失败）'
                           % (b1_count, b2_count))
+                if b_open and obs1 != obs2:
+                    print('[WARN] B 通道观察条数波动：%d vs %d（模型原声，已声明 release.md I-6，不计失败）'
+                          % (obs1, obs2))
             else:
                 failed += 1
                 print('[FAIL] 两次运行的标准规则结论不一致')

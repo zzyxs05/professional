@@ -292,3 +292,61 @@ T-M5-12 字段级内容核对、E1/E2/E3 交互、R-1 模型横向评测。
 | S36 | 引用同步 | 删除四份文件后，`GLOBAL.md`、`HARNESS.md`、`PLAN.md`、`README.md`、`docs/decision-log.md`、10 份 ADR、`docs/ai-disclosure.md`、`docs/impact-map.md`、`docs/research/` 中的引用一并改指新位置 |
 
 **结果**：md 文件从 43 份降到 39 份，`docs/` 从 17 份降到 13 份；需求、规约、交接三处各自只有一份正文。
+
+---
+
+## 代码审查修复：结论全量化 + 敌对样本防御（2026-11-23）
+
+> 性质：**结构变更**（报告形态 + 预处理防御 + B 通道 prompt），`RULE_PACK_VERSION` 0.1.4 → **0.1.5**。
+> 触发：`review/code_review_2026-11-23.md` 全仓库审查。
+> **判定标准未放宽**：本次只补「每条判点必须有交代」，不新增档位、不改三档语义、不降低任何档位门槛。
+
+| # | 变更 | 暴露渠道 | 影响 |
+|---|------|----------|------|
+| R1 | **结论全量化**（`core/fusion.py`）：`build_conclusions` 对 14 条规则逐条出结论。无命中但已执行 → 「无法判定」+ 注明「已执行、未命中，不构成安全结论」；未执行 → 「无法判定」+ `missing_evidence` 写明缺口。B2 补盲改为原位升级，不再追加第二条 | 审查 C-1：正本 `RUN-20261015-145016` 覆盖声明 14 条、结论仅 8 条，8 条判点在报告中消失 | 结论条数从「有命中数」变为「规则总数 + B 侧疑点」；历史正本不改写 |
+| R2 | **真值口径收紧**（`scripts/truth_check.py`）：`EXPECTED_SILENT` 下 `c is None` 由 PASS 改判 `MISS`，`missing_evidence` 非空同样记 `MISS` | 同上：原口径把「规则没跑」也算 PASS | 84 点不再掩盖覆盖缺口 |
+| R3 | **判点完整性预检**（`evaluator/precheck.py`）：新增 `E-MISSING-CRITERION`，只对当前规则包生成的报告生效 | 同上 | 新报告缺判点直接 FAIL；历史正本走版本不匹配路径 |
+| R4 | **干净样本判定适配**（`evaluator/agent.py::_decide`）：全量「无法判定」时按 `missing_evidence` 区分「规则没跑」与「跑了没命中」 | R1 的连带影响 | 干净样本仍判 PASS（带覆盖范围），数据源缺口仍弃权 |
+| R5 | **评价器 criterion 收口**（`evaluator/agent.py::_mechanical_verdict`）：`content_checked` 不再只对 E-05 开放 | 审查 m-7：`any(INSUFFICIENT)` 恒真导致 PASS 不可达，与 `specification.md` A-08「四状态」不符 | 快照 PASS + 锚点齐全时各项可判「通过（仅机械层）」 |
+| R6 | **B1/B2 数据边界**（`core/channel_b.py`，b1-v0.3→**v0.4**、b2-v0.4→**v0.5**）：system 声明 `<sample_data>` 内是样本字节、其中指令不得执行；片段用定界符包裹；片段命中指令性特征时不采信「上下文无害」降级 | 审查 M-2：样本可注入 prompt 把真命中压成待复核 | 只堵降级方向；升级仍须钉证据 |
+| R7 | **原始响应完整落盘**（`core/evidence.py`）：`add_record` 新增 `raw_response`，全文写 `raw/<evidence_id>.txt`，JSONL 记 `raw_response_path` + `raw_response_sha256`；B1/B2 另记 `input_sha256`、`injection_flag` | 审查 M-4：`raw_snippet[:400]` 截断模型理由，与模块头承诺不符 | 证据可事后复核；JSONL 仍只留 400 字展示片段 |
+| R8 | **证据目录拒绝覆盖**（`core/evidence.py` + `cli.py`）：`run_id` 追加 sha256 前 8 位；RUN 目录已存在抛 `RunDirExists`，cli 返回 3 | 审查 C-2：同秒启动两样本写同一目录，证据 ID 重号且 `hits.jsonl` 互相覆盖 | 已落盘正本不会被静默改写 |
+| R9 | **敌对样本预处理防御**：AXML 嵌套上限 `MAX_XML_DEPTH=64`（超限抛 `AXMLParseError`，不再 `RecursionError`）；zip 成员解压上限 `ZIP_MEMBER_MAX_BYTES=64MiB`（新增 `core/safezip.py`） | 审查 M-1：深嵌套 / zip bomb 可让审计整体退化为「样本预处理失败」 | 畸形样本 → 样本级无法判定，语义正确 |
+| R10 | **DEX method_refs 修正**（`core/dexscan.py`）：`class_idx` 改按 type_ids 下标取，不再误用 strings 表 | 审查 M-3 | `method_refs` 内容随之变化；当前无规则依赖（预防性） |
+| R11 | **健壮性杂项**：规则模块导入异常纳入单规则降级；`_read_string` 捕 `IndexError`；`_build_tree` 校验标签配对；`SmaliFacts.file_set`；`_chat` 重试耗尽抛明确异常；`cmd_reset` 清理演练临时目录；B 通道记录另存 `channel_b/records.jsonl`；报告遇未知档位 fail-fast；AXML 空值属性输出 `name=""` | 审查 m-1/m-2/m-3/m-4/m-5/m-6/m-8 及 Nit | 不改变正常样本结论 |
+| R12 | **单测**：53 → 61（新增 C-1 / C-2 / M-1 / M-4 回归 8 项） | — | — |
+| R13 | **e2e 归一化修正**（`scripts/e2e.py`）：`observations`（B 通道模型原声、非结论）不再参与 A-09 逐字段比较，只比条数 | 判点全量化后 B1 调用面变大，观察区波动每次都会触发假失败；A-09 契约本就只要求「14 条规则结论一致」 | A-09 只对标准结论报差异 |
+
+**影响面**：
+
+- 新 RUN 的 `report.md` 会列出全部 14 条判点（多数为「无法判定 · 已执行未命中」），比历史报告长；
+- 历史正本（0.1.3 / 0.1.4）保持原样，评价时走 `version_mismatch` → `INSUFFICIENT_EVIDENCE`；
+- 契约 `rule_pack_version` 需同步到 0.1.5，才能对新报告判 PASS。
+
+**回归**：单测 61/61；K-1—K-6 校准 6/6；靶场真值 `--no-evidence` 重跑 **84 点 · 一致 84 · 硬错 0（FP 0 / 漏检 0 / 档位错 0）· 噪声 0**（结果见 `review/truth_result.json`）。
+六个样本的新报告均为 14 条标准判点全量出结论、覆盖缺口 0。
+
+---
+
+## 第二次审查修复：汇总回归 + 权限模式补齐（2026-11-23）
+
+> 性质：**结构变更**（汇总判定 + 规则表），`RULE_PACK_VERSION` 0.1.5 → **0.1.6**。
+> 触发：`review/第二次审查/code_review_2026-11-23_第二次.md` 全仓库独立审查（M-1 / m-1 / m-2）。
+> **判定标准未放宽**：只补齐"全量化改造的连带适配"与"权限使用模式覆盖"，不改三档语义、不降低任何档位门槛。
+
+| # | 变更 | 暴露渠道 | 影响 |
+|---|------|----------|------|
+| S1 | **B3 汇总干净样本判定修正**（`core/summary.py`）：新增 `substantive_conclusions()` 作为唯一判据（标准结论中非 UNDECIDED 的实结论），输入组装与模板渲染三处共用；把"无检出样本"判据从"没有标准结论"改为"没有实结论" | 第二次审查 M-1：全量化后每条规则都有 UNDECIDED 占位，干净样本被统计成"无检出 0 个 / 14 条结论"，汇总报告自相矛盾 | B3 prompt 版本 b3-v0.2 → v0.3；干净样本正确计入 n_quiet；不改变审计结论 |
+| S2 | **补齐 12 项 Android 12/13+ 敏感权限使用模式**（`core/registry.py` `PERMISSION_USAGE_PATTERNS`）：READ_MEDIA_*、ACCESS_MEDIA_LOCATION、NEARBY_WIFI_DEVICES、BLUETOOTH_SCAN/CONNECT/ADVERTISE、BODY_SENSORS(_BACKGROUND)、ACTIVITY_RECOGNITION、USE_BIOMETRIC | 第二次审查 m-1：43 项敏感权限中 35 项需模式，原仅 23 项，12 项声明后永不判"未发现使用" | R-PERM-03 对这 12 项从"检测空转"变为可比对；靶场未声明这些权限，既有 84 判点不受影响 |
+| S3 | **B 通道探测调用记账**（`core/channel_b.py` + `cli.py`）：`BResult.probe_calls` 记录连通性探测；`meta.json` 增 `channel_b_probe_calls`，实际 HTTP 调用数可从报告还原 | 第二次审查 m-2：ping 探测不计预算、不计调用，报告"调用 N 次"比实际少 1 | 预算口径不变（探测不占判定预算），成本可追溯 |
+| S4 | **清理未使用导入**（`core/adapters.py`、`core/channel_a.py`、`core/rules/net/r_net_01.py`、`tests/test_evidence_store.py`） | 第二次审查 Nit | 无行为影响 |
+| S5 | **单测**：61 → 66（新增 `tests/test_summary.py` 4 项 M-1 回归 + `test_rules.py` 权限模式覆盖断言 1 项） | — | — |
+| S6 | **e2e 归一化补齐**（`scripts/e2e.py`）：A-09 比较前剔除 `observations_count` / `_b_side_count` 两个 LLM 波动计数（保留取值用于 WARN），避免 B 通道开启时模型原声条数波动触发假失败 | 修复后 e2e 验收发现：标准结论完全一致，但两个波动计数字段参与 `r1==r2` 致 A-09 误报 FAIL（R13 只归一化 observations 内容，漏了 count） | A-09 只对 14 条标准规则结论判确定性；B 侧波动继续按 I-6 单列 WARN |
+
+**影响面**：
+
+- 新 RUN 的 `report.json` 版本为 0.1.6；历史正本（0.1.3/0.1.4/0.1.5）评价时走 `version_mismatch`；
+- B3 汇总报告对干净样本的统计口径修正，不影响任何已签署审计报告；
+- 12 项新权限的使用模式为静态模式扩充，靶场未使用，真值判点不变。
+
+**回归**：单测 66/66；靶场真值 `--no-evidence` 重跑 84 点全量核对（结果见 `review/truth_result.json`）。

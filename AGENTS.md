@@ -29,7 +29,7 @@ python cli.py evaluate --run <RUN> --no-llm  # 只走确定性路径
 python scripts/truth_check.py --no-run       # 复算 84 个判点
 python scripts/eval_calibrate.py             # K-1~K-6 校准
 python scripts/e2e.py --no-evidence          # 端到端验收 A-01/A-09
-python -m unittest discover -s tests         # 53 个单测
+python -m unittest discover -s tests         # 61 个单测
 ```
 
 ## 不要做

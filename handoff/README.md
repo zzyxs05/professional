@@ -36,7 +36,7 @@ python cli.py reset                                 # 清解码缓存，不动 e
 | 结论和真值是否一致 | `python scripts/truth_check.py` | 84 个判点全一致，硬错 0，噪声 0 |
 | 端到端能不能跑通 | `python scripts/e2e.py` | A-01 全样本受理；A-09 两次运行一致 |
 | 评价器是否正常 | `python cli.py evaluate --run <RUN>` | 四状态之一 + 引用校验 |
-| 单元测试 | `python -m unittest discover -s tests` | 53 个全过 |
+| 单元测试 | `python -m unittest discover -s tests` | 61 个全过 |
 
 ## 4. 重置
 

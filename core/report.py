@@ -59,12 +59,23 @@ def render_md(report, meta_extra=None):
 
     groups = {registry.STATUS_CONFIRMED: [], registry.STATUS_REVIEW: [], registry.STATUS_UNDECIDED: []}
     for c in report['conclusions']:
-        groups.setdefault(c['status'], []).append(c)
+        status = c.get('status')
+        if status not in groups:
+            # 未知档位会在下面三档遍历里被静默丢弃——宁可报错，也不让判点消失
+            raise ValueError('结论 %s 的状态非法：%r'
+                             % (c.get('criterion_id', '?'), status))
+        groups[status].append(c)
 
     for status in (registry.STATUS_CONFIRMED, registry.STATUS_REVIEW, registry.STATUS_UNDECIDED):
         items = groups.get(status, [])
         lines.append('## %s（%d 条）' % (status, len(items)))
         lines.append('')
+        if status == registry.STATUS_UNDECIDED and items:
+            no_hit = sum(1 for c in items if not c.get('missing_evidence'))
+            missing = len(items) - no_hit
+            lines.append('> 其中：规则已执行、机械未命中 %d 条（不构成安全结论）｜'
+                         '规则未执行 %d 条（覆盖缺口）' % (no_hit, missing))
+            lines.append('')
         if not items:
             lines.append('（无）')
             lines.append('')

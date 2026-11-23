@@ -110,4 +110,16 @@ def precheck(run_dir):
         findings.append({'level': 'INSUFFICIENT', 'code': 'W-NO-CHECKED',
                          'msg': '无任何已检查项（可能全部未覆盖）'})
 
+    # 判点完整性：每条规则都必须有结论（查过没发现 ≠ 没查，两者都要写出来）。
+    # 只对"当前规则包"生成的报告生效——历史正本保留原有形态，由版本不匹配路径处理。
+    report_pack = (report.get('versions') or {}).get('rule_pack')
+    if report_pack == registry.RULE_PACK_VERSION:
+        covered = {c.get('criterion_id') for c in conclusions}
+        missing_points = [rid for rid in registry.ALL_RULE_IDS if rid not in covered]
+        if missing_points:
+            findings.append({
+                'level': 'FAIL', 'code': 'E-MISSING-CRITERION',
+                'msg': '报告缺少判点结论（%d 条）：%s'
+                       % (len(missing_points), ', '.join(missing_points[:8]))})
+
     return findings, report, records

@@ -36,16 +36,32 @@ def sha256_bytes(data):
     return hashlib.sha256(data).hexdigest()
 
 
-class EvidenceStore(object):
-    """一个 RUN 的证据目录。"""
+class RunDirExists(RuntimeError):
+    """RUN 目录已存在：拒绝覆盖已落盘正本（总档 §4「已签署的运行正本不改写」）。"""
 
-    def __init__(self, evidence_root, run_id):
+
+class EvidenceStore(object):
+    """一个 RUN 的证据目录。
+
+    纪律：目录已存在即拒绝（不做静默合并）。run_id 冲突曾导致两次运行写同一目录、
+    证据 ID 从 -001 重号并互相覆盖 hits.jsonl，直接破坏「证据 ID 全局唯一」。
+    """
+
+    def __init__(self, evidence_root, run_id, allow_existing=False):
         self.run_id = run_id
         self.root = os.path.join(evidence_root, run_id)
         self.seq = 0
         self.records = []
-        self._short = run_id.replace('RUN-', '')
-        os.makedirs(self.root, exist_ok=True)
+        self._short = run_id[4:] if run_id.startswith('RUN-') else run_id
+        if not allow_existing:
+            try:
+                os.makedirs(self.root, exist_ok=False)
+            except FileExistsError:
+                raise RunDirExists(
+                    'RUN 目录已存在，拒绝覆盖正本：%s'
+                    '（如需重跑请换 run_id，或人工归档后重试）' % self.root)
+            except OSError as e:
+                raise RunDirExists('无法创建 RUN 目录 %s：%s' % (self.root, e))
 
     # -------------------------------------------------- 目录
     def path(self, *parts):
@@ -64,7 +80,7 @@ class EvidenceStore(object):
     # -------------------------------------------------- 记录
     def add_record(self, rule_id, location, raw_snippet, kind='rule_hit',
                    source_file='', source_sha256='', rule_pack='',
-                   origin='static_inspection', extra=None):
+                   origin='static_inspection', raw_response=None, extra=None):
         ev = {
             'evidence_id': self.new_id(),
             'run_id': self.run_id,
@@ -79,6 +95,14 @@ class EvidenceStore(object):
             'rule_pack': rule_pack,
             'created': utc_now_iso(),
         }
+        if raw_response is not None:
+            # 完整原始响应单独落盘，JSONL 只留指针与哈希：
+            # 模型的判定理由要能被事后复核，不能被 400 字展示截断。
+            full = raw_response or ''
+            rel = 'raw/%s.txt' % ev['evidence_id']
+            self.write_text(rel, full)
+            ev['raw_response_path'] = rel
+            ev['raw_response_sha256'] = hashlib.sha256(full.encode('utf-8')).hexdigest()
         if extra:
             ev.update(extra)
         self.records.append(ev)

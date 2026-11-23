@@ -168,7 +168,10 @@ def build_conclusions(hits_by_rule, ev_map=None, b_result=None, pin_fn=None):
     pin_fn(rule_guess, point) → pin_evidence 结果（含 rules[].evidence_ids）。
 
     返回 (conclusions, observations)：
-      - conclusions：审计结论（三档，须有证据）
+      - conclusions：审计结论（三档，须有证据）。**全部规则逐条出结论**：
+        有命中走 A/B1 融合；无命中但已执行 → 无法判定 + 注明「已执行未命中」；
+        未执行（数据源缺口）→ 无法判定 + missing_evidence 写明缺口。
+        不允许某条判点在报告里消失（总档「没证据就写无法判定」）。
       - observations：B 通道观察（低置信、未经机械核查）——保留 B 的原始声音，不作为结论
     """
     ev_map = ev_map or {}
@@ -179,44 +182,68 @@ def build_conclusions(hits_by_rule, ev_map=None, b_result=None, pin_fn=None):
         b2_points = getattr(b_result, 'b2', []) or []
 
     conclusions = []
+    concl_pos = {}          # criterion_id → conclusions 下标（B2 补盲原位升级用）
     hit_rule_ids = set()
     for rule_id in registry.ALL_RULE_IDS:
         hits = hits_by_rule.get(rule_id, [])
         meta = registry.RULE_META[rule_id]
 
-        if hits:
-            hit_rule_ids.add(rule_id)
-            status = meta['max_status']
-            for h in hits:
-                if h.max_status:
-                    status = min_status(status, h.max_status)
-
-            channel = 'A'
-            degrade_note = None
-            b1 = b1_by_rule.get(rule_id)
-            if b1:
-                verdict = b1.get('verdict')
-                channel = 'fusion'
-                if verdict == '上下文无害':
-                    new_status = min_status(status, registry.STATUS_REVIEW)
-                    if STATUS_RANK[new_status] < STATUS_RANK[status]:
-                        degrade_note = ('B1 复核判定「上下文无害」，降级为待复核（人工可推翻）：%s'
-                                        % b1.get('reason', ''))
-                        status = new_status
-                elif verdict == '无法判断':
-                    status = min_status(status, registry.STATUS_REVIEW)
-
+        if not hits:
+            # 判点必须全部有交代：报告里缺一条 = 签署人无法区分
+            # 「查过没发现」与「根本没跑」。
+            # hits_by_rule 无该 key → 规则未执行（数据源未覆盖 / 执行异常）；
+            # 有 key 但为空 → 规则已执行、机械未命中。
+            executed = rule_id in hits_by_rule
+            concl_pos[rule_id] = len(conclusions)
             conclusions.append({
                 'criterion_id': rule_id,
-                'status': status,
-                'channel': channel,
-                'location': ' | '.join(h.location for h in hits),
-                'evidence_ids': list(ev_map.get(rule_id, [])),
+                'status': registry.STATUS_UNDECIDED,
+                'channel': 'A',
+                'location': '',
+                'evidence_ids': [],
                 'scope': meta['name'],
-                'missing_evidence': [],
+                'missing_evidence': [] if executed else [
+                    '规则未执行：数据源未覆盖或执行异常，详见覆盖声明'],
                 'human_signoff': 'pending',
-                'notes': [h.note for h in hits if h.note] + ([degrade_note] if degrade_note else []),
+                'notes': (['机械规则已执行、未命中。仅代表本规则集范围内未发现问题，'
+                           '不构成「安全」结论。'] if executed else [
+                           '规则未执行，不得视为通过。']),
             })
+            continue
+
+        hit_rule_ids.add(rule_id)
+        status = meta['max_status']
+        for h in hits:
+            if h.max_status:
+                status = min_status(status, h.max_status)
+
+        channel = 'A'
+        degrade_note = None
+        b1 = b1_by_rule.get(rule_id)
+        if b1:
+            verdict = b1.get('verdict')
+            channel = 'fusion'
+            if verdict == '上下文无害':
+                new_status = min_status(status, registry.STATUS_REVIEW)
+                if STATUS_RANK[new_status] < STATUS_RANK[status]:
+                    degrade_note = ('B1 复核判定「上下文无害」，降级为待复核（人工可推翻）：%s'
+                                    % b1.get('reason', ''))
+                    status = new_status
+            elif verdict == '无法判断':
+                status = min_status(status, registry.STATUS_REVIEW)
+
+        concl_pos[rule_id] = len(conclusions)
+        conclusions.append({
+            'criterion_id': rule_id,
+            'status': status,
+            'channel': channel,
+            'location': ' | '.join(h.location for h in hits),
+            'evidence_ids': list(ev_map.get(rule_id, [])),
+            'scope': meta['name'],
+            'missing_evidence': [],
+            'human_signoff': 'pending',
+            'notes': [h.note for h in hits if h.note] + ([degrade_note] if degrade_note else []),
+        })
 
     # ---- B2 侧疑点：低置信进观察区，其余走钉证据
     observations = []
@@ -237,13 +264,15 @@ def build_conclusions(hits_by_rule, ev_map=None, b_result=None, pin_fn=None):
             'status': 'unpinned', 'detail': '未执行钉证据', 'rules': [], 'locations': []}
 
         if pin['status'] == 'pinned':
-            # 补盲：只对"未被 A 覆盖"的规则出结论（避免重复）
+            # 补盲：只对"未被 A 覆盖"的规则出结论（避免重复）。
+            # 这些规则在上一轮已有一条「无命中 → 无法判定」的占位结论，
+            # 这里必须**原位升级**，不能再 append（否则同一判点出现两条冲突结论）。
             new_infos = [r for r in pin.get('rules', [])
                          if r['rule_id'] in registry.RULE_META and r['rule_id'] not in hit_rule_ids]
             for rinfo in new_infos:
                 rid = rinfo['rule_id']
                 cap = registry.RULE_META[rid]['max_status']
-                conclusions.append({
+                upgraded = {
                     'criterion_id': rid,
                     'status': cap,
                     'channel': 'fusion',
@@ -254,7 +283,12 @@ def build_conclusions(hits_by_rule, ev_map=None, b_result=None, pin_fn=None):
                     'human_signoff': 'pending',
                     'notes': ['钉证据通过：%s' % rinfo.get('note', ''),
                               '来源：B2 疑点「%s」' % claim[:120]],
-                })
+                }
+                if rid in concl_pos:
+                    conclusions[concl_pos[rid]] = upgraded
+                else:
+                    concl_pos[rid] = len(conclusions)
+                    conclusions.append(upgraded)
                 hit_rule_ids.add(rid)
             continue
 

@@ -10,9 +10,7 @@
 import os
 import re
 import shutil
-import struct
 import subprocess
-import sys
 import tempfile
 
 from . import registry
@@ -155,6 +153,7 @@ class SmaliFacts(object):
         self.root = decode_dir
         self.smali_dirs = []
         self.files = []            # 相对 decode_dir 的路径
+        self.file_set = set()      # 成员判断用（files 是 list，线性查找在大 APK 上很慢）
         self.class_index = {}      # 'com/foo/Bar' → 相对路径
         self._lines_cache = {}
         if os.path.isdir(decode_dir):
@@ -169,6 +168,7 @@ class SmaliFacts(object):
                             full = os.path.join(dirpath, fn)
                             rel = os.path.relpath(full, decode_dir).replace('\\', '/')
                             self.files.append(rel)
+                            self.file_set.add(rel)
                             cls = fn[:-len('.smali')]
                             pkg_rel = os.path.relpath(dirpath, os.path.join(decode_dir, d))
                             if pkg_rel != '.':

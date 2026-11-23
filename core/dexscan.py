@@ -13,6 +13,7 @@ import struct
 import zipfile
 
 from . import registry
+from . import safezip
 
 
 class DexFact(object):
@@ -107,23 +108,26 @@ def parse_dex(data, dex_name):
             return strings[idx]
         return ''
 
-    # 类型描述符
+    # 类型描述符（保留下标：method_id.class_idx 索引的是 type_ids，不是 string_ids）
     type_descriptors = set()
+    type_list = []
     for i in range(min(type_ids_size, registry.DEX_SCAN_MAX_STRINGS)):
         if type_ids_off + 4 * i + 4 > len(data):
             break
         d_idx = struct.unpack_from('<I', data, type_ids_off + 4 * i)[0]
         d = str_at(d_idx)
+        type_list.append(d)
         if d:
             type_descriptors.add(d)
 
     # 方法引用：class_idx(u2) proto_idx(u2) name_idx(u4)
+    # class_idx → type_ids 表下标；name_idx → string_ids 表下标。两者不可混用。
     method_refs = set()
     for i in range(min(method_ids_size, registry.DEX_SCAN_MAX_STRINGS)):
         if method_ids_off + 8 * i + 8 > len(data):
             break
         class_idx, proto_idx, name_idx = struct.unpack_from('<HHI', data, method_ids_off + 8 * i)
-        cls = str_at(class_idx)
+        cls = type_list[class_idx] if 0 <= class_idx < len(type_list) else ''
         if not cls.startswith('L'):
             continue
         name = str_at(name_idx)
@@ -144,7 +148,7 @@ def scan_apk_dex(apk_path):
         for name in dex_names:
             facts.dex_files.append(name)
             try:
-                parsed = parse_dex(z.read(name), name)
+                parsed = parse_dex(safezip.read_member(z, name), name)
             except Exception as e:  # noqa: BLE001 —— 单文件失败不阻断整体，如实记录
                 facts.errors.append('%s: %s' % (name, e))
                 continue

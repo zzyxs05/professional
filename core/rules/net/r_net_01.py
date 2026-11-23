@@ -9,7 +9,6 @@
 判据基础：smali 方法体指令级（正确实现必有委托 invoke，good02 口径）。
 """
 
-from ... import registry
 from ..common import (Hit, class_interfaces, clip, effective_ops,
                       is_const_true_return, is_empty_array_return,
                       is_empty_method_body, smali_loc)

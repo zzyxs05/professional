@@ -38,17 +38,22 @@ def cmd_analyze(args):
         return 2
 
     sha = sha256_file(apk_path)
-    run_id = 'RUN-' + local_stamp()
+    # run_id 带样本指纹：纯秒级时间戳会让同秒启动的两个样本撞进同一 RUN 目录，
+    # 互相覆盖证据且证据 ID 重号（见 review/code_review_2026-11-23.md C-2）。
+    run_id = 'RUN-' + local_stamp() + '-' + sha[:8]
     runner = Runner(PROJECT_ROOT)
     if args.no_evidence:
         # 演练模式：完整跑链路（含通道 B），但证据写临时区，不进 evidence/ 正本
-        import tempfile
         ev_root = tempfile.mkdtemp(prefix='apkaudit_trial_')
         print('[run] %s（演练模式 · 不写入 evidence，sha256=%s…）' % (run_id, sha[:16]))
     else:
         ev_root = os.path.join(PROJECT_ROOT, 'evidence')
         print('[run] %s（sha256=%s…）' % (run_id, sha[:16]))
-    store = EvidenceStore(ev_root, run_id)
+    try:
+        store = EvidenceStore(ev_root, run_id)
+    except Exception as e:  # noqa: BLE001 —— 不覆盖正本，直接拒绝本次运行
+        print('[error] %s' % e)
+        return 3
 
     # ---- 解码（失败不阻断：M/S 类照跑，语义类进覆盖声明）
     runner.sm.advance('DECODING')
@@ -194,10 +199,19 @@ def cmd_analyze(args):
         },
         'created': utc_now_iso(),
         'budget': runner.budget.as_dict(),
+        # 实际 HTTP 调用 = channel_b 判定调用 + 1 次连通性探测；
+        # 探测不占预算但要能从报告还原成本（第二次审查 m-2）。
+        'channel_b_probe_calls': (b_result.probe_calls if b_result else 0),
         'state': runner.sm.as_dict(),
     }
     store.write_json('meta.json', meta)
     store.write_jsonl('channel_a/hits.jsonl', store.records)
+    # 按通道分文件落一份：precheck 会分别读 channel_a / channel_b 两处。
+    # B 侧记录（含钉证据回填）同时留在 hits.jsonl 里，不改变历史读取路径。
+    b_records = [r for r in store.records
+                 if r.get('origin') in ('b_channel', 'b_channel_pin')]
+    if b_records:
+        store.write_jsonl('channel_b/records.jsonl', b_records)
     store.write_text('report.md', md)
     store.write_json('report.json', rep)
 
@@ -297,6 +311,19 @@ def cmd_reset(args):
     if os.path.isdir(decode_root):
         shutil.rmtree(decode_root, ignore_errors=True)
         removed.append(decode_root)
+    # 演练/实验脚本的临时目录同样可重建，一并清理，避免每次运行留一堆
+    trial_prefixes = ('apkaudit_trial_', 'apkaudit_truth_', 'apkaudit_e2e_',
+                      'apkaudit_calib_')
+    tmp_root = tempfile.gettempdir()
+    try:
+        for name in sorted(os.listdir(tmp_root)):
+            if name.startswith(trial_prefixes):
+                p = os.path.join(tmp_root, name)
+                if os.path.isdir(p):
+                    shutil.rmtree(p, ignore_errors=True)
+                    removed.append(p)
+    except OSError:
+        pass
     print('[reset] 已清理可重建产物：')
     for r in removed:
         print('  - %s' % r)

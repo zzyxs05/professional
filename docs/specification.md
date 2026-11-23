@@ -60,13 +60,24 @@ S 类字符串规则扫描全量 dex 字符串 + 资源字符串（库字符串�
 }
 ```
 
+**判点完整性（0.1.5 起，硬性）**：`conclusions[]` 必须覆盖 `registry.ALL_RULE_IDS` 的每一条规则，
+外加 B 侧疑点（`R-B-*`）。规则无命中时同样要出条目，用 `missing_evidence` 区分两种含义：
+
+| 情形 | status | missing_evidence | notes |
+|------|--------|------------------|-------|
+| 规则已执行、机械未命中 | 无法判定 | `[]` | 注明「已执行、未命中，不构成安全结论」 |
+| 规则未执行（数据源缺口 / 执行异常） | 无法判定 | 写明缺口 | 注明「不得视为通过」 |
+
+不允许某条判点在报告里消失——否则签署人无法区分「查过没发现」与「根本没跑」。
+`evaluator/precheck.py` 的 `E-MISSING-CRITERION` 对当前规则包生成的报告强制此约束。
+
 ### 3.2 报告顶层
 
 ```json
 {
-  "run_id": "RUN-<yyyymmdd-HHMMSS>",
+  "run_id": "RUN-<yyyymmdd-HHMMSS>-<sha256前8位>",
   "target": {"apk_name": "...", "apk_sha256": "..."},
-  "versions": {"rule_pack": "0.1.4", "channel_b_model": "none|模型名"},
+  "versions": {"rule_pack": "0.1.6", "channel_b_model": "none|模型名"},
   "conclusions": [],
   "observations": [],   ← B 通道观察区（低置信/补充观察），**非结论、不计入三档**
   "coverage": {
@@ -120,8 +131,10 @@ B1 的 `observation` 与 B2 的 `low` 置信观察进入报告 `observations` �
 |------|---------|-----------|----------|-----------|------------|
 | `EXPECTED_HIT:CONFIRMED` | 结论存在且状态=已确认 | — | — | 无结论 | 状态=待复核/无法判定 |
 | `EXPECTED_HIT:REVIEW` | 结论存在且状态∈{已确认,待复核} | — | — | 无结论或无法判定 | — |
-| `EXPECTED_SILENT` | 无结论 | 状态=已确认 | **状态=待复核**（低置信输出，单独统计） | — | — |
+| `EXPECTED_SILENT` | 结论存在、状态=无法判定、`missing_evidence` 为空 | 状态=已确认 | **状态=待复核**（低置信输出，单独统计） | 无结论，或 `missing_evidence` 非空（规则未执行） | — |
 
+- 0.1.5 起 `EXPECTED_SILENT` 不再把「无结论」判 PASS：判点全量化后，无结论只可能是报告不完整，
+  必须记漏检；「规则没跑」与「跑了没命中」用 `missing_evidence` 区分（§3.1）；
 - 硬错 = FP + M + T（目标 0）；噪声 W 单独列示（目标 0，但按"不把合理不确定性判错"精神不并入硬错）；
 - 输出：`passed/HARD-errors breakdown (FP/M/T) / W / 84`，作为交付材料进 `review/`；
 - **注意区分**：审计报告（对目标的事实与结论）与一致性成绩（自评质量门）不混用。

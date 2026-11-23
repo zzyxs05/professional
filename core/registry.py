@@ -5,7 +5,8 @@
 - 本文件是 specification.md §2 的机器可读实现；两者冲突时以 specification.md 为准并回改本文件。
 """
 
-RULE_PACK_VERSION = "0.1.4"   # 0.1.4：剥离 DEX string_data 的 uleb128 长度前缀（OBS-5），恢复 R-CODE-01 弱模式 / find_type_refs / method_refs
+RULE_PACK_VERSION = "0.1.6"   # 0.1.6：补齐 12 项 Android 12/13+ 敏感权限的使用模式（R-PERM-03 不再对这些权限检测空转）
+                              # 0.1.5：结论全量化（每条判点都有交代，不再静默消失）+ B1/B2 prompt 数据边界 + 敌对样本防御
                               # 0.1.3：R-PERM-03 静态排除力分档 + 声明即生效排除集 + 权限清单扩至 Android 13+ + 自有代码范围兜底
 PROJECT_NAME = "apkaudit"
 
@@ -240,6 +241,19 @@ PERMISSION_USAGE_PATTERNS = {
     "android.permission.QUERY_ALL_PACKAGES": ["Landroid/content/pm/PackageManager;->getInstalledPackages", "Landroid/content/pm/PackageManager;->getInstalledApplications", "Landroid/content/pm/PackageManager;->queryIntentActivities"],
     "android.permission.PACKAGE_USAGE_STATS": ["Landroid/app/usage/UsageStatsManager;"],
     "android.permission.WRITE_SETTINGS": ["Landroid/provider/Settings$System;->putString", "Landroid/provider/Settings$System;->putInt", "android.settings.action.MANAGE_WRITE_SETTINGS"],
+    # Android 12/13+ 新增敏感权限（第二次审查 m-1：补齐使用模式，避免声明后永不判"未发现使用"）
+    "android.permission.READ_MEDIA_IMAGES": ["Landroid/provider/MediaStore$Images;", "Landroid/content/ContentResolver;->openInputStream", "Landroid/provider/MediaStore;->"],
+    "android.permission.READ_MEDIA_VIDEO": ["Landroid/provider/MediaStore$Video;", "Landroid/content/ContentResolver;->openInputStream", "Landroid/provider/MediaStore;->"],
+    "android.permission.READ_MEDIA_AUDIO": ["Landroid/provider/MediaStore$Audio;", "Landroid/content/ContentResolver;->openInputStream", "Landroid/provider/MediaStore;->"],
+    "android.permission.ACCESS_MEDIA_LOCATION": ["Landroid/media/MediaMetadataRetriever;", "Landroid/location/Location;", "setRequireOriginal"],
+    "android.permission.NEARBY_WIFI_DEVICES": ["Landroid/net/wifi/aware/", "Landroid/net/wifi/p2p/WifiP2pManager;", "Landroid/net/NetworkSpecifier;"],
+    "android.permission.BLUETOOTH_SCAN": ["Landroid/bluetooth/le/BluetoothLeScanner;->", "Landroid/bluetooth/BluetoothAdapter;->startDiscovery", "Landroid/bluetooth/le/ScanCallback;"],
+    "android.permission.BLUETOOTH_CONNECT": ["Landroid/bluetooth/BluetoothDevice;->", "Landroid/bluetooth/BluetoothGatt;", "Landroid/bluetooth/BluetoothA2dp;"],
+    "android.permission.BLUETOOTH_ADVERTISE": ["Landroid/bluetooth/le/BluetoothLeAdvertiser;->", "Landroid/bluetooth/le/AdvertiseCallback;"],
+    "android.permission.BODY_SENSORS": ["Landroid/hardware/SensorManager;->", "Landroid/hardware/SensorEventListener;", "TYPE_HEART_RATE"],
+    "android.permission.BODY_SENSORS_BACKGROUND": ["Landroid/hardware/SensorManager;->", "android.permission.BODY_SENSORS_BACKGROUND"],
+    "android.permission.ACTIVITY_RECOGNITION": ["Lcom/google/android/gms/location/ActivityRecognitionClient;", "Landroid/app/ActivityRecognition;", "ActivityRecognitionRequest"],
+    "android.permission.USE_BIOMETRIC": ["Landroidx/biometric/BiometricPrompt;", "Landroid/hardware/biometrics/", "Landroid/biometric/BiometricPrompt;"],
 }
 
 # ---------------------------------------------------------------- 凭据模式（R-STR-01）
@@ -322,6 +336,8 @@ LIBRARY_PREFIXES = (
 MAX_SNIPPET_LEN = 200          # raw_snippet 截断长度
 MAX_HITS_PER_RULE = 50         # 单规则命中上限（超出记录并截断）
 DEX_SCAN_MAX_STRINGS = 200000  # 防御性上限
+ZIP_MEMBER_MAX_BYTES = 64 * 1024 * 1024   # 单个 zip 成员解压上限（防 zip bomb）
+MAX_XML_DEPTH = 64             # AXML 元素嵌套上限（防畸形样本递归爆栈）
 
 # ---------------------------------------------------------------- LLM 接入（通道 B / 评价器共用）
 KEY_FILE_NAME = "key.txt"

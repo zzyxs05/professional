@@ -12,6 +12,8 @@
 
 import struct
 
+from . import registry
+
 # ---- chunk 类型
 CHUNK_STRING_POOL = 0x0001
 CHUNK_XML_START_NS = 0x0100
@@ -55,7 +57,7 @@ class _StringPool(object):
             for off in offsets:
                 pos = offset + strings_start + off
                 self.strings.append(self._read_string(data, pos))
-        except struct.error as e:
+        except (struct.error, IndexError) as e:
             raise AXMLParseError('StringPool 解析失败: %s' % e)
 
     def _read_string(self, data, pos):
@@ -239,8 +241,13 @@ def _resolve_value(pool, raw, vtype, data):
 def _build_tree(events, ns_prefixes):
     root = None
     stack = []
+    max_depth = registry.MAX_XML_DEPTH
     for kind, payload in events:
         if kind == 'start':
+            # 畸形/恶意样本可以构造上万层嵌套，让后续任何递归遍历爆栈。
+            # 在这里就挡住，转成 AXMLParseError（样本级语义），不留 RecursionError。
+            if len(stack) >= max_depth:
+                raise AXMLParseError('XML 嵌套超过 %d 层，疑似畸形样本' % max_depth)
             tag, ns_idx, attrs, line = payload
             el = XmlElement(tag, line)
             for a_ns, a_name, a_value, a_line in attrs:
@@ -252,8 +259,14 @@ def _build_tree(events, ns_prefixes):
                 root = el
             stack.append(el)
         elif kind == 'end':
-            if stack:
-                stack.pop()
+            name = payload[0] if isinstance(payload, tuple) and payload else ''
+            if not stack:
+                raise AXMLParseError('结束标签 </%s> 无对应开始标签' % name)
+            if name and stack[-1].tag != name:
+                # 不配对时静默 pop 会让整棵树的层级与行号区间错位，
+                # 进而把组件归属、证据定位整体带偏——宁可判样本畸形。
+                raise AXMLParseError('标签不配对：<%s> 与 </%s>' % (stack[-1].tag, name))
+            stack.pop()
         elif kind == 'cdata':
             if stack and payload:
                 el = XmlElement('#text', 0)
@@ -277,6 +290,8 @@ def _render(root, ns_prefixes):
     lines = ['<?xml version="1.0" encoding="utf-8"?>']
 
     def walk(el, depth):
+        if depth > registry.MAX_XML_DEPTH:
+            raise AXMLParseError('重建 XML 超过 %d 层，疑似畸形样本' % registry.MAX_XML_DEPTH)
         indent = '    ' * depth
         if el.tag == '#text':
             lines.append(indent + _format_attr_value(str(el.attrs[0].value)))
@@ -288,7 +303,8 @@ def _render(root, ns_prefixes):
             if a.value is not None:
                 parts.append(' %s="%s"' % (name, _format_attr_value(str(a.value))))
             else:
-                parts.append(' %s' % name)
+                # 值缺失时也要保持合法 XML；裸属性名会让重建文本无法再被解析
+                parts.append(' %s=""' % name)
         header = indent + ''.join(parts)
         if not el.children:
             lines.append(header + '/>')

@@ -89,6 +89,16 @@ class TestCommonOps(unittest.TestCase):
 
 
 class TestPermRules(unittest.TestCase):
+    def test_sensitive_permission_usage_patterns_complete(self):
+        """回归（第二次审查 m-1）：除豁免集外，每个敏感权限都要有使用模式，
+        否则 R-PERM-03 会对该权限的'声明未使用'检测永久空转。"""
+        exempt = (set(registry.DECLARATION_ONLY_PERMISSIONS)
+                  | set(registry.BROADCAST_TYPE_PERMISSIONS))
+        need = set(registry.SENSITIVE_PERMISSIONS) - exempt
+        missing = need - set(registry.PERMISSION_USAGE_PATTERNS)
+        self.assertEqual(missing, set(),
+                         '缺使用模式的敏感权限：%s' % sorted(missing))
+
     def test_perm01_combo_hit(self):
         src = (SMALI_HEAD.format('App') +
                '.method public run()V\n    .locals 2\n'

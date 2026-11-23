@@ -10,7 +10,7 @@ import os
 import re
 import zipfile
 
-from . import registry
+from . import safezip
 from .adapters import ResFacts, SmaliFacts
 from .axml import parse_manifest_bytes
 from .dexscan import scan_apk_dex
@@ -79,7 +79,7 @@ def build_context(project_root, apk_path, sha256, decode_dir=None):
     ctx.apk_sha256 = sha256
 
     with zipfile.ZipFile(apk_path) as z:
-        manifest_bytes = z.read('AndroidManifest.xml')
+        manifest_bytes = safezip.read_member(z, 'AndroidManifest.xml')
     doc, facts = parse_manifest_bytes(manifest_bytes)
     ctx.manifest = facts
     ctx.manifest_doc = doc
@@ -123,10 +123,10 @@ def run_channel_a(ctx):
             coverage_not_checked.append(
                 '%s（数据源未覆盖：缺少 %s）' % (rule_id, missing))
             continue
-        mod = importlib.import_module(modpath)
         try:
+            mod = importlib.import_module(modpath)
             hits = mod.run(ctx)
-        except Exception as e:  # noqa: BLE001 —— 单规则异常不阻断其余；记为未判定
+        except Exception as e:  # noqa: BLE001 —— 单规则异常（含导入期）不阻断其余；记为未判定
             coverage_not_checked.append('%s（规则执行异常：%s）' % (rule_id, e))
             continue
         hits_by_rule[rule_id] = hits

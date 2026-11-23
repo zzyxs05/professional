@@ -48,12 +48,17 @@ def compare_sample(report, truth):
             else:
                 result = 'PASS' if status in (registry.STATUS_CONFIRMED, registry.STATUS_REVIEW) else 'TIER'
         elif exp == 'EXPECTED_SILENT':
+            # 「预期不命中」只有在报告明确写出该判点、且规则确实执行过时才算 PASS。
+            # c is None = 报告缺这一条（不可区分「查过」与「没查」）；
+            # missing_evidence 非空 = 规则未执行/数据源缺口，同样不等于「查过」。
             if c is None:
-                result = 'PASS'
+                result = 'MISS'
             elif status == registry.STATUS_CONFIRMED:
                 result = 'FP'
             elif status == registry.STATUS_REVIEW:
                 result = 'NOISE'
+            elif c.get('missing_evidence'):
+                result = 'MISS'
             else:
                 result = 'PASS'
         elif exp.startswith('EXPECTED_NA'):

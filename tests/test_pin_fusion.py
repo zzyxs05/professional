@@ -81,25 +81,52 @@ class TestPinEvidence(unittest.TestCase):
 
 
 class TestBuildConclusions(unittest.TestCase):
+    @staticmethod
+    def _by_id(concl, rid):
+        """结论已全量化（每条规则都有交代），按 id 精确定位被测规则。"""
+        found = [c for c in concl if c['criterion_id'] == rid]
+        return found[0] if found else None
+
+    def test_all_rules_have_conclusion(self):
+        # C-1 回归：未执行任何规则时，14 条判点仍须逐条出结论并写明缺口，
+        # 不允许在报告里静默消失。
+        concl, _obs = fusion.build_conclusions({})
+        self.assertEqual(sorted(c['criterion_id'] for c in concl),
+                         sorted(registry.ALL_RULE_IDS))
+        for c in concl:
+            self.assertEqual(c['status'], registry.STATUS_UNDECIDED)
+            self.assertTrue(c['missing_evidence'], '未执行的规则必须写明缺口')
+
+    def test_executed_no_hit_is_undecided_without_gap(self):
+        # 规则已执行、机械未命中：仍是「无法判定」（没证据不许写通过），
+        # 但不应留下覆盖缺口。
+        concl, _obs = fusion.build_conclusions({rid: [] for rid in registry.ALL_RULE_IDS})
+        self.assertEqual(len(concl), len(registry.ALL_RULE_IDS))
+        for c in concl:
+            self.assertEqual(c['status'], registry.STATUS_UNDECIDED)
+            self.assertEqual(c['missing_evidence'], [])
+            self.assertTrue(c['notes'], '须注明「已执行未命中，不构成安全结论」')
+
     def test_tier_cap_by_rule(self):
         # 融合层档位 = 该规则的 max_status（不越权；动态取值，档位调整不会让测试假失败）
         rid = 'R-PERM-03'
         hits = {rid: [Hit(rid, 'x.smali:1', 'snippet')]}
         concl, _obs = fusion.build_conclusions(hits)
-        self.assertEqual(concl[0]['status'], registry.RULE_META[rid]['max_status'])
+        self.assertEqual(self._by_id(concl, rid)['status'],
+                         registry.RULE_META[rid]['max_status'])
 
     def test_hit_level_cap_below_rule(self):
         # hit 标注低于规则上限时，取更低档（弱证据不得被规则上限拉高）
         rid = 'R-PERM-03'
         hits = {rid: [Hit(rid, 'x.smali:1', 'snippet', max_status=registry.STATUS_REVIEW)]}
         concl, _obs = fusion.build_conclusions(hits)
-        self.assertEqual(concl[0]['status'], registry.STATUS_REVIEW)
+        self.assertEqual(self._by_id(concl, rid)['status'], registry.STATUS_REVIEW)
 
     def test_tier_min_with_hit_override(self):
         hits = {'R-CODE-01': [Hit('R-CODE-01', 'classes.dex#type', 'x',
                                   max_status=registry.STATUS_REVIEW)]}
         concl, _obs = fusion.build_conclusions(hits)
-        code01 = [c for c in concl if c['criterion_id'] == 'R-CODE-01'][0]
+        code01 = self._by_id(concl, 'R-CODE-01')
         self.assertEqual(code01['status'], registry.STATUS_REVIEW)
 
     def test_b2_unpinned_stays_review(self):
@@ -109,9 +136,10 @@ class TestBuildConclusions(unittest.TestCase):
             b2 = [{'claim': '某处存在可疑行为但无具体对象', 'location': '', 'rule_guess': 'R-FAKE'}]
         concl, obs = fusion.build_conclusions({}, {}, BRes())
         self.assertEqual(obs, [])
-        self.assertEqual(len(concl), 1)
-        self.assertEqual(concl[0]['status'], registry.STATUS_REVIEW)
-        self.assertTrue(concl[0]['missing_evidence'])
+        rb = [c for c in concl if c['criterion_id'].startswith('R-B-')]
+        self.assertEqual(len(rb), 1)
+        self.assertEqual(rb[0]['status'], registry.STATUS_REVIEW)
+        self.assertTrue(rb[0]['missing_evidence'])
 
     def test_b2_pinned_backfill_respects_cap(self):
         # 钉成功补盲：档位取规则上限（R-PERM-01 仍为待复核，不越权）
@@ -126,11 +154,12 @@ class TestBuildConclusions(unittest.TestCase):
             b2 = [{'claim': '声明了权限但代码中未发现使用', 'location': 'x', 'rule_guess': 'R-PERM-03'}]
 
         concl, _obs = fusion.build_conclusions({}, {}, BRes(), pin_fn=pin_fn)
-        self.assertEqual(len(concl), 1)
-        self.assertEqual(concl[0]['criterion_id'], 'R-PERM-03')
+        # 补盲只对「未被 A 覆盖」的规则生效，且不得重复出结论
+        perm03 = [c for c in concl if c['criterion_id'] == 'R-PERM-03']
+        self.assertEqual(len(perm03), 1)
         # 补盲结论档位取该规则上限（不得越权升到上限之上）
-        self.assertEqual(concl[0]['status'], registry.RULE_META['R-PERM-03']['max_status'])
-        self.assertEqual(concl[0]['channel'], 'fusion')
+        self.assertEqual(perm03[0]['status'], registry.RULE_META['R-PERM-03']['max_status'])
+        self.assertEqual(perm03[0]['channel'], 'fusion')
 
 
 if __name__ == '__main__':

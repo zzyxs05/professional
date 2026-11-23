@@ -36,7 +36,17 @@ def _decide(findings, report):
             return 'PASS', '无命中结论（干净样本），覆盖声明完整（%d 项已检查）' % len(checked)
         return 'INSUFFICIENT_EVIDENCE', '报告无结论且覆盖声明不完整'
     if all(c.get('status') == registry.STATUS_UNDECIDED for c in concl):
-        return 'INSUFFICIENT_EVIDENCE', '全部结论为「无法判定」（数据源缺口）'
+        # 判点全量化后，「全部无法判定」有两种含义，必须分开判：
+        #   有 missing_evidence → 规则没跑（数据源缺口）→ 弃权
+        #   无 missing_evidence → 规则都跑了、机械未命中 → 干净样本，可判通过
+        gaps = [c for c in concl if c.get('missing_evidence')]
+        if gaps:
+            return 'INSUFFICIENT_EVIDENCE', (
+                '全部结论为「无法判定」（数据源缺口 %d 条）' % len(gaps))
+        if checked and not cov.get('decode_failed'):
+            return 'PASS', ('判点全部执行、机械未命中（干净样本），'
+                            '覆盖声明完整（%d 项已检查）' % len(checked))
+        return 'INSUFFICIENT_EVIDENCE', '无命中结论且覆盖声明不完整'
     insuff = [f for f in findings if f['level'] == 'INSUFFICIENT']
     if insuff:
         return 'INSUFFICIENT_EVIDENCE', insuff[0]['msg']
@@ -296,7 +306,13 @@ class AgentLoop(object):
             rejected = [it['path'] for it in listing['items'] if not it.get('allowed', True)]
             evidence_ids = [it['path'] for it in listing['items'] if it['exists']]
 
-            content_checked = (crit['id'] == 'E-05' and mechanically_checked)
+            # 机械层能核到的最深程度：引用/版本/结构由 verify_claims 统一核对。
+            # 一旦快照通过且该项锚点齐全，即可判「通过（仅机械层）」——
+            # 原先只给 E-05 开口，导致上层 any(INSUFFICIENT) 恒真、PASS 永不可达，
+            # 与总档 A-08「四状态」不符。
+            content_checked = bool(mechanically_checked
+                                   and snapshot_status == 'PASS'
+                                   and not missing and not rejected)
             if self.contract is None and self.mode == 'peer':
                 status, finding = ('INSUFFICIENT_EVIDENCE',
                                    '互评缺少目标批准契约，本项未做实质审查')
