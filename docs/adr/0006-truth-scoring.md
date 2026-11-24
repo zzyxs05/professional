@@ -1,5 +1,10 @@
 # ADR-0006 · 真值一致性评分规则（FP 与噪声的二分）
 
+> 性质：design ｜ 版本：v1.0 ｜ 状态：生效
+> 职责：回答真值一致性中 FP 与噪声如何二分、硬错如何计数；不定义 14 条规则的具体判定。
+> 关联：依据 `docs/specification.md` §6、第 8 节；脚本 `scripts/truth_check.py`；成绩 `review/truth_result.json`；索引 `docs/decision-log.md` D-10。
+> 签署：状态统一见 `docs/signoff.md`，本文不设独立签署栏。
+
 - 状态：已采纳（2026-10-14）
 - 决策人：周宗正、余俊辉
 - 关联：`docs/specification.md` §6（真值一致性评分规则）、`docs/specification.md` 第 8 节、`scripts/truth_check.py`

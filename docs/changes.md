@@ -1,7 +1,11 @@
 # changes · 规则/结构变更记录（版本锚点）【review】
 
-> 规则变更 = bump RULE_PACK_VERSION + 本文件记录 + 重跑靶场真值。
-> 历史报告保留原有解释，不被新规则悄悄改写。
+> 性质：review ｜ 版本：v1.0 ｜ 状态：生效
+> 职责：按时间记录规则包与结构的每次变更、触发来源与回归结果；不重述规约正文，也不保存运行事实。
+> 关联：变更纪律 `HARNESS.md` §1.3；规则契约 `docs/specification.md`；回归 `scripts/truth_check.py`；实验数据 `docs/experiments.md`。
+> 签署：状态统一见 `docs/signoff.md`，本文不设独立签署栏。
+
+规则变更 = bump RULE_PACK_VERSION + 本文件记录 + 重跑靶场真值。历史报告保留原有解释，不被新规则悄悄改写。
 
 ## B 通道建设期修正（2026-10-14/15，真实模型连测驱动；B 通道有独立 prompt 版本号）
 
@@ -55,7 +59,7 @@
 | G4 | R-PERM-03 新增**声明即生效权限排除集** `DECLARATION_ONLY_PERMISSIONS`（QUERY_ALL_PACKAGES、SYSTEM_ALERT_WINDOW、REQUEST_INSTALL_PACKAGES 等 7 项） | 消除对"无需 API 调用即生效"的权限误判"未使用" |
 | G5 | `Hit.context` 字段：规则可附带"机械层已完成的检索说明"，注入 B1 输入 | 信息不全会让 B1 判"无法判断"；补齐后 bad01 R-PERM-03 由 B1 判"确认可疑"并正确升档 |
 
-**G4 的来源值得记录**：它来自 **B 通道的观察**（B1 在 observation 中指出 QUERY_ALL_PACKAGES 等
+**G4 的来源**：它来自 **B 通道的观察**（B1 在 observation 中指出 QUERY_ALL_PACKAGES 等
 "属清单声明即生效的能力型权限，通常无对应 API 调用"）→ 经人/规则采纳为机械改进。
 这是「B 提疑 → 规则改进」闭环的第一次实证。
 
@@ -101,7 +105,7 @@
 | 报告 schema | 新增 `observations` 区（B 通道观察：低置信疑点 + B1 补充观察），**非结论、不计入三档**（规则包 0.1.0 → **0.1.1**） |
 | 机械修复 | 钉证据 `_claim_entities` 的 URL 提取误吞中文右括号 `）`，导致实体比对失败、疑点无法正确归属（机械 bug，非引导问题） |
 
-**实测结论（重要）**：去禁令后 B1 **并未**回到"判真伪/降档"——它按误报口径判"确认可疑"，
+**实测结论**：去禁令后 B1 **并未**回到"判真伪/降档"——它按误报口径判"确认可疑"，
 同时用 `observation` 说出"疑似示例/占位值"的观察。**说明之前的禁令本就不必要：模型能区分
 "判定"与"观察"，是我没给 observation 出口才误以为需要堵嘴。** B2 也恢复了推理型观察
 （如"攻击面来自网络入口而非组件"），以 `confidence: low` 进观察区。

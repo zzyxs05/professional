@@ -1,5 +1,10 @@
 # ADR-0004 · 钉证据机制：LLM 提疑、规则钉证据
 
+> 性质：design ｜ 版本：v1.0 ｜ 状态：生效
+> 职责：回答 LLM 提疑如何翻译为可机械验证的事实断言、钉成功与失败各如何处理；不规定 B 通道的 prompt 版本。
+> 关联：实现 `core/fusion.py`（pin_evidence）；测试 `tests/test_pin_fusion.py`；依据 `docs/specification.md` §2；索引 `docs/decision-log.md` D-08。
+> 签署：状态统一见 `docs/signoff.md`，本文不设独立签署栏。
+
 - 状态：已采纳（2026-10-14）
 - 决策人：周宗正
 - 关联：总档 §3.5、`core/fusion.py`、`specification.md`

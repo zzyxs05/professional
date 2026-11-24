@@ -1,9 +1,11 @@
 # requirements · 需求说明
 
-> 交付类：brief（问题、范围、责任）+ 需求层｜版本：v1.1
-> 这份文件回答"谁、在什么场景下、系统要保证什么"，不回答怎么实现。
-> UN / REQ 的编号属于稳定部分，改编号要记 `changes.md` 并说明影响。实现细节（规则怎么加、换哪个模型）不进这里。
-> 上游：`research/apk-audit-landscape.md`（调研推导）｜下游：`specification.md`（规约与验收）
+> 性质：brief ｜ 版本：v1.1 ｜ 状态：生效
+> 职责：这份文件回答"谁、在什么场景下、系统要保证什么"，不回答怎么实现。
+> 关联：上游 `research/apk-audit-landscape.md`（调研推导）；下游 `specification.md`（规约与验收）。
+> 签署：状态统一见 `docs/signoff.md`，本文不设独立签署栏。
+
+UN / REQ 的编号属于稳定部分，改编号要记 `changes.md` 并说明影响。实现细节（规则怎么加、换哪个模型）不进这里。
 
 ---
 

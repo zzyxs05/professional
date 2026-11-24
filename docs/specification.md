@@ -1,9 +1,11 @@
 # specification · 规约（规则、格式、状态、验收）
 
-> 交付类：design / eval　｜　上游：`requirements.md`　｜　版本：v0.4（对齐规则包 0.1.4）
-> 这份文件回答四件事：14 条规则具体查什么、报告长什么样、运行有哪些状态、怎么算验收通过。
-> 实现唯一来源是 `core/registry.py`（规则、阈值、正则都登记在那里）。本文与 registry 不一致时，以本文为准，并回去改 registry。
-> 需求对应：本文件的规则服务 `requirements.md` REQ-02；用户需求 UN-01—UN-06 和追溯关系也在那份文件。
+> 性质：design ｜ 版本：v0.4（对齐规则包 0.1.4） ｜ 状态：生效
+> 职责：回答 14 条规则查什么、报告长什么样、运行有哪些状态、怎么算验收通过；不回答需求来源，也不展开实现代码。
+> 关联：上游 `requirements.md`（REQ-02、UN-01—UN-06）；实现 `core/registry.py`、`core/rules/`；验收 `scripts/truth_check.py`、`scripts/e2e.py`。
+> 签署：状态统一见 `docs/signoff.md`，本文不设独立签署栏。
+
+实现唯一来源是 `core/registry.py`（规则、阈值、正则都登记在那里）。本文与 registry 不一致时，以本文为准，并回去改 registry。
 
 ## 1. 数据源四层与降级规则
 

@@ -1,5 +1,10 @@
 # ADR-0003 · 结论三档与证据强度上限（静态不到"已确认"的场景显式封顶）
 
+> 性质：design ｜ 版本：v1.0 ｜ 状态：生效
+> 职责：回答结论为何分三档、逐规则档位上限如何约束融合层；不定义真值评分的判罚口径。
+> 关联：依据 `docs/specification.md` §2/§6；实现 `core/fusion.py`；真值 `scripts/truth_check.py`；索引 `docs/decision-log.md` D-07。
+> 签署：状态统一见 `docs/signoff.md`，本文不设独立签署栏。
+
 - 状态：已采纳（2026-10-14）
 - 决策人：周宗正、余俊辉
 - 关联：总档 §3.5、`specification.md` §2/§6

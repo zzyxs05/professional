@@ -1,7 +1,9 @@
 # experiments · 实验卡与逐次数据【review / O4】
 
-> 允许并保留负结果。每卡：假设 → 设置 → 逐次数据 → 结论（含失败与成本）。
-> 变量怎么控制、固定条件有哪些、计时从哪算到哪，统一写在 `docs/experiment-protocol.md`；这里只写每张实验卡的具体设置和数据，不重复抄一遍。
+> 性质：review ｜ 版本：v1.0 ｜ 状态：生效
+> 职责：记录各实验卡的假设、设置、逐次数据与结论（含失败与成本）；允许并保留负结果。变量控制、固定条件与计时规则只看 `docs/experiment-protocol.md`，这里不重复。
+> 关联：协议 `docs/experiment-protocol.md`；数据 `review/exp_datasource_ab*.json`；规则变更 `docs/changes.md`；技术决策 `docs/adr/0002-toolchain-layered-sources.md`、`docs/adr/0006-truth-scoring.md`。
+> 签署：状态统一见 `docs/signoff.md`，本文不设独立签署栏。
 
 ## 实验 1：靶场真值一致性（核心质量门）
 

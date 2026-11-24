@@ -1,8 +1,9 @@
 # E1 方案与证据挑战包
 
-> 用途：E1 的输入材料。对方按这份材料挑 2—3 个 Claim 质疑，我方必须给出明确决定（采用 / 限制采用 / 保留 Baseline / 需更多证据）。
-> 对手组：毛舒逸组（异题结对）｜纪律：不代写实现，正式实验前不共享保留数据。
-> 关联：`docs/events.md`、`docs/decision-log.md`
+> 性质：review ｜ 版本：v1.0 ｜ 状态：生效
+> 职责：面向毛舒逸组给出交换材料、三个 Claim 的证据链与自曝攻击点，供对方质疑并记录决定；不代写实现，不共享保留数据。
+> 关联：事件记录 `docs/events.md`；决策索引 `docs/decision-log.md`；配套攻击面 `review/e3_attack_surface.md`。
+> 签署：状态统一见 `docs/signoff.md`，本文不设独立签署栏。
 
 ---
 

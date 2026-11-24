@@ -1,5 +1,10 @@
 # ADR-0008 · 目标用户：以"复核者"为主用户，而不是"扫描者"
 
+> 性质：design ｜ 版本：v1.0 ｜ 状态：生效
+> 职责：回答主用户为何是复核者而非扫描者、由此导出哪些报告设计取舍；不指定角色的具名人。
+> 关联：依据 `docs/requirements.md` §1/§3；格式契约 `docs/specification.md` §4；签署流程 `docs/signoff.md`；索引 `docs/decision-log.md` D-02。
+> 签署：状态统一见 `docs/signoff.md`，本文不设独立签署栏。
+
 - 状态：已采纳
 - 决策人：周宗正（起草）、余俊辉（复核）
 - 关联：`requirements.md` §1/§3、`requirements.md` 第 2 节、`specification.md` §4

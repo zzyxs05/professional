@@ -1,5 +1,10 @@
 # ADR-0007 · 软件形态与交付形态：本地 CLI、单机离线、文件产物
 
+> 性质：design ｜ 版本：v1.0 ｜ 状态：生效
+> 职责：回答交付为何是本地 CLI + 文件产物、服务端/GUI/插件为何被否；不规定命令参数细节。
+> 关联：依据 `docs/requirements.md` REQ-09/11/15/17；入口 `cli.py`；交接包 `handoff/README.md`；验收 `scripts/e2e.py`。
+> 签署：状态统一见 `docs/signoff.md`，本文不设独立签署栏。
+
 - 状态：已采纳
 - 决策人：周宗正（起草）、余俊辉（复核）
 - 关联：`requirements.md` REQ-09/REQ-11/REQ-15/REQ-17、`handoff/README.md`、`handoff/README.md`

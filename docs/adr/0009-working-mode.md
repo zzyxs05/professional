@@ -1,5 +1,10 @@
 # ADR-0009 · 工作方式：人工触发、一样本一正本、签署后才生效
 
+> 性质：design ｜ 版本：v1.0 ｜ 状态：生效
+> 职责：回答分析何时触发、RUN 为何不覆盖、结论为何签署后才生效；不规定规则内容与报告 schema。
+> 关联：依据 `docs/requirements.md` REQ-05/06/18、`总档.md` §2.8；实现 `cli.py`、`evidence/RUN-*/`；台账 `docs/signoff.md`。
+> 签署：状态统一见 `docs/signoff.md`，本文不设独立签署栏。
+
 - 状态：已采纳
 - 决策人：周宗正（起草）、余俊辉（复核）
 - 关联：`requirements.md` REQ-05/REQ-06/REQ-18、`总档.md` §2.8、`handoff/README.md` 第 2 节

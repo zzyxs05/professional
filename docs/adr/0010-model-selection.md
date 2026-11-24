@@ -1,5 +1,10 @@
 # ADR-0010 · 模型选型：mimo-v2.6-flash（可用性优先，未做横向评测）
 
+> 性质：design ｜ 版本：v1.0 ｜ 状态：生效
+> 职责：回答 B 通道与评价器选用哪个模型、为何结论只到"当前可用"；不规定 prompt 版本与判定标准。
+> 关联：依据 `docs/specification.md` §5；实测 `docs/experiments.md` 实验 4/5；接入 `core/channel_b.py`、`evaluator/llm.py`；索引 `docs/decision-log.md` D-04。
+> 签署：状态统一见 `docs/signoff.md`，本文不设独立签署栏。
+
 - 状态：已采纳，**附带待办 R-1**
 - 决策人：周宗正（起草）、余俊辉（复核）
 - 关联：`specification.md` §5、`experiments.md` 实验 4/5、`总档.md` §6.6

@@ -1,5 +1,10 @@
 # ADR-0005 · 解码产物工作区外 + 工具链随仓库入库
 
+> 性质：design ｜ 版本：v1.0 ｜ 状态：生效
+> 职责：回答解码产物为何放工作区外、apktool jar 为何随仓库入库；不规定数据源分层与规则检测点。
+> 关联：实现 `core/adapters.py`；依据 `总档.md` §10、`docs/specification.md` §1；交接包 `handoff/README.md`；索引 `docs/decision-log.md` D-09。
+> 签署：状态统一见 `docs/signoff.md`，本文不设独立签署栏。
+
 - 状态：已采纳（2026-10-14）
 - 决策人：周宗正
 - 关联：总档 §10、`core/adapters.py`

@@ -1,6 +1,11 @@
 # ADR-0011 · 评价 Agent 的实现形态：Python 受限多轮循环，不引入 DeepSeek Harness
 
-- 状态：已采纳（待复核签字；签署状态见 `docs/decision-log.md`）
+> 性质：design ｜ 版本：v1.0 ｜ 状态：生效
+> 职责：回答评价器为何重构成 Python 受限多轮循环、不引入 DeepSeek Harness；不规定评分数值与 Rubric 细节。
+> 关联：依据 `总档.md` §2.6 / §8.3、`HARNESS.md` §1.5；实现 `evaluator/agent.py`、`evaluator/tools.py`；校准 `scripts/eval_calibrate.py`；变更 `docs/changes.md` S14—S22。
+> 签署：状态统一见 `docs/signoff.md`，本文不设独立签署栏。
+
+- 状态：已采纳（签署状态见 `docs/signoff.md`）
 - 日期：2026-11-18
 - 决策人：周宗正（起草）、余俊辉（复核）
 - 关联：`总档.md` §2.6 / §8.3、`AGENTS.md`、`HARNESS.md` §1.5、`docs/changes.md` S14—S22

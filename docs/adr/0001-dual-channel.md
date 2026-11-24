@@ -1,5 +1,10 @@
 # ADR-0001 · 双通道架构：确定性规则 + LLM 语义审查
 
+> 性质：design ｜ 版本：v1.0 ｜ 状态：生效
+> 职责：回答为何把确定性规则与 LLM 语义审查分成两条通道、融合层如何合并；不定义具体规则与报告格式。
+> 关联：依据 `docs/specification.md` §2/§5；实现 `core/channel_a.py`、`core/channel_b.py`、`core/fusion.py`；索引 `docs/decision-log.md` D-05。
+> 签署：状态统一见 `docs/signoff.md`，本文不设独立签署栏。
+
 - 状态：已采纳（2026-10-14）
 - 决策人：周宗正（起草）、余俊辉（复核）
 - 关联：总档 §3、`specification.md` §2/§5

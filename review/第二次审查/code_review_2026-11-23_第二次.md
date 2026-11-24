@@ -1,8 +1,13 @@
 # 代码审查报告 · zhuan（APK 静态审计系统）· 第二次审查
 
+> 性质：review ｜ 版本：v1.0 ｜ 状态：归档
+> 职责：记录第二次独立全量审查的发现、评分与合并建议；不沿用第一次审查结论，也不判定后续修复状态。
+> 关联：前次报告 `review/第一次审查/code_review_2026-11-23.md`；后续报告 `review/第三次审查/code_review_2026-11-24.md`；修复明细 `docs/changes.md`。
+> 签署：状态统一见 `docs/signoff.md`，本文不设独立签署栏。
+
 ## 审查概览
 
-- 审查目标：`C:/Users/shixz/Desktop/study/zhuan`（全仓库）
+- 审查目标：`.`（全仓库）
 - 审查范围：全量（59 个 Python 文件；AST 扫描 120 条原始发现，剔除 Skill 自身 10 条后按维度归并）
 - 技术栈：Python 3.13（仅标准库）；自研 AXML/DEX 解析器 + apktool 子进程 + OpenAI 兼容 HTTP 客户端
 - 审查方式：AST 静态扫描 + 五维度人工深审 + 17 组可复现行为实验 + 61 单测 + 84 判点真值重跑

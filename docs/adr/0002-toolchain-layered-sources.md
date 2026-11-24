@@ -1,5 +1,10 @@
 # ADR-0002 · 工具链与数据源分层：apktool + 自研 AXML/dex 直读
 
+> 性质：design ｜ 版本：v1.0 ｜ 状态：生效
+> 职责：回答数据源为何分四层、各自如何降级，以及语义规则为何用 smali 不用 jadx；不规定具体规则的检测点。
+> 关联：依据 `docs/specification.md` §1；实现 `core/axml.py`、`core/dexscan.py`、`core/adapters.py`；实验 `docs/experiments.md` 实验 2/6/7。
+> 签署：状态统一见 `docs/signoff.md`，本文不设独立签署栏。
+
 - 状态：已采纳（2026-10-14）
 - 决策人：周宗正
 - 关联：总档 §3.3/§10、`specification.md` §1

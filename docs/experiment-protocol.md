@@ -1,9 +1,11 @@
 # experiment-protocol · 对照实验协议（变量控制与计时规则）
 
-> 项目：APK 通用静态审计（apkaudit）｜交付类：design / eval｜版本：v1.0
-> 用途：固化工程对照实验的**自变量、因变量、控制变量与计时规则**。后续新增对照实验沿用本规则，不每次重定。
-> 依据：`docs/adr/0002-toolchain-layered-sources.md`、`docs/adr/0004-pin-evidence.md`、`总档.md` §2.2 O4 / §2.8 证据纪律。
-> 规则来源：EXP-6 的指标与固定条件写在采集脚本 `scripts/exp_datasource_ab.py` 的 `metrics` / `fixed_conditions` 字段中，随每次运行一起存盘；本文件是同一套规则的说明版，不倒填事前审批记录。
+> 性质：design ｜ 版本：v1.0 ｜ 状态：生效
+> 职责：固化工程对照实验的自变量、因变量、控制变量与计时规则；后续新增对照实验沿用，不每次重定。
+> 关联：依据 `docs/adr/0002-toolchain-layered-sources.md`、`docs/adr/0004-pin-evidence.md`、`总档.md` §2.2 O4 / §2.8；规则实现 `scripts/exp_datasource_ab.py`；实验数据 `docs/experiments.md`、`review/exp_datasource_ab.json`。
+> 签署：状态统一见 `docs/signoff.md`，本文不设独立签署栏。
+
+规则来源：EXP-6 的指标与固定条件写在采集脚本 `scripts/exp_datasource_ab.py` 的 `metrics` / `fixed_conditions` 字段中，随每次运行一起存盘；本文件是同一套规则的说明版，不倒填事前审批记录。
 
 ---
 

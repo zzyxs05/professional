@@ -1,6 +1,9 @@
 # AGENTS.md · 给 AI 的入口
 
-> 只做导航，不写规则。和 `HARNESS.md` 冲突时，以 `HARNESS.md` 为准；和 `总档.md` 冲突时，以 `总档.md` 为准。
+> 性质：design ｜ 版本：v1.0 ｜ 状态：生效
+> 职责：只做导航，不写规则；指清开工前读什么、哪六条不能违反、常用命令在哪。
+> 关联：依据 `HARNESS.md`、`总档.md`；与之冲突时分别以 `HARNESS.md`、`总档.md` 为准。下游 `TASKS.md`、`docs/specification.md`。
+> 签署：状态统一见 `docs/signoff.md`，本文不设独立签署栏。
 
 ## 开工前读三份
 
