@@ -1,0 +1,34 @@
+```json
+[
+  {
+    "claim": "ProtectedService 对外导出（exported=True），仅依赖自定义签名级权限 com.synth.good02.permission.INTERNAL 挡在外部调用之前；摘要中未见该服务在运行时 enforceCallingPermission/checkCallingPermission 的调用点证据。",
+    "location": "com.synth.good02.ProtectedService (service; exported=True)",
+    "rule_guess": "exported-component-permission-enforcement",
+    "confidence": "medium"
+  },
+  {
+    "claim": "自定义权限声明 com.synth.good02.permission.INTERNAL 的 protectionLevel 为 signature，需确认 Manifest 中实际声明值与之一致，且未被降级为 normal/debuggable，也未与系统或其他应用的同名权限产生覆盖冲突。",
+    "location": "AndroidManifest.xml 自定义权限声明 com.synth.good02.permission.INTERNAL",
+    "rule_guess": "custom-permission-protection-level",
+    "confidence": "medium"
+  },
+  {
+    "claim": "SyncReceiver 声明了自定义 action com.synth.good02.action.SYNC，虽 exported=False，但需确认其接收的广播是否为有序/可伪造的系统广播，以及发送方是否用 PendingIntent 可变标志导致广播被劫持。",
+    "location": "com.synth.good02.SyncReceiver (receiver; exported=False; actions=[com.synth.good02.action.SYNC])",
+    "rule_guess": "broadcast-receiver-visibility",
+    "confidence": "low"
+  },
+  {
+    "claim": "样本声明 INTERNET 权限并存在自有代码 URL（https://example.com/api/profile、https://example.com/secure），需核查请求是否仅走 HTTPS、是否禁用 cleartextTraffic、证书校验是否被放宽（如自定义 TrustManager/HostnameVerifier）。",
+    "location": "自有代码 URL 列表: https://example.com/api/profile; https://example.com/secure",
+    "rule_guess": "cleartext-traffic-and-tls-validation",
+    "confidence": "medium"
+  },
+  {
+    "claim": "MainActivity 未导出，攻击面较小，但需确认其是否通过隐式 Intent、deep link 或任务栈复用方式被外部拉起并携带敏感参数。",
+    "location": "com.synth.good02.MainActivity (activity; exported=False)",
+    "rule_guess": "activity-exported-surface",
+    "confidence": "low"
+  }
+]
+```

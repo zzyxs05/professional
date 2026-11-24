@@ -1,0 +1,1 @@
+{"verdict": "确认可疑", "reason": "命中同时具备 JS 启用、文件访问开启与 addJavascriptInterface 接口注入三要素，超出仅启用 JS 的误报口径。", "observation": "setAllowFileAccess 处 v1 复用自 229 行的 const/4 v1, 0x1，即开启文件访问；接口名为 \"nativeBridge\"，注入对象为 MainActivity$JsBridge。"}

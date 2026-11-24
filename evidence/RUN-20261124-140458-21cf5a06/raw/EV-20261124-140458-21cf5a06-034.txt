@@ -1,0 +1,1 @@
+{"verdict": "确认可疑", "reason": "命中处直接调用 SslErrorHandler.proceed() 且方法内无 handler.cancel()，属于规则所检测的忽略 SSL 错误结构", "observation": "方法在 proceed() 后直接 return-void，日志调用仅记录而不阻止错误继续"}

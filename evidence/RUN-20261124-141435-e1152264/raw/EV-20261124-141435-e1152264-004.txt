@@ -1,0 +1,1 @@
+{"verdict": "确认可疑", "reason": "该 activity 标注 android:exported=\"true\" 且未设置 permission/readPermission/writePermission，不满足误报口径中的组件级权限保护条件，构成导出组件无权限保护的结构。", "observation": "片段仅展示 Manifest 中的 activity 声明行，未见 intent-filter 之外的其他保护属性；命中位置为 AndroidManifest.xml:5-5。"}

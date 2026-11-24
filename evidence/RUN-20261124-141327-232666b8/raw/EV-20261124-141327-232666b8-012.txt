@@ -1,0 +1,34 @@
+```json
+[
+  {
+    "claim": "自有代码中硬编码了一个明文 HTTP URL，且将疑似 GitHub 个人访问令牌（ghp_ 前缀）直接拼接在 query 参数 token 中",
+    "location": "自有代码 URL 列表第 1 条：http://10.0.0.8:8080/api/profile?token=ghp_0000000000000000000000000000000000",
+    "rule_guess": "hardcoded_credential",
+    "confidence": "high"
+  },
+  {
+    "claim": "网络请求使用 http:// 明文协议，凭据以 query 参数传输，存在中间人窃取与日志泄露风险",
+    "location": "http://10.0.0.8:8080/api/profile?token=...",
+    "rule_guess": "cleartext_traffic",
+    "confidence": "high"
+  },
+  {
+    "claim": "请求目标为内网私有地址 10.0.0.8:8080，结合 INTERNET 权限，可能用于连接硬编码的调试/内网后端或数据外传",
+    "location": "com.synth.bad02 应用代码；权限 android.permission.INTERNET",
+    "rule_guess": "hardcoded_endpoint",
+    "confidence": "medium"
+  },
+  {
+    "claim": "敏感令牌出现在 URL query 中，可能被 WebView、Referer 头或访问日志二次泄露",
+    "location": "http://10.0.0.8:8080/api/profile?token=ghp_...",
+    "rule_guess": "sensitive_data_in_url",
+    "confidence": "medium"
+  },
+  {
+    "claim": "MainActivity 未导出（exported=False），无明显的跨应用组件暴露入口；未观察到动态加载、自定义权限或明文网络配置等其他高风险结构",
+    "location": "com.synth.bad02.MainActivity",
+    "rule_guess": "exported_component",
+    "confidence": "low"
+  }
+]
+```

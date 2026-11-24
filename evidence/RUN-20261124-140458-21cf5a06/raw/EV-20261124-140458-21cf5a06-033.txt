@@ -1,0 +1,1 @@
+{"verdict": "确认可疑", "reason": "checkClientTrusted/checkServerTrusted 均为空实现（直接 return-void），HostnameVerifier.verify 也恒返回 true，既未委托系统默认校验也不属于非空实现，正是空 TrustManager 导致的证书校验绕过结构", "observation": "三个方法构成一个匿名 TrustManager/HostnameVerifier 实现（InsecureTls$1/$2），getAcceptedIssuers 返回空数组也是典型的空校验实现配套写法"}

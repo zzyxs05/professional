@@ -1,0 +1,1 @@
+{"verdict": "确认可疑", "reason": "命中片段监听的均为敏感系统广播（BOOT_COMPLETED、SMS_RECEIVED、PHONE_STATE），不属于自定义 action 或非敏感系统事件的误报口径。", "observation": "该 receiver exported=true 且未见权限限制，SMS_RECEIVED 与 PHONE_STATE 属于受保护广播，监听意图明确。"}

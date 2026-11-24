@@ -1,0 +1,1 @@
+{"verdict": "确认可疑", "reason": "命中不是单纯的类名字符串，而是完整的 DexClassLoader 实例化（new-instance）、构造调用（invoke-direct <init>）以及随后的 loadClass 调用链，具备明确的动态代码加载调用上下文，超出'仅字符串出现类名'的误报口径。", "observation": "三个片段构成连续调用链：构造 DexClassLoader 后立即以常量字符串 \"com.synth.bad03.plugin.EntryPoint\" 调用 loadClass，属于典型的动态加载并执行外部 dex 类的结构。"}

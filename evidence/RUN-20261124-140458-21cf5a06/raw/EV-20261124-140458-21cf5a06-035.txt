@@ -1,0 +1,9 @@
+```json
+[
+  {"claim": "清单声明了 android.permission.RECORD_AUDIO、android.permission.ACCESS_FINE_LOCATION 与 android.permission.INETERNET 三者组合，具备采集音频与精确位置并通过网络外发的能力", "location": "AndroidManifest 权限声明（INTERNET / RECORD_AUDIO / ACCESS_FINE_LOCATION）", "rule_guess": "PERM_SENSITIVE_COMBO", "confidence": "high"},
+  {"claim": "MainActivity.smali 的第 82、101、106 行存在动态加载/反射调用点，可能在运行时加载额外代码或类", "location": "smali/com/synth/bad03/MainActivity.smali:82,101,106", "rule_guess": "DYNAMIC_LOAD", "confidence": "medium"},
+  {"claim": "自有代码中出现硬编码 URL https://example.com/app，为样本内唯一网络入口，需确认其数据上传内容", "location": "自有代码字符串 https://example.com/app", "rule_guess": "HARDCODED_URL", "confidence": "medium"},
+  {"claim": "RecordingService 为录音服务且未导出（exported=False），需人工确认其启动时机及是否在用户未授权感知时持续录音", "location": "com.synth.bad03.RecordingService (service; exported=False)", "rule_guess": "BACKGROUND_SENSING", "confidence": "medium"},
+  {"claim": "两个组件均标记 exported=False，未发现对外暴露的入口，导出组件滥用风险较低", "location": "com.synth.bad03.MainActivity / RecordingService", "rule_guess": "EXPORTED_COMPONENT", "confidence": "high"}
+]
+```

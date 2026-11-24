@@ -1,0 +1,1 @@
+[{"claim": "com.synth.bad04.MainActivity 被标记为 exported=True，且摘要中未见任何权限保护或 intent-filter 限制说明", "location": "com.synth.bad04.MainActivity", "rule_guess": "exported_component_unprotected", "confidence": "medium"}, {"claim": "样本摘要中权限调用点、自定义权限声明、URL、动态加载点均为空，敏感面信息可能采集不全，需人工确认是否为真实空白", "location": "权限/URL/动态加载（摘要为空）", "rule_guess": "", "confidence": "low"}]

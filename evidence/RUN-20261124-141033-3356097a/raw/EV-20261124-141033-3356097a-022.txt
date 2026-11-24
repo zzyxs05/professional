@@ -1,0 +1,1 @@
+{"verdict": "确认可疑", "reason": "四个组件均声明 android:exported=\"true\" 且片段中未见任何组件级 permission/readPermission/writePermission 属性，不属于误报口径", "observation": "provider 同时缺少 readPermission/writePermission；receiver 具备 intent-filter 但未见权限或 android:permission 保护；命中以 Manifest 属性为准，若完整清单其他位置另有权限声明需另行核对"}

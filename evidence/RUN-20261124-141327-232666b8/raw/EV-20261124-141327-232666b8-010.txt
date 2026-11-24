@@ -1,0 +1,1 @@
+{"verdict": "确认可疑", "reason": "误报口径明确为“无——形式匹配即命中”，示例值与占位值照报，故全部片段均构成硬编码凭据结构的命中。", "observation": "样本含 AWS Access Key 格式串（AKIA 前缀）、GitHub token 格式串（ghp_ 前缀）及带 token 参数的内网 URL；其中 AKIAIOSFODNN7EXAMPLE 为 AWS 官方文档示例值，ghp_ 串为全零占位值，backup_access_key 字符串资源值为明显的假值命名，但按口径均不降级。"}

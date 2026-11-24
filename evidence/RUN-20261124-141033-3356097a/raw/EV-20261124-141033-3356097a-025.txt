@@ -1,0 +1,1 @@
+{"verdict": "确认可疑", "reason": "样本中 android:debuggable=\"true\" 且 android:allowBackup=\"true\"，两个风险属性均为开启状态，不满足误报口径（需 allowBackup 显式为 false 且无 debuggable=true），构成该规则检测的调试与备份风险结构。", "observation": ""}

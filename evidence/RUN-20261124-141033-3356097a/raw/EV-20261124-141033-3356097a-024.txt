@@ -1,0 +1,1 @@
+{"verdict": "确认可疑", "reason": "命中片段明确设置了两处允许明文流量的配置（manifest 的 usesCleartextTraffic=\"true\" 与 network_security_config 的 cleartextTrafficPermitted=\"true\"），属于 R-MAN-03 所检测的明文许可结构，不在误报口径内。", "observation": "两处配置相互印证，均为显式开启而非缺省或禁止，若需进一步评估可结合实际是否发起明文请求。"}

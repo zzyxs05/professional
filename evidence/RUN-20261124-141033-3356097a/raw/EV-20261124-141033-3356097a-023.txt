@@ -1,0 +1,1 @@
+{"verdict": "确认可疑", "reason": "命中片段中的 RECORD_AUDIO、CAMERA、ACCESS_FINE_LOCATION、READ_CONTACTS、RECEIVE_SMS 均为 Android 危险（dangerous）权限，不属于仅 INTERNET 等非敏感权限或自定义 com.* 权限的误报口径。", "observation": "五条声明全部为系统危险权限，其中 RECEIVE_SMS 属于高敏感权限，常见于短信拦截类应用，需结合实际调用点进一步判断行为是否必要。"}
