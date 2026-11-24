@@ -376,3 +376,19 @@ T-M5-12 字段级内容核对、E1/E2/E3 交互、R-1 模型横向评测。
 safezip 无跨成员累计上限（需调用方自律）；`mkdtemp` 演练目录不清理；`hits.jsonl` 命名与内容不符。
 
 **回归**：单测 70/70。
+
+---
+
+## 第四次审查（MiMo-V2.6-Pro + code-review-analyzer）修复：评价器路径穿越加固（2026-11-24）
+
+> 性质：**边界加固**，`RULE_PACK_VERSION` 不变（0.1.6）——不动规则、判罚口径与三档语义。
+> 触发：第四次审查核实的评价器 run_id 校验缺口（完整报告见 `review/第四次审查/code_review_2026-11-24_第四次.md`，逐条记录见 `review/审查模型表.md`）。
+
+| # | 变更 | 暴露渠道 | 影响 |
+|---|------|----------|------|
+| U1 | **run_id 入口校验**（`core/evidence.py` 新增 `check_run_id` / `BadRunId`；`EvidenceStore.__init__`、`evaluator/tools.py` RestrictedTools、`evaluator/agent.py` evaluate_run 三处统一调用；`cli.py cmd_evaluate` 捕获后友好报错退出 2）：白名单正则 `^RUN-[A-Za-z0-9][A-Za-z0-9_-]*$`，拒绝 `..`、路径分隔符、绝对路径 | 第四次审查 U1：三处 `os.path.join(root, run_id)` 未校验，`cli.py evaluate --run` 可传入穿越 run_id，在 evidence/ 根外创建 RUN 目录 / 读取 JSONL，绕过 `_safe_path` 白名单 | 合法 run_id（RUN-20261015-145536、RUN-20261124-121104-3356097a 等历史格式）行为不变；非法 run_id 明确报错 |
+| U2 | **单测**：70 → 72（新增穿越拒绝回归 2 项：`tests/test_evidence_store.py::test_path_traversal_run_id_rejected`、`tests/test_eval_agent.py::test_run_id_traversal_rejected_in_tools`） | — | — |
+
+**未修（沿袭治理待办，如实记录）**：B1 循环体 RULE_META/_hits_with_context 在降级 try 之外；`advance('DONE')` 与 `build_report_json` 顺序；R-MAN-03 特例声明化 / `sources_note` 汇总口径 / key 解析抽公共 `_client`（需升版本）；`networkSecurityConfig` 正则只匹配双引号；safezip 无跨成员累计上限；`cli.cmd_analyze` 拆分（重构风险高于收益）；`truth_check.py` 默认 `--out` 指向正本。
+
+**回归**：单测 72/72；靶场真值 `--no-evidence` 修复前后各复跑一次，均 **84 点 · 一致 84 · 硬错 0（FP 0 / 漏检 0 / 档位错 0）· 噪声 0**（`--out` 显式临时路径，正本未触碰）。

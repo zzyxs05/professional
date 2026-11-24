@@ -11,7 +11,7 @@ import unittest
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from evaluator.agent import (Budget, _parse_model_output, evaluate_dir_quick,
-                             run_agent)
+                             evaluate_run, run_agent)
 from evaluator.tools import RestrictedTools
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -72,6 +72,15 @@ class TestAgentOffline(unittest.TestCase):
         self.assertIsNone(tools._safe_path('docs/../../key.txt'))
         self.assertIsNotNone(tools._safe_path('docs/specification.md'))
         self.assertIsNotNone(tools._safe_path('.gitignore'))
+
+    def test_run_id_traversal_rejected_in_tools(self):
+        # run_dir 由 run_id 拼接，必须白名单校验（第四次审查 U1）
+        from core.evidence import BadRunId
+        for bad in ('../evil', 'RUN-..-..', 'RUN-a/b', 'RUN-1\\x'):
+            with self.assertRaises(BadRunId, msg=bad):
+                RestrictedTools(ROOT, ROOT, bad, {}, 'self', Budget())
+        with self.assertRaises(BadRunId):
+            evaluate_run(ROOT, '../../etc')
 
     def test_unregistered_test_rejected(self):
         tools = RestrictedTools(ROOT, ROOT, RUN, {}, 'self', Budget())

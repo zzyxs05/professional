@@ -9,7 +9,7 @@ import shutil
 import tempfile
 import unittest
 
-from core.evidence import EvidenceStore, RunDirExists
+from core.evidence import BadRunId, EvidenceStore, RunDirExists
 
 
 class TestEvidenceStore(unittest.TestCase):
@@ -50,6 +50,13 @@ class TestEvidenceStore(unittest.TestCase):
         self.assertEqual(len(rec['raw_response_sha256']), 64)
         with open(s.path(rec['raw_response_path']), 'r', encoding='utf-8') as f:
             self.assertEqual(f.read(), raw)
+
+    def test_path_traversal_run_id_rejected(self):
+        # run_id 参与路径拼接，必须白名单校验（第四次审查 U1）
+        for bad in ('../evil', 'RUN-..-..', 'RUN-a/b', 'RUN-a\\b',
+                    '/etc/passwd', '', 'RUN-', 'xRUN-1', 'RUN-1\0'):
+            with self.assertRaises(BadRunId, msg=bad):
+                EvidenceStore(self.root, bad)
 
 
 if __name__ == '__main__':

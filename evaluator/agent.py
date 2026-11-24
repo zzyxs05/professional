@@ -11,7 +11,7 @@ import os
 import uuid
 
 from core import registry
-from core.evidence import utc_now_iso
+from core.evidence import check_run_id, utc_now_iso
 from .contract import load_contract
 from .llm import chat, describe_model
 from .precheck import precheck
@@ -61,7 +61,7 @@ def evaluate_dir_quick(run_dir):
 
 def evaluate_run(project_root, run_id, use_llm=False):
     """兼容旧接口的确定性快路径；正式评价请走 run_agent / cli.py evaluate。"""
-    run_dir = os.path.join(project_root, 'evidence', run_id)
+    run_dir = os.path.join(project_root, 'evidence', check_run_id(run_id))
     if not os.path.isdir(run_dir):
         return {'run_id': run_id, 'status': 'FAIL', 'mode': 'deterministic',
                 'findings': [{'level': 'FAIL', 'code': 'E-NO-RUN',

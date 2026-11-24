@@ -270,13 +270,18 @@ def cmd_register(args):
 
 # ------------------------------------------------------------------ evaluate
 def cmd_evaluate(args):
+    from core.evidence import BadRunId
     from evaluator.agent import run_agent
     target = os.path.abspath(args.target) if args.target else PROJECT_ROOT
-    result = run_agent(PROJECT_ROOT, target, args.run,
-                       mode=args.mode, contract_path=args.contract,
-                       use_llm=not args.no_llm,
-                       max_model_calls=args.max_model_calls,
-                       out_dir=args.out_dir)
+    try:
+        result = run_agent(PROJECT_ROOT, target, args.run,
+                           mode=args.mode, contract_path=args.contract,
+                           use_llm=not args.no_llm,
+                           max_model_calls=args.max_model_calls,
+                           out_dir=args.out_dir)
+    except BadRunId as e:
+        print('[error] %s' % e)
+        return 2
     print(result['text'])
     print('[evaluation] %s' % result['out_path'])
     return 0

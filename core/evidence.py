@@ -11,6 +11,7 @@ import datetime
 import hashlib
 import json
 import os
+import re
 
 
 def utc_now_iso():
@@ -40,6 +41,23 @@ class RunDirExists(RuntimeError):
     """RUN 目录已存在：拒绝覆盖已落盘正本（总档 §4「已签署的运行正本不改写」）。"""
 
 
+class BadRunId(ValueError):
+    """run_id 含路径穿越/非法字符：拒绝参与路径拼接（第四次审查 U1）。"""
+
+
+# run_id 会拼进 evidence/ 路径。只允许 RUN- 前缀 + 字母数字/连字符/下划线：
+# 拒绝 `..`、路径分隔符、绝对路径等一切可改变拼接落点的字符（白名单而非黑名单）。
+_RUN_ID_RE = re.compile(r'^RUN-[A-Za-z0-9][A-Za-z0-9_-]*$')
+
+
+def check_run_id(run_id):
+    """校验 run_id 格式；不合法抛 BadRunId。返回 run_id 便于链式使用。"""
+    if not isinstance(run_id, str) or not _RUN_ID_RE.match(run_id):
+        raise BadRunId('run_id 含非法字符（只允许 RUN- 前缀 + 字母数字/-/_）：%r'
+                       % (run_id,))
+    return run_id
+
+
 class EvidenceStore(object):
     """一个 RUN 的证据目录。
 
@@ -48,7 +66,7 @@ class EvidenceStore(object):
     """
 
     def __init__(self, evidence_root, run_id, allow_existing=False):
-        self.run_id = run_id
+        self.run_id = check_run_id(run_id)
         self.root = os.path.join(evidence_root, run_id)
         self.seq = 0
         self.records = []

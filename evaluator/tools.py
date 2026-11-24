@@ -12,6 +12,7 @@ import os
 import subprocess
 import sys
 
+from core.evidence import check_run_id
 from .precheck import precheck
 
 ALLOWED_PREFIXES = (
@@ -48,8 +49,8 @@ class RestrictedTools(object):
     def __init__(self, owner_root, target_root, run_id, contract, mode, budget):
         self.owner_root = owner_root
         self.target_root = target_root
-        self.run_id = run_id
-        self.run_dir = os.path.join(target_root, 'evidence', run_id)
+        self.run_id = check_run_id(run_id)
+        self.run_dir = os.path.join(target_root, 'evidence', self.run_id)
         self.contract = contract
         self.mode = mode
         self.budget = budget
