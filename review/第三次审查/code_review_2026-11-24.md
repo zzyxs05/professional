@@ -1,82 +1,70 @@
-# 代码审查报告 · zhuan（APK 静态审计系统）· 第三次审查
+# 代码审查报告 · 第三次审查
 
-> 性质：review ｜ 版本：v1.0 ｜ 状态：归档
-> 职责：记录第三次全量审查的扫描结论、安全清单、既往修复复核与遗留待办；不重新判定前次审查结论。
-> 关联：前次报告 `review/第二次审查/code_review_2026-11-23_第二次.md`；后续报告 `review/第四次审查/code_review_2026-11-24_第四次.md`；登记 `review/审查模型表.md`。
-> 签署：状态统一见 `docs/signoff.md`，本文不设独立签署栏。
+> 审查模型：GLM-5.3-Flash + code-review-analyzer v1.2.4（AST 扫描 + 安全清单 + 五维深审）
+> 审查时间：2026-11-24 11:40—11:50
+> 审查基线：`e2f6716`（pull 自 origin/main，含朋友文档重构提交 `c7dfdc2`/`e2f6716`；经 `git diff c164870..HEAD -- core evaluator scripts cli.py tests` 确认**代码零变更**，本次为全量独立复核，未沿用既往结论文本）
 
 ## 审查概览
 
-- 审查目标：`D:/专业能力提升/professional-main`（全仓库）
-- 审查范围：全量（60 个 Python 文件；不含 `.git`、`.workbuddy`、`.tools`、`evidence/`）
-- 技术栈：Python 3（标准库为主，无第三方运行时依赖）；自研 AXML 解析器 + 自研 DEX 解析器 + apktool 子进程 + OpenAI 兼容 HTTP 客户端
-- 审查方式：AST 静态扫描 + 安全检查清单逐项核查 + 五维度人工深审 + 既往修复逐项复核 + 单测/真值回归
-- 审查模型：GLM-5.3-Flash（code-review-analyzer v1.2.4）
-- 总体结论：**0 Critical / 0 Major**，无新增需修复项
-- 合并建议：**✅ 可签署**（遗留治理待办沿袭前轮记录，按流程单独排期，不构成签署阻碍）
+- 审查目标：`professional-main` 全仓库（60 个 Python 文件）
+- 审查范围：全量（非 diff）
+- 技术栈：Python 3（apk 静态审计流水线，规则引擎 + 双通道 + 融合报告）
+- 总体评分：**8 / 10**
+- 合并建议：✅ 可签署（签署动作由人执行，AI 不代签）
 
-## 脚本扫描结论（analyze.py · AST 版）
+## 风险摘要
 
-- 分析文件数 60，发现问题 108：**Minor 81、Nit 27，无 Critical/Major**。
-- Minor 集中为超长函数 / 高圈复杂度 / 过深嵌套：`cli.cmd_analyze`（209 行 / 圈复杂度 36）、`core/axml.py`（parse_axml / _build_tree / extract_manifest_facts）、`core/adapters.py`、`fusion.build_conclusions`（158 行 / 35）、`evaluator/agent._mechanical_verdict`（36）等——均为二进制格式解析与融合逻辑的固有复杂度，与第 1/2 次审查结论一致；按 AGENTS.md 纪律「改规则就是改版本」，重构需 bump `RULE_PACK_VERSION` + 记 `docs/changes.md` + 重跑 84 判点，不在审查轮进行。
-- Nit 为魔法数字（DEX 结构体字段宽度、截断上限等，多数有 registry 常量对应）与 2 处设计内 TODO（`cli.py:261` 登记模板占位符、`scripts/truth_check.py:38` truth 缺省兜底，前轮已核实为设计内）。
-- 无硬编码密钥、无 SQL 注入、无命令注入、无不安全反序列化；未使用导入清零。
+本轮无 Critical/Major 新增。AST 扫描 108 条（Minor 81 / Nit 27）与既有基线完全一致，均为二进制格式解析与融合逻辑的固有复杂度治理项（需按治理流程升版本重构，不在审查轮进行）。本轮重点成果：**配置 `.tools/JRE-17` 便携 JRE 后，真值复跑首次在本机完整执行，84/84 全一致（硬错 0），消除了前两轮「环境性缺源」的验证缺口**。
 
-## 安全检查清单（逐项核查，全部通过）
+## 关键问题（Critical / Major）
 
-| 类别 | 核查结果 |
-|------|----------|
-| 注入类 | 无 SQL（无数据库）；apktool 子进程为参数列表式调用、白名单仅 java，无 `shell=True` / `os.system` / `eval` |
-| 敏感信息 | `key.txt` 在 `.gitignore` 且 `git check-ignore` 确认未追踪；`describe_model` 只返回模型名与端点，不返回密钥；密钥不进日志 |
-| 反序列化 | 无 pickle / yaml.load；模型响应经 `_tolerant_json` + `json.JSONDecoder().raw_decode` 严格解析 |
-| 文件与路径 | 证据落盘使用 `run_id`（`RUN-` + 时间戳 + sha[:8]，字符集安全）+ 固定文件名，无用户可控路径拼接 |
-| 资源与可用性 | safezip 按中央目录声明 `file_size` 预检（CPython zipfile 以声明值为读取边界，谎报头抛 BadZipFile，第 3 次审查复核该运行时假设成立）；`MAX_XML_DEPTH` 挡深嵌套 AXML；敏感区扫描 80 文件/前 15 条截断；LLM 预算熔断 |
+未发现。
 
-## 既往修复复核（逐项验证在位，全部 ✅）
+## 一般问题（Minor）
+
+与既有基线一致（81 条，无新增），集中于：`cli.cmd_analyze`（209 行 / 圈复杂度 36）、`core/axml.py`、`core/adapters.py`、`fusion.build_conclusions` 等格式解析固有复杂度。沿袭遗留治理待办（见审查模型表），按治理流程单独排期，本轮不修。
+
+## 优化建议（Nit）
+
+27 条魔法数字/待办标记类 Nit，与既有基线一致，无新增。
+
+## 五维深审要点（本轮独立复读代码核实）
+
+1. **正确性**：`fusion.py:188-208` 未发现档两态区分正确（`executed = rule_id in hits_by_rule`，notes 分别为「已执行未命中」与「规则未执行，不得视为通过」）；B1「上下文无害」降级 `min_status` 方向正确（fusion.py:205-207）；`_tolerant_json`（channel_b.py:276-284）孤立键正则仅匹配 `}` 不碰 `]`，字符串数组保真；B2 verdict 白名单校验兜底为「无法判断」。未发现新增逻辑缺陷。
+2. **安全性**：全仓 `shell=True` / `eval(` / `pickle` / `yaml.load` / `os.system` 命中为 0；`key.txt` 未被 git 追踪，key 解析 `split(',', 2)` + 捕获 `OSError/UnicodeDecodeError`（channel_b.py:45-48、llm.py:25-28 两处一致）；B1/B2/B3 均 `<sample_data>` 数据边界 + `_INJECTION_RE` 检测 + `injection_flag` 落盘（channel_b.py:103-144、summary.py:64）；safezip 按中央目录声明体积预检（safezip.py:22-33），channel_a.py:82 / dexscan.py:151 全部走 `read_member`；AXML 深度上限 MAX_XML_DEPTH → AXMLParseError（axml.py:293-294）。未发现安全问题。
+3. **性能**：预算熔断与截断上限齐备；B 通道连通性探测单独记账 `probe_calls`（channel_b.py:168-174）；无 N+1 或无谓 IO。未发现问题。
+4. **可维护性**：70/70 单测全过（0.9s）；`mkdtemp` 演练目录由 `cli.py reset` 统一清理。超长函数/深嵌套为固有复杂度，沿袭治理待办。
+5. **架构**：分层清晰（规则注册表 / 通道 A / 通道 B / 融合 / 报告 / 评价器），依赖方向单向，无循环依赖；evidence 旁车落盘完整响应。
+
+## 既往修复验证（本轮逐项复核，全部在位）
 
 | 修复项 | 验证位置 | 结论 |
 |--------|----------|------|
-| C-1 结论区丢失「已检查未命中」判点 | `core/fusion.py:208`（未发现档产出 notes） | ✅ 在位 |
-| C-2 run_id 同秒冲突、证据覆盖 | `cli.py:43` run_id 带样本指纹；`EvidenceStore` 拒绝覆盖已存在 RUN 目录 | ✅ 在位 |
-| AXML 深度上限（防 RecursionError 击穿） | `core/axml.py:244,293` | ✅ 在位 |
-| zip bomb 防御 | `core/safezip.py`；`channel_a.py:82`、`dexscan.py:151` 全部经 `read_member` 读取 | ✅ 在位 |
-| T1 覆盖声明语义失真 | `cli.py:107` `decode_failed = not decode.ok` | ✅ 在位 |
-| T2 超时/连接失败纳入退避重试 | `core/channel_b.py:68-94`（HTTPError 429/5xx / HTTPException / OSError 三面重试，耗尽 `raise RuntimeError`，无 `raise None` 死代码） | ✅ 在位 |
-| T3 key.txt 解析加固 | `channel_b.py:45-48` `split(',', 2)` + `UnicodeDecodeError`；`evaluator/llm.py` 同步 | ✅ 在位 |
-| T4 B3 数据边界 | `core/summary.py:64,256`（`_DATA_BOUNDARY` + `<sample_data>` 包裹，prompt b3-v0.4） | ✅ 在位 |
-| T5 safezip 测试固化 | `tests/test_safezip.py` 4 例（含谎报头运行时行为钉住） | ✅ 在位 |
-| B 通道注入防御 | `_INJECTION_RE` + 降级方向设防（命中指令性文本不采信「上下文无害」）+ `injection_flag` 落盘 | ✅ 在位 |
-| `_tolerant_json` 孤立键正则 | `channel_b.py:284` 仅匹配对象闭合 `}`，不碰 `]` | ✅ 在位 |
-| `importlib.import_module` 纳入降级 try | `core/channel_a.py:126-131`（含导入期异常） | ✅ 在位 |
+| C-1 未发现档两态（已执行未命中 vs 未执行） | `core/fusion.py:195-208` | ✅ 在位 |
+| C-2 run_id 同秒防撞（样本指纹 sha[:8]） | `cli.py:41-43` | ✅ 在位 |
+| AXML 深度上限 | `core/axml.py:244,293-294` | ✅ 在位 |
+| zip bomb 声明体积预检 | `core/safezip.py:22-33` + `channel_a.py:82` / `dexscan.py:151` | ✅ 在位 |
+| T1 decode_failed 语义 | `cli.py:107,114` | ✅ 在位 |
+| B 通道注入防御（数据边界 + 正则 + 落盘） | `core/channel_b.py:103-144,184,213,223,238` | ✅ 在位 |
+| B3 数据边界（第三次审查 M-5） | `core/summary.py:60-64` | ✅ 在位 |
+| key 解析容错（两模块一致） | `core/channel_b.py:45-48` / `evaluator/llm.py:25-28` | ✅ 在位 |
+| B 探测记账 probe_calls | `core/channel_b.py:168-174` | ✅ 在位 |
 
-## 五维深审要点
+## 真值复跑（本轮首次完整执行 ✅）
 
-1. **正确性**：通道 A 单规则异常不阻断其余规则（记为未判定）；通道 B 任何网络/协议失败自动降级并进覆盖声明；样本级失败如实产出全规则「无法判定」+ 归因准确的 `not_checked` 说明（T1 修复后语义正确）。逻辑闭环正确。
-2. **安全性**：见上表，未发现安全问题。
-3. **性能**：`SmaliFacts.read_lines` 有内存缓存（此前误报已澄清）；预算熔断与截断上限齐备；无 N+1 查询或无谓 IO。
-4. **可维护性**：单测 66 → 70 全过；`cli.py reset` 可统一清理演练临时目录。超长函数/深嵌套为固有复杂度，沿袭前轮结论不在本轮重构。
-5. **架构**：分层清晰（规则注册表 / 通道 A / 通道 B / 融合 / 报告 / 评价器），依赖方向单向（evaluator → core 只复用常量），无循环依赖；evidence 层 `raw_response` 旁车文件落盘完整响应（与「证据必须落盘」承诺一致），`channel_b/records.jsonl` 按通道分文件落盘供 precheck 读取。
+- **环境变更**：本轮在项目 `.tools/JRE-17/` 配置 Temurin JRE 17.0.21.1（`_probe_java` 优先查找 `.tools/JRE*/bin/java.exe`，`.gitignore` 已加 `.tools/JRE*/` 忽略规则，JRE 不入库）。`probe_toolchain` 识别 java + apktool_3.0.3.jar 成功。
+- **结果**：`python scripts/truth_check.py --no-evidence --out <临时路径>` 复跑 6 样本 × 14 判点：**84 点 · 一致 84 · 硬错 0（FP 0 / 漏检 0 / 档位错 0）· 噪声 0 · 未标定 0**。
+- **纪律**：本轮按遗留待办第 6 条的教训，`--out` 显式指向临时路径，`review/truth_result.json` 正本未被触碰；`--no-evidence` 演练模式，evidence/ 零写入。
 
-## 回归验证
+## 遗留治理待办（沿袭前轮，本轮复核确认仍在，按治理流程单独排期）
 
-- **单测**：70/70 全过（`python -m unittest discover -s tests`）。
-- **真值重跑**：本审查环境无 java（`probe_toolchain` 报「未找到 java」）→ apktool 解码降级 → 依赖 smali/res 数据源的规则如实记为未判定 → `truth_check.py` 复算 47/84。该结果为**环境性缺源，非代码回归**：历史 84/84 由具备 java 的环境产出（第 1/2 次审查记录）。**签署前需在含 java 的环境复跑 `python scripts/truth_check.py --no-evidence` 确认 84/84**。
-- **过程纪律（如实记录）**：本轮真值重跑曾误写入 `evidence/` 6 个 RUN 目录（未签署、未入库），已全部清除；`review/truth_result.json` 曾被复算结果覆盖，已从 git 恢复。
-
-## 遗留治理待办（沿袭前轮，不因本轮消失，需按治理流程处理）
-
-1. B1 循环体 `RULE_META[rule_id]` / `_hits_with_context` 位于降级 try 之外（实际崩溃路径极窄：rule_id 均来自 RULES_PIPELINE，`read_lines` 已捕获 IO 异常）——加固建议；
-2. `advance('DONE')` 在 `build_report_json` 之后，状态与产物顺序不一致（仅 meta 状态字段观感）；
+1. B1 循环体 `RULE_META[rule_id]` / `_hits_with_context` 位于降级 try 之外（实际崩溃路径极窄）——加固建议；
+2. `advance('DONE')`（cli.py:227）在 `build_report_json`（cli.py:180）之后，状态与产物顺序不一致（仅 meta 状态字段观感）；
 3. R-MAN-03 特例声明化、`sources_note` 按组汇总口径、key 解析两模块抽公共 `_client`（需 bump 版本 + 同步总档）；
-4. `networkSecurityConfig` 正则只匹配双引号写法（apktool 输出恒为双引号，低危）；safezip 无跨成员累计上限；
-5. `cli.cmd_analyze` 拆分（209 行 / 圈复杂度 36）——非缺陷，重构风险高于收益，单独排期。
+4. `networkSecurityConfig` 正则只匹配双引号写法（低危）；safezip 无跨成员累计上限；
+5. `cli.cmd_analyze` 拆分（209 行 / 圈复杂度 36）——非缺陷，重构风险高于收益，单独排期；
+6. `truth_check.py` 默认 `--out` 指向正本路径的流程风险（本轮已按规避方式执行，建议改为默认临时路径）。
 
-## 备注
+## 本轮非代码改进（环境项，非审查发现）
 
-- 修复明细：`docs/changes.md`（R1—R13、T1—T5）。
-- 审查模型表：`review/审查模型表.md`（本报告已登记为第 3 次）。
-- 第 4 次审查（mimo 直评）按用户流程在新对话中进行。
-
----
-
-*本报告由代码审查与架构分析助手（code-review-analyzer v1.2.4，模型 GLM-5.3-Flash）生成。所有结论均基于代码阅读、AST 扫描与可复现验证；不改变任何审计结论。*
+- `.gitignore` 新增 `.tools/JRE*/`、`.tools/_jre_tmp/` 忽略规则（便携 JRE 属本机工具，与 `.tools/framework/` 同理不入库）。

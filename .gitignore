@@ -4,6 +4,10 @@ key.txt
 # apktool framework 缓存（可重建，指向项目可控路径）
 .tools/framework/
 
+# 本机便携 JRE（可重建，不入库；工具链查找见 core/adapters.py _probe_java）
+.tools/JRE*/
+.tools/_jre_tmp/
+
 # Python
 __pycache__/
 *.pyc
