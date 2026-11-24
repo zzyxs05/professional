@@ -392,3 +392,27 @@ safezip 无跨成员累计上限（需调用方自律）；`mkdtemp` 演练目�
 **未修（沿袭治理待办，如实记录）**：B1 循环体 RULE_META/_hits_with_context 在降级 try 之外；`advance('DONE')` 与 `build_report_json` 顺序；R-MAN-03 特例声明化 / `sources_note` 汇总口径 / key 解析抽公共 `_client`（需升版本）；`networkSecurityConfig` 正则只匹配双引号；safezip 无跨成员累计上限；`cli.cmd_analyze` 拆分（重构风险高于收益）；`truth_check.py` 默认 `--out` 指向正本。
 
 **回归**：单测 72/72；靶场真值 `--no-evidence` 修复前后各复跑一次，均 **84 点 · 一致 84 · 硬错 0（FP 0 / 漏检 0 / 档位错 0）· 噪声 0**（`--out` 显式临时路径，正本未触碰）。
+
+---
+
+## T-M5 收尾：字段级核对与批次归一（2026-11-24，不改规则包版本）
+
+> 性质：**评价器能力 + 文档/台账**，`RULE_PACK_VERSION` 不变（0.1.6）——不动规则、判罚口径与三档语义，只把评价从"查文件存在"推进到"读字段内容"。
+> 触发：`TASKS.md` T-M5-10 / T-M5-12 / T-M5-14 收尾任务。判定标准未放宽：字段全符合是 PASS 的必要条件，任一字段不符/缺失都不得判 PASS。
+
+| # | 变更 | 暴露渠道 | 影响 |
+|---|------|----------|------|
+| V1 | **字段级核对**（新增 `evaluator/skills/evidence-review/fields.json`、`evaluator/fieldcheck.py`）：10 项审查项每项 ≥2 个真实字段，三态 `match`/`mismatch`/`missing`，只读走 `RestrictedTools` 白名单，文本当数据不当指令 | T-M5-12：旧评价只确认锚点文件存在，未读内容 | 字段核对作为内容级证据层；不自动改四状态、不代签、不判分 |
+| V2 | **评价器接入字段核对**（`evaluator/agent.py`）：`content_checked` 叠加"字段全符合"必要条件；轨迹新增 `field_check` 事件逐项记录；每条 finding 带 `field_check` 明细；顶层输出带 `field_check` 汇总 | T-M5-12 步骤 2/5 | **只加严不放宽**：字段缺口项维持 `INSUFFICIENT_EVIDENCE`；新批次明细 PASS 7 / INSUFF 3（E-01/E-02/E-07 缺文档合并前的历史文件名） |
+| V3 | **新增单测 + 批量脚本**（`tests/test_fieldcheck.py` 7 例、`scripts/field_check.py`）：72 → 79 例；产出 `review/evaluation/field_check.json`（6 样本 × 10 项三态 + 人工抽验 5 条留空） | T-M5-12 步骤 3/4 | 抽验栏留空待本人填，AI 不代填 |
+| V4 | **批次归一**（`review/evaluation/SIGNOFF.md`）：登记 0.1.6 新批次为当前评价正本（6 个新 EVAL ID，签名留空），11-18 批保留为历史记录；临时说明折入 §5 并删除；新增 `docs/version-waiver.md`、`review/evaluation/field_check_notes.md` | T-M5-10 / T-M5-14 | 旧签名不挪到新文件；旧批次文件不物理移出（含已签正本，须本人确认后处理） |
+
+**影响面**：
+
+- 新评价输出（0.1.6 批）与旧批次并存，当前登记批次为前者；`version_check.mismatch=false`；
+- 顶层四状态仍为 `INSUFFICIENT_EVIDENCE`（E-01/E-02/E-07 各缺 1 个历史文件名），明细由"10 项全 INSUFFICIENT"变为"PASS 7 / INSUFF 3"——见 `field_check_notes.md` 解释；
+- 已签历史正本、6 个 0.1.6 运行正本、真值表、rubric 均未改写。
+
+**回归**：单测 79/79（新增字段核对 7 例）；K-1—K-6 校准 6/6；靶场真值 `--no-run` 84 点全量核对一致 84、硬错 0、噪声 0。
+
+**未做（如实列）**：签名/抽验/状态由本人填，AI 未代签；E-01/E-02/E-07 的 3 个历史文件名缺口待本人决定拆回独立文件或请教师确认 rubric 映射；旧批次物理移出待本人确认存档后指示；0.1.6 全模型评价批未跑（本批为 `--no-llm` 确定性路径）。

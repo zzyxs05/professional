@@ -13,6 +13,7 @@ import uuid
 from core import registry
 from core.evidence import check_run_id, utc_now_iso
 from .contract import load_contract
+from .fieldcheck import check_all as field_check_all, load_fields as load_field_spec
 from .llm import chat, describe_model
 from .precheck import precheck
 from .tools import RestrictedTools
@@ -297,6 +298,22 @@ class AgentLoop(object):
         vc = self.verify_claims_result or {}
         mechanically_checked = bool(vc.get('ok') and not vc.get('findings'))
 
+        # T-M5-12 字段级内容核对：读真实字段，三态（match/mismatch/missing）。
+        # 只读、走 RestrictedTools 白名单；只加严不放宽——字段未全符合时
+        # content_checked 强制为 False，任何一项都不得仅凭"文件在"判 PASS。
+        field_result = field_check_all(load_field_spec(), self.tools, self.run_id)
+        self.field_check_result = field_result
+        field_by_id = {c['criterion_id']: c for c in field_result['criteria']}
+        self._trace('field_check', run_id=self.run_id,
+                    criteria=[{'criterion_id': c['criterion_id'],
+                               'fields': [{'id': f['id'],
+                                           'path': f.get('path_expanded'),
+                                           'kind': f['kind'],
+                                           'status': f['status']}
+                                          for f in c['fields']],
+                               'summary': c['summary']}
+                              for c in field_result['criteria']])
+
         items = []
         for crit in self.rubric['criteria']:
             expected = [p.replace('evidence/RUN-*/', 'evidence/%s/' % self.run_id)
@@ -306,13 +323,21 @@ class AgentLoop(object):
             rejected = [it['path'] for it in listing['items'] if not it.get('allowed', True)]
             evidence_ids = [it['path'] for it in listing['items'] if it['exists']]
 
-            # 机械层能核到的最深程度：引用/版本/结构由 verify_claims 统一核对。
-            # 一旦快照通过且该项锚点齐全，即可判「通过（仅机械层）」——
-            # 原先只给 E-05 开口，导致上层 any(INSUFFICIENT) 恒真、PASS 永不可达，
-            # 与总档 A-08「四状态」不符。
+            # T-M5-12：字段级核对是 PASS 的必要条件（加严）。字段全符合才算
+            # 内容级核过；任一字段 mismatch/missing 都不得判 PASS。
+            fc = field_by_id.get(crit['id'], {})
+            fs = fc.get('summary', {})
+            field_ok = bool(fs.get('all_match'))
+            field_bad = [f['id'] for f in fc.get('fields', [])
+                         if f['status'] != 'match']
+
+            # 机械层能核到的最深程度：引用/版本/结构由 verify_claims 统一核对，
+            # 叠加字段级内容核对。原先只给 E-05 开口，导致上层 any(INSUFFICIENT)
+            # 恒真、PASS 永不可达，与总档 A-08「四状态」不符。
             content_checked = bool(mechanically_checked
                                    and snapshot_status == 'PASS'
-                                   and not missing and not rejected)
+                                   and not missing and not rejected
+                                   and field_ok)
             if self.contract is None and self.mode == 'peer':
                 status, finding = ('INSUFFICIENT_EVIDENCE',
                                    '互评缺少目标批准契约，本项未做实质审查')
@@ -330,11 +355,16 @@ class AgentLoop(object):
                            % (report_version, contract_version))
             elif content_checked:
                 status = 'PASS'
-                finding = ('引用、版本、结构经 verify_claims 机械核对通过；'
-                           '范围仅限机械层，结论语义正确性仍待人工复核')
+                finding = ('引用、版本、结构经 verify_claims 机械核对通过，'
+                           '字段级核对全部符合；范围仅限机械/字段层，'
+                           '结论语义正确性仍待人工复核')
             else:
                 status = 'INSUFFICIENT_EVIDENCE'
-                finding = '锚点齐全但未做字段级内容核对；仅存在性不足以判定内容合格'
+                if field_bad and not (missing or rejected):
+                    finding = ('字段级核对未全符合（%s）；仅存在性不足以判定内容合格'
+                               % ', '.join(field_bad[:6]))
+                else:
+                    finding = '锚点或字段存在缺口；仅存在性不足以判定内容合格'
             items.append({
                 'criterion_id': crit['id'],
                 'criterion': crit['criterion'],
@@ -342,12 +372,19 @@ class AgentLoop(object):
                 'status': status,
                 'evidence_level': 'STATIC',
                 'content_checked': content_checked,
+                'field_check': {
+                    'summary': fs,
+                    'fields': [{'id': f['id'], 'path': f.get('path_expanded'),
+                                'kind': f['kind'], 'status': f['status'],
+                                'observed': f['observed']}
+                               for f in fc.get('fields', [])],
+                },
                 'evidence_ids': evidence_ids[:12],
                 'finding': finding,
                 'scope': '目标 %s 的 %s（%s）' % (self.mode, self.run_id,
                                                 self.target_root),
-                'missing_evidence': missing[:8],
-                'suggested_check': ('补齐上述证据后复跑；'
+                'missing_evidence': missing[:8] + field_bad[:8],
+                'suggested_check': ('补齐上述证据/字段后复跑；'
                                     '内容正确性需人工抽验' if status != 'PASS'
                                     else '人工抽验 2—3 个关键 Claim'),
                 'score_suggestion': None,
@@ -392,7 +429,7 @@ class AgentLoop(object):
         unchecked = [i['criterion_id'] for i in items
                      if not i.get('content_checked')]
         if unchecked:
-            self.not_checked.append('未做字段级内容核对：%s' % ', '.join(unchecked))
+            self.not_checked.append('字段/锚点核对未全符合：%s' % ', '.join(unchecked))
         result = {
             'eval_id': self.eval_id,
             'generated_at': self.now,
@@ -414,6 +451,7 @@ class AgentLoop(object):
                          'note': self.contract_note,
                          'approved_by': (self.contract or {}).get('approved_by')},
             'version_check': getattr(self, 'version_check', {}),
+            'field_check': getattr(self, 'field_check_result', None),
             'coverage_note': getattr(self, 'coverage_note', ''),
             'model': {'mode': self.model_mode,
                       'name': describe_model(self.owner_root).get('model'),

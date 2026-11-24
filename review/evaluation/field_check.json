@@ -1,0 +1,3551 @@
+{
+  "generated_at": "2026-11-24T08:15:05Z",
+  "task": "T-M5-12 字段级内容核对",
+  "fields_id": "fields-course-v1",
+  "fields_version": "1.0",
+  "discipline": "只读、机械三态、不代签不判分；字段未全符合不得仅凭存在性判 PASS",
+  "runs": [
+    [
+      "RUN-20261124-140458-21cf5a06",
+      "bad03"
+    ],
+    [
+      "RUN-20261124-141033-3356097a",
+      "bad01"
+    ],
+    [
+      "RUN-20261124-141327-232666b8",
+      "bad02"
+    ],
+    [
+      "RUN-20261124-141435-e1152264",
+      "bad04"
+    ],
+    [
+      "RUN-20261124-141502-4cbacbdd",
+      "good01"
+    ],
+    [
+      "RUN-20261124-141518-710b457d",
+      "good02"
+    ]
+  ],
+  "per_run": {
+    "RUN-20261124-140458-21cf5a06": {
+      "sample": "bad03",
+      "check": {
+        "fields_id": "fields-course-v1",
+        "fields_version": "1.0",
+        "run_id": "RUN-20261124-140458-21cf5a06",
+        "criteria": [
+          {
+            "criterion_id": "E-01",
+            "note": "brief.md 已在 2026-11-18 文档合并中并入 requirements.md；如实记承载位置",
+            "fields": [
+              {
+                "id": "E-01-F1",
+                "path": "docs/requirements.md",
+                "kind": "text_all",
+                "status": "match",
+                "observed": {
+                  "missing_anchors": [],
+                  "expected_count": 5
+                },
+                "note": "角色/场景/UN/追溯/范围外五项结构",
+                "path_expanded": "docs/requirements.md"
+              },
+              {
+                "id": "E-01-F2",
+                "path": "docs/requirements.md",
+                "kind": "text_all",
+                "status": "match",
+                "observed": {
+                  "missing_anchors": [],
+                  "expected_count": 3
+                },
+                "note": "UN 编号、REQ 编号、不服务对象",
+                "path_expanded": "docs/requirements.md"
+              },
+              {
+                "id": "E-01-F3",
+                "path": "docs/brief.md",
+                "kind": "file_exists",
+                "status": "missing",
+                "observed": false,
+                "note": "rubric 期望的历史文件，已合并；缺失如实记 missing，不伪造",
+                "path_expanded": "docs/brief.md"
+              }
+            ],
+            "summary": {
+              "total": 3,
+              "match": 2,
+              "mismatch": 0,
+              "missing": 1,
+              "all_match": false
+            }
+          },
+          {
+            "criterion_id": "E-02",
+            "note": "acceptance-matrix.md / state-model.md 的历史内容承载在 specification.md §7/§8",
+            "fields": [
+              {
+                "id": "E-02-F1",
+                "path": "docs/specification.md",
+                "kind": "text_all",
+                "status": "match",
+                "observed": {
+                  "missing_anchors": [],
+                  "expected_count": 3
+                },
+                "note": "规则契约、报告 schema、验收 ID 三节",
+                "path_expanded": "docs/specification.md"
+              },
+              {
+                "id": "E-02-F2",
+                "path": "docs/specification.md",
+                "kind": "text_all",
+                "status": "match",
+                "observed": {
+                  "missing_anchors": [],
+                  "expected_count": 3
+                },
+                "note": "A-01~A-10 验收 ID 与定位契约",
+                "path_expanded": "docs/specification.md"
+              },
+              {
+                "id": "E-02-F3",
+                "path": "docs/acceptance-matrix.md",
+                "kind": "file_exists",
+                "status": "missing",
+                "observed": false,
+                "note": "历史文件名，缺失如实记 missing",
+                "path_expanded": "docs/acceptance-matrix.md"
+              }
+            ],
+            "summary": {
+              "total": 3,
+              "match": 2,
+              "mismatch": 0,
+              "missing": 1,
+              "all_match": false
+            }
+          },
+          {
+            "criterion_id": "E-03",
+            "note": null,
+            "fields": [
+              {
+                "id": "E-03-F1",
+                "path": "docs/decision-log.md",
+                "kind": "text_all",
+                "status": "match",
+                "observed": {
+                  "missing_anchors": [],
+                  "expected_count": 3
+                },
+                "note": "决策索引可定位到 ADR 且有复核记录",
+                "path_expanded": "docs/decision-log.md"
+              },
+              {
+                "id": "E-03-F2",
+                "path": "docs/adr",
+                "kind": "dir_min",
+                "status": "match",
+                "observed": {
+                  "entries": 11,
+                  "min": 10
+                },
+                "note": "ADR 目录至少 10 份（当前 11 份）",
+                "path_expanded": "docs/adr"
+              },
+              {
+                "id": "E-03-F3",
+                "path": "docs/research",
+                "kind": "dir_min",
+                "status": "match",
+                "observed": {
+                  "entries": 2,
+                  "min": 2
+                },
+                "note": "前置调研目录至少 2 份",
+                "path_expanded": "docs/research"
+              }
+            ],
+            "summary": {
+              "total": 3,
+              "match": 3,
+              "mismatch": 0,
+              "missing": 0,
+              "all_match": true
+            }
+          },
+          {
+            "criterion_id": "E-04",
+            "note": null,
+            "fields": [
+              {
+                "id": "E-04-F1",
+                "path": "HARNESS.md",
+                "kind": "text_all",
+                "status": "match",
+                "observed": {
+                  "missing_anchors": [],
+                  "expected_count": 3
+                },
+                "note": "Harness 含开发规范、日志规范、脚本配置",
+                "path_expanded": "HARNESS.md"
+              },
+              {
+                "id": "E-04-F2",
+                "path": "GLOBAL.md",
+                "kind": "file_exists",
+                "status": "match",
+                "observed": true,
+                "note": "目标独立成文",
+                "path_expanded": "GLOBAL.md"
+              },
+              {
+                "id": "E-04-F3",
+                "path": "PLAN.md",
+                "kind": "file_exists",
+                "status": "match",
+                "observed": true,
+                "note": "计划独立成文",
+                "path_expanded": "PLAN.md"
+              },
+              {
+                "id": "E-04-F4",
+                "path": "TASKS.md",
+                "kind": "file_exists",
+                "status": "match",
+                "observed": true,
+                "note": "任务独立成文",
+                "path_expanded": "TASKS.md"
+              }
+            ],
+            "summary": {
+              "total": 4,
+              "match": 4,
+              "mismatch": 0,
+              "missing": 0,
+              "all_match": true
+            }
+          },
+          {
+            "criterion_id": "E-05",
+            "note": null,
+            "fields": [
+              {
+                "id": "E-05-F1",
+                "path": "evidence/RUN-*/report.json",
+                "kind": "json_eq",
+                "status": "match",
+                "observed": {
+                  "lhs": "0.1.6",
+                  "rhs": "0.1.6"
+                },
+                "note": "报告规则包版本与 meta 一致",
+                "path_expanded": "evidence/RUN-20261124-140458-21cf5a06/report.json"
+              },
+              {
+                "id": "E-05-F2",
+                "path": "evidence/RUN-*/report.json",
+                "kind": "json_eq",
+                "status": "match",
+                "observed": {
+                  "lhs": "21cf5a06cc615b6e8ce71b66dbcda9386a136f63d861fcc258a195b98c4728aa",
+                  "rhs": "21cf5a06cc615b6e8ce71b66dbcda9386a136f63d861fcc258a195b98c4728aa"
+                },
+                "note": "样本指纹与 meta 一致",
+                "path_expanded": "evidence/RUN-20261124-140458-21cf5a06/report.json"
+              },
+              {
+                "id": "E-05-F3",
+                "path": "evidence/RUN-*/report.json",
+                "kind": "json_nonempty",
+                "status": "match",
+                "observed": {
+                  "found": true,
+                  "nonempty": true
+                },
+                "note": "结论列表非空",
+                "path_expanded": "evidence/RUN-20261124-140458-21cf5a06/report.json"
+              },
+              {
+                "id": "E-05-F4",
+                "path": "evidence/RUN-*/report.json",
+                "kind": "json_nonempty",
+                "status": "match",
+                "observed": {
+                  "found": true,
+                  "nonempty": true
+                },
+                "note": "覆盖声明已检查项非空",
+                "path_expanded": "evidence/RUN-20261124-140458-21cf5a06/report.json"
+              }
+            ],
+            "summary": {
+              "total": 4,
+              "match": 4,
+              "mismatch": 0,
+              "missing": 0,
+              "all_match": true
+            }
+          },
+          {
+            "criterion_id": "E-06",
+            "note": null,
+            "fields": [
+              {
+                "id": "E-06-F1",
+                "path": "docs/changes.md",
+                "kind": "text_all",
+                "status": "match",
+                "observed": {
+                  "missing_anchors": [],
+                  "expected_count": 2
+                },
+                "note": "变更有版本锚点与回归成绩",
+                "path_expanded": "docs/changes.md"
+              },
+              {
+                "id": "E-06-F2",
+                "path": "core/registry.py",
+                "kind": "text_all",
+                "status": "match",
+                "observed": {
+                  "missing_anchors": [],
+                  "expected_count": 2
+                },
+                "note": "版本号绑定实现",
+                "path_expanded": "core/registry.py"
+              },
+              {
+                "id": "E-06-F3",
+                "path": "evidence/RUN-*/meta.json",
+                "kind": "json_eq",
+                "status": "match",
+                "observed": {
+                  "lhs": "0.1.6",
+                  "rhs": "0.1.6"
+                },
+                "note": "meta 与报告版本互相一致（TASKS.md 点名字段）",
+                "path_expanded": "evidence/RUN-20261124-140458-21cf5a06/meta.json"
+              }
+            ],
+            "summary": {
+              "total": 3,
+              "match": 3,
+              "mismatch": 0,
+              "missing": 0,
+              "all_match": true
+            }
+          },
+          {
+            "criterion_id": "E-07",
+            "note": "release.md 的内容承载在 handoff/README.md",
+            "fields": [
+              {
+                "id": "E-07-F1",
+                "path": "handoff/README.md",
+                "kind": "text_all",
+                "status": "match",
+                "observed": {
+                  "missing_anchors": [],
+                  "expected_count": 3
+                },
+                "note": "交接包含启动、重置、已知限制",
+                "path_expanded": "handoff/README.md"
+              },
+              {
+                "id": "E-07-F2",
+                "path": "docs/signoff.md",
+                "kind": "text_all",
+                "status": "match",
+                "observed": {
+                  "missing_anchors": [],
+                  "expected_count": 3
+                },
+                "note": "签署状态显式，未发生的层不预填",
+                "path_expanded": "docs/signoff.md"
+              },
+              {
+                "id": "E-07-F3",
+                "path": "docs/release.md",
+                "kind": "file_exists",
+                "status": "missing",
+                "observed": false,
+                "note": "历史文件名，缺失如实记 missing",
+                "path_expanded": "docs/release.md"
+              }
+            ],
+            "summary": {
+              "total": 3,
+              "match": 2,
+              "mismatch": 0,
+              "missing": 1,
+              "all_match": false
+            }
+          },
+          {
+            "criterion_id": "E-08",
+            "note": null,
+            "fields": [
+              {
+                "id": "E-08-F1",
+                "path": "docs/experiment-protocol.md",
+                "kind": "text_all",
+                "status": "match",
+                "observed": {
+                  "missing_anchors": [],
+                  "expected_count": 3
+                },
+                "note": "协议含不变量、计时与指标",
+                "path_expanded": "docs/experiment-protocol.md"
+              },
+              {
+                "id": "E-08-F2",
+                "path": "review/exp_datasource_ab_v014.json",
+                "kind": "json_nonempty",
+                "status": "match",
+                "observed": {
+                  "found": true,
+                  "nonempty": true
+                },
+                "note": "真实运行输出留存固定条件",
+                "path_expanded": "review/exp_datasource_ab_v014.json"
+              },
+              {
+                "id": "E-08-F3",
+                "path": "review/exp_datasource_ab_v014.json",
+                "kind": "json_nonempty",
+                "status": "match",
+                "observed": {
+                  "found": true,
+                  "nonempty": true
+                },
+                "note": "真实运行输出留存汇总",
+                "path_expanded": "review/exp_datasource_ab_v014.json"
+              }
+            ],
+            "summary": {
+              "total": 3,
+              "match": 3,
+              "mismatch": 0,
+              "missing": 0,
+              "all_match": true
+            }
+          },
+          {
+            "criterion_id": "E-09",
+            "note": null,
+            "fields": [
+              {
+                "id": "E-09-F1",
+                "path": "evaluator/agent.py",
+                "kind": "text_all",
+                "status": "match",
+                "observed": {
+                  "missing_anchors": [],
+                  "expected_count": 3
+                },
+                "note": "评价器实现四状态与未完成项",
+                "path_expanded": "evaluator/agent.py"
+              },
+              {
+                "id": "E-09-F2",
+                "path": "evaluator/skills/evidence-review/rubric.json",
+                "kind": "text_all",
+                "status": "match",
+                "observed": {
+                  "missing_anchors": [],
+                  "expected_count": 4
+                },
+                "note": "rubric 含 K-1~K-6 校准判例",
+                "path_expanded": "evaluator/skills/evidence-review/rubric.json"
+              },
+              {
+                "id": "E-09-F3",
+                "path": "review/evaluation/calibration_k1_k6.json",
+                "kind": "file_exists",
+                "status": "match",
+                "observed": true,
+                "note": "校准运行记录",
+                "path_expanded": "review/evaluation/calibration_k1_k6.json"
+              }
+            ],
+            "summary": {
+              "total": 3,
+              "match": 3,
+              "mismatch": 0,
+              "missing": 0,
+              "all_match": true
+            }
+          },
+          {
+            "criterion_id": "E-10",
+            "note": null,
+            "fields": [
+              {
+                "id": "E-10-F1",
+                "path": ".gitignore",
+                "kind": "text_all",
+                "status": "match",
+                "observed": {
+                  "missing_anchors": [],
+                  "expected_count": 1
+                },
+                "note": "凭据不入库",
+                "path_expanded": ".gitignore"
+              },
+              {
+                "id": "E-10-F2",
+                "path": "AGENTS.md",
+                "kind": "text_all",
+                "status": "match",
+                "observed": {
+                  "missing_anchors": [],
+                  "expected_count": 2
+                },
+                "note": "人机责任与证据纪律",
+                "path_expanded": "AGENTS.md"
+              },
+              {
+                "id": "E-10-F3",
+                "path": "docs/ai-disclosure.md",
+                "kind": "text_all",
+                "status": "match",
+                "observed": {
+                  "missing_anchors": [],
+                  "expected_count": 2
+                },
+                "note": "AI 使用记录与被拒绝建议",
+                "path_expanded": "docs/ai-disclosure.md"
+              }
+            ],
+            "summary": {
+              "total": 3,
+              "match": 3,
+              "mismatch": 0,
+              "missing": 0,
+              "all_match": true
+            }
+          }
+        ]
+      }
+    },
+    "RUN-20261124-141033-3356097a": {
+      "sample": "bad01",
+      "check": {
+        "fields_id": "fields-course-v1",
+        "fields_version": "1.0",
+        "run_id": "RUN-20261124-141033-3356097a",
+        "criteria": [
+          {
+            "criterion_id": "E-01",
+            "note": "brief.md 已在 2026-11-18 文档合并中并入 requirements.md；如实记承载位置",
+            "fields": [
+              {
+                "id": "E-01-F1",
+                "path": "docs/requirements.md",
+                "kind": "text_all",
+                "status": "match",
+                "observed": {
+                  "missing_anchors": [],
+                  "expected_count": 5
+                },
+                "note": "角色/场景/UN/追溯/范围外五项结构",
+                "path_expanded": "docs/requirements.md"
+              },
+              {
+                "id": "E-01-F2",
+                "path": "docs/requirements.md",
+                "kind": "text_all",
+                "status": "match",
+                "observed": {
+                  "missing_anchors": [],
+                  "expected_count": 3
+                },
+                "note": "UN 编号、REQ 编号、不服务对象",
+                "path_expanded": "docs/requirements.md"
+              },
+              {
+                "id": "E-01-F3",
+                "path": "docs/brief.md",
+                "kind": "file_exists",
+                "status": "missing",
+                "observed": false,
+                "note": "rubric 期望的历史文件，已合并；缺失如实记 missing，不伪造",
+                "path_expanded": "docs/brief.md"
+              }
+            ],
+            "summary": {
+              "total": 3,
+              "match": 2,
+              "mismatch": 0,
+              "missing": 1,
+              "all_match": false
+            }
+          },
+          {
+            "criterion_id": "E-02",
+            "note": "acceptance-matrix.md / state-model.md 的历史内容承载在 specification.md §7/§8",
+            "fields": [
+              {
+                "id": "E-02-F1",
+                "path": "docs/specification.md",
+                "kind": "text_all",
+                "status": "match",
+                "observed": {
+                  "missing_anchors": [],
+                  "expected_count": 3
+                },
+                "note": "规则契约、报告 schema、验收 ID 三节",
+                "path_expanded": "docs/specification.md"
+              },
+              {
+                "id": "E-02-F2",
+                "path": "docs/specification.md",
+                "kind": "text_all",
+                "status": "match",
+                "observed": {
+                  "missing_anchors": [],
+                  "expected_count": 3
+                },
+                "note": "A-01~A-10 验收 ID 与定位契约",
+                "path_expanded": "docs/specification.md"
+              },
+              {
+                "id": "E-02-F3",
+                "path": "docs/acceptance-matrix.md",
+                "kind": "file_exists",
+                "status": "missing",
+                "observed": false,
+                "note": "历史文件名，缺失如实记 missing",
+                "path_expanded": "docs/acceptance-matrix.md"
+              }
+            ],
+            "summary": {
+              "total": 3,
+              "match": 2,
+              "mismatch": 0,
+              "missing": 1,
+              "all_match": false
+            }
+          },
+          {
+            "criterion_id": "E-03",
+            "note": null,
+            "fields": [
+              {
+                "id": "E-03-F1",
+                "path": "docs/decision-log.md",
+                "kind": "text_all",
+                "status": "match",
+                "observed": {
+                  "missing_anchors": [],
+                  "expected_count": 3
+                },
+                "note": "决策索引可定位到 ADR 且有复核记录",
+                "path_expanded": "docs/decision-log.md"
+              },
+              {
+                "id": "E-03-F2",
+                "path": "docs/adr",
+                "kind": "dir_min",
+                "status": "match",
+                "observed": {
+                  "entries": 11,
+                  "min": 10
+                },
+                "note": "ADR 目录至少 10 份（当前 11 份）",
+                "path_expanded": "docs/adr"
+              },
+              {
+                "id": "E-03-F3",
+                "path": "docs/research",
+                "kind": "dir_min",
+                "status": "match",
+                "observed": {
+                  "entries": 2,
+                  "min": 2
+                },
+                "note": "前置调研目录至少 2 份",
+                "path_expanded": "docs/research"
+              }
+            ],
+            "summary": {
+              "total": 3,
+              "match": 3,
+              "mismatch": 0,
+              "missing": 0,
+              "all_match": true
+            }
+          },
+          {
+            "criterion_id": "E-04",
+            "note": null,
+            "fields": [
+              {
+                "id": "E-04-F1",
+                "path": "HARNESS.md",
+                "kind": "text_all",
+                "status": "match",
+                "observed": {
+                  "missing_anchors": [],
+                  "expected_count": 3
+                },
+                "note": "Harness 含开发规范、日志规范、脚本配置",
+                "path_expanded": "HARNESS.md"
+              },
+              {
+                "id": "E-04-F2",
+                "path": "GLOBAL.md",
+                "kind": "file_exists",
+                "status": "match",
+                "observed": true,
+                "note": "目标独立成文",
+                "path_expanded": "GLOBAL.md"
+              },
+              {
+                "id": "E-04-F3",
+                "path": "PLAN.md",
+                "kind": "file_exists",
+                "status": "match",
+                "observed": true,
+                "note": "计划独立成文",
+                "path_expanded": "PLAN.md"
+              },
+              {
+                "id": "E-04-F4",
+                "path": "TASKS.md",
+                "kind": "file_exists",
+                "status": "match",
+                "observed": true,
+                "note": "任务独立成文",
+                "path_expanded": "TASKS.md"
+              }
+            ],
+            "summary": {
+              "total": 4,
+              "match": 4,
+              "mismatch": 0,
+              "missing": 0,
+              "all_match": true
+            }
+          },
+          {
+            "criterion_id": "E-05",
+            "note": null,
+            "fields": [
+              {
+                "id": "E-05-F1",
+                "path": "evidence/RUN-*/report.json",
+                "kind": "json_eq",
+                "status": "match",
+                "observed": {
+                  "lhs": "0.1.6",
+                  "rhs": "0.1.6"
+                },
+                "note": "报告规则包版本与 meta 一致",
+                "path_expanded": "evidence/RUN-20261124-141033-3356097a/report.json"
+              },
+              {
+                "id": "E-05-F2",
+                "path": "evidence/RUN-*/report.json",
+                "kind": "json_eq",
+                "status": "match",
+                "observed": {
+                  "lhs": "3356097a33fb044d848ee1930523924b2d08ba7bbfdf47f43c7dbad10aae1414",
+                  "rhs": "3356097a33fb044d848ee1930523924b2d08ba7bbfdf47f43c7dbad10aae1414"
+                },
+                "note": "样本指纹与 meta 一致",
+                "path_expanded": "evidence/RUN-20261124-141033-3356097a/report.json"
+              },
+              {
+                "id": "E-05-F3",
+                "path": "evidence/RUN-*/report.json",
+                "kind": "json_nonempty",
+                "status": "match",
+                "observed": {
+                  "found": true,
+                  "nonempty": true
+                },
+                "note": "结论列表非空",
+                "path_expanded": "evidence/RUN-20261124-141033-3356097a/report.json"
+              },
+              {
+                "id": "E-05-F4",
+                "path": "evidence/RUN-*/report.json",
+                "kind": "json_nonempty",
+                "status": "match",
+                "observed": {
+                  "found": true,
+                  "nonempty": true
+                },
+                "note": "覆盖声明已检查项非空",
+                "path_expanded": "evidence/RUN-20261124-141033-3356097a/report.json"
+              }
+            ],
+            "summary": {
+              "total": 4,
+              "match": 4,
+              "mismatch": 0,
+              "missing": 0,
+              "all_match": true
+            }
+          },
+          {
+            "criterion_id": "E-06",
+            "note": null,
+            "fields": [
+              {
+                "id": "E-06-F1",
+                "path": "docs/changes.md",
+                "kind": "text_all",
+                "status": "match",
+                "observed": {
+                  "missing_anchors": [],
+                  "expected_count": 2
+                },
+                "note": "变更有版本锚点与回归成绩",
+                "path_expanded": "docs/changes.md"
+              },
+              {
+                "id": "E-06-F2",
+                "path": "core/registry.py",
+                "kind": "text_all",
+                "status": "match",
+                "observed": {
+                  "missing_anchors": [],
+                  "expected_count": 2
+                },
+                "note": "版本号绑定实现",
+                "path_expanded": "core/registry.py"
+              },
+              {
+                "id": "E-06-F3",
+                "path": "evidence/RUN-*/meta.json",
+                "kind": "json_eq",
+                "status": "match",
+                "observed": {
+                  "lhs": "0.1.6",
+                  "rhs": "0.1.6"
+                },
+                "note": "meta 与报告版本互相一致（TASKS.md 点名字段）",
+                "path_expanded": "evidence/RUN-20261124-141033-3356097a/meta.json"
+              }
+            ],
+            "summary": {
+              "total": 3,
+              "match": 3,
+              "mismatch": 0,
+              "missing": 0,
+              "all_match": true
+            }
+          },
+          {
+            "criterion_id": "E-07",
+            "note": "release.md 的内容承载在 handoff/README.md",
+            "fields": [
+              {
+                "id": "E-07-F1",
+                "path": "handoff/README.md",
+                "kind": "text_all",
+                "status": "match",
+                "observed": {
+                  "missing_anchors": [],
+                  "expected_count": 3
+                },
+                "note": "交接包含启动、重置、已知限制",
+                "path_expanded": "handoff/README.md"
+              },
+              {
+                "id": "E-07-F2",
+                "path": "docs/signoff.md",
+                "kind": "text_all",
+                "status": "match",
+                "observed": {
+                  "missing_anchors": [],
+                  "expected_count": 3
+                },
+                "note": "签署状态显式，未发生的层不预填",
+                "path_expanded": "docs/signoff.md"
+              },
+              {
+                "id": "E-07-F3",
+                "path": "docs/release.md",
+                "kind": "file_exists",
+                "status": "missing",
+                "observed": false,
+                "note": "历史文件名，缺失如实记 missing",
+                "path_expanded": "docs/release.md"
+              }
+            ],
+            "summary": {
+              "total": 3,
+              "match": 2,
+              "mismatch": 0,
+              "missing": 1,
+              "all_match": false
+            }
+          },
+          {
+            "criterion_id": "E-08",
+            "note": null,
+            "fields": [
+              {
+                "id": "E-08-F1",
+                "path": "docs/experiment-protocol.md",
+                "kind": "text_all",
+                "status": "match",
+                "observed": {
+                  "missing_anchors": [],
+                  "expected_count": 3
+                },
+                "note": "协议含不变量、计时与指标",
+                "path_expanded": "docs/experiment-protocol.md"
+              },
+              {
+                "id": "E-08-F2",
+                "path": "review/exp_datasource_ab_v014.json",
+                "kind": "json_nonempty",
+                "status": "match",
+                "observed": {
+                  "found": true,
+                  "nonempty": true
+                },
+                "note": "真实运行输出留存固定条件",
+                "path_expanded": "review/exp_datasource_ab_v014.json"
+              },
+              {
+                "id": "E-08-F3",
+                "path": "review/exp_datasource_ab_v014.json",
+                "kind": "json_nonempty",
+                "status": "match",
+                "observed": {
+                  "found": true,
+                  "nonempty": true
+                },
+                "note": "真实运行输出留存汇总",
+                "path_expanded": "review/exp_datasource_ab_v014.json"
+              }
+            ],
+            "summary": {
+              "total": 3,
+              "match": 3,
+              "mismatch": 0,
+              "missing": 0,
+              "all_match": true
+            }
+          },
+          {
+            "criterion_id": "E-09",
+            "note": null,
+            "fields": [
+              {
+                "id": "E-09-F1",
+                "path": "evaluator/agent.py",
+                "kind": "text_all",
+                "status": "match",
+                "observed": {
+                  "missing_anchors": [],
+                  "expected_count": 3
+                },
+                "note": "评价器实现四状态与未完成项",
+                "path_expanded": "evaluator/agent.py"
+              },
+              {
+                "id": "E-09-F2",
+                "path": "evaluator/skills/evidence-review/rubric.json",
+                "kind": "text_all",
+                "status": "match",
+                "observed": {
+                  "missing_anchors": [],
+                  "expected_count": 4
+                },
+                "note": "rubric 含 K-1~K-6 校准判例",
+                "path_expanded": "evaluator/skills/evidence-review/rubric.json"
+              },
+              {
+                "id": "E-09-F3",
+                "path": "review/evaluation/calibration_k1_k6.json",
+                "kind": "file_exists",
+                "status": "match",
+                "observed": true,
+                "note": "校准运行记录",
+                "path_expanded": "review/evaluation/calibration_k1_k6.json"
+              }
+            ],
+            "summary": {
+              "total": 3,
+              "match": 3,
+              "mismatch": 0,
+              "missing": 0,
+              "all_match": true
+            }
+          },
+          {
+            "criterion_id": "E-10",
+            "note": null,
+            "fields": [
+              {
+                "id": "E-10-F1",
+                "path": ".gitignore",
+                "kind": "text_all",
+                "status": "match",
+                "observed": {
+                  "missing_anchors": [],
+                  "expected_count": 1
+                },
+                "note": "凭据不入库",
+                "path_expanded": ".gitignore"
+              },
+              {
+                "id": "E-10-F2",
+                "path": "AGENTS.md",
+                "kind": "text_all",
+                "status": "match",
+                "observed": {
+                  "missing_anchors": [],
+                  "expected_count": 2
+                },
+                "note": "人机责任与证据纪律",
+                "path_expanded": "AGENTS.md"
+              },
+              {
+                "id": "E-10-F3",
+                "path": "docs/ai-disclosure.md",
+                "kind": "text_all",
+                "status": "match",
+                "observed": {
+                  "missing_anchors": [],
+                  "expected_count": 2
+                },
+                "note": "AI 使用记录与被拒绝建议",
+                "path_expanded": "docs/ai-disclosure.md"
+              }
+            ],
+            "summary": {
+              "total": 3,
+              "match": 3,
+              "mismatch": 0,
+              "missing": 0,
+              "all_match": true
+            }
+          }
+        ]
+      }
+    },
+    "RUN-20261124-141327-232666b8": {
+      "sample": "bad02",
+      "check": {
+        "fields_id": "fields-course-v1",
+        "fields_version": "1.0",
+        "run_id": "RUN-20261124-141327-232666b8",
+        "criteria": [
+          {
+            "criterion_id": "E-01",
+            "note": "brief.md 已在 2026-11-18 文档合并中并入 requirements.md；如实记承载位置",
+            "fields": [
+              {
+                "id": "E-01-F1",
+                "path": "docs/requirements.md",
+                "kind": "text_all",
+                "status": "match",
+                "observed": {
+                  "missing_anchors": [],
+                  "expected_count": 5
+                },
+                "note": "角色/场景/UN/追溯/范围外五项结构",
+                "path_expanded": "docs/requirements.md"
+              },
+              {
+                "id": "E-01-F2",
+                "path": "docs/requirements.md",
+                "kind": "text_all",
+                "status": "match",
+                "observed": {
+                  "missing_anchors": [],
+                  "expected_count": 3
+                },
+                "note": "UN 编号、REQ 编号、不服务对象",
+                "path_expanded": "docs/requirements.md"
+              },
+              {
+                "id": "E-01-F3",
+                "path": "docs/brief.md",
+                "kind": "file_exists",
+                "status": "missing",
+                "observed": false,
+                "note": "rubric 期望的历史文件，已合并；缺失如实记 missing，不伪造",
+                "path_expanded": "docs/brief.md"
+              }
+            ],
+            "summary": {
+              "total": 3,
+              "match": 2,
+              "mismatch": 0,
+              "missing": 1,
+              "all_match": false
+            }
+          },
+          {
+            "criterion_id": "E-02",
+            "note": "acceptance-matrix.md / state-model.md 的历史内容承载在 specification.md §7/§8",
+            "fields": [
+              {
+                "id": "E-02-F1",
+                "path": "docs/specification.md",
+                "kind": "text_all",
+                "status": "match",
+                "observed": {
+                  "missing_anchors": [],
+                  "expected_count": 3
+                },
+                "note": "规则契约、报告 schema、验收 ID 三节",
+                "path_expanded": "docs/specification.md"
+              },
+              {
+                "id": "E-02-F2",
+                "path": "docs/specification.md",
+                "kind": "text_all",
+                "status": "match",
+                "observed": {
+                  "missing_anchors": [],
+                  "expected_count": 3
+                },
+                "note": "A-01~A-10 验收 ID 与定位契约",
+                "path_expanded": "docs/specification.md"
+              },
+              {
+                "id": "E-02-F3",
+                "path": "docs/acceptance-matrix.md",
+                "kind": "file_exists",
+                "status": "missing",
+                "observed": false,
+                "note": "历史文件名，缺失如实记 missing",
+                "path_expanded": "docs/acceptance-matrix.md"
+              }
+            ],
+            "summary": {
+              "total": 3,
+              "match": 2,
+              "mismatch": 0,
+              "missing": 1,
+              "all_match": false
+            }
+          },
+          {
+            "criterion_id": "E-03",
+            "note": null,
+            "fields": [
+              {
+                "id": "E-03-F1",
+                "path": "docs/decision-log.md",
+                "kind": "text_all",
+                "status": "match",
+                "observed": {
+                  "missing_anchors": [],
+                  "expected_count": 3
+                },
+                "note": "决策索引可定位到 ADR 且有复核记录",
+                "path_expanded": "docs/decision-log.md"
+              },
+              {
+                "id": "E-03-F2",
+                "path": "docs/adr",
+                "kind": "dir_min",
+                "status": "match",
+                "observed": {
+                  "entries": 11,
+                  "min": 10
+                },
+                "note": "ADR 目录至少 10 份（当前 11 份）",
+                "path_expanded": "docs/adr"
+              },
+              {
+                "id": "E-03-F3",
+                "path": "docs/research",
+                "kind": "dir_min",
+                "status": "match",
+                "observed": {
+                  "entries": 2,
+                  "min": 2
+                },
+                "note": "前置调研目录至少 2 份",
+                "path_expanded": "docs/research"
+              }
+            ],
+            "summary": {
+              "total": 3,
+              "match": 3,
+              "mismatch": 0,
+              "missing": 0,
+              "all_match": true
+            }
+          },
+          {
+            "criterion_id": "E-04",
+            "note": null,
+            "fields": [
+              {
+                "id": "E-04-F1",
+                "path": "HARNESS.md",
+                "kind": "text_all",
+                "status": "match",
+                "observed": {
+                  "missing_anchors": [],
+                  "expected_count": 3
+                },
+                "note": "Harness 含开发规范、日志规范、脚本配置",
+                "path_expanded": "HARNESS.md"
+              },
+              {
+                "id": "E-04-F2",
+                "path": "GLOBAL.md",
+                "kind": "file_exists",
+                "status": "match",
+                "observed": true,
+                "note": "目标独立成文",
+                "path_expanded": "GLOBAL.md"
+              },
+              {
+                "id": "E-04-F3",
+                "path": "PLAN.md",
+                "kind": "file_exists",
+                "status": "match",
+                "observed": true,
+                "note": "计划独立成文",
+                "path_expanded": "PLAN.md"
+              },
+              {
+                "id": "E-04-F4",
+                "path": "TASKS.md",
+                "kind": "file_exists",
+                "status": "match",
+                "observed": true,
+                "note": "任务独立成文",
+                "path_expanded": "TASKS.md"
+              }
+            ],
+            "summary": {
+              "total": 4,
+              "match": 4,
+              "mismatch": 0,
+              "missing": 0,
+              "all_match": true
+            }
+          },
+          {
+            "criterion_id": "E-05",
+            "note": null,
+            "fields": [
+              {
+                "id": "E-05-F1",
+                "path": "evidence/RUN-*/report.json",
+                "kind": "json_eq",
+                "status": "match",
+                "observed": {
+                  "lhs": "0.1.6",
+                  "rhs": "0.1.6"
+                },
+                "note": "报告规则包版本与 meta 一致",
+                "path_expanded": "evidence/RUN-20261124-141327-232666b8/report.json"
+              },
+              {
+                "id": "E-05-F2",
+                "path": "evidence/RUN-*/report.json",
+                "kind": "json_eq",
+                "status": "match",
+                "observed": {
+                  "lhs": "232666b8c0bf411dd454f5ec0922a5795a5c594e0eff56cbecce9f376a4f0d4c",
+                  "rhs": "232666b8c0bf411dd454f5ec0922a5795a5c594e0eff56cbecce9f376a4f0d4c"
+                },
+                "note": "样本指纹与 meta 一致",
+                "path_expanded": "evidence/RUN-20261124-141327-232666b8/report.json"
+              },
+              {
+                "id": "E-05-F3",
+                "path": "evidence/RUN-*/report.json",
+                "kind": "json_nonempty",
+                "status": "match",
+                "observed": {
+                  "found": true,
+                  "nonempty": true
+                },
+                "note": "结论列表非空",
+                "path_expanded": "evidence/RUN-20261124-141327-232666b8/report.json"
+              },
+              {
+                "id": "E-05-F4",
+                "path": "evidence/RUN-*/report.json",
+                "kind": "json_nonempty",
+                "status": "match",
+                "observed": {
+                  "found": true,
+                  "nonempty": true
+                },
+                "note": "覆盖声明已检查项非空",
+                "path_expanded": "evidence/RUN-20261124-141327-232666b8/report.json"
+              }
+            ],
+            "summary": {
+              "total": 4,
+              "match": 4,
+              "mismatch": 0,
+              "missing": 0,
+              "all_match": true
+            }
+          },
+          {
+            "criterion_id": "E-06",
+            "note": null,
+            "fields": [
+              {
+                "id": "E-06-F1",
+                "path": "docs/changes.md",
+                "kind": "text_all",
+                "status": "match",
+                "observed": {
+                  "missing_anchors": [],
+                  "expected_count": 2
+                },
+                "note": "变更有版本锚点与回归成绩",
+                "path_expanded": "docs/changes.md"
+              },
+              {
+                "id": "E-06-F2",
+                "path": "core/registry.py",
+                "kind": "text_all",
+                "status": "match",
+                "observed": {
+                  "missing_anchors": [],
+                  "expected_count": 2
+                },
+                "note": "版本号绑定实现",
+                "path_expanded": "core/registry.py"
+              },
+              {
+                "id": "E-06-F3",
+                "path": "evidence/RUN-*/meta.json",
+                "kind": "json_eq",
+                "status": "match",
+                "observed": {
+                  "lhs": "0.1.6",
+                  "rhs": "0.1.6"
+                },
+                "note": "meta 与报告版本互相一致（TASKS.md 点名字段）",
+                "path_expanded": "evidence/RUN-20261124-141327-232666b8/meta.json"
+              }
+            ],
+            "summary": {
+              "total": 3,
+              "match": 3,
+              "mismatch": 0,
+              "missing": 0,
+              "all_match": true
+            }
+          },
+          {
+            "criterion_id": "E-07",
+            "note": "release.md 的内容承载在 handoff/README.md",
+            "fields": [
+              {
+                "id": "E-07-F1",
+                "path": "handoff/README.md",
+                "kind": "text_all",
+                "status": "match",
+                "observed": {
+                  "missing_anchors": [],
+                  "expected_count": 3
+                },
+                "note": "交接包含启动、重置、已知限制",
+                "path_expanded": "handoff/README.md"
+              },
+              {
+                "id": "E-07-F2",
+                "path": "docs/signoff.md",
+                "kind": "text_all",
+                "status": "match",
+                "observed": {
+                  "missing_anchors": [],
+                  "expected_count": 3
+                },
+                "note": "签署状态显式，未发生的层不预填",
+                "path_expanded": "docs/signoff.md"
+              },
+              {
+                "id": "E-07-F3",
+                "path": "docs/release.md",
+                "kind": "file_exists",
+                "status": "missing",
+                "observed": false,
+                "note": "历史文件名，缺失如实记 missing",
+                "path_expanded": "docs/release.md"
+              }
+            ],
+            "summary": {
+              "total": 3,
+              "match": 2,
+              "mismatch": 0,
+              "missing": 1,
+              "all_match": false
+            }
+          },
+          {
+            "criterion_id": "E-08",
+            "note": null,
+            "fields": [
+              {
+                "id": "E-08-F1",
+                "path": "docs/experiment-protocol.md",
+                "kind": "text_all",
+                "status": "match",
+                "observed": {
+                  "missing_anchors": [],
+                  "expected_count": 3
+                },
+                "note": "协议含不变量、计时与指标",
+                "path_expanded": "docs/experiment-protocol.md"
+              },
+              {
+                "id": "E-08-F2",
+                "path": "review/exp_datasource_ab_v014.json",
+                "kind": "json_nonempty",
+                "status": "match",
+                "observed": {
+                  "found": true,
+                  "nonempty": true
+                },
+                "note": "真实运行输出留存固定条件",
+                "path_expanded": "review/exp_datasource_ab_v014.json"
+              },
+              {
+                "id": "E-08-F3",
+                "path": "review/exp_datasource_ab_v014.json",
+                "kind": "json_nonempty",
+                "status": "match",
+                "observed": {
+                  "found": true,
+                  "nonempty": true
+                },
+                "note": "真实运行输出留存汇总",
+                "path_expanded": "review/exp_datasource_ab_v014.json"
+              }
+            ],
+            "summary": {
+              "total": 3,
+              "match": 3,
+              "mismatch": 0,
+              "missing": 0,
+              "all_match": true
+            }
+          },
+          {
+            "criterion_id": "E-09",
+            "note": null,
+            "fields": [
+              {
+                "id": "E-09-F1",
+                "path": "evaluator/agent.py",
+                "kind": "text_all",
+                "status": "match",
+                "observed": {
+                  "missing_anchors": [],
+                  "expected_count": 3
+                },
+                "note": "评价器实现四状态与未完成项",
+                "path_expanded": "evaluator/agent.py"
+              },
+              {
+                "id": "E-09-F2",
+                "path": "evaluator/skills/evidence-review/rubric.json",
+                "kind": "text_all",
+                "status": "match",
+                "observed": {
+                  "missing_anchors": [],
+                  "expected_count": 4
+                },
+                "note": "rubric 含 K-1~K-6 校准判例",
+                "path_expanded": "evaluator/skills/evidence-review/rubric.json"
+              },
+              {
+                "id": "E-09-F3",
+                "path": "review/evaluation/calibration_k1_k6.json",
+                "kind": "file_exists",
+                "status": "match",
+                "observed": true,
+                "note": "校准运行记录",
+                "path_expanded": "review/evaluation/calibration_k1_k6.json"
+              }
+            ],
+            "summary": {
+              "total": 3,
+              "match": 3,
+              "mismatch": 0,
+              "missing": 0,
+              "all_match": true
+            }
+          },
+          {
+            "criterion_id": "E-10",
+            "note": null,
+            "fields": [
+              {
+                "id": "E-10-F1",
+                "path": ".gitignore",
+                "kind": "text_all",
+                "status": "match",
+                "observed": {
+                  "missing_anchors": [],
+                  "expected_count": 1
+                },
+                "note": "凭据不入库",
+                "path_expanded": ".gitignore"
+              },
+              {
+                "id": "E-10-F2",
+                "path": "AGENTS.md",
+                "kind": "text_all",
+                "status": "match",
+                "observed": {
+                  "missing_anchors": [],
+                  "expected_count": 2
+                },
+                "note": "人机责任与证据纪律",
+                "path_expanded": "AGENTS.md"
+              },
+              {
+                "id": "E-10-F3",
+                "path": "docs/ai-disclosure.md",
+                "kind": "text_all",
+                "status": "match",
+                "observed": {
+                  "missing_anchors": [],
+                  "expected_count": 2
+                },
+                "note": "AI 使用记录与被拒绝建议",
+                "path_expanded": "docs/ai-disclosure.md"
+              }
+            ],
+            "summary": {
+              "total": 3,
+              "match": 3,
+              "mismatch": 0,
+              "missing": 0,
+              "all_match": true
+            }
+          }
+        ]
+      }
+    },
+    "RUN-20261124-141435-e1152264": {
+      "sample": "bad04",
+      "check": {
+        "fields_id": "fields-course-v1",
+        "fields_version": "1.0",
+        "run_id": "RUN-20261124-141435-e1152264",
+        "criteria": [
+          {
+            "criterion_id": "E-01",
+            "note": "brief.md 已在 2026-11-18 文档合并中并入 requirements.md；如实记承载位置",
+            "fields": [
+              {
+                "id": "E-01-F1",
+                "path": "docs/requirements.md",
+                "kind": "text_all",
+                "status": "match",
+                "observed": {
+                  "missing_anchors": [],
+                  "expected_count": 5
+                },
+                "note": "角色/场景/UN/追溯/范围外五项结构",
+                "path_expanded": "docs/requirements.md"
+              },
+              {
+                "id": "E-01-F2",
+                "path": "docs/requirements.md",
+                "kind": "text_all",
+                "status": "match",
+                "observed": {
+                  "missing_anchors": [],
+                  "expected_count": 3
+                },
+                "note": "UN 编号、REQ 编号、不服务对象",
+                "path_expanded": "docs/requirements.md"
+              },
+              {
+                "id": "E-01-F3",
+                "path": "docs/brief.md",
+                "kind": "file_exists",
+                "status": "missing",
+                "observed": false,
+                "note": "rubric 期望的历史文件，已合并；缺失如实记 missing，不伪造",
+                "path_expanded": "docs/brief.md"
+              }
+            ],
+            "summary": {
+              "total": 3,
+              "match": 2,
+              "mismatch": 0,
+              "missing": 1,
+              "all_match": false
+            }
+          },
+          {
+            "criterion_id": "E-02",
+            "note": "acceptance-matrix.md / state-model.md 的历史内容承载在 specification.md §7/§8",
+            "fields": [
+              {
+                "id": "E-02-F1",
+                "path": "docs/specification.md",
+                "kind": "text_all",
+                "status": "match",
+                "observed": {
+                  "missing_anchors": [],
+                  "expected_count": 3
+                },
+                "note": "规则契约、报告 schema、验收 ID 三节",
+                "path_expanded": "docs/specification.md"
+              },
+              {
+                "id": "E-02-F2",
+                "path": "docs/specification.md",
+                "kind": "text_all",
+                "status": "match",
+                "observed": {
+                  "missing_anchors": [],
+                  "expected_count": 3
+                },
+                "note": "A-01~A-10 验收 ID 与定位契约",
+                "path_expanded": "docs/specification.md"
+              },
+              {
+                "id": "E-02-F3",
+                "path": "docs/acceptance-matrix.md",
+                "kind": "file_exists",
+                "status": "missing",
+                "observed": false,
+                "note": "历史文件名，缺失如实记 missing",
+                "path_expanded": "docs/acceptance-matrix.md"
+              }
+            ],
+            "summary": {
+              "total": 3,
+              "match": 2,
+              "mismatch": 0,
+              "missing": 1,
+              "all_match": false
+            }
+          },
+          {
+            "criterion_id": "E-03",
+            "note": null,
+            "fields": [
+              {
+                "id": "E-03-F1",
+                "path": "docs/decision-log.md",
+                "kind": "text_all",
+                "status": "match",
+                "observed": {
+                  "missing_anchors": [],
+                  "expected_count": 3
+                },
+                "note": "决策索引可定位到 ADR 且有复核记录",
+                "path_expanded": "docs/decision-log.md"
+              },
+              {
+                "id": "E-03-F2",
+                "path": "docs/adr",
+                "kind": "dir_min",
+                "status": "match",
+                "observed": {
+                  "entries": 11,
+                  "min": 10
+                },
+                "note": "ADR 目录至少 10 份（当前 11 份）",
+                "path_expanded": "docs/adr"
+              },
+              {
+                "id": "E-03-F3",
+                "path": "docs/research",
+                "kind": "dir_min",
+                "status": "match",
+                "observed": {
+                  "entries": 2,
+                  "min": 2
+                },
+                "note": "前置调研目录至少 2 份",
+                "path_expanded": "docs/research"
+              }
+            ],
+            "summary": {
+              "total": 3,
+              "match": 3,
+              "mismatch": 0,
+              "missing": 0,
+              "all_match": true
+            }
+          },
+          {
+            "criterion_id": "E-04",
+            "note": null,
+            "fields": [
+              {
+                "id": "E-04-F1",
+                "path": "HARNESS.md",
+                "kind": "text_all",
+                "status": "match",
+                "observed": {
+                  "missing_anchors": [],
+                  "expected_count": 3
+                },
+                "note": "Harness 含开发规范、日志规范、脚本配置",
+                "path_expanded": "HARNESS.md"
+              },
+              {
+                "id": "E-04-F2",
+                "path": "GLOBAL.md",
+                "kind": "file_exists",
+                "status": "match",
+                "observed": true,
+                "note": "目标独立成文",
+                "path_expanded": "GLOBAL.md"
+              },
+              {
+                "id": "E-04-F3",
+                "path": "PLAN.md",
+                "kind": "file_exists",
+                "status": "match",
+                "observed": true,
+                "note": "计划独立成文",
+                "path_expanded": "PLAN.md"
+              },
+              {
+                "id": "E-04-F4",
+                "path": "TASKS.md",
+                "kind": "file_exists",
+                "status": "match",
+                "observed": true,
+                "note": "任务独立成文",
+                "path_expanded": "TASKS.md"
+              }
+            ],
+            "summary": {
+              "total": 4,
+              "match": 4,
+              "mismatch": 0,
+              "missing": 0,
+              "all_match": true
+            }
+          },
+          {
+            "criterion_id": "E-05",
+            "note": null,
+            "fields": [
+              {
+                "id": "E-05-F1",
+                "path": "evidence/RUN-*/report.json",
+                "kind": "json_eq",
+                "status": "match",
+                "observed": {
+                  "lhs": "0.1.6",
+                  "rhs": "0.1.6"
+                },
+                "note": "报告规则包版本与 meta 一致",
+                "path_expanded": "evidence/RUN-20261124-141435-e1152264/report.json"
+              },
+              {
+                "id": "E-05-F2",
+                "path": "evidence/RUN-*/report.json",
+                "kind": "json_eq",
+                "status": "match",
+                "observed": {
+                  "lhs": "e11522640317bad12bafb2aecd880d348343b66234a42b1b28e206e7c846dab7",
+                  "rhs": "e11522640317bad12bafb2aecd880d348343b66234a42b1b28e206e7c846dab7"
+                },
+                "note": "样本指纹与 meta 一致",
+                "path_expanded": "evidence/RUN-20261124-141435-e1152264/report.json"
+              },
+              {
+                "id": "E-05-F3",
+                "path": "evidence/RUN-*/report.json",
+                "kind": "json_nonempty",
+                "status": "match",
+                "observed": {
+                  "found": true,
+                  "nonempty": true
+                },
+                "note": "结论列表非空",
+                "path_expanded": "evidence/RUN-20261124-141435-e1152264/report.json"
+              },
+              {
+                "id": "E-05-F4",
+                "path": "evidence/RUN-*/report.json",
+                "kind": "json_nonempty",
+                "status": "match",
+                "observed": {
+                  "found": true,
+                  "nonempty": true
+                },
+                "note": "覆盖声明已检查项非空",
+                "path_expanded": "evidence/RUN-20261124-141435-e1152264/report.json"
+              }
+            ],
+            "summary": {
+              "total": 4,
+              "match": 4,
+              "mismatch": 0,
+              "missing": 0,
+              "all_match": true
+            }
+          },
+          {
+            "criterion_id": "E-06",
+            "note": null,
+            "fields": [
+              {
+                "id": "E-06-F1",
+                "path": "docs/changes.md",
+                "kind": "text_all",
+                "status": "match",
+                "observed": {
+                  "missing_anchors": [],
+                  "expected_count": 2
+                },
+                "note": "变更有版本锚点与回归成绩",
+                "path_expanded": "docs/changes.md"
+              },
+              {
+                "id": "E-06-F2",
+                "path": "core/registry.py",
+                "kind": "text_all",
+                "status": "match",
+                "observed": {
+                  "missing_anchors": [],
+                  "expected_count": 2
+                },
+                "note": "版本号绑定实现",
+                "path_expanded": "core/registry.py"
+              },
+              {
+                "id": "E-06-F3",
+                "path": "evidence/RUN-*/meta.json",
+                "kind": "json_eq",
+                "status": "match",
+                "observed": {
+                  "lhs": "0.1.6",
+                  "rhs": "0.1.6"
+                },
+                "note": "meta 与报告版本互相一致（TASKS.md 点名字段）",
+                "path_expanded": "evidence/RUN-20261124-141435-e1152264/meta.json"
+              }
+            ],
+            "summary": {
+              "total": 3,
+              "match": 3,
+              "mismatch": 0,
+              "missing": 0,
+              "all_match": true
+            }
+          },
+          {
+            "criterion_id": "E-07",
+            "note": "release.md 的内容承载在 handoff/README.md",
+            "fields": [
+              {
+                "id": "E-07-F1",
+                "path": "handoff/README.md",
+                "kind": "text_all",
+                "status": "match",
+                "observed": {
+                  "missing_anchors": [],
+                  "expected_count": 3
+                },
+                "note": "交接包含启动、重置、已知限制",
+                "path_expanded": "handoff/README.md"
+              },
+              {
+                "id": "E-07-F2",
+                "path": "docs/signoff.md",
+                "kind": "text_all",
+                "status": "match",
+                "observed": {
+                  "missing_anchors": [],
+                  "expected_count": 3
+                },
+                "note": "签署状态显式，未发生的层不预填",
+                "path_expanded": "docs/signoff.md"
+              },
+              {
+                "id": "E-07-F3",
+                "path": "docs/release.md",
+                "kind": "file_exists",
+                "status": "missing",
+                "observed": false,
+                "note": "历史文件名，缺失如实记 missing",
+                "path_expanded": "docs/release.md"
+              }
+            ],
+            "summary": {
+              "total": 3,
+              "match": 2,
+              "mismatch": 0,
+              "missing": 1,
+              "all_match": false
+            }
+          },
+          {
+            "criterion_id": "E-08",
+            "note": null,
+            "fields": [
+              {
+                "id": "E-08-F1",
+                "path": "docs/experiment-protocol.md",
+                "kind": "text_all",
+                "status": "match",
+                "observed": {
+                  "missing_anchors": [],
+                  "expected_count": 3
+                },
+                "note": "协议含不变量、计时与指标",
+                "path_expanded": "docs/experiment-protocol.md"
+              },
+              {
+                "id": "E-08-F2",
+                "path": "review/exp_datasource_ab_v014.json",
+                "kind": "json_nonempty",
+                "status": "match",
+                "observed": {
+                  "found": true,
+                  "nonempty": true
+                },
+                "note": "真实运行输出留存固定条件",
+                "path_expanded": "review/exp_datasource_ab_v014.json"
+              },
+              {
+                "id": "E-08-F3",
+                "path": "review/exp_datasource_ab_v014.json",
+                "kind": "json_nonempty",
+                "status": "match",
+                "observed": {
+                  "found": true,
+                  "nonempty": true
+                },
+                "note": "真实运行输出留存汇总",
+                "path_expanded": "review/exp_datasource_ab_v014.json"
+              }
+            ],
+            "summary": {
+              "total": 3,
+              "match": 3,
+              "mismatch": 0,
+              "missing": 0,
+              "all_match": true
+            }
+          },
+          {
+            "criterion_id": "E-09",
+            "note": null,
+            "fields": [
+              {
+                "id": "E-09-F1",
+                "path": "evaluator/agent.py",
+                "kind": "text_all",
+                "status": "match",
+                "observed": {
+                  "missing_anchors": [],
+                  "expected_count": 3
+                },
+                "note": "评价器实现四状态与未完成项",
+                "path_expanded": "evaluator/agent.py"
+              },
+              {
+                "id": "E-09-F2",
+                "path": "evaluator/skills/evidence-review/rubric.json",
+                "kind": "text_all",
+                "status": "match",
+                "observed": {
+                  "missing_anchors": [],
+                  "expected_count": 4
+                },
+                "note": "rubric 含 K-1~K-6 校准判例",
+                "path_expanded": "evaluator/skills/evidence-review/rubric.json"
+              },
+              {
+                "id": "E-09-F3",
+                "path": "review/evaluation/calibration_k1_k6.json",
+                "kind": "file_exists",
+                "status": "match",
+                "observed": true,
+                "note": "校准运行记录",
+                "path_expanded": "review/evaluation/calibration_k1_k6.json"
+              }
+            ],
+            "summary": {
+              "total": 3,
+              "match": 3,
+              "mismatch": 0,
+              "missing": 0,
+              "all_match": true
+            }
+          },
+          {
+            "criterion_id": "E-10",
+            "note": null,
+            "fields": [
+              {
+                "id": "E-10-F1",
+                "path": ".gitignore",
+                "kind": "text_all",
+                "status": "match",
+                "observed": {
+                  "missing_anchors": [],
+                  "expected_count": 1
+                },
+                "note": "凭据不入库",
+                "path_expanded": ".gitignore"
+              },
+              {
+                "id": "E-10-F2",
+                "path": "AGENTS.md",
+                "kind": "text_all",
+                "status": "match",
+                "observed": {
+                  "missing_anchors": [],
+                  "expected_count": 2
+                },
+                "note": "人机责任与证据纪律",
+                "path_expanded": "AGENTS.md"
+              },
+              {
+                "id": "E-10-F3",
+                "path": "docs/ai-disclosure.md",
+                "kind": "text_all",
+                "status": "match",
+                "observed": {
+                  "missing_anchors": [],
+                  "expected_count": 2
+                },
+                "note": "AI 使用记录与被拒绝建议",
+                "path_expanded": "docs/ai-disclosure.md"
+              }
+            ],
+            "summary": {
+              "total": 3,
+              "match": 3,
+              "mismatch": 0,
+              "missing": 0,
+              "all_match": true
+            }
+          }
+        ]
+      }
+    },
+    "RUN-20261124-141502-4cbacbdd": {
+      "sample": "good01",
+      "check": {
+        "fields_id": "fields-course-v1",
+        "fields_version": "1.0",
+        "run_id": "RUN-20261124-141502-4cbacbdd",
+        "criteria": [
+          {
+            "criterion_id": "E-01",
+            "note": "brief.md 已在 2026-11-18 文档合并中并入 requirements.md；如实记承载位置",
+            "fields": [
+              {
+                "id": "E-01-F1",
+                "path": "docs/requirements.md",
+                "kind": "text_all",
+                "status": "match",
+                "observed": {
+                  "missing_anchors": [],
+                  "expected_count": 5
+                },
+                "note": "角色/场景/UN/追溯/范围外五项结构",
+                "path_expanded": "docs/requirements.md"
+              },
+              {
+                "id": "E-01-F2",
+                "path": "docs/requirements.md",
+                "kind": "text_all",
+                "status": "match",
+                "observed": {
+                  "missing_anchors": [],
+                  "expected_count": 3
+                },
+                "note": "UN 编号、REQ 编号、不服务对象",
+                "path_expanded": "docs/requirements.md"
+              },
+              {
+                "id": "E-01-F3",
+                "path": "docs/brief.md",
+                "kind": "file_exists",
+                "status": "missing",
+                "observed": false,
+                "note": "rubric 期望的历史文件，已合并；缺失如实记 missing，不伪造",
+                "path_expanded": "docs/brief.md"
+              }
+            ],
+            "summary": {
+              "total": 3,
+              "match": 2,
+              "mismatch": 0,
+              "missing": 1,
+              "all_match": false
+            }
+          },
+          {
+            "criterion_id": "E-02",
+            "note": "acceptance-matrix.md / state-model.md 的历史内容承载在 specification.md §7/§8",
+            "fields": [
+              {
+                "id": "E-02-F1",
+                "path": "docs/specification.md",
+                "kind": "text_all",
+                "status": "match",
+                "observed": {
+                  "missing_anchors": [],
+                  "expected_count": 3
+                },
+                "note": "规则契约、报告 schema、验收 ID 三节",
+                "path_expanded": "docs/specification.md"
+              },
+              {
+                "id": "E-02-F2",
+                "path": "docs/specification.md",
+                "kind": "text_all",
+                "status": "match",
+                "observed": {
+                  "missing_anchors": [],
+                  "expected_count": 3
+                },
+                "note": "A-01~A-10 验收 ID 与定位契约",
+                "path_expanded": "docs/specification.md"
+              },
+              {
+                "id": "E-02-F3",
+                "path": "docs/acceptance-matrix.md",
+                "kind": "file_exists",
+                "status": "missing",
+                "observed": false,
+                "note": "历史文件名，缺失如实记 missing",
+                "path_expanded": "docs/acceptance-matrix.md"
+              }
+            ],
+            "summary": {
+              "total": 3,
+              "match": 2,
+              "mismatch": 0,
+              "missing": 1,
+              "all_match": false
+            }
+          },
+          {
+            "criterion_id": "E-03",
+            "note": null,
+            "fields": [
+              {
+                "id": "E-03-F1",
+                "path": "docs/decision-log.md",
+                "kind": "text_all",
+                "status": "match",
+                "observed": {
+                  "missing_anchors": [],
+                  "expected_count": 3
+                },
+                "note": "决策索引可定位到 ADR 且有复核记录",
+                "path_expanded": "docs/decision-log.md"
+              },
+              {
+                "id": "E-03-F2",
+                "path": "docs/adr",
+                "kind": "dir_min",
+                "status": "match",
+                "observed": {
+                  "entries": 11,
+                  "min": 10
+                },
+                "note": "ADR 目录至少 10 份（当前 11 份）",
+                "path_expanded": "docs/adr"
+              },
+              {
+                "id": "E-03-F3",
+                "path": "docs/research",
+                "kind": "dir_min",
+                "status": "match",
+                "observed": {
+                  "entries": 2,
+                  "min": 2
+                },
+                "note": "前置调研目录至少 2 份",
+                "path_expanded": "docs/research"
+              }
+            ],
+            "summary": {
+              "total": 3,
+              "match": 3,
+              "mismatch": 0,
+              "missing": 0,
+              "all_match": true
+            }
+          },
+          {
+            "criterion_id": "E-04",
+            "note": null,
+            "fields": [
+              {
+                "id": "E-04-F1",
+                "path": "HARNESS.md",
+                "kind": "text_all",
+                "status": "match",
+                "observed": {
+                  "missing_anchors": [],
+                  "expected_count": 3
+                },
+                "note": "Harness 含开发规范、日志规范、脚本配置",
+                "path_expanded": "HARNESS.md"
+              },
+              {
+                "id": "E-04-F2",
+                "path": "GLOBAL.md",
+                "kind": "file_exists",
+                "status": "match",
+                "observed": true,
+                "note": "目标独立成文",
+                "path_expanded": "GLOBAL.md"
+              },
+              {
+                "id": "E-04-F3",
+                "path": "PLAN.md",
+                "kind": "file_exists",
+                "status": "match",
+                "observed": true,
+                "note": "计划独立成文",
+                "path_expanded": "PLAN.md"
+              },
+              {
+                "id": "E-04-F4",
+                "path": "TASKS.md",
+                "kind": "file_exists",
+                "status": "match",
+                "observed": true,
+                "note": "任务独立成文",
+                "path_expanded": "TASKS.md"
+              }
+            ],
+            "summary": {
+              "total": 4,
+              "match": 4,
+              "mismatch": 0,
+              "missing": 0,
+              "all_match": true
+            }
+          },
+          {
+            "criterion_id": "E-05",
+            "note": null,
+            "fields": [
+              {
+                "id": "E-05-F1",
+                "path": "evidence/RUN-*/report.json",
+                "kind": "json_eq",
+                "status": "match",
+                "observed": {
+                  "lhs": "0.1.6",
+                  "rhs": "0.1.6"
+                },
+                "note": "报告规则包版本与 meta 一致",
+                "path_expanded": "evidence/RUN-20261124-141502-4cbacbdd/report.json"
+              },
+              {
+                "id": "E-05-F2",
+                "path": "evidence/RUN-*/report.json",
+                "kind": "json_eq",
+                "status": "match",
+                "observed": {
+                  "lhs": "4cbacbdd6f878f7128ee4938f311ebac9a65e54e53f809a1b9b61634c17355dc",
+                  "rhs": "4cbacbdd6f878f7128ee4938f311ebac9a65e54e53f809a1b9b61634c17355dc"
+                },
+                "note": "样本指纹与 meta 一致",
+                "path_expanded": "evidence/RUN-20261124-141502-4cbacbdd/report.json"
+              },
+              {
+                "id": "E-05-F3",
+                "path": "evidence/RUN-*/report.json",
+                "kind": "json_nonempty",
+                "status": "match",
+                "observed": {
+                  "found": true,
+                  "nonempty": true
+                },
+                "note": "结论列表非空",
+                "path_expanded": "evidence/RUN-20261124-141502-4cbacbdd/report.json"
+              },
+              {
+                "id": "E-05-F4",
+                "path": "evidence/RUN-*/report.json",
+                "kind": "json_nonempty",
+                "status": "match",
+                "observed": {
+                  "found": true,
+                  "nonempty": true
+                },
+                "note": "覆盖声明已检查项非空",
+                "path_expanded": "evidence/RUN-20261124-141502-4cbacbdd/report.json"
+              }
+            ],
+            "summary": {
+              "total": 4,
+              "match": 4,
+              "mismatch": 0,
+              "missing": 0,
+              "all_match": true
+            }
+          },
+          {
+            "criterion_id": "E-06",
+            "note": null,
+            "fields": [
+              {
+                "id": "E-06-F1",
+                "path": "docs/changes.md",
+                "kind": "text_all",
+                "status": "match",
+                "observed": {
+                  "missing_anchors": [],
+                  "expected_count": 2
+                },
+                "note": "变更有版本锚点与回归成绩",
+                "path_expanded": "docs/changes.md"
+              },
+              {
+                "id": "E-06-F2",
+                "path": "core/registry.py",
+                "kind": "text_all",
+                "status": "match",
+                "observed": {
+                  "missing_anchors": [],
+                  "expected_count": 2
+                },
+                "note": "版本号绑定实现",
+                "path_expanded": "core/registry.py"
+              },
+              {
+                "id": "E-06-F3",
+                "path": "evidence/RUN-*/meta.json",
+                "kind": "json_eq",
+                "status": "match",
+                "observed": {
+                  "lhs": "0.1.6",
+                  "rhs": "0.1.6"
+                },
+                "note": "meta 与报告版本互相一致（TASKS.md 点名字段）",
+                "path_expanded": "evidence/RUN-20261124-141502-4cbacbdd/meta.json"
+              }
+            ],
+            "summary": {
+              "total": 3,
+              "match": 3,
+              "mismatch": 0,
+              "missing": 0,
+              "all_match": true
+            }
+          },
+          {
+            "criterion_id": "E-07",
+            "note": "release.md 的内容承载在 handoff/README.md",
+            "fields": [
+              {
+                "id": "E-07-F1",
+                "path": "handoff/README.md",
+                "kind": "text_all",
+                "status": "match",
+                "observed": {
+                  "missing_anchors": [],
+                  "expected_count": 3
+                },
+                "note": "交接包含启动、重置、已知限制",
+                "path_expanded": "handoff/README.md"
+              },
+              {
+                "id": "E-07-F2",
+                "path": "docs/signoff.md",
+                "kind": "text_all",
+                "status": "match",
+                "observed": {
+                  "missing_anchors": [],
+                  "expected_count": 3
+                },
+                "note": "签署状态显式，未发生的层不预填",
+                "path_expanded": "docs/signoff.md"
+              },
+              {
+                "id": "E-07-F3",
+                "path": "docs/release.md",
+                "kind": "file_exists",
+                "status": "missing",
+                "observed": false,
+                "note": "历史文件名，缺失如实记 missing",
+                "path_expanded": "docs/release.md"
+              }
+            ],
+            "summary": {
+              "total": 3,
+              "match": 2,
+              "mismatch": 0,
+              "missing": 1,
+              "all_match": false
+            }
+          },
+          {
+            "criterion_id": "E-08",
+            "note": null,
+            "fields": [
+              {
+                "id": "E-08-F1",
+                "path": "docs/experiment-protocol.md",
+                "kind": "text_all",
+                "status": "match",
+                "observed": {
+                  "missing_anchors": [],
+                  "expected_count": 3
+                },
+                "note": "协议含不变量、计时与指标",
+                "path_expanded": "docs/experiment-protocol.md"
+              },
+              {
+                "id": "E-08-F2",
+                "path": "review/exp_datasource_ab_v014.json",
+                "kind": "json_nonempty",
+                "status": "match",
+                "observed": {
+                  "found": true,
+                  "nonempty": true
+                },
+                "note": "真实运行输出留存固定条件",
+                "path_expanded": "review/exp_datasource_ab_v014.json"
+              },
+              {
+                "id": "E-08-F3",
+                "path": "review/exp_datasource_ab_v014.json",
+                "kind": "json_nonempty",
+                "status": "match",
+                "observed": {
+                  "found": true,
+                  "nonempty": true
+                },
+                "note": "真实运行输出留存汇总",
+                "path_expanded": "review/exp_datasource_ab_v014.json"
+              }
+            ],
+            "summary": {
+              "total": 3,
+              "match": 3,
+              "mismatch": 0,
+              "missing": 0,
+              "all_match": true
+            }
+          },
+          {
+            "criterion_id": "E-09",
+            "note": null,
+            "fields": [
+              {
+                "id": "E-09-F1",
+                "path": "evaluator/agent.py",
+                "kind": "text_all",
+                "status": "match",
+                "observed": {
+                  "missing_anchors": [],
+                  "expected_count": 3
+                },
+                "note": "评价器实现四状态与未完成项",
+                "path_expanded": "evaluator/agent.py"
+              },
+              {
+                "id": "E-09-F2",
+                "path": "evaluator/skills/evidence-review/rubric.json",
+                "kind": "text_all",
+                "status": "match",
+                "observed": {
+                  "missing_anchors": [],
+                  "expected_count": 4
+                },
+                "note": "rubric 含 K-1~K-6 校准判例",
+                "path_expanded": "evaluator/skills/evidence-review/rubric.json"
+              },
+              {
+                "id": "E-09-F3",
+                "path": "review/evaluation/calibration_k1_k6.json",
+                "kind": "file_exists",
+                "status": "match",
+                "observed": true,
+                "note": "校准运行记录",
+                "path_expanded": "review/evaluation/calibration_k1_k6.json"
+              }
+            ],
+            "summary": {
+              "total": 3,
+              "match": 3,
+              "mismatch": 0,
+              "missing": 0,
+              "all_match": true
+            }
+          },
+          {
+            "criterion_id": "E-10",
+            "note": null,
+            "fields": [
+              {
+                "id": "E-10-F1",
+                "path": ".gitignore",
+                "kind": "text_all",
+                "status": "match",
+                "observed": {
+                  "missing_anchors": [],
+                  "expected_count": 1
+                },
+                "note": "凭据不入库",
+                "path_expanded": ".gitignore"
+              },
+              {
+                "id": "E-10-F2",
+                "path": "AGENTS.md",
+                "kind": "text_all",
+                "status": "match",
+                "observed": {
+                  "missing_anchors": [],
+                  "expected_count": 2
+                },
+                "note": "人机责任与证据纪律",
+                "path_expanded": "AGENTS.md"
+              },
+              {
+                "id": "E-10-F3",
+                "path": "docs/ai-disclosure.md",
+                "kind": "text_all",
+                "status": "match",
+                "observed": {
+                  "missing_anchors": [],
+                  "expected_count": 2
+                },
+                "note": "AI 使用记录与被拒绝建议",
+                "path_expanded": "docs/ai-disclosure.md"
+              }
+            ],
+            "summary": {
+              "total": 3,
+              "match": 3,
+              "mismatch": 0,
+              "missing": 0,
+              "all_match": true
+            }
+          }
+        ]
+      }
+    },
+    "RUN-20261124-141518-710b457d": {
+      "sample": "good02",
+      "check": {
+        "fields_id": "fields-course-v1",
+        "fields_version": "1.0",
+        "run_id": "RUN-20261124-141518-710b457d",
+        "criteria": [
+          {
+            "criterion_id": "E-01",
+            "note": "brief.md 已在 2026-11-18 文档合并中并入 requirements.md；如实记承载位置",
+            "fields": [
+              {
+                "id": "E-01-F1",
+                "path": "docs/requirements.md",
+                "kind": "text_all",
+                "status": "match",
+                "observed": {
+                  "missing_anchors": [],
+                  "expected_count": 5
+                },
+                "note": "角色/场景/UN/追溯/范围外五项结构",
+                "path_expanded": "docs/requirements.md"
+              },
+              {
+                "id": "E-01-F2",
+                "path": "docs/requirements.md",
+                "kind": "text_all",
+                "status": "match",
+                "observed": {
+                  "missing_anchors": [],
+                  "expected_count": 3
+                },
+                "note": "UN 编号、REQ 编号、不服务对象",
+                "path_expanded": "docs/requirements.md"
+              },
+              {
+                "id": "E-01-F3",
+                "path": "docs/brief.md",
+                "kind": "file_exists",
+                "status": "missing",
+                "observed": false,
+                "note": "rubric 期望的历史文件，已合并；缺失如实记 missing，不伪造",
+                "path_expanded": "docs/brief.md"
+              }
+            ],
+            "summary": {
+              "total": 3,
+              "match": 2,
+              "mismatch": 0,
+              "missing": 1,
+              "all_match": false
+            }
+          },
+          {
+            "criterion_id": "E-02",
+            "note": "acceptance-matrix.md / state-model.md 的历史内容承载在 specification.md §7/§8",
+            "fields": [
+              {
+                "id": "E-02-F1",
+                "path": "docs/specification.md",
+                "kind": "text_all",
+                "status": "match",
+                "observed": {
+                  "missing_anchors": [],
+                  "expected_count": 3
+                },
+                "note": "规则契约、报告 schema、验收 ID 三节",
+                "path_expanded": "docs/specification.md"
+              },
+              {
+                "id": "E-02-F2",
+                "path": "docs/specification.md",
+                "kind": "text_all",
+                "status": "match",
+                "observed": {
+                  "missing_anchors": [],
+                  "expected_count": 3
+                },
+                "note": "A-01~A-10 验收 ID 与定位契约",
+                "path_expanded": "docs/specification.md"
+              },
+              {
+                "id": "E-02-F3",
+                "path": "docs/acceptance-matrix.md",
+                "kind": "file_exists",
+                "status": "missing",
+                "observed": false,
+                "note": "历史文件名，缺失如实记 missing",
+                "path_expanded": "docs/acceptance-matrix.md"
+              }
+            ],
+            "summary": {
+              "total": 3,
+              "match": 2,
+              "mismatch": 0,
+              "missing": 1,
+              "all_match": false
+            }
+          },
+          {
+            "criterion_id": "E-03",
+            "note": null,
+            "fields": [
+              {
+                "id": "E-03-F1",
+                "path": "docs/decision-log.md",
+                "kind": "text_all",
+                "status": "match",
+                "observed": {
+                  "missing_anchors": [],
+                  "expected_count": 3
+                },
+                "note": "决策索引可定位到 ADR 且有复核记录",
+                "path_expanded": "docs/decision-log.md"
+              },
+              {
+                "id": "E-03-F2",
+                "path": "docs/adr",
+                "kind": "dir_min",
+                "status": "match",
+                "observed": {
+                  "entries": 11,
+                  "min": 10
+                },
+                "note": "ADR 目录至少 10 份（当前 11 份）",
+                "path_expanded": "docs/adr"
+              },
+              {
+                "id": "E-03-F3",
+                "path": "docs/research",
+                "kind": "dir_min",
+                "status": "match",
+                "observed": {
+                  "entries": 2,
+                  "min": 2
+                },
+                "note": "前置调研目录至少 2 份",
+                "path_expanded": "docs/research"
+              }
+            ],
+            "summary": {
+              "total": 3,
+              "match": 3,
+              "mismatch": 0,
+              "missing": 0,
+              "all_match": true
+            }
+          },
+          {
+            "criterion_id": "E-04",
+            "note": null,
+            "fields": [
+              {
+                "id": "E-04-F1",
+                "path": "HARNESS.md",
+                "kind": "text_all",
+                "status": "match",
+                "observed": {
+                  "missing_anchors": [],
+                  "expected_count": 3
+                },
+                "note": "Harness 含开发规范、日志规范、脚本配置",
+                "path_expanded": "HARNESS.md"
+              },
+              {
+                "id": "E-04-F2",
+                "path": "GLOBAL.md",
+                "kind": "file_exists",
+                "status": "match",
+                "observed": true,
+                "note": "目标独立成文",
+                "path_expanded": "GLOBAL.md"
+              },
+              {
+                "id": "E-04-F3",
+                "path": "PLAN.md",
+                "kind": "file_exists",
+                "status": "match",
+                "observed": true,
+                "note": "计划独立成文",
+                "path_expanded": "PLAN.md"
+              },
+              {
+                "id": "E-04-F4",
+                "path": "TASKS.md",
+                "kind": "file_exists",
+                "status": "match",
+                "observed": true,
+                "note": "任务独立成文",
+                "path_expanded": "TASKS.md"
+              }
+            ],
+            "summary": {
+              "total": 4,
+              "match": 4,
+              "mismatch": 0,
+              "missing": 0,
+              "all_match": true
+            }
+          },
+          {
+            "criterion_id": "E-05",
+            "note": null,
+            "fields": [
+              {
+                "id": "E-05-F1",
+                "path": "evidence/RUN-*/report.json",
+                "kind": "json_eq",
+                "status": "match",
+                "observed": {
+                  "lhs": "0.1.6",
+                  "rhs": "0.1.6"
+                },
+                "note": "报告规则包版本与 meta 一致",
+                "path_expanded": "evidence/RUN-20261124-141518-710b457d/report.json"
+              },
+              {
+                "id": "E-05-F2",
+                "path": "evidence/RUN-*/report.json",
+                "kind": "json_eq",
+                "status": "match",
+                "observed": {
+                  "lhs": "710b457d51f2b960d63470001105522e5eea24d63c4d09d9696d549b3978b1f2",
+                  "rhs": "710b457d51f2b960d63470001105522e5eea24d63c4d09d9696d549b3978b1f2"
+                },
+                "note": "样本指纹与 meta 一致",
+                "path_expanded": "evidence/RUN-20261124-141518-710b457d/report.json"
+              },
+              {
+                "id": "E-05-F3",
+                "path": "evidence/RUN-*/report.json",
+                "kind": "json_nonempty",
+                "status": "match",
+                "observed": {
+                  "found": true,
+                  "nonempty": true
+                },
+                "note": "结论列表非空",
+                "path_expanded": "evidence/RUN-20261124-141518-710b457d/report.json"
+              },
+              {
+                "id": "E-05-F4",
+                "path": "evidence/RUN-*/report.json",
+                "kind": "json_nonempty",
+                "status": "match",
+                "observed": {
+                  "found": true,
+                  "nonempty": true
+                },
+                "note": "覆盖声明已检查项非空",
+                "path_expanded": "evidence/RUN-20261124-141518-710b457d/report.json"
+              }
+            ],
+            "summary": {
+              "total": 4,
+              "match": 4,
+              "mismatch": 0,
+              "missing": 0,
+              "all_match": true
+            }
+          },
+          {
+            "criterion_id": "E-06",
+            "note": null,
+            "fields": [
+              {
+                "id": "E-06-F1",
+                "path": "docs/changes.md",
+                "kind": "text_all",
+                "status": "match",
+                "observed": {
+                  "missing_anchors": [],
+                  "expected_count": 2
+                },
+                "note": "变更有版本锚点与回归成绩",
+                "path_expanded": "docs/changes.md"
+              },
+              {
+                "id": "E-06-F2",
+                "path": "core/registry.py",
+                "kind": "text_all",
+                "status": "match",
+                "observed": {
+                  "missing_anchors": [],
+                  "expected_count": 2
+                },
+                "note": "版本号绑定实现",
+                "path_expanded": "core/registry.py"
+              },
+              {
+                "id": "E-06-F3",
+                "path": "evidence/RUN-*/meta.json",
+                "kind": "json_eq",
+                "status": "match",
+                "observed": {
+                  "lhs": "0.1.6",
+                  "rhs": "0.1.6"
+                },
+                "note": "meta 与报告版本互相一致（TASKS.md 点名字段）",
+                "path_expanded": "evidence/RUN-20261124-141518-710b457d/meta.json"
+              }
+            ],
+            "summary": {
+              "total": 3,
+              "match": 3,
+              "mismatch": 0,
+              "missing": 0,
+              "all_match": true
+            }
+          },
+          {
+            "criterion_id": "E-07",
+            "note": "release.md 的内容承载在 handoff/README.md",
+            "fields": [
+              {
+                "id": "E-07-F1",
+                "path": "handoff/README.md",
+                "kind": "text_all",
+                "status": "match",
+                "observed": {
+                  "missing_anchors": [],
+                  "expected_count": 3
+                },
+                "note": "交接包含启动、重置、已知限制",
+                "path_expanded": "handoff/README.md"
+              },
+              {
+                "id": "E-07-F2",
+                "path": "docs/signoff.md",
+                "kind": "text_all",
+                "status": "match",
+                "observed": {
+                  "missing_anchors": [],
+                  "expected_count": 3
+                },
+                "note": "签署状态显式，未发生的层不预填",
+                "path_expanded": "docs/signoff.md"
+              },
+              {
+                "id": "E-07-F3",
+                "path": "docs/release.md",
+                "kind": "file_exists",
+                "status": "missing",
+                "observed": false,
+                "note": "历史文件名，缺失如实记 missing",
+                "path_expanded": "docs/release.md"
+              }
+            ],
+            "summary": {
+              "total": 3,
+              "match": 2,
+              "mismatch": 0,
+              "missing": 1,
+              "all_match": false
+            }
+          },
+          {
+            "criterion_id": "E-08",
+            "note": null,
+            "fields": [
+              {
+                "id": "E-08-F1",
+                "path": "docs/experiment-protocol.md",
+                "kind": "text_all",
+                "status": "match",
+                "observed": {
+                  "missing_anchors": [],
+                  "expected_count": 3
+                },
+                "note": "协议含不变量、计时与指标",
+                "path_expanded": "docs/experiment-protocol.md"
+              },
+              {
+                "id": "E-08-F2",
+                "path": "review/exp_datasource_ab_v014.json",
+                "kind": "json_nonempty",
+                "status": "match",
+                "observed": {
+                  "found": true,
+                  "nonempty": true
+                },
+                "note": "真实运行输出留存固定条件",
+                "path_expanded": "review/exp_datasource_ab_v014.json"
+              },
+              {
+                "id": "E-08-F3",
+                "path": "review/exp_datasource_ab_v014.json",
+                "kind": "json_nonempty",
+                "status": "match",
+                "observed": {
+                  "found": true,
+                  "nonempty": true
+                },
+                "note": "真实运行输出留存汇总",
+                "path_expanded": "review/exp_datasource_ab_v014.json"
+              }
+            ],
+            "summary": {
+              "total": 3,
+              "match": 3,
+              "mismatch": 0,
+              "missing": 0,
+              "all_match": true
+            }
+          },
+          {
+            "criterion_id": "E-09",
+            "note": null,
+            "fields": [
+              {
+                "id": "E-09-F1",
+                "path": "evaluator/agent.py",
+                "kind": "text_all",
+                "status": "match",
+                "observed": {
+                  "missing_anchors": [],
+                  "expected_count": 3
+                },
+                "note": "评价器实现四状态与未完成项",
+                "path_expanded": "evaluator/agent.py"
+              },
+              {
+                "id": "E-09-F2",
+                "path": "evaluator/skills/evidence-review/rubric.json",
+                "kind": "text_all",
+                "status": "match",
+                "observed": {
+                  "missing_anchors": [],
+                  "expected_count": 4
+                },
+                "note": "rubric 含 K-1~K-6 校准判例",
+                "path_expanded": "evaluator/skills/evidence-review/rubric.json"
+              },
+              {
+                "id": "E-09-F3",
+                "path": "review/evaluation/calibration_k1_k6.json",
+                "kind": "file_exists",
+                "status": "match",
+                "observed": true,
+                "note": "校准运行记录",
+                "path_expanded": "review/evaluation/calibration_k1_k6.json"
+              }
+            ],
+            "summary": {
+              "total": 3,
+              "match": 3,
+              "mismatch": 0,
+              "missing": 0,
+              "all_match": true
+            }
+          },
+          {
+            "criterion_id": "E-10",
+            "note": null,
+            "fields": [
+              {
+                "id": "E-10-F1",
+                "path": ".gitignore",
+                "kind": "text_all",
+                "status": "match",
+                "observed": {
+                  "missing_anchors": [],
+                  "expected_count": 1
+                },
+                "note": "凭据不入库",
+                "path_expanded": ".gitignore"
+              },
+              {
+                "id": "E-10-F2",
+                "path": "AGENTS.md",
+                "kind": "text_all",
+                "status": "match",
+                "observed": {
+                  "missing_anchors": [],
+                  "expected_count": 2
+                },
+                "note": "人机责任与证据纪律",
+                "path_expanded": "AGENTS.md"
+              },
+              {
+                "id": "E-10-F3",
+                "path": "docs/ai-disclosure.md",
+                "kind": "text_all",
+                "status": "match",
+                "observed": {
+                  "missing_anchors": [],
+                  "expected_count": 2
+                },
+                "note": "AI 使用记录与被拒绝建议",
+                "path_expanded": "docs/ai-disclosure.md"
+              }
+            ],
+            "summary": {
+              "total": 3,
+              "match": 3,
+              "mismatch": 0,
+              "missing": 0,
+              "all_match": true
+            }
+          }
+        ]
+      }
+    }
+  },
+  "matrix": {
+    "E-01": {
+      "bad03": {
+        "total": 3,
+        "match": 2,
+        "mismatch": 0,
+        "missing": 1,
+        "all_match": false
+      },
+      "bad01": {
+        "total": 3,
+        "match": 2,
+        "mismatch": 0,
+        "missing": 1,
+        "all_match": false
+      },
+      "bad02": {
+        "total": 3,
+        "match": 2,
+        "mismatch": 0,
+        "missing": 1,
+        "all_match": false
+      },
+      "bad04": {
+        "total": 3,
+        "match": 2,
+        "mismatch": 0,
+        "missing": 1,
+        "all_match": false
+      },
+      "good01": {
+        "total": 3,
+        "match": 2,
+        "mismatch": 0,
+        "missing": 1,
+        "all_match": false
+      },
+      "good02": {
+        "total": 3,
+        "match": 2,
+        "mismatch": 0,
+        "missing": 1,
+        "all_match": false
+      }
+    },
+    "E-02": {
+      "bad03": {
+        "total": 3,
+        "match": 2,
+        "mismatch": 0,
+        "missing": 1,
+        "all_match": false
+      },
+      "bad01": {
+        "total": 3,
+        "match": 2,
+        "mismatch": 0,
+        "missing": 1,
+        "all_match": false
+      },
+      "bad02": {
+        "total": 3,
+        "match": 2,
+        "mismatch": 0,
+        "missing": 1,
+        "all_match": false
+      },
+      "bad04": {
+        "total": 3,
+        "match": 2,
+        "mismatch": 0,
+        "missing": 1,
+        "all_match": false
+      },
+      "good01": {
+        "total": 3,
+        "match": 2,
+        "mismatch": 0,
+        "missing": 1,
+        "all_match": false
+      },
+      "good02": {
+        "total": 3,
+        "match": 2,
+        "mismatch": 0,
+        "missing": 1,
+        "all_match": false
+      }
+    },
+    "E-03": {
+      "bad03": {
+        "total": 3,
+        "match": 3,
+        "mismatch": 0,
+        "missing": 0,
+        "all_match": true
+      },
+      "bad01": {
+        "total": 3,
+        "match": 3,
+        "mismatch": 0,
+        "missing": 0,
+        "all_match": true
+      },
+      "bad02": {
+        "total": 3,
+        "match": 3,
+        "mismatch": 0,
+        "missing": 0,
+        "all_match": true
+      },
+      "bad04": {
+        "total": 3,
+        "match": 3,
+        "mismatch": 0,
+        "missing": 0,
+        "all_match": true
+      },
+      "good01": {
+        "total": 3,
+        "match": 3,
+        "mismatch": 0,
+        "missing": 0,
+        "all_match": true
+      },
+      "good02": {
+        "total": 3,
+        "match": 3,
+        "mismatch": 0,
+        "missing": 0,
+        "all_match": true
+      }
+    },
+    "E-04": {
+      "bad03": {
+        "total": 4,
+        "match": 4,
+        "mismatch": 0,
+        "missing": 0,
+        "all_match": true
+      },
+      "bad01": {
+        "total": 4,
+        "match": 4,
+        "mismatch": 0,
+        "missing": 0,
+        "all_match": true
+      },
+      "bad02": {
+        "total": 4,
+        "match": 4,
+        "mismatch": 0,
+        "missing": 0,
+        "all_match": true
+      },
+      "bad04": {
+        "total": 4,
+        "match": 4,
+        "mismatch": 0,
+        "missing": 0,
+        "all_match": true
+      },
+      "good01": {
+        "total": 4,
+        "match": 4,
+        "mismatch": 0,
+        "missing": 0,
+        "all_match": true
+      },
+      "good02": {
+        "total": 4,
+        "match": 4,
+        "mismatch": 0,
+        "missing": 0,
+        "all_match": true
+      }
+    },
+    "E-05": {
+      "bad03": {
+        "total": 4,
+        "match": 4,
+        "mismatch": 0,
+        "missing": 0,
+        "all_match": true
+      },
+      "bad01": {
+        "total": 4,
+        "match": 4,
+        "mismatch": 0,
+        "missing": 0,
+        "all_match": true
+      },
+      "bad02": {
+        "total": 4,
+        "match": 4,
+        "mismatch": 0,
+        "missing": 0,
+        "all_match": true
+      },
+      "bad04": {
+        "total": 4,
+        "match": 4,
+        "mismatch": 0,
+        "missing": 0,
+        "all_match": true
+      },
+      "good01": {
+        "total": 4,
+        "match": 4,
+        "mismatch": 0,
+        "missing": 0,
+        "all_match": true
+      },
+      "good02": {
+        "total": 4,
+        "match": 4,
+        "mismatch": 0,
+        "missing": 0,
+        "all_match": true
+      }
+    },
+    "E-06": {
+      "bad03": {
+        "total": 3,
+        "match": 3,
+        "mismatch": 0,
+        "missing": 0,
+        "all_match": true
+      },
+      "bad01": {
+        "total": 3,
+        "match": 3,
+        "mismatch": 0,
+        "missing": 0,
+        "all_match": true
+      },
+      "bad02": {
+        "total": 3,
+        "match": 3,
+        "mismatch": 0,
+        "missing": 0,
+        "all_match": true
+      },
+      "bad04": {
+        "total": 3,
+        "match": 3,
+        "mismatch": 0,
+        "missing": 0,
+        "all_match": true
+      },
+      "good01": {
+        "total": 3,
+        "match": 3,
+        "mismatch": 0,
+        "missing": 0,
+        "all_match": true
+      },
+      "good02": {
+        "total": 3,
+        "match": 3,
+        "mismatch": 0,
+        "missing": 0,
+        "all_match": true
+      }
+    },
+    "E-07": {
+      "bad03": {
+        "total": 3,
+        "match": 2,
+        "mismatch": 0,
+        "missing": 1,
+        "all_match": false
+      },
+      "bad01": {
+        "total": 3,
+        "match": 2,
+        "mismatch": 0,
+        "missing": 1,
+        "all_match": false
+      },
+      "bad02": {
+        "total": 3,
+        "match": 2,
+        "mismatch": 0,
+        "missing": 1,
+        "all_match": false
+      },
+      "bad04": {
+        "total": 3,
+        "match": 2,
+        "mismatch": 0,
+        "missing": 1,
+        "all_match": false
+      },
+      "good01": {
+        "total": 3,
+        "match": 2,
+        "mismatch": 0,
+        "missing": 1,
+        "all_match": false
+      },
+      "good02": {
+        "total": 3,
+        "match": 2,
+        "mismatch": 0,
+        "missing": 1,
+        "all_match": false
+      }
+    },
+    "E-08": {
+      "bad03": {
+        "total": 3,
+        "match": 3,
+        "mismatch": 0,
+        "missing": 0,
+        "all_match": true
+      },
+      "bad01": {
+        "total": 3,
+        "match": 3,
+        "mismatch": 0,
+        "missing": 0,
+        "all_match": true
+      },
+      "bad02": {
+        "total": 3,
+        "match": 3,
+        "mismatch": 0,
+        "missing": 0,
+        "all_match": true
+      },
+      "bad04": {
+        "total": 3,
+        "match": 3,
+        "mismatch": 0,
+        "missing": 0,
+        "all_match": true
+      },
+      "good01": {
+        "total": 3,
+        "match": 3,
+        "mismatch": 0,
+        "missing": 0,
+        "all_match": true
+      },
+      "good02": {
+        "total": 3,
+        "match": 3,
+        "mismatch": 0,
+        "missing": 0,
+        "all_match": true
+      }
+    },
+    "E-09": {
+      "bad03": {
+        "total": 3,
+        "match": 3,
+        "mismatch": 0,
+        "missing": 0,
+        "all_match": true
+      },
+      "bad01": {
+        "total": 3,
+        "match": 3,
+        "mismatch": 0,
+        "missing": 0,
+        "all_match": true
+      },
+      "bad02": {
+        "total": 3,
+        "match": 3,
+        "mismatch": 0,
+        "missing": 0,
+        "all_match": true
+      },
+      "bad04": {
+        "total": 3,
+        "match": 3,
+        "mismatch": 0,
+        "missing": 0,
+        "all_match": true
+      },
+      "good01": {
+        "total": 3,
+        "match": 3,
+        "mismatch": 0,
+        "missing": 0,
+        "all_match": true
+      },
+      "good02": {
+        "total": 3,
+        "match": 3,
+        "mismatch": 0,
+        "missing": 0,
+        "all_match": true
+      }
+    },
+    "E-10": {
+      "bad03": {
+        "total": 3,
+        "match": 3,
+        "mismatch": 0,
+        "missing": 0,
+        "all_match": true
+      },
+      "bad01": {
+        "total": 3,
+        "match": 3,
+        "mismatch": 0,
+        "missing": 0,
+        "all_match": true
+      },
+      "bad02": {
+        "total": 3,
+        "match": 3,
+        "mismatch": 0,
+        "missing": 0,
+        "all_match": true
+      },
+      "bad04": {
+        "total": 3,
+        "match": 3,
+        "mismatch": 0,
+        "missing": 0,
+        "all_match": true
+      },
+      "good01": {
+        "total": 3,
+        "match": 3,
+        "mismatch": 0,
+        "missing": 0,
+        "all_match": true
+      },
+      "good02": {
+        "total": 3,
+        "match": 3,
+        "mismatch": 0,
+        "missing": 0,
+        "all_match": true
+      }
+    }
+  },
+  "human_spot_check": {
+    "required": 5,
+    "note": "人工抽 5 条，按坐标/字段打开原文核对程序三态结论；签名与日期由本人填写",
+    "items": [
+      {
+        "index": 1,
+        "run_id": "RUN-20261124-140458-21cf5a06",
+        "criterion_id": "E-01",
+        "field_id": "E-01-F3",
+        "program_status": "missing",
+        "human_result": "符合：docs/brief.md 确不存在，内容已并入 requirements.md",
+        "checker": "余俊辉",
+        "date": "2026.11.24"
+      },
+      {
+        "index": 2,
+        "run_id": "RUN-20261124-141033-3356097a",
+        "criterion_id": "E-02",
+        "field_id": "E-02-F3",
+        "program_status": "missing",
+        "human_result": "符合：docs/acceptance-matrix.md 确不存在，验收矩阵内容承载于 specification.md 第 8 节",
+        "checker": "余俊辉",
+        "date": "2026.11.24"
+      },
+      {
+        "index": 3,
+        "run_id": "RUN-20261124-141518-710b457d",
+        "criterion_id": "E-07",
+        "field_id": "E-07-F3",
+        "program_status": "missing",
+        "human_result": "符合：docs/release.md 确不存在，交接/限制内容承载于 handoff/README.md",
+        "checker": "余俊辉",
+        "date": "2026.11.24"
+      },
+      {
+        "index": 4,
+        "run_id": "RUN-20261124-140458-21cf5a06",
+        "criterion_id": "E-05",
+        "field_id": "E-05-F1",
+        "program_status": "match",
+        "human_result": "符合：report.versions.rule_pack 与 meta.rule_pack 均为 0.1.6，取值一致",
+        "checker": "余俊辉",
+        "date": "2026.11.24"
+      },
+      {
+        "index": 5,
+        "run_id": "RUN-20261124-141033-3356097a",
+        "criterion_id": "E-06",
+        "field_id": "E-06-F1",
+        "program_status": "match",
+        "human_result": "符合：docs/changes.md 含 0.1.6 版本锚点与回归成绩描述",
+        "checker": "余俊辉",
+        "date": "2026.11.24"
+      }
+    ]
+  }
+}
