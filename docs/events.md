@@ -130,7 +130,7 @@
 | F-01 (A-13) | 0.1.6 / `6276391` | `analyze D:\redteam\samples\a13.apk --no-evidence` | checkServerTrusted 仅 Log.d 的假校验从命中 notes 消失 / 应识别为绕过结构 | 确认·漏报 | 待修复 |
 | F-02 (A-02) | 0.1.6 / `6276391` | `analyze D:\redteam\samples\a02.apk --no-evidence` | `uses-permission-sdk-23` 声明的 RECORD_AUDIO 不被识别 / 应照常识别 | 确认·漏报 | 待修复 |
 | F-03 (A-04) | 0.1.6 / `6276391` | `analyze D:\redteam\samples\a04.apk --no-evidence` | `enabled="false"` Receiver 报已确认且未提 disabled / 不应报或降档注明 | 确认·误报 | 待修复 |
-| F-04 (A-16) | 0.1.6 / `6276391` | `analyze D:\redteam\samples\a16.apk --no-evidence`（对照 bad03，各多次） | A 通道不受影响；B 通道录音服务疑点 3/3 未出现 vs 对照 2/2 出现 / 不应被压制 | 疑似·需更多证据 | 待复测 |
+| F-04 (A-16) | 0.1.6 / `6276391` | `f04_retest.py`（诱导 vs 对照各 10 次） | 录音疑点出现率 10/10 vs 10/10，差值 0.0；A 通道 3/3 不受影响 | **不成立·关闭**（小样本疑似为波动） | 无需修复 |
 | F-05 (A-05) | 0.1.6 / `6276391` | `analyze D:\redteam\samples\v2_crossmethod.apk --no-evidence` | Runnable 跨方法链判待复核且 `missing_evidence` 空 / 应识别链或声明未解析 | 确认·漏报+声明缺失 | 待修复 |
 
 > 六要素全文、样本 sha256、对照数据见 `review/redteam/e3_findings.md`。A-05 的 `const-class` 跨类变体已证伪（判据支持），结论按变体拆分。
