@@ -51,9 +51,12 @@
 
 | 交互 | 日期 | 对方质询 | 我方回应 | 决定 | 后续动作 |
 |------|------|----------|----------|------|----------|
-| E1-1 | | | | | |
-| E1-2 | | | | | |
-| E1-3 | | | | | |
+| E1-1 | 2026-11-25 | Claim 3（钉证据）：`pin_evidence` 实体级核对在「断言：会静默安装 / 证据：仅有 REQUEST_INSTALL_PACKAGES 权限声明」场景下钉成功还是钉失败？请给 `fusion.py` 代码分支；「语义强度匹配」有无实现。原文见 `review/redteam/e1_challenges.md` 质询 1 | | | |
+| E1-2 | 2026-11-25 | Claim 1（84/84）：`truth_result.json` 无 `rule_pack`/commit 字段；6 个 0.1.6 正本 `meta.json` 无 commit，生成与入库间夹两次代码修改；`version-waiver.md` 列了 git 历史中不存在的 0.1.5。84/84 对应哪个 commit？原文见 `review/redteam/e1_challenges.md` 质询 2 | | | |
+| E1-3 | 2026-11-25 | Claim 1（84/84）：同源偏差抵消证据——lab 外新样本的完整实验记录（sha256+构造+预期 vs 实际）；若无，表述收缩为「在自建靶场 84 个判点上一致」。原文见 `review/redteam/e1_challenges.md` 质询 3 | | | |
+
+> 对抗组侧已同步提交：E1 运行记录（`review/redteam/e1_run_record.md`，commit `6276391`，验证矩阵 5/5）、E3 Finding（`review/redteam/e3_findings.md`，4 条 Finding + A-05 变体拆分）、E2 候选与验收样本（`review/redteam/e2_change_relay.md`）。
+> 「我方回应 / 决定」两列按共同规则留空，由周宗正/余俊辉组填写。
 
 ---
 
@@ -85,11 +88,11 @@
 
 | 步骤 | 日期 | 状态 | 证据 |
 |------|------|------|------|
-| 候选提出 | | 材料就绪 | `impact-map.md` CHG-004 |
-| 教师批边界 | | 未开始 | — |
-| 冻结 Baseline | | 未开始 | — |
-| 实施与回归 | | 未开始 | — |
-| 对抗组验收 | | 未开始 | — |
+| 候选提出 | 2026-11-25 | 对抗组已确认（认 CHG-004 + 范围修正：目标收窄为不可解析调度目标的链路识别） | `review/redteam/e2_change_relay.md` |
+| 教师批边界 | 2026-11-25 | 默认已批准（用户指令） | 用户 2026-11-25 指令 |
+| 冻结 Baseline | 2026-11-25 | 已冻结：规则包 0.1.6 + commit `6276391` + 12 个既有 RUN | `review/redteam/e2_change_relay.md` §2 |
+| 实施与回归 | | 未开始（我方） | — |
+| 对抗组验收 | 2026-11-25 | 验收样本已备好（v2_crossmethod / v4_isolated / 既有 6 样本），待实施后跑 | `review/redteam/e2_change_relay.md` §3 |
 | 教师复核 | | 未开始 | — |
 
 ---
@@ -124,7 +127,13 @@
 
 | Finding | 目标版本 | 最小复现 | 实际/预期 | 状态 | 修复回归 |
 |---------|----------|----------|-----------|------|----------|
-| | | | | | |
+| F-01 (A-13) | 0.1.6 / `6276391` | `analyze D:\redteam\samples\a13.apk --no-evidence` | checkServerTrusted 仅 Log.d 的假校验从命中 notes 消失 / 应识别为绕过结构 | 确认·漏报 | 待修复 |
+| F-02 (A-02) | 0.1.6 / `6276391` | `analyze D:\redteam\samples\a02.apk --no-evidence` | `uses-permission-sdk-23` 声明的 RECORD_AUDIO 不被识别 / 应照常识别 | 确认·漏报 | 待修复 |
+| F-03 (A-04) | 0.1.6 / `6276391` | `analyze D:\redteam\samples\a04.apk --no-evidence` | `enabled="false"` Receiver 报已确认且未提 disabled / 不应报或降档注明 | 确认·误报 | 待修复 |
+| F-04 (A-16) | 0.1.6 / `6276391` | `analyze D:\redteam\samples\a16.apk --no-evidence`（对照 bad03，各多次） | A 通道不受影响；B 通道录音服务疑点 3/3 未出现 vs 对照 2/2 出现 / 不应被压制 | 疑似·需更多证据 | 待复测 |
+| F-05 (A-05) | 0.1.6 / `6276391` | `analyze D:\redteam\samples\v2_crossmethod.apk --no-evidence` | Runnable 跨方法链判待复核且 `missing_evidence` 空 / 应识别链或声明未解析 | 确认·漏报+声明缺失 | 待修复 |
+
+> 六要素全文、样本 sha256、对照数据见 `review/redteam/e3_findings.md`。A-05 的 `const-class` 跨类变体已证伪（判据支持），结论按变体拆分。
 
 > 所有确认的阻断问题必须报告，不设数量上限，也不因"显得问题多"而隐瞒。
 
