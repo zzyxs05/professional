@@ -17,7 +17,7 @@
       "evidence_ids": [],
       "scope": "导出组件无权限保护",
       "missing_evidence": [],
-      "human_signoff": "pending",
+      "human_signoff": "余俊辉 复核 2026.11.26",
       "notes": [
         "机械规则已执行、未命中。仅代表本规则集范围内未发现问题，不构成「安全」结论。"
       ]
@@ -33,7 +33,7 @@
       ],
       "scope": "危险权限声明",
       "missing_evidence": [],
-      "human_signoff": "pending",
+      "human_signoff": "余俊辉 复核 2026.11.26",
       "notes": [
         "声明敏感权限：android.permission.RECORD_AUDIO（录音）",
         "声明敏感权限：android.permission.ACCESS_FINE_LOCATION（精确定位）"
@@ -47,7 +47,7 @@
       "evidence_ids": [],
       "scope": "明文流量许可",
       "missing_evidence": [],
-      "human_signoff": "pending",
+      "human_signoff": "余俊辉 复核 2026.11.26",
       "notes": [
         "机械规则已执行、未命中。仅代表本规则集范围内未发现问题，不构成「安全」结论。"
       ]
@@ -60,7 +60,7 @@
       "evidence_ids": [],
       "scope": "调试与备份风险",
       "missing_evidence": [],
-      "human_signoff": "pending",
+      "human_signoff": "余俊辉 复核 2026.11.26",
       "notes": [
         "机械规则已执行、未命中。仅代表本规则集范围内未发现问题，不构成「安全」结论。"
       ]
@@ -73,7 +73,7 @@
       "evidence_ids": [],
       "scope": "敏感广播监听",
       "missing_evidence": [],
-      "human_signoff": "pending",
+      "human_signoff": "余俊辉 复核 2026.11.26",
       "notes": [
         "机械规则已执行、未命中。仅代表本规则集范围内未发现问题，不构成「安全」结论。"
       ]
@@ -90,7 +90,7 @@
       ],
       "scope": "定时/后台结构 × 敏感权限",
       "missing_evidence": [],
-      "human_signoff": "pending",
+      "human_signoff": "余俊辉 复核 2026.11.26",
       "notes": [
         "定时/后台调度点：Landroid/app/AlarmManager;->set",
         "调度目标组件：Lcom/synth/bad03/RecordingService;（该组件内存在敏感 API：录音）",
@@ -117,7 +117,7 @@
       ],
       "scope": "非交互组件使用敏感 API",
       "missing_evidence": [],
-      "human_signoff": "pending",
+      "human_signoff": "余俊辉 复核 2026.11.26",
       "notes": [
         "非交互组件 com.synth.bad03.RecordingService（service）中调用敏感 API：录音",
         "非交互组件 com.synth.bad03.RecordingService（service）中调用敏感 API：录音",
@@ -140,7 +140,7 @@
       "evidence_ids": [],
       "scope": "声明与使用不一致",
       "missing_evidence": [],
-      "human_signoff": "pending",
+      "human_signoff": "余俊辉 复核 2026.11.26",
       "notes": [
         "机械规则已执行、未命中。仅代表本规则集范围内未发现问题，不构成「安全」结论。"
       ]
@@ -153,7 +153,7 @@
       "evidence_ids": [],
       "scope": "硬编码凭据",
       "missing_evidence": [],
-      "human_signoff": "pending",
+      "human_signoff": "余俊辉 复核 2026.11.26",
       "notes": [
         "机械规则已执行、未命中。仅代表本规则集范围内未发现问题，不构成「安全」结论。"
       ]
@@ -166,7 +166,7 @@
       "evidence_ids": [],
       "scope": "内网/明文端点",
       "missing_evidence": [],
-      "human_signoff": "pending",
+      "human_signoff": "余俊辉 复核 2026.11.26",
       "notes": [
         "机械规则已执行、未命中。仅代表本规则集范围内未发现问题，不构成「安全」结论。"
       ]
@@ -183,7 +183,7 @@
       ],
       "scope": "动态代码加载",
       "missing_evidence": [],
-      "human_signoff": "pending",
+      "human_signoff": "余俊辉 复核 2026.11.26",
       "notes": [
         "动态代码加载调用：Ldalvik/system/DexClassLoader;",
         "动态代码加载调用：Ldalvik/system/DexClassLoader;",
@@ -202,7 +202,7 @@
       ],
       "scope": "WebView 危险组合",
       "missing_evidence": [],
-      "human_signoff": "pending",
+      "human_signoff": "余俊辉 复核 2026.11.26",
       "notes": [
         "WebView 危险组合要素：addJavascriptInterface",
         "WebView 危险组合要素：setJavaScriptEnabled",
@@ -222,7 +222,7 @@
       ],
       "scope": "证书校验绕过结构",
       "missing_evidence": [],
-      "human_signoff": "pending",
+      "human_signoff": "余俊辉 复核 2026.11.26",
       "notes": [
         "X509TrustManager.checkClientTrusted 空实现（证书校验被跳过）；检测到安装点 smali/com/synth/bad03/InsecureTls.smali:53（原始行 51）",
         "X509TrustManager.checkServerTrusted 空实现（证书校验被跳过）",
@@ -240,7 +240,7 @@
       ],
       "scope": "WebView SSL 错误忽略",
       "missing_evidence": [],
-      "human_signoff": "pending",
+      "human_signoff": "余俊辉 复核 2026.11.26",
       "notes": [
         "onReceivedSslError 忽略 SSL 错误（proceed）"
       ]

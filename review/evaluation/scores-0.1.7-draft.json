@@ -1,0 +1,105 @@
+{
+  "S1.需求": {
+    "score": 6,
+    "rationale": "requirements.md 五节结构齐全：角色分主/次/间接/不服务四类，场景 A/B/C 含失败路径，UN 带痛点与满意条件，追溯矩阵列到 REQ，第 6 节明确不做六项。满意条件仍偏定性（如抽验比例未定），但不影响可执行性。",
+    "evidence_ids": ["docs/requirements.md"],
+    "evidence_level": "STATIC"
+  },
+  "S1.架构与约束": {
+    "score": 5,
+    "rationale": "specification.md 把 14 条规则的数据源、档位上限、误报口径逐条写死，报告 schema、定位格式、A-01—A-10 验收 ID、预算与状态机成文，规则变更受 RULE_PACK_VERSION 约束，机器可验证。",
+    "evidence_ids": ["docs/specification.md"],
+    "evidence_level": "STATIC"
+  },
+  "S1.功能与安全验证": {
+    "score": 12,
+    "rationale": "94 单测全过、84 判点一致 84 硬错 0、e2e A-01 六样本与 A-09 复现均 PASS，E3 五条 Finding 四条修复验收 4/4，报告坐标抽验可直达原文。扣 2 分：B 侧仍有未钉疑点、跨方法调用链只到待复核、6 样本自建同源（E1-3 已书面收缩表述）。",
+    "evidence_ids": [
+      "evidence/RUN-20261126-181546-3356097a/report.json",
+      "review/truth_result.json",
+      "review/redteam/e3_findings.md"
+    ],
+    "evidence_level": "OBSERVED"
+  },
+  "S1.变化修复": {
+    "score": 7,
+    "rationale": "规则包 0.1.3→0.1.7 逐版有触发来源与回归记录，version-waiver 交代错配成因且历史正本不改写，impact-map 承接 CHG-004/005，E3 修复合规。扣 1 分：0.1.7 六个新正本只在 TASKS 提了 1 个，批次未在 signoff 登记。",
+    "evidence_ids": ["docs/changes.md", "docs/version-waiver.md", "docs/impact-map.md"],
+    "evidence_level": "STATIC"
+  },
+  "S1.交接发布": {
+    "score": 6,
+    "rationale": "handoff/README.md 含环境、启动、复现、重置、已知限制与合规，命令可照跑。扣 2 分：signoff 写“正本共 13 个”，实际 18 个（6×0.1.3 + 6×0.1.6 + 6×0.1.7），0.1.7 六份均未签；TASKS 仍指向已删除的 review/evaluation/SIGNOFF.md。",
+    "evidence_ids": ["handoff/README.md", "docs/signoff.md", "TASKS.md"],
+    "evidence_level": "STATIC"
+  },
+  "S1.治理": {
+    "score": 4,
+    "rationale": "总档、HARNESS、PLAN、TASKS 各自独立成文；HARNESS 六类约定逐条给落地位置与核查方式；任务有产出、完成标志、证据路径；ADR 与被否方案成文。",
+    "evidence_ids": ["HARNESS.md", "TASKS.md", "docs/decision-log.md"],
+    "evidence_level": "STATIC"
+  },
+  "S2.工程实验与取舍": {
+    "score": 13,
+    "rationale": "实验协议先定不变量与计时口径，experiments.md 保留 R1 路径 bug、AXML 双长度负结果、成本口径；R-1 横向评测 4 模型 × 13 样本 52/52 补上模型覆盖，exp_datasource_ab_v017 有真实运行 JSON。扣 2 分：B 侧召回增量在标定样本上未被激活，样本自建同源，结论只到回归门。",
+    "evidence_ids": [
+      "docs/experiment-protocol.md",
+      "docs/experiments.md",
+      "review/exp_datasource_ab_v017.json",
+      "review/model_eval/analysis.md"
+    ],
+    "evidence_level": "OBSERVED"
+  },
+  "S3.适配": {
+    "score": 4,
+    "rationale": "评价器不 import core、不认 report.json/APK 结构，四个受限工具 + 白名单 + 预算，self/peer 契约隔离，字段规范由目标项目提供；有测试证明可评无 run_id 的异题对象。",
+    "evidence_ids": ["evaluator/agent.py", "evaluator/checker.py", "evaluator/tools.py"],
+    "evidence_level": "STATIC"
+  },
+  "S3.校准与错误分析": {
+    "score": 5,
+    "rationale": "K-1~K-6 确定性快路径与 llm 模式各 6/6，判例覆盖误放行、自述式确认、诱导文本、假引用、不合理弃权；错误类型口径写明“出现才记”，判定指纹保证同快照重跑一致。",
+    "evidence_ids": [
+      "review/evaluation/calibration_k1_k6.json",
+      "review/evaluation/calibration_k1_k6_llm.json",
+      "evaluator/skills/evidence-review/rubric.json"
+    ],
+    "evidence_level": "OBSERVED"
+  },
+  "S3.实际复核": {
+    "score": 3,
+    "rationale": "本组抽验 5 条有具名与日期，E1 三条质询与我方回应、E2 CHG-004/005、E3 五条 Finding 与 4/4 验收均已落文档。扣 1 分：signoff 对抗组与教师栏仍为空，对抗组复核未形成签署级结论。",
+    "evidence_ids": ["docs/signoff.md", "docs/events.md", "review/redteam/e3_findings.md"],
+    "evidence_level": "STATIC"
+  },
+  "S3.权限隐私": {
+    "score": 2,
+    "rationale": "key.txt 在 .gitignore、子进程白名单只放行 java、工具只读不执行、覆盖声明如实写。字段核对里 AGENTS.md 的“AI 不代签”锚点 mismatch，是字段规范未跟文档改词（现文为“人签署、人负责”），实质纪律仍在，不扣分但需同步。",
+    "evidence_ids": [".gitignore", "AGENTS.md", "evaluator/tools.py"],
+    "evidence_level": "STATIC"
+  },
+  "S4.路径解释": {
+    "score": 5,
+    "rationale": "decision-log 13 条可定位到 ADR 与支撑证据，双通道、三档、钉证据、不引 DSH 等取舍有被否方案与理由。扣 3 分：仓库里只有文档痕迹，没有本人当场讲解或答辩记录，无法确认讲解深度。",
+    "evidence_ids": ["docs/decision-log.md", "docs/adr"],
+    "evidence_level": "STATIC"
+  },
+  "S4.独立小任务": {
+    "score": null,
+    "rationale": "缺本人自述与独立完成说明。team-roster 与 TASKS 只有台账记录（谁做了什么、日期），不能证明独立程度与本人对方法的解释；此项 AI 不代证，需本人自述 + 独立核对。",
+    "evidence_ids": ["docs/team-roster.md"],
+    "evidence_level": "CLAIM_ONLY"
+  },
+  "S4.取舍说明": {
+    "score": 4,
+    "rationale": "ADR 一决策一文件，0004 钉证据与 0011 评价器都写了背景、被否方案的具体理由与后果。扣 1 分：ADR 的本人复核与现场解读未体现，文档成文不等于能讲清。",
+    "evidence_ids": ["docs/adr/0004-pin-evidence.md", "docs/adr/0011-evaluation-agent.md"],
+    "evidence_level": "STATIC"
+  },
+  "S4.轮换与责任": {
+    "score": null,
+    "rationale": "缺本人确认。team-roster 有角色表与两周期安排，周期 2 标待启动；轮换中谁独立完成了哪一步只有台账单一来源，需本人自述或复核记录。",
+    "evidence_ids": ["docs/team-roster.md"],
+    "evidence_level": "CLAIM_ONLY"
+  }
+}
