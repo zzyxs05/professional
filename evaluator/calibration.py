@@ -24,7 +24,18 @@ CASES = {
 
 
 def _write_run(root, run_id, conclusions, coverage, evidence_records,
-               meta_over=None, version='0.1.0'):
+               meta_over=None, version=None):
+    # 夹具跟随当前规则包：判点完整性检查只对当前版本生效，
+    # 写死 0.1.0 会让快路径跳过 E-MISSING-CRITERION、与 llm 模式口径不一致。
+    version = version or registry.RULE_PACK_VERSION
+    # 补齐 14 条判点：显式给的结论保留原样，其余规则给"无法判定"占位，
+    # 不改变各判例语义（K-1 的 R-MAN-01 仍是已确认 + 有效证据）。
+    present = {c['criterion_id'] for c in conclusions}
+    full = list(conclusions)
+    for rid in registry.ALL_RULE_IDS:
+        if rid not in present:
+            full.append(_concl(rid, registry.STATUS_UNDECIDED))
+    conclusions = full
     run_dir = os.path.join(root, run_id)
     os.makedirs(os.path.join(run_dir, 'channel_a'), exist_ok=True)
     report = {

@@ -45,7 +45,7 @@ python scripts/truth_check.py --no-run # 复算 84 个判点，不重跑样本
 | 做过哪些对照实验、数据是什么 | `docs/experiments.md` | 实验方法之外的事 |
 | 改过什么、为什么改、影响哪些地方 | `docs/changes.md` | 计划 |
 | 和对抗组的三次交互 | `docs/events.md` | 我方单方材料 |
-| 谁签了字、签的是哪一份 | `docs/signoff.md`、`review/evaluation/SIGNOFF.md` | 结论本身 |
+| 谁签了字、签的是哪一份 | `docs/signoff.md` | 结论本身 |
 | 每轮运行留下了什么 | `evidence/RUN-*/` | 对它的解释 |
 | 复核底稿、评价结果、挑战包 | `review/` | 运行事实 |
 

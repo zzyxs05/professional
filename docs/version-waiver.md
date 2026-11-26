@@ -35,7 +35,7 @@ T-M5-10 的完成标志是"评价不再报版本错配"。实现路径选的是*
 3. 新正本的 `meta.json.rule_pack` 与 `report.json.versions.rule_pack` 均为 0.1.6，与内部契约一致；
 4. 6 份新评价输出（`EVAL-20261124-0815*`）实测 `version_check.mismatch = false`。
 
-> 结果可核对：`review/evaluation/EVAL-20261124-081521Z-self-821506-dba9.json` 等 6 份的 `version_check` 字段。
+> 该结论当时的证据是 6 份 EVAL 的 `version_check` 字段；这批 EVAL 文件已于 2026-11-26 清理，仓库内不再保留；它们是测试产物，不纳入签署台账。
 
 ## 4. 历史正本怎么处理（不改写）
 

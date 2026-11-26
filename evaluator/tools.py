@@ -46,11 +46,15 @@ class RestrictedTools(object):
         'rerun_analyze': '需受控 runner；未提供时只读既有结果并标注验证层级',
     }
 
-    def __init__(self, owner_root, target_root, run_id, contract, mode, budget):
+    def __init__(self, owner_root, target_root, run_id, contract, mode, budget,
+                 run_dir=None):
         self.owner_root = owner_root
         self.target_root = target_root
         self.run_id = check_run_id(run_id)
-        self.run_dir = os.path.join(target_root, 'evidence', self.run_id)
+        # run_dir 可选：外部 harness 可直传合成 RUN 目录（校准判例）；
+        # 不传仍按 target_root/evidence/<run_id> 拼接，默认行为不变。
+        self.external_run_dir = bool(run_dir)
+        self.run_dir = run_dir or os.path.join(target_root, 'evidence', self.run_id)
         self.contract = contract
         self.mode = mode
         self.budget = budget
@@ -69,6 +73,18 @@ class RestrictedTools(object):
             return None
         if '/' in rel and not rel.startswith(ALLOWED_PREFIXES):
             return None
+        # 外部直传合成 RUN 时，把 evidence/<run_id>/ 前缀重定向到该目录：
+        # 字段规范的 evidence/{{run_id}}/... 模板才指得到夹具文件。
+        prefix = 'evidence/%s/' % self.run_id
+        if self.external_run_dir and rel.startswith(prefix):
+            rel = rel[len(prefix):]
+            full = os.path.normpath(os.path.join(self.run_dir, rel))
+            try:
+                if os.path.commonpath([full, self.run_dir]) != os.path.normpath(self.run_dir):
+                    return None
+            except ValueError:
+                return None
+            return full
         full = os.path.normpath(os.path.join(self.target_root, rel))
         try:
             if os.path.commonpath([full, self.target_root]) != self.target_root:

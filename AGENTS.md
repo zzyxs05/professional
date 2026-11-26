@@ -27,10 +27,11 @@
 ```bash
 python cli.py analyze <apk>         # 完整审计
 python cli.py analyze <apk> --no-evidence  # 演练，产物不进 evidence/
-python cli.py evaluate --run <RUN>      # 评价 Agent 自评（默认用 key.txt 的模型）
-python cli.py evaluate --run <RUN> --no-llm # 只走确定性路径
+python cli.py evaluate --run <RUN>      # 评价 Agent 自评（默认纯 harness，不调模型）
+python cli.py evaluate --run <RUN> --llm # 可选：调用模型判读（默认不用）
 python scripts/truth_check.py --no-run    # 复算 84 个判点
-python scripts/eval_calibrate.py       # K-1~K-6 校准
+python scripts/eval_calibrate.py       # K-1~K-6 快路径校准
+python scripts/eval_calibrate.py --llm   # K-1~K-6 llm 模式校准
 python scripts/e2e.py --no-evidence     # 端到端验收 A-01/A-09
 python -m unittest discover -s tests     # 93 个单测
 ```

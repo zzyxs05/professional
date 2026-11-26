@@ -196,7 +196,7 @@ class AgentLoop(object):
 
     def __init__(self, owner_root, target_root, run_id, mode='self',
                  contract_path=None, use_llm=False, max_model_calls=10,
-                 out_dir=None, now=None, want_html=True):
+                 out_dir=None, now=None, want_html=True, run_dir=None):
         self.owner_root = os.path.abspath(owner_root)
         self.target_root = os.path.abspath(target_root)
         self.run_id = run_id
@@ -218,7 +218,8 @@ class AgentLoop(object):
         self.contract, self.contract_note = load_contract(
             self.owner_root, self.target_root, mode, contract_path)
         self.tools = RestrictedTools(self.owner_root, self.target_root, run_id,
-                                     self.contract, mode, self.budget)
+                                     self.contract, mode, self.budget,
+                                     run_dir=run_dir)
         self.observations = []
         self.suggested_checks = []
         self.not_checked = []
@@ -573,17 +574,18 @@ class AgentLoop(object):
         (top, snapshot_status, snapshot_reason,
          items, findings, records) = self._mechanical_verdict()
 
+        # 证据包与是否调模型无关：两种模式都要生成，供 next_action 与 harness 评分。
+        from .scoring import build_from_project
+        self.evidence_pack = build_from_project(
+            self.target_root,
+            context={'run_id': self.run_id, 'target': self.target_root},
+            rubric=self.rubric)
+        self._trace('evidence_pack_ready',
+                    subcriteria=len(self.evidence_pack['subcriteria']))
         if not self.use_llm:
-            from .scoring import build_from_project
-            self.evidence_pack = build_from_project(
-                self.target_root,
-                context={'run_id': self.run_id, 'target': self.target_root},
-                rubric=self.rubric)
             # 分数待 harness 看过证据包后主观给出；此处不猜分。
             self.scoring = None
             self.scores = {}
-            self._trace('evidence_pack_ready',
-                        subcriteria=len(self.evidence_pack['subcriteria']))
 
         if self.budget.exhausted_notes:
             self.observations.append(
@@ -725,11 +727,12 @@ class AgentLoop(object):
 
 
 def run_agent(owner_root, target_root, run_id, mode='self', contract_path=None,
-              use_llm=False, max_model_calls=10, out_dir=None, want_html=True):
+              use_llm=False, max_model_calls=10, out_dir=None, want_html=True,
+              run_dir=None):
     return AgentLoop(owner_root, target_root, run_id, mode=mode,
                      contract_path=contract_path, use_llm=use_llm,
                      max_model_calls=max_model_calls, out_dir=out_dir,
-                     want_html=want_html).run()
+                     want_html=want_html, run_dir=run_dir).run()
 
 
 def apply_scores(eval_path, scores_path):

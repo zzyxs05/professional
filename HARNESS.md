@@ -52,12 +52,12 @@
 
 | 脚本 | 作用 | 主要参数 | 产物 | 退出码 |
 |------|------|----------|------|--------|
-| `cli.py` | 唯一入口：`analyze` / `register` / `evaluate` / `summary` / `reset` | `analyze --out / --no-evidence / --force-decode`；`evaluate --target / --mode / --contract / --no-llm / --max-model-calls`；`summary --no-llm` | `evidence/RUN-*/` 或 `review/evaluation/` | 0 / 1 / 2 |
+| `cli.py` | 唯一入口：`analyze` / `register` / `evaluate` / `summary` / `reset` | `analyze --out / --no-evidence / --force-decode`；`evaluate --target / --mode / --contract / --llm / --max-model-calls`；`summary --no-llm` | `evidence/RUN-*/` 或 `review/evaluation/` | 0 / 1 / 2 |
 | `scripts/truth_check.py` | 靶场 84 判点一致性 | `--no-run`、`--no-evidence`、`--only`、`--out` | `review/truth_result.json` | 0 / 1 |
 | `scripts/e2e.py` | A-01 / A-09 端到端验收 | `--no-evidence` | 控制台 + 临时区 | 0 / 1 |
 | `scripts/b_stability.py` | B 通道稳定性（固定样本 × N 轮） | `--sample`、`--runs`、`--rules`、`--no-b2` | `review/b_stability_*.json` | 0 / 2 |
-| `scripts/exp_datasource_ab.py` | 数据源实现 A/B 对照（EXP-6） | `--runs`、`--samples`、`--out` | `review/exp_datasource_ab.json` | 0 |
-| `scripts/eval_calibrate.py` | 评价 Agent 的 K-1~K-6 校准 | 无 | `review/evaluation/calibration_k1_k6.json` | 0 / 1 |
+| `scripts/exp_datasource_ab.py` | 数据源实现 A/B 对照（EXP-6/7/8） | `--runs`、`--samples`、`--out` | `review/exp_datasource_ab*.json` | 0 |
+| `scripts/eval_calibrate.py` | 评价 Agent 的 K-1~K-6 校准 | `--llm`（默认快路径） | `review/evaluation/calibration_k1_k6{,_llm}.json` | 0 / 1 |
 
 约定：
 
@@ -131,7 +131,7 @@
  ```
 
  四个字段的含义：性质对应 §4 的六类交付物；版本是文档自身版本，与 `RULE_PACK_VERSION` 分开写；状态只有「生效 / 复核中 / 归档」；关联只列直接上下游。第四行让所有文档把签署指向同一台账，避免同一件事在好几份文件里各留一处待签。存量文档按此格式改，不倒填日期。
-- **不建第二台账**：签署状态只在 `docs/signoff.md`（报告）与 `review/evaluation/SIGNOFF.md`（评价输出）两处维护。阶段性"待办清单/待签署清单"是一次性便签：其中的事项写入对应台账后即删除，不留在仓库里当快照——快照不回填就会过期，反而误导签署人。确实需要留的，是解释"为什么这样判"的决策说明，不是"谁还没签"的清单。
+- **不建第二台账**：签署状态只在 `docs/signoff.md` 一处维护；评价输出是测试产物，不纳入签署台账。阶段性"待办清单/待签署清单"是一次性便签：其中的事项写入对应台账后即删除，不留在仓库里当快照——快照不回填就会过期，反而误导签署人。确实需要留的，是解释"为什么这样判"的决策说明，不是"谁还没签"的清单。
 - **实验记录**：对照实验沿用 `docs/experiment-protocol.md` 的变量控制与计时规则，实验卡进 `docs/experiments.md`，真实运行数据落 `review/`；历史结果 JSON 不改写，规则变更须升协议版本并重跑。
 
 ---
@@ -196,7 +196,7 @@
 |----|------|
 | 13 条关键决策复核签字 | `docs/decision-log.md` |
 | 6 份报告本组签署、对抗组复核、教师复评 | `docs/signoff.md` |
-| 评价 Agent 输出复核 | `review/evaluation/SIGNOFF.md` |
+| 评价 Agent 输出 | 测试产物，不签署、不留台账 |
 | E1 / E2 / E3 结对交互 | `docs/events.md` |
 | 验证任务与角色轮换 | `docs/team-roster.md` |
 | 模型横向评测（R-1） | `docs/adr/0010-model-selection.md`、`handoff/README.md` I-8 |

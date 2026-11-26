@@ -469,8 +469,8 @@
       {
         "id": "K-3",
         "material": "只有文档和『已通过』自述",
-        "expected": "INSUFFICIENT_EVIDENCE",
-        "checks": "臆测执行成功"
+        "expected": "FAIL",
+        "checks": "自述式已确认：结论无证据引用（明确反例，非证据缺口）"
       },
       {
         "id": "K-4",

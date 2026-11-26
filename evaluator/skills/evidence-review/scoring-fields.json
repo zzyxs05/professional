@@ -12,119 +12,442 @@
   "kinds_ref": "fields-schema.json",
   "subcriteria": [
     {
-      "subcriterion_id": "S1.需求", "max": 6, "evidence_refs": ["E-01"],
+      "subcriterion_id": "S1.需求",
+      "max": 6,
+      "evidence_refs": [
+        "E-01"
+      ],
       "fields": [
-        {"id": "SC-S1-01-F1", "path": "docs/requirements.md", "kind": "text_all", "expect": ["## 1. 角色与利益相关者", "## 2. 使用场景", "## 3. 用户需求（UN）", "## 5. 追溯矩阵", "## 6. 明确不做"], "note": "需求五项结构齐全"},
-        {"id": "SC-S1-01-F2", "path": "docs/requirements.md", "kind": "text_all", "expect": ["UN-01", "REQ-01", "不服务"], "note": "编号与非服务对象"}
+        {
+          "id": "SC-S1-01-F1",
+          "path": "docs/requirements.md",
+          "kind": "text_all",
+          "expect": [
+            "## 1. 角色与利益相关者",
+            "## 2. 使用场景",
+            "## 3. 用户需求（UN）",
+            "## 5. 追溯矩阵",
+            "## 6. 明确不做"
+          ],
+          "note": "需求五项结构齐全"
+        },
+        {
+          "id": "SC-S1-01-F2",
+          "path": "docs/requirements.md",
+          "kind": "text_all",
+          "expect": [
+            "UN-01",
+            "REQ-01",
+            "不服务"
+          ],
+          "note": "编号与非服务对象"
+        }
       ]
     },
     {
-      "subcriterion_id": "S1.架构与约束", "max": 5, "evidence_refs": ["E-02"],
+      "subcriterion_id": "S1.架构与约束",
+      "max": 5,
+      "evidence_refs": [
+        "E-02"
+      ],
       "fields": [
-        {"id": "SC-S1-02-F1", "path": "docs/specification.md", "kind": "text_all", "expect": ["## 2. 规则契约", "## 3. 结论与报告 schema", "## 8. 验收 ID"], "note": "规则契约、报告 schema、验收 ID"},
-        {"id": "SC-S1-02-F2", "path": "docs/specification.md", "kind": "text_all", "expect": ["A-01", "A-10", "定位格式"], "note": "验收编号与定位格式"}
+        {
+          "id": "SC-S1-02-F1",
+          "path": "docs/specification.md",
+          "kind": "text_all",
+          "expect": [
+            "## 2. 规则契约",
+            "## 3. 结论与报告 schema",
+            "## 8. 验收 ID"
+          ],
+          "note": "规则契约、报告 schema、验收 ID"
+        },
+        {
+          "id": "SC-S1-02-F2",
+          "path": "docs/specification.md",
+          "kind": "text_all",
+          "expect": [
+            "A-01",
+            "A-10",
+            "定位格式"
+          ],
+          "note": "验收编号与定位格式"
+        }
       ]
     },
     {
-      "subcriterion_id": "S1.功能与安全验证", "max": 14, "evidence_refs": ["E-05"],
+      "subcriterion_id": "S1.功能与安全验证",
+      "max": 14,
+      "evidence_refs": [
+        "E-05"
+      ],
       "fields": [
-        {"id": "SC-S1-05-F1", "path": "evidence/{{run_id}}/report.json", "kind": "json_nonempty", "json_path": "conclusions", "note": "有结论"},
-        {"id": "SC-S1-05-F2", "path": "evidence/{{run_id}}/report.json", "kind": "json_nonempty", "json_path": "coverage.checked", "note": "有覆盖声明"},
-        {"id": "SC-S1-05-F3", "path": "review/truth_result.json", "kind": "json_nonempty", "json_path": "summary", "note": "真值回归成绩"}
+        {
+          "id": "SC-S1-05-F1",
+          "path": "evidence/{{run_id}}/report.json",
+          "kind": "json_nonempty",
+          "json_path": "conclusions",
+          "note": "有结论"
+        },
+        {
+          "id": "SC-S1-05-F2",
+          "path": "evidence/{{run_id}}/report.json",
+          "kind": "json_nonempty",
+          "json_path": "coverage.checked",
+          "note": "有覆盖声明"
+        },
+        {
+          "id": "SC-S1-05-F3",
+          "path": "review/truth_result.json",
+          "kind": "json_nonempty",
+          "json_path": "summary",
+          "note": "真值回归成绩"
+        }
       ]
     },
     {
-      "subcriterion_id": "S1.变化修复", "max": 8, "evidence_refs": ["E-06"],
+      "subcriterion_id": "S1.变化修复",
+      "max": 8,
+      "evidence_refs": [
+        "E-06"
+      ],
       "fields": [
-        {"id": "SC-S1-06-F1", "path": "docs/changes.md", "kind": "text_all", "expect": ["规则变更", "回归"], "note": "变更记录有版本锚点与回归"},
-        {"id": "SC-S1-06-F2", "path": "docs/impact-map.md", "kind": "file_exists", "note": "影响分析文件存在"},
-        {"id": "SC-S1-06-F3", "path": "evidence/{{run_id}}/meta.json", "kind": "json_eq", "lhs": "rule_pack", "rhs": "evidence/{{run_id}}/report.json:versions.rule_pack", "note": "版本绑定一致"}
+        {
+          "id": "SC-S1-06-F1",
+          "path": "docs/changes.md",
+          "kind": "text_all",
+          "expect": [
+            "规则变更",
+            "回归"
+          ],
+          "note": "变更记录有版本锚点与回归"
+        },
+        {
+          "id": "SC-S1-06-F2",
+          "path": "docs/impact-map.md",
+          "kind": "file_exists",
+          "note": "影响分析文件存在"
+        },
+        {
+          "id": "SC-S1-06-F3",
+          "path": "evidence/{{run_id}}/meta.json",
+          "kind": "json_eq",
+          "lhs": "rule_pack",
+          "rhs": "evidence/{{run_id}}/report.json:versions.rule_pack",
+          "note": "版本绑定一致"
+        }
       ]
     },
     {
-      "subcriterion_id": "S1.交接发布", "max": 8, "evidence_refs": ["E-07"],
+      "subcriterion_id": "S1.交接发布",
+      "max": 8,
+      "evidence_refs": [
+        "E-07"
+      ],
       "fields": [
-        {"id": "SC-S1-07-F1", "path": "handoff/README.md", "kind": "text_all", "expect": ["## 2. 启动", "## 4. 重置", "## 6. 已知问题"], "note": "启动、重置、已知限制"},
-        {"id": "SC-S1-07-F2", "path": "handoff/README.md", "kind": "text_all", "expect": ["## 3. 复现与验证", "## 8. 目录导航"], "note": "复现入口与导航"}
+        {
+          "id": "SC-S1-07-F1",
+          "path": "handoff/README.md",
+          "kind": "text_all",
+          "expect": [
+            "## 2. 启动",
+            "## 4. 重置",
+            "## 6. 已知问题"
+          ],
+          "note": "启动、重置、已知限制"
+        },
+        {
+          "id": "SC-S1-07-F2",
+          "path": "handoff/README.md",
+          "kind": "text_all",
+          "expect": [
+            "## 3. 复现与验证",
+            "## 8. 目录导航"
+          ],
+          "note": "复现入口与导航"
+        }
       ]
     },
     {
-      "subcriterion_id": "S1.治理", "max": 4, "evidence_refs": ["E-04"],
+      "subcriterion_id": "S1.治理",
+      "max": 4,
+      "evidence_refs": [
+        "E-04"
+      ],
       "fields": [
-        {"id": "SC-S1-04-F1", "path": "HARNESS.md", "kind": "text_all", "expect": ["## 1. 项目开发规范", "## 5. 日志规范", "自动化脚本配置"], "note": "开发规范、日志、脚本配置"},
-        {"id": "SC-S1-04-F2", "path": "TASKS.md", "kind": "file_exists", "note": "任务台账独立成文"}
+        {
+          "id": "SC-S1-04-F1",
+          "path": "HARNESS.md",
+          "kind": "text_all",
+          "expect": [
+            "## 1. 项目开发规范",
+            "## 5. 日志规范",
+            "自动化脚本配置"
+          ],
+          "note": "开发规范、日志、脚本配置"
+        },
+        {
+          "id": "SC-S1-04-F2",
+          "path": "TASKS.md",
+          "kind": "file_exists",
+          "note": "任务台账独立成文"
+        }
       ]
     },
     {
-      "subcriterion_id": "S2.工程实验与取舍", "max": 15, "evidence_refs": ["E-08"],
+      "subcriterion_id": "S2.工程实验与取舍",
+      "max": 15,
+      "evidence_refs": [
+        "E-08"
+      ],
       "fields": [
-        {"id": "SC-S2-F1", "path": "docs/experiment-protocol.md", "kind": "text_all", "expect": ["固定条件", "计时规则", "对比指标"], "note": "协议含不变量、计时与指标"},
-        {"id": "SC-S2-F2", "path": "review/exp_datasource_ab_v014.json", "kind": "json_nonempty", "json_path": "fixed_conditions", "note": "真实运行输出留存固定条件"},
-        {"id": "SC-S2-F3", "path": "review/exp_datasource_ab_v014.json", "kind": "json_nonempty", "json_path": "summary", "note": "真实运行输出留存汇总"}
+        {
+          "id": "SC-S2-F1",
+          "path": "docs/experiment-protocol.md",
+          "kind": "text_all",
+          "expect": [
+            "固定条件",
+            "计时规则",
+            "对比指标"
+          ],
+          "note": "协议含不变量、计时与指标"
+        },
+        {
+          "id": "SC-S2-F2",
+          "path": "review/exp_datasource_ab_v014.json",
+          "kind": "json_nonempty",
+          "json_path": "fixed_conditions",
+          "note": "真实运行输出留存固定条件"
+        },
+        {
+          "id": "SC-S2-F3",
+          "path": "review/exp_datasource_ab_v014.json",
+          "kind": "json_nonempty",
+          "json_path": "summary",
+          "note": "真实运行输出留存汇总"
+        }
       ]
     },
     {
-      "subcriterion_id": "S3.适配", "max": 4, "evidence_refs": ["E-09"],
+      "subcriterion_id": "S3.适配",
+      "max": 4,
+      "evidence_refs": [
+        "E-09"
+      ],
       "fields": [
-        {"id": "SC-S3-F1", "path": "evaluator/agent.py", "kind": "text_all", "expect": ["four_states", "INSUFFICIENT_EVIDENCE", "verdict_digest"], "note": "评价器实现四状态与判定指纹"},
-        {"id": "SC-S3-F2", "path": "evaluator/checker.py", "kind": "file_exists", "note": "通用确定性内核存在"}
+        {
+          "id": "SC-S3-F1",
+          "path": "evaluator/agent.py",
+          "kind": "text_all",
+          "expect": [
+            "four_states",
+            "INSUFFICIENT_EVIDENCE",
+            "verdict_digest"
+          ],
+          "note": "评价器实现四状态与判定指纹"
+        },
+        {
+          "id": "SC-S3-F2",
+          "path": "evaluator/checker.py",
+          "kind": "file_exists",
+          "note": "通用确定性内核存在"
+        }
       ]
     },
     {
-      "subcriterion_id": "S3.校准与错误分析", "max": 5, "evidence_refs": ["E-09"],
+      "subcriterion_id": "S3.校准与错误分析",
+      "max": 5,
+      "evidence_refs": [
+        "E-09"
+      ],
       "fields": [
-        {"id": "SC-S3C-F1", "path": "evaluator/skills/evidence-review/rubric.json", "kind": "text_all", "expect": ["K-1", "K-6", "PASS", "FAIL"], "note": "rubric 含 K-1~K-6 判例"},
-        {"id": "SC-S3C-F2", "path": "review/evaluation/calibration_k1_k6.json", "kind": "json_nonempty", "json_path": "cases", "note": "校准运行记录存在"}
+        {
+          "id": "SC-S3C-F1",
+          "path": "evaluator/skills/evidence-review/rubric.json",
+          "kind": "text_all",
+          "expect": [
+            "K-1",
+            "K-6",
+            "PASS",
+            "FAIL"
+          ],
+          "note": "rubric 含 K-1~K-6 判例"
+        },
+        {
+          "id": "SC-S3C-F2",
+          "path": "review/evaluation/calibration_k1_k6.json",
+          "kind": "json_nonempty",
+          "json_path": "cases",
+          "note": "校准运行记录存在"
+        }
       ]
     },
     {
-      "subcriterion_id": "S3.实际复核", "max": 4, "evidence_refs": ["E-09"],
+      "subcriterion_id": "S3.实际复核",
+      "max": 4,
+      "evidence_refs": [
+        "E-09"
+      ],
       "fields": [
-        {"id": "SC-S3R-F1", "path": "review/evaluation/SIGNOFF.md", "kind": "text_all", "expect": ["本组", "复核"], "note": "本组复核记录"},
-        {"id": "SC-S3R-F2", "path": "docs/events.md", "kind": "file_exists", "note": "结对交互记录文件存在"}
+        {
+          "id": "SC-S3R-F1",
+          "path": "docs/signoff.md",
+          "kind": "text_all",
+          "expect": [
+            "本组签署",
+            "抽验"
+          ],
+          "note": "本组报告签署台账（评价输出为测试产物，不纳入签署）"
+        },
+        {
+          "id": "SC-S3R-F2",
+          "path": "docs/events.md",
+          "kind": "file_exists",
+          "note": "结对交互记录文件存在"
+        }
       ]
     },
     {
-      "subcriterion_id": "S3.权限隐私", "max": 2, "evidence_refs": ["E-10"],
+      "subcriterion_id": "S3.权限隐私",
+      "max": 2,
+      "evidence_refs": [
+        "E-10"
+      ],
       "fields": [
-        {"id": "SC-S3P-F1", "path": ".gitignore", "kind": "text_all", "expect": ["key.txt"], "note": "凭据不入库"},
-        {"id": "SC-S3P-F2", "path": "AGENTS.md", "kind": "text_all", "expect": ["证据不能编", "AI 不代签"], "note": "人机责任与证据纪律"}
+        {
+          "id": "SC-S3P-F1",
+          "path": ".gitignore",
+          "kind": "text_all",
+          "expect": [
+            "key.txt"
+          ],
+          "note": "凭据不入库"
+        },
+        {
+          "id": "SC-S3P-F2",
+          "path": "AGENTS.md",
+          "kind": "text_all",
+          "expect": [
+            "证据不能编",
+            "AI 不代签"
+          ],
+          "note": "人机责任与证据纪律"
+        }
       ]
     },
     {
-      "subcriterion_id": "S4.路径解释", "max": 8, "evidence_refs": ["E-03"],
+      "subcriterion_id": "S4.路径解释",
+      "max": 8,
+      "evidence_refs": [
+        "E-03"
+      ],
       "evidence_level": "CLAIM_ONLY",
       "note": "机械层只核对决策链记录是否存在；解释质量靠答辩",
       "fields": [
-        {"id": "SC-S4-F1", "path": "docs/decision-log.md", "kind": "text_all", "expect": ["D-01", "ADR-0007", "复核"], "note": "决策索引可定位到 ADR 且有复核"},
-        {"id": "SC-S4-F2", "path": "docs/adr", "kind": "dir_min", "min": 10, "note": "ADR 数量"}
+        {
+          "id": "SC-S4-F1",
+          "path": "docs/decision-log.md",
+          "kind": "text_all",
+          "expect": [
+            "D-01",
+            "ADR-0007",
+            "复核"
+          ],
+          "note": "决策索引可定位到 ADR 且有复核"
+        },
+        {
+          "id": "SC-S4-F2",
+          "path": "docs/adr",
+          "kind": "dir_min",
+          "min": 10,
+          "note": "ADR 数量"
+        }
       ]
     },
     {
-      "subcriterion_id": "S4.独立小任务", "max": 8, "evidence_refs": [],
+      "subcriterion_id": "S4.独立小任务",
+      "max": 8,
+      "evidence_refs": [],
       "evidence_level": "CLAIM_ONLY",
       "note": "机械层只核对验证任务清单是否记录；独立完成情况靠人证明",
       "fields": [
-        {"id": "SC-S4I-F1", "path": "docs/team-roster.md", "kind": "text_all", "expect": ["独立运行", "验证任务清单"], "note": "有独立任务记录"},
-        {"id": "SC-S4I-F2", "path": "docs/team-roster.md", "kind": "text_all", "expect": ["余俊辉", "已完成"], "note": "记录含完成状态"}
+        {
+          "id": "SC-S4I-F1",
+          "path": "docs/team-roster.md",
+          "kind": "text_all",
+          "expect": [
+            "独立运行",
+            "验证任务清单"
+          ],
+          "note": "有独立任务记录"
+        },
+        {
+          "id": "SC-S4I-F2",
+          "path": "docs/team-roster.md",
+          "kind": "text_all",
+          "expect": [
+            "余俊辉",
+            "已完成"
+          ],
+          "note": "记录含完成状态"
+        }
       ]
     },
     {
-      "subcriterion_id": "S4.取舍说明", "max": 5, "evidence_refs": ["E-03"],
+      "subcriterion_id": "S4.取舍说明",
+      "max": 5,
+      "evidence_refs": [
+        "E-03"
+      ],
       "evidence_level": "CLAIM_ONLY",
       "note": "机械层只核对 ADR 与被否方案是否成文；取舍解释靠答辩",
       "fields": [
-        {"id": "SC-S4T-F1", "path": "docs/adr/0011-evaluation-agent.md", "kind": "text_all", "expect": ["被否", "理由", "后果"], "note": "ADR 含被否方案与理由"},
-        {"id": "SC-S4T-F2", "path": "docs/adr/0004-pin-evidence.md", "kind": "file_exists", "note": "关键决策 ADR 存在"}
+        {
+          "id": "SC-S4T-F1",
+          "path": "docs/adr/0011-evaluation-agent.md",
+          "kind": "text_all",
+          "expect": [
+            "被否",
+            "理由",
+            "后果"
+          ],
+          "note": "ADR 含被否方案与理由"
+        },
+        {
+          "id": "SC-S4T-F2",
+          "path": "docs/adr/0004-pin-evidence.md",
+          "kind": "file_exists",
+          "note": "关键决策 ADR 存在"
+        }
       ]
     },
     {
-      "subcriterion_id": "S4.轮换与责任", "max": 4, "evidence_refs": [],
+      "subcriterion_id": "S4.轮换与责任",
+      "max": 4,
+      "evidence_refs": [],
       "evidence_level": "CLAIM_ONLY",
       "note": "机械层只核对轮换记录是否成文；真实轮换靠人证明",
       "fields": [
-        {"id": "SC-S4R-F1", "path": "docs/team-roster.md", "kind": "text_all", "expect": ["轮换记录", "交换内容"], "note": "轮换记录存在"},
-        {"id": "SC-S4R-F2", "path": "docs/team-roster.md", "kind": "text_all", "expect": ["周期", "已完成"], "note": "轮换有周期与状态"}
+        {
+          "id": "SC-S4R-F1",
+          "path": "docs/team-roster.md",
+          "kind": "text_all",
+          "expect": [
+            "轮换记录",
+            "交换内容"
+          ],
+          "note": "轮换记录存在"
+        },
+        {
+          "id": "SC-S4R-F2",
+          "path": "docs/team-roster.md",
+          "kind": "text_all",
+          "expect": [
+            "周期",
+            "已完成"
+          ],
+          "note": "轮换有周期与状态"
+        }
       ]
     }
   ]

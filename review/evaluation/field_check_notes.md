@@ -2,8 +2,8 @@
 
 > 性质：review ｜ 版本：v1.0 ｜ 状态：复核中
 > 职责：解释"从只查文件存在到读字段内容"之后，评价四状态为什么这样变、为什么没变成全 PASS。
-> 关联：字段表 `review/evaluation/field_check.json`；字段定义 `evaluator/skills/evidence-review/fields.json`；新批次评价 `review/evaluation/EVAL-20261124-08*.json`。
-> 签署：本文不含签名；复核后填入 `SIGNOFF.md`。
+> 关联：字段表 `review/evaluation/field_check.json`；字段定义 `evaluator/skills/evidence-review/fields.json`；该批评价输出已于 2026-11-26 清理，属测试产物，不纳入签署台账。
+> 本文是测试记录，不含签名，也不纳入签署台账。
 
 ## 1. 改了什么
 

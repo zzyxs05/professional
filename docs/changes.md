@@ -631,3 +631,40 @@ R-1 多模型横向评测（缺 key，协议已定）；独立复核单独登记
 `experiments.md` 的实验版本、对抗组提交时的快照、SIGNOFF 的批次登记状态——这些都是当时事实，改了即篡改历史。
 
 **回归**：93 单测、84 判点一致 84、K-1~K-6 6/6。
+
+---
+
+## 评价输出退出签署台账（2026-11-26）
+
+> 触发：评价输出本就是测试产物，报告文件已按要求清理；继续留在签署台账里只是指向空气的记录。
+
+| # | 变更 | 影响 |
+|---|------|------|
+| S69 | 删除 `review/evaluation/SIGNOFF.md`——整份台账都是围绕测试评价建的，评价删了、也不该签，文件随之删除 | 签署状态只在 `docs/signoff.md` 一处维护，回归"不建第二台账"约定 |
+| S70 | `scoring-fields.json` 的 SC-S3R-F1 改指向 `docs/signoff.md`（本组签署台账） | 字段核对仍有真实锚点 |
+| S71 | `fields.json` 的 E-07-F2 锚点从"待签署"改为"未发生/不预填" | 对齐 docs/signoff 现状，不再要求过时的"待签署"字样 |
+| S72 | HARNESS / README / docs/signoff / version-waiver / field_check_notes / PLAN / TASKS 的当前态引用清理：评价输出明确为测试产物、不纳入签署 | 消除"文档说有、实际已删"的矛盾；历史任务描述保留不改 |
+| S73 | rubric K-3 期望改 FAIL（`evaluation_agent.calibration_cases`，上次改错字段）；docs/signoff 0.1.6 批"待签署"改为已抽验 | 校准与判定契约一致 |
+
+**保留未改**：changes.md 各节的历史记录、TASKS.md 里 T-M5-13/T-M5-14 当时的任务描述——那是历史事实，删了即篡改。
+**评价产物**：每次评价生成的 EVAL 文件按约定清理，不留在仓库。
+
+**回归**：93 单测、84 判点一致 84、K-1~K-6 6/6；评价 PASS 10/10。
+
+---
+
+## 实验代差消除与 llm 校准补齐（2026-11-26）
+
+> 触发：评价指出主实验停在 0.1.4、校准只有快路径。核查后发现 llm 模式一个真 bug 与一个夹具口径问题。
+
+| # | 变更 | 影响 |
+|---|------|------|
+| S74 | `exp_datasource_ab.py --out review/exp_datasource_ab_v017.json` 在 0.1.7 重跑：6 样本检出全一致，A 中位 69.489ms / B 25.100ms，记录见 experiments 实验 8 | 主实验数据与当前版本对齐；0.1.3/0.1.4 数据保留 |
+| S75 | 修 `AgentLoop.run` 里 `evidence_pack` 只在非 llm 分支初始化的 bug——llm 模式走到 `pending_harness` 分支时属性不存在直接崩 | **不是 token 截断**：`--llm` 现在能跑通，PASS 10/10、指纹与确定性路径一致 |
+| S76 | `RestrictedTools` / `AgentLoop` / `run_agent` 加可选 `run_dir`，外部 harness 可直传合成 RUN 目录；`_safe_path` 把 `evidence/<run_id>/` 重定向到该目录 | 校准判例能走完整 llm 流程，默认路径不变 |
+| S77 | `scripts/eval_calibrate.py` 加 `--llm`，产物 `calibration_k1_k6_llm.json`，与快路径产物互不覆盖 | 两套校准都有记录 |
+| S78 | 校准夹具 `_write_run` 跟随当前规则包版本，并补齐 14 条判点占位（其余给"无法判定"） | 消除"0.1.0 夹具跳过判点完整性检查"的假阴性；两套校准口径一致 |
+| S79 | `fields.json` E-06-F1/F2 的版本锚点 0.1.6 → 0.1.7 | 补上之前统一文档口径时漏掉的字段规范 |
+
+**回归**：快路径校准 6/6、llm 校准 **6/6**；93 单测、84 判点一致 84；默认 evaluate PASS 10/10。
+**结论**：llm 模式此前不可用的根因是代码 bug，不是 max_tokens 设置——改大 token 无效，已修代码本身。
