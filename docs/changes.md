@@ -699,3 +699,22 @@ R-1 多模型横向评测（缺 key，协议已定）；独立复核单独登记
 
 **背景**：S3 校准曾被扣 1 分"跨人校准未做"，但该要求不在课程硬性口径内——
 总档只要求六类判例齐全、错误类型出现时记录。两套校准现均 6/6、结论一致、无分歧可记。
+
+---
+
+## 评价器工具层去特异化收尾（2026-11-26）
+
+> 触发：独立评价发现 list_evidence 把 `docs` 当路径拒绝、预算浪费在试错；HTML 状态矛盾。
+
+| # | 变更 | 影响 |
+|---|------|------|
+| S89 | `check_run_id` 去掉 RUN- 前缀正则，改为通用安全校验（只拒 `/`、`\`、`.`、`..`、空壳、控制字符） | 换项目后 `K1`/`calib-2026` 等 ID 可用；路径穿越防护保留 |
+| S90 | 单测同步：`xRUN-1` 从非法改为合法（新增 `test_run_id_prefix_not_required`），94 例全过 | 测试跟契约对齐 |
+| S91 | `_safe_path` 放行白名单目录本身（`docs`/`review`/`evaluator` 等），`list_evidence` 可列目录 | harness 能先看目录再取证，不再把预算花在试错路径上 |
+| S92 | `list_evidence` 默认路径删掉已不存在的 `docs/acceptance-matrix.md`、`docs/release.md` | 不再指向空气 |
+| S93 | `scoring_status` 判断改为看 `self.scoring` **或** `self.scores` | 修 HTML 顶部"待评/100"与表格"已评合计"矛盾；llm 模式现在 `scored` + next_action=None |
+| S94 | SKILL §3 补取证顺序：先读 evidence_pack 与 fields.json，再 list 目录、最后 read 具体文件 | 指导 harness 省预算 |
+
+**未做**：precheck 的 APK 专用判定（report.json / channel_a / 14 条规则）仍未通用化——
+这是内核级改动，会动判定指纹与既有 RUN 基线，单独讨论。
+**回归**：94 单测、84 判点、校准 6/6；llm 评价 scoring_status=scored 验证通过。

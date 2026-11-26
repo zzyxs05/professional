@@ -632,8 +632,10 @@ class AgentLoop(object):
                                   or [self.scores[s['id']]
                                       for s in (self.rubric.get('evaluation_scoring') or {})
                                       .get('subcriteria', []) if s['id'] in self.scores]),
-            'scoring_status': ('pending_harness' if not getattr(self, 'scoring', None)
-                               else 'scored'),
+            # 分数可能来自确定性模式的 self.scoring，也可能来自 llm 模式的 self.scores。
+            # 只看 self.scoring 会让 llm 模式明明有分却显示"待评"（HTML 与表格矛盾）。
+            'scoring_status': ('scored' if (getattr(self, 'scoring', None) or self.scores)
+                               else 'pending_harness'),
             'evidence_pack': getattr(self, 'evidence_pack', None),
             'scoring_framework': (self.rubric.get('evaluation_scoring') or {}).get('framework'),
             'score_contract': ('harness 依证据满足度主观评分；非课程最终成绩'),

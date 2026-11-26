@@ -52,11 +52,18 @@ class TestEvidenceStore(unittest.TestCase):
             self.assertEqual(f.read(), raw)
 
     def test_path_traversal_run_id_rejected(self):
-        # run_id 参与路径拼接，必须白名单校验（第四次审查 U1）
+        # run_id 参与路径拼接，只拒危险字符；不规定命名前缀（那是项目约定）。
+        # 第四次审查 U1 的路径穿越防护保留：斜杠、..、绝对路径、空壳、控制字符。
         for bad in ('../evil', 'RUN-..-..', 'RUN-a/b', 'RUN-a\\b',
-                    '/etc/passwd', '', 'RUN-', 'xRUN-1', 'RUN-1\0'):
+                    '/etc/passwd', '', 'RUN-', 'RUN-1\0', '-', 'a-'):
             with self.assertRaises(BadRunId, msg=bad):
                 EvidenceStore(self.root, bad)
+
+    def test_run_id_prefix_not_required(self):
+        # 通用内核不认 RUN- 前缀：换项目后 K1 / calib-2026 等也能当 run_id。
+        for good in ('K1', 'calib-2026', 'xRUN-1'):
+            store = EvidenceStore(self.root, good, allow_existing=True)
+            self.assertEqual(store.run_id, good)
 
 
 if __name__ == '__main__':

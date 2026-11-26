@@ -19,6 +19,7 @@ ALLOWED_PREFIXES = (
     'docs/', 'review/', 'evidence/', 'core/', 'evaluator/',
     'scripts/', 'tests/', 'lab/truth/', 'handoff/',
 )
+_ALLOWED_DIRS = frozenset(p.rstrip('/') for p in ALLOWED_PREFIXES)
 ALLOWED_ROOT_FILES = frozenset({
     'AGENTS.md', 'HARNESS.md', 'GLOBAL.md', 'PLAN.md', 'TASKS.md',
     '总档.md', 'cli.py', '.gitignore',
@@ -69,7 +70,11 @@ class RestrictedTools(object):
             return None
         if rel.startswith('.') and rel not in ALLOWED_ROOT_FILES:
             return None
-        if '/' not in rel and rel not in ALLOWED_ROOT_FILES:
+        # 白名单目录本身（docs / review / evaluator …）允许列出，模型才知道去哪找证据；
+        # 只有既不是根文件、也不是白名单目录的裸名字才拒绝。
+        bare_dir = rel.rstrip('/')
+        if '/' not in rel and rel not in ALLOWED_ROOT_FILES \
+                and bare_dir not in _ALLOWED_DIRS:
             return None
         if '/' in rel and not rel.startswith(ALLOWED_PREFIXES):
             return None
@@ -105,9 +110,7 @@ class RestrictedTools(object):
         if paths is None:
             paths = [
                 'docs/requirements.md', 'docs/specification.md',
-                'docs/acceptance-matrix.md', 'docs/decision-log.md',
-                'docs/experiments.md', 'docs/experiment-protocol.md',
-                'docs/changes.md', 'docs/release.md', 'docs/signoff.md',
+                'docs/decision-log.md', 'docs/changes.md', 'docs/signoff.md',
                 'HARNESS.md', 'GLOBAL.md', 'PLAN.md', 'TASKS.md',
                 'AGENTS.md', 'handoff/README.md',
                 'evidence/%s/report.json' % self.run_id,
