@@ -148,15 +148,27 @@ def _sha256_text(text):
     return hashlib.sha256((text or '').encode('utf-8')).hexdigest()
 
 
-def run_channel_b(ctx, hits_by_rule, runner, store, force_off=False):
-    """B1 复核 + B2 敏感区扫描。无模型配置时返回 ran=False（进覆盖声明）。"""
+def run_channel_b(ctx, hits_by_rule, runner, store, force_off=False,
+                  model_name=None):
+    """B1 复核 + B2 敏感区扫描。无模型配置时返回 ran=False（进覆盖声明）。
+
+    model_name 可选：按 key.txt 里的模型名选配置；不传仍取第一行，行为不变。
+    名字不匹配时不静默回退到别的模型——直接报未配置，避免横向评测跑错模型。
+    """
     res = BResult()
     cfgs = [] if force_off else load_key_config(ctx.project_root)
     if not cfgs:
         res.reason = '未配置模型（key.txt 缺失或不可解析）——B 通道未运行'
         return res
 
-    cfg = cfgs[0]
+    if model_name:
+        matched = [c for c in cfgs if c[0] == model_name]
+        if not matched:
+            res.reason = '未配置模型 %s（key.txt 中无此模型名）' % model_name
+            return res
+        cfg = matched[0]
+    else:
+        cfg = cfgs[0]
     res.model = cfg[0]
     available = True
     # 轻量连通性探测：不是审计判定调用，不占预算；但成本真实发生，

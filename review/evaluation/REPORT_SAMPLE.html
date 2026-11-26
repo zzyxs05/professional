@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head><meta charset="utf-8"><title>评价报告 · EVAL-SAMPLE</title><style>
+body{font-family:system-ui,-apple-system,"Segoe UI",sans-serif;color:#2c2c2a;background:#fff;line-height:1.6;margin:0;padding:24px;max-width:1080px;margin:0 auto}
+h1{font-size:20px;font-weight:500;margin:0 0 4px}h2{font-size:15px;font-weight:500;margin:24px 0 8px}
+.meta{color:#5f5e5a;font-size:13px;margin-bottom:16px}
+.top{background:#f1efe8;border:1px solid #d3d1c7;padding:12px 16px;border-radius:8px;margin-bottom:16px}
+.item{border:1px solid #d3d1c7;border-radius:8px;padding:14px 16px;margin-bottom:12px}
+.item-head{display:flex;align-items:center;gap:10px}.no{color:#888780;font-size:12px}
+.cid{font-weight:500;font-size:14px}.badge{font-size:12px;padding:2px 8px;border-radius:10px}
+.badge.ok{background:#eaf3de;color:#3b6d11}.badge.bad{background:#fcebeb;color:#a32d2d}
+.badge.warn{background:#faeeda;color:#854f0b}.badge.na{background:#f1efe8;color:#5f5e5a}
+.desc{font-size:13px;margin:8px 0 12px;color:#2c2c2a}
+.why{font-size:13px;margin:8px 0;color:#444441}.why b{font-weight:500}
+.muted{color:#888780;font-size:12px}
+.score{font-size:13px;background:#e6f1fb;border-radius:6px;padding:8px 10px;margin:8px 0}
+.score b{font-size:16px;font-weight:500;color:#0c447c}
+table{border-collapse:collapse;width:100%;font-size:12px;margin-top:6px}
+th,td{border:1px solid #d3d1c7;padding:6px 8px;text-align:left;vertical-align:top}
+th{background:#f1efe8;font-weight:500}td.mismatch{background:#fcebeb}
+details summary{cursor:pointer;font-size:13px;font-weight:500;padding:6px 0}
+.digest{font-size:12px;color:#5f5e5a;margin-bottom:12px}code{font-family:monospace}
+.model{background:#f1efe8;border-radius:8px;padding:10px 16px}
+</style></head><body><h1>工程证据审查报告</h1><div class="meta">评价编号 EVAL-SAMPLE ｜ 目标 （样例）目标仓库 ｜ 模式 self ｜ 规则版本 0.1.6</div><div class="top">总览：通过 1 ｜ 审查项 1 ｜ 结论状态 证据不足<br>模型模式 未知 ｜ 模型交互 0</div><!-- verdict:start --><div class="digest">判定指纹：<code>sample</code><span class="muted">（只含机械判定；同快照重跑应一致）</span></div><section class="item"><div class="item-head"><span class="no">1</span><span class="cid">E-01</span><span class="badge ok">通过</span></div><p class="desc">需求写没写清：给谁用、什么场景、做什么、不做什么</p><div class="why"><b>扣分或未通过原因</b><ul><li>证据齐全</li></ul></div><details open><summary>完整证据链（1 步）</summary><table class="chain"><thead><tr><th>字段</th><th>看什么</th><th>文件</th><th>应满足</th><th>实际读到</th><th>结果</th></tr></thead><tbody><tr class="match"><td>E-01-F1</td><td>角色场景结构</td><td></td><td>见字段规范</td><td>missing_anchors：无</td><td>match</td></tr></tbody></table></details><div class="why"><b>最小补查</b><span>抽验 2-3 个关键 Claim</span></div></section><!-- verdict:end --><section><h2>分项评测分（S1—S4，非课程最终成绩）</h2><p class="muted">共 2 个子项，已评合计 5 / 100；未评项如实标「未评」，不猜分。教师复评决定采纳与否。</p><table class="summary"><thead><tr><th>子项</th><th>状态</th><th>得分</th><th>扣分理由</th><th>证据引用</th><th>证据层级</th></tr></thead><tbody><tr><td>S1.需求</td><td>未判定</td><td>5 / 6</td><td>缺非服务对象说明</td><td>docs/requirements.md</td><td>STATIC </td></tr><tr><td>S4.独立小任务</td><td>未判定</td><td>未评 / 8</td><td>只有自述，无独立证据</td><td>无</td><td>CLAIM_ONLY （自述，待教师复评）</td></tr></tbody></table></section><p class="muted">本报告为工程证据审查，不是成绩单；最终成绩只在教师层。证据审查区由机械核对收口；分项评测分按课程框架逐项给出，供教师复评参考。</p></body></html>

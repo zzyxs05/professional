@@ -6,11 +6,14 @@
 """
 
 import os
+import shutil
 import sys
+import tempfile
 import unittest
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
+from core import registry
 from core.channel_b import _parse_b2, _parse_verdict
 
 
@@ -41,3 +44,32 @@ class TestParseVerdict(unittest.TestCase):
 
 if __name__ == '__main__':
     unittest.main()
+
+
+class TestModelSelection(unittest.TestCase):
+    """R-1：按模型名选 key.txt 配置；默认仍取第一行；错误名字不回退。"""
+
+    def setUp(self):
+        self.tmp = tempfile.mkdtemp(prefix='model_sel_')
+        with open(os.path.join(self.tmp, registry.KEY_FILE_NAME), 'w', encoding='utf-8') as f:
+            f.write('first-model,https://a.example/v1,key1\n')
+            f.write('second-model,https://b.example/v1,key2\n')
+
+    def tearDown(self):
+        shutil.rmtree(self.tmp, ignore_errors=True)
+
+    def _ctx(self):
+        class Ctx(object): pass
+        c = Ctx(); c.project_root = self.tmp
+        return c
+
+    def test_load_key_config_reads_all_lines(self):
+        from core.channel_b import load_key_config
+        cfgs = load_key_config(self.tmp)
+        self.assertEqual([c[0] for c in cfgs], ['first-model', 'second-model'])
+
+    def test_unknown_model_does_not_fallback(self):
+        from core.channel_b import run_channel_b
+        res = run_channel_b(self._ctx(), {}, None, None, model_name='not-exist')
+        self.assertFalse(res.ran)
+        self.assertIn('not-exist', res.reason)

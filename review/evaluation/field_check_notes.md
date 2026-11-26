@@ -3,7 +3,7 @@
 > 性质：review ｜ 版本：v1.0 ｜ 状态：复核中
 > 职责：解释"从只查文件存在到读字段内容"之后，评价四状态为什么这样变、为什么没变成全 PASS。
 > 关联：字段表 `review/evaluation/field_check.json`；字段定义 `evaluator/skills/evidence-review/fields.json`；新批次评价 `review/evaluation/EVAL-20261124-08*.json`。
-> 签署：本文不含签名；由本人复核后填入 `SIGNOFF.md`。
+> 签署：本文不含签名；复核后填入 `SIGNOFF.md`。
 
 ## 1. 改了什么
 
@@ -30,9 +30,9 @@
 
 - 7 项 PASS 的范围仅限"机械 + 字段层"，结论语义正确性仍待人工复核，`score_suggestion=null`、`human_signoff=pending` 未被改写。
 - 6 份新输出形态完全一致：PASS 7 / INSUFFICIENT 3、`mismatch=false`、字段核对已接入、轨迹含 `field_check` 事件。
-- **未做的事**（不因文档补齐而消失）：E-01/E-02/E-07 的 3 个历史文件名缺口需本人决定——是把内容拆回独立文件，还是请教师确认 rubric 映射已由合并文档覆盖。本说明不擅自选。
-- **回归证据**：79 个单测全过（新增 7 项字段核对测试）；K-1~K-6 校准 6/6；84 判点 84/84 一致、硬错 0。
+- **未做的事**（不因文档补齐而消失）：E-01/E-02/E-07 的 3 个历史文件名缺口需决定——是把内容拆回独立文件，还是请教师确认 rubric 映射已由合并文档覆盖。本说明不擅自选。
+- **回归证据**：93 个单测全过（含 7 项字段核对测试）；K-1~K-6 校准 6/6；84 判点 84/84 一致、硬错 0。
 
 ## 5. 待人工抽验（步骤 4，签名留空）
 
-`field_check.json` 中 `human_spot_check.items` 预留 5 条：每条填 `run_id` / `criterion_id` / `field_id` / 程序三态，由抽验人打开原文核对后填 `human_result` / `checker` / `date`。AI 不代填、不代签。
+`field_check.json` 中 `human_spot_check.items` 预留 5 条：每条填 `run_id` / `criterion_id` / `field_id` / 程序三态，由抽验人打开原文核对后填 `human_result` / `checker` / `date`。

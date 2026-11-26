@@ -1,0 +1,1 @@
+{"verdict": "确认可疑", "reason": "调度原语 AlarmManager.setRepeating、可解析的调度目标 RecordingService（同文件内以 Intent 指定类并配合 PendingIntent 传入 setRepeating）与目标组件内的敏感 API MediaRecorder 三侧证据齐备，构成 ①档 调度→目标组件→敏感 API 的调用链结构事实。", "observation": "三条命中分属同一包内两个类，MainActivity 中构造指向 RecordingService 的 Intent 与 setRepeating 调用位置相邻，链路在样本内可关联；本判定仅确认结构存在，不涉及真实执行时间或实际滥用。"}

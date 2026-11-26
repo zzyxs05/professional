@@ -1,7 +1,7 @@
 # handoff · 交接包
 
 > 给对抗组和教师：在一台干净机器上复现本组的结论、跑评价器、提出挑战。
-> 规则包 0.1.4 ｜ 历史正本是 0.1.3，不改写，各 RUN 的 `meta.json` 里能看到生成时的版本。
+> 规则包 0.1.7 ｜ 历史正本是 0.1.3/0.1.6，不改写，各 RUN 的 `meta.json` 里能看到生成时的版本。
 
 ## 1. 环境
 
@@ -17,14 +17,14 @@
 ## 2. 启动
 
 ```bash
-python cli.py analyze lab/apks/bad03.apk            # 完整审计，产物在 evidence/RUN-<时间>/
-python cli.py analyze <apk> --out <dir>             # 报告另存一份
-python cli.py analyze <apk> --no-evidence           # 演练：跑完整链路但不写 evidence/
-python cli.py register <apk>                        # 登记新样本，打印真值模板，不写 registry
-python cli.py evaluate --run <RUN>                  # 评价 Agent，默认用 key.txt 的模型
-python cli.py evaluate --run <RUN> --no-llm         # 只走确定性路径
-python cli.py summary [--no-llm]                    # 六样本汇总，无模型时用模板
-python cli.py reset                                 # 清解码缓存，不动 evidence
+python cli.py analyze lab/apks/bad03.apk # 完整审计，产物在 evidence/RUN-<时间>/
+python cli.py analyze <apk> --out <dir> # 报告另存一份
+python cli.py analyze <apk> --no-evidence # 演练：跑完整链路但不写 evidence/
+python cli.py register <apk> # 登记新样本，打印真值模板，不写 registry
+python cli.py evaluate --run <RUN> # 评价器：纯 harness 评分，不调 API、不需要 key
+python cli.py evaluate --run <RUN> --llm # 可选：调用 API 由模型判读（默认不用）
+python cli.py summary [--no-llm] # 六样本汇总，无模型时用模板
+python cli.py reset # 清解码缓存，不动 evidence
 ```
 
 `--no-evidence` 是给调规则用的：产物写临时区，不进 `evidence/`。运行正本只收正式运行。
@@ -78,12 +78,12 @@ python cli.py reset                                 # 清解码缓存，不动 e
 ## 8. 目录导航
 
 ```
-总档.md             总纲（指针）
-docs/               需求、规约、决策、调研、实验、变更、事件、签署
-core/               审计流水线
-evaluator/          评价 Agent
-evidence/RUN-*/     运行正本，不改写
-review/             复核与互评材料
-lab/                靶场：样本 + 真值表 + sha256
-scripts/ tests/     契约脚本与单元测试
+总档.md 总纲（指针）
+docs/ 需求、规约、决策、调研、实验、变更、事件、签署
+core/ 审计流水线
+evaluator/ 评价 Agent
+evidence/RUN-*/ 运行正本，不改写
+review/ 复核与互评材料
+lab/ 靶场：样本 + 真值表 + sha256
+scripts/ tests/ 契约脚本与单元测试
 ```

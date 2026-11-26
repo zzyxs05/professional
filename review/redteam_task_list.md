@@ -200,7 +200,7 @@ E2 交的是**前后差异 + 回归证据**，不是新功能截图。差异必�
 **`meta.json` 和 `report.json` 都不记录 git commit。** `meta.json` 只有 `rule_pack`、`toolchain`、`apk_sha256`、`created`。后果：
 
 - 0.1.6 的 6 个正本生成于 14:06、入库于 14:21。期间 `91e0957`（11-23 23:52）改过 `core/channel_b.py`、`core/safezip.py`，`3152051`（11-24 12:44）改过 `core/evidence.py`、`cli.py`。
-- 因此**这 6 个正本对应的确切 commit 无法从产物自证**，只能给出区间：生成晚于 `3152051`、入库于 `a4e24e8`。要精确，只能重跑或由本人声明。
+- 因此**这 6 个正本对应的确切 commit 无法从产物自证**，只能给出区间：生成晚于 `3152051`、入库于 `a4e24e8`。要精确，只能重跑或补一份声明。
 
 **本机实测旁证**（2026-11-25，HEAD=`6276391`，Java 11，无 `key.txt`）：`bad03` 规则侧 14 条结论与 0.1.6 正本**逐条一致**，差异仅是正本多 2 条 `R-B-001/R-B-002` 疑点（B 通道产生，我无模型）。说明这两天的代码改动没有改变 A 通道判定。这一条可以写进你的 E1 运行记录，但**不能替他们证明正本的 commit**。
 
@@ -245,7 +245,7 @@ E2 交的是**前后差异 + 回归证据**，不是新功能截图。差异必�
 2. **E3-A-13 非空无效 TrustManager**——判据是"空方法体（无 invoke 指令）"，加一条 `Log.d` 就绕开。这是**定义缝隙**，对方无法用"设计取舍"挡，只能改判据或承认漏报。真实世界最常见的写法，影响面大。
 3. **E3-A-04 `enabled="false"` 的静态 Receiver**——判据没排除 enabled=false，构造只需改一行，大概率误报。
 4. **版本锚缺失**（并入 E1-Claim1 或单列质询）——三条硬事实：①12 个正本无一记录 commit；②`version-waiver.md` 写了不存在的 0.1.5；③该文件自认"0.1.3 与 0.1.4 逐字节一致"引自 `changes.md` C6 的历史记录，**本次未重新核验**。
-   公允地说：他们没造假，`version-waiver.md` §5 把这三条限制如实写出来了，这本身值得肯定。质询应落在"可复现性证据链缺一环"，不是"你们数据有问题"。
+  公允地说：他们没造假，`version-waiver.md` §5 把这三条限制如实写出来了，这本身值得肯定。质询应落在"可复现性证据链缺一环"，不是"你们数据有问题"。
 5. **A-01 targetSdk≥31 导出判定**——他们展开段里拿"样本能装上"当反证，但静态审计不安装样本，这个论证在静态场景不成立。可以用，但这条大概率会认，收益不如 2、3。
 
 不建议先打：A-08（字符串拼接）——对方已明确"不修"，只能打覆盖声明，收益取决于报告写得糙不糙。
@@ -275,10 +275,10 @@ E2 交的是**前后差异 + 回归证据**，不是新功能截图。差异必�
 开跑命令：
 
 ```bash
-git rev-parse --short HEAD                                # 先记版本，再跑
-python cli.py analyze lab/apks/bad03.apk --no-evidence   # 演练，不污染 evidence/
-python scripts/truth_check.py --no-run                    # 84 判点复算
-python -m unittest discover -s tests                      # 79 个单测
+git rev-parse --short HEAD                # 先记版本，再跑
+python cli.py analyze lab/apks/bad03.apk --no-evidence  # 演练，不污染 evidence/
+python scripts/truth_check.py --no-run          # 84 判点复算
+python -m unittest discover -s tests           # 79 个单测
 ```
 
 > 注意：`truth_check.py` 会覆写 `review/truth_result.json`（内容 84/84 不变，行尾会被改写）。跑之前先确认工作区干净，跑完 `git diff` 为空即可。

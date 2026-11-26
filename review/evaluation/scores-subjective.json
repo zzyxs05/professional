@@ -1,0 +1,139 @@
+{
+  "S1.需求": {
+    "score": 6,
+    "rationale": "6 条 UN 每条带痛点与满意条件，追溯矩阵和 out-of-scope 六项都有依据；角色分三类、场景三个。满意条件部分仍偏定性（如'按坐标打开即可'未定义抽查比例），但不影响可执行性，给满分。",
+    "evidence_ids": [
+      "docs/requirements.md"
+    ],
+    "evidence_level": "STATIC"
+  },
+  "S1.架构与约束": {
+    "score": 5,
+    "rationale": "14 条规则逐条声明数据源、档位上限与误报口径，降级路径和子进程白名单写死，机器可验证。规格把边界与失败处理都写进契约，给满分。",
+    "evidence_ids": [
+      "docs/specification.md"
+    ],
+    "evidence_level": "STATIC"
+  },
+  "S1.功能与安全验证": {
+    "score": 11,
+    "rationale": "6 样本×14 规则=84 判点全一致、硬错 0，报告每条带坐标可回溯，这是强项。扣 3 分：9 条 B 侧疑点未钉住、B 与规则冲突场景未覆盖、跨方法调用链只到待复核，验证有明确边界。",
+    "evidence_ids": [
+      "review/truth_result.json",
+      "evidence/RUN-20261124-140458-21cf5a06/report.json",
+      "handoff/README.md"
+    ],
+    "evidence_level": "STATIC"
+  },
+  "S1.变化修复": {
+    "score": 7,
+    "rationale": "版本从 0.1.3 推到 0.1.6，changes.md 逐条记变更与回归，历史正本不改写、版本豁免单独成文，做法扎实。扣 1 分：E1/E2/E3 结对交互尚未发生，CHG-004 仍是候选提案，变化-对抗闭环还没走完。",
+    "evidence_ids": [
+      "docs/changes.md",
+      "docs/version-waiver.md",
+      "docs/events.md"
+    ],
+    "evidence_level": "STATIC"
+  },
+  "S1.交接发布": {
+    "score": 7,
+    "rationale": "handoff 含环境、启动、复现、重置、已知问题 8 条与合规，I-4/I-6 等限制如实列出，可照着跑。扣 1 分：0.1.6 新批次的评价输出尚未登记到 SIGNOFF.md，旧批次的物理存档也待本人确认，交接状态不完备。",
+    "evidence_ids": [
+      "handoff/README.md",
+      "review/evaluation/SIGNOFF.md"
+    ],
+    "evidence_level": "STATIC"
+  },
+  "S1.治理": {
+    "score": 4,
+    "rationale": "HARNESS.md、TASKS.md、总档、AGENTS.md 各自独立成文，六类约定、脚本配置、任务完成标准都能逐条核对，ADR 与被否方案成文。给满分。",
+    "evidence_ids": [
+      "HARNESS.md",
+      "TASKS.md",
+      "docs/decision-log.md"
+    ],
+    "evidence_level": "STATIC"
+  },
+  "S2.工程实验与取舍": {
+    "score": 13,
+    "rationale": "实验有固定条件、逐轮明细、真实运行 JSON 和成本规则，负结果（模型算错数字、假设被否定、非端到端计时）如实保留，这是亮点。扣 2 分：B 侧召回增量在标定样本上未激活，模型只验证了一个、没做横向评测，取舍结论的覆盖面有限。",
+    "evidence_ids": [
+      "docs/experiment-protocol.md",
+      "docs/experiments.md",
+      "review/exp_datasource_ab_v014.json"
+    ],
+    "evidence_level": "STATIC"
+  },
+  "S3.适配": {
+    "score": 4,
+    "rationale": "评价器已做到目标参数化、契约隔离、四个受限工具与通用内核，能评无 run_id 的异题项目并有测试证明。适配完整，给满分。",
+    "evidence_ids": [
+      "evaluator/checker.py",
+      "evaluator/agent.py",
+      "tests/test_eval_generic.py"
+    ],
+    "evidence_level": "STATIC"
+  },
+  "S3.校准与错误分析": {
+    "score": 4,
+    "rationale": "K-1~K-6 六类判例齐备且 6/6 通过，错误类型（误放行、错引、弃权、分歧）有记录，判定指纹机制保证稳定性。扣 1 分：校准是确定性快路径，语义评分的主观分歧没有跨人对照数据。",
+    "evidence_ids": [
+      "review/evaluation/calibration_k1_k6.json",
+      "evaluator/skills/evidence-review/rubric.json"
+    ],
+    "evidence_level": "STATIC"
+  },
+  "S3.实际复核": {
+    "score": 2,
+    "rationale": "本组两人各自复核过评价输出并有署名日期，这一点成立。但对抗组回应与复核栏都是空的，E1/E2/E3 三个结对事件全部停在'材料就绪、交互未发生'——约定的交叉审查实际没跑起来，这是本项最大缺口，扣 2 分。",
+    "evidence_ids": [
+      "review/evaluation/SIGNOFF.md",
+      "docs/events.md"
+    ],
+    "evidence_level": "STATIC"
+  },
+  "S3.权限隐私": {
+    "score": 2,
+    "rationale": "key.txt 在 .gitignore、子进程白名单只放行 java、不执行不联网、覆盖声明如实写，AGENTS.md 六条纪律明确。给满分。",
+    "evidence_ids": [
+      ".gitignore",
+      "AGENTS.md",
+      "docs/ai-disclosure.md"
+    ],
+    "evidence_level": "STATIC"
+  },
+  "S4.路径解释": {
+    "score": 6,
+    "rationale": "13 条决策能顺着 decision-log 定位到 ADR 与证据，关键取舍（双通道、三档、钉证据、不引 DSH）都有被否方案与理由。扣 2 分：个人自述两栏完全空白，路径解释目前只有文档痕迹，没有本人当场讲清取舍的记录，这部分只能靠答辩验证。",
+    "evidence_ids": [
+      "docs/decision-log.md",
+      "docs/adr/0011-evaluation-agent.md"
+    ],
+    "evidence_level": "CLAIM_ONLY"
+  },
+  "S4.独立小任务": {
+    "score": 5,
+    "rationale": "team-roster 列了 7 项验证任务并标了完成人与日期，余俊辉独立跑全样本、真值复算、抽验坐标都有落点。扣 3 分：个人自述两栏空白，'独立小任务'只有台账记录、没有本人对做了什么和怎么做的说明，无法确认独立程度，待独立复核。",
+    "evidence_ids": [
+      "docs/team-roster.md"
+    ],
+    "evidence_level": "CLAIM_ONLY"
+  },
+  "S4.取舍说明": {
+    "score": 4,
+    "rationale": "ADR 一决策一文件，0004（钉证据）和 0011（不引 DSH）都写清了背景、被否方案的具体理由与后果，取舍有据。扣 1 分：ADR 的本人复核与现场解读尚未体现，文档成文不等于能讲清。",
+    "evidence_ids": [
+      "docs/adr/0004-pin-evidence.md",
+      "docs/adr/0011-evaluation-agent.md"
+    ],
+    "evidence_level": "CLAIM_ONLY"
+  },
+  "S4.轮换与责任": {
+    "score": 2,
+    "rationale": "team-roster 有角色表和两周期轮换安排，周期 1 标已完成、周期 2 标待启动，状态如实。扣 2 分：个人自述空白，轮换到底谁独立完成了哪一步只有台账单一来源，没有本人确认，责任边界不足以判满，待独立复核。",
+    "evidence_ids": [
+      "docs/team-roster.md"
+    ],
+    "evidence_level": "CLAIM_ONLY"
+  }
+}

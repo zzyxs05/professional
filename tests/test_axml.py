@@ -95,6 +95,48 @@ class TestAxml(unittest.TestCase):
         self.assertEqual(rcv.line_start, rcv_line)
         self.assertLess(rcv.line_start, rcv.line_end)  # 含 intent-filter 子元素
 
+    def test_sdk23_permission_tag_dedup(self):
+        """CHG-005：uses-permission 与 uses-permission-sdk-23 混用不重复计数。"""
+        from core.axml import PermissionDecl, ManifestFacts
+        from core.rules.man import r_man_02
+
+        class Ctx(object):
+            res = None
+            rule_notes = []
+
+        facts = ManifestFacts()
+        facts.permissions = [
+            PermissionDecl('android.permission.CAMERA', 3, 'uses-permission'),
+            PermissionDecl('android.permission.CAMERA', 4, 'uses-permission-sdk-23'),
+            PermissionDecl('android.permission.INTERNET', 5, 'uses-permission'),
+        ]
+        ctx = Ctx()
+        ctx.manifest = facts
+        hits = r_man_02.run(ctx)
+        self.assertEqual(len(hits), 1)              # 同一权限只报一次
+        self.assertIn('uses-permission]', hits[0].location)  # 首次出现的真实标签
+        self.assertIn('CAMERA', hits[0].raw_snippet)
+
+    def test_sdk23_only_permission_reported(self):
+        """CHG-005：只有 sdk-23 标签时也要报，且证据片段写真实标签。"""
+        from core.axml import PermissionDecl, ManifestFacts
+        from core.rules.man import r_man_02
+
+        class Ctx(object):
+            res = None
+            rule_notes = []
+
+        facts = ManifestFacts()
+        facts.permissions = [
+            PermissionDecl('android.permission.RECORD_AUDIO', 4,
+                           'uses-permission-sdk-23')]
+        ctx = Ctx()
+        ctx.manifest = facts
+        hits = r_man_02.run(ctx)
+        self.assertEqual(len(hits), 1)
+        self.assertIn('uses-permission-sdk-23', hits[0].location)
+        self.assertIn('uses-permission-sdk-23', hits[0].raw_snippet)
+
     def test_rules_on_fixture(self):
         from core.rules.man import r_man_01, r_man_04, r_man_05
         from core.rules.man import r_man_02

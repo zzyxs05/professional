@@ -1,0 +1,1 @@
+{"verdict": "确认可疑", "reason": "命中片段包含 DexClassLoader 的完整调用链（new-instance、<init> 构造、loadClass 加载指定类），属于明确的动态代码加载调用上下文，而非仅字符串中出现类名", "observation": "三处命中位于同一方法内且寄存器 v4 贯穿实例化、构造与 loadClass 调用，证据链完整；加载的目标类为 \"com.synth.bad03.plugin.EntryPoint\"，构成典型插件式动态加载"}

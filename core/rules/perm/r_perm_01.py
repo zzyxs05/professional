@@ -107,10 +107,23 @@ def run(ctx):
     if not sched_points or not sensitive:
         return []
     hits = []
+    # 0.1.7（F-05）：无链回退时声明能力边界——复核者要能分清
+    # "查过但接口/回调目标未解析" 与 "根本没查"。
+    unresolved_targets = []
+    for rel, lineno, lines, s in sched_points:
+        if any(tok in s for tok in ('->', 'invoke-interface')):
+            unresolved_targets.append(smali_loc(rel, lineno, lines))
+    boundary = None
+    if unresolved_targets:
+        boundary = ('存在不可直接解析的调度目标（%s 等），'
+                    'Runnable/接口回调/动态类名的跨方法链未解析'
+                    % unresolved_targets[0])
+
     for rel, lineno, lines, s in sched_points[:5]:
         hits.append(Hit(RULE_ID, smali_loc(rel, lineno, lines), clip(s),
                         note='调度原语：%s' % _matched_primitive(s),
-                        max_status=registry.STATUS_REVIEW))
+                        max_status=registry.STATUS_REVIEW,
+                        context=boundary or ''))
     for _cls, items in list(sensitive.items())[:3]:
         rel, lineno, lines, s, cat = items[0]
         hits.append(Hit(RULE_ID, smali_loc(rel, lineno, lines), clip(s),

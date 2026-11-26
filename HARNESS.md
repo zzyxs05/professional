@@ -75,7 +75,7 @@
 |------|------|------|
 | 分析链路 | 仅通道 B（B1 复核 / B2 提疑）与评价器判读 | 不得直接产出「已确认」；升级必须经 `pin_evidence` 机械核对（ADR-0004） |
 | 执行能力 | 分析进程不执行样本；评价器只用四个受限工具 | 不提供任意 Shell / 任意 URL（权限防护，不是提示词禁令） |
-| 文档与代码 | 起草、检索、整理、复算 | 不得代签、不得改写 `evidence/`、不得把口头决定写成契约 |
+| 文档与代码 | 起草、检索、整理、复算 | 不得改写 `evidence/`、不得把口头决定写成契约 |
 | 调研 | AI 铺开候选；人逐条打开原始页面核对 | 数字、排名、「最优/最流行」类断言无原始来源一律删 |
 
 - **人机责任四分**：决定 / 生成 / 检查 / 停止逐环节具名，见 `docs/ai-disclosure.md` §1；被拒绝的 AI 建议逐条记录（同文件 §3、§4）。
@@ -97,7 +97,7 @@
 | 规则实现 | 一条规则一文件：`core/rules/<类>/r_<类>_<序号>.py`；统一输出命中三元组 `{rule_id, location, raw_snippet}` |
 | 依赖 | 仅标准库；模型调用用标准库 HTTP，不引 SDK |
 | 子进程 | 一律经 `Runner.run_subprocess` 走白名单，不直接 `subprocess.run` |
-| 测试 | `unittest`，合成夹具放 `tests/fixtures/`，不依赖真实 APK；当前 53 用例（含 8 个 OBS-5、7 个评价 Agent 回归），`python -m unittest discover -s tests` |
+| 测试 | `unittest`，合成夹具放 `tests/fixtures/`，不依赖真实 APK；当前 93 用例（含 8 个 OBS-5、评价 Agent 与 R-1 回归），`python -m unittest discover -s tests` |
 | 质量门 | `scripts/truth_check.py`（84 判点）、`scripts/e2e.py`（A-01/A-09）；改规则后必须复跑 |
 
 ---
@@ -121,17 +121,17 @@
 - **变更留痕**：`docs/changes.md` 记录规则/结构变更；实验数据进 `docs/experiments.md`，允许并保留负结果。
 - **文档元数据 / 文件头注释块**：每份文档标题正下方放一个统一的环境块，像源码文件头注释一样，读者扫一眼就知道这份文档的性质与边界。格式固定为四行 `>` 引用：
 
-  ```markdown
-  # 标题
+ ```markdown
+ # 标题
 
-  > 性质：<brief | design | eval | evidence | release | review> ｜ 版本：<文档版本> ｜ 状态：<生效 | 复核中 | 归档>
-  > 职责：一句话说清这份文档回答什么、不回答什么。
-  > 关联：上下游文档与代码的路径（只列直接相关，不堆链接）。
-  > 签署：状态统一见 `docs/signoff.md`，本文不设独立签署栏。
-  ```
+ > 性质：<brief | design | eval | evidence | release | review> ｜ 版本：<文档版本> ｜ 状态：<生效 | 复核中 | 归档>
+ > 职责：一句话说清这份文档回答什么、不回答什么。
+ > 关联：上下游文档与代码的路径（只列直接相关，不堆链接）。
+ > 签署：状态统一见 `docs/signoff.md`，本文不设独立签署栏。
+ ```
 
-  四个字段的含义：性质对应 §4 的六类交付物；版本是文档自身版本，与 `RULE_PACK_VERSION` 分开写；状态只有「生效 / 复核中 / 归档」；关联只列直接上下游。第四行让所有文档把签署指向同一台账，避免同一件事在好几份文件里各留一处待签。存量文档按此格式改，不倒填日期。
-- **不建第二台账**：签署状态只在 `docs/signoff.md`（报告）与 `review/evaluation/SIGNOFF.md`（评价输出）两处维护。阶段性"待办清单/待本人签署清单"是一次性便签：其中的事项写入对应台账后即删除，不留在仓库里当快照——快照不回填就会过期，反而误导签署人。确实需要留的，是解释"为什么这样判"的决策说明，不是"谁还没签"的清单。
+ 四个字段的含义：性质对应 §4 的六类交付物；版本是文档自身版本，与 `RULE_PACK_VERSION` 分开写；状态只有「生效 / 复核中 / 归档」；关联只列直接上下游。第四行让所有文档把签署指向同一台账，避免同一件事在好几份文件里各留一处待签。存量文档按此格式改，不倒填日期。
+- **不建第二台账**：签署状态只在 `docs/signoff.md`（报告）与 `review/evaluation/SIGNOFF.md`（评价输出）两处维护。阶段性"待办清单/待签署清单"是一次性便签：其中的事项写入对应台账后即删除，不留在仓库里当快照——快照不回填就会过期，反而误导签署人。确实需要留的，是解释"为什么这样判"的决策说明，不是"谁还没签"的清单。
 - **实验记录**：对照实验沿用 `docs/experiment-protocol.md` 的变量控制与计时规则，实验卡进 `docs/experiments.md`，真实运行数据落 `review/`；历史结果 JSON 不改写，规则变更须升协议版本并重跑。
 
 ---
@@ -172,7 +172,7 @@
 | 预算与熔断 | `meta.json.budget`（LLM ≤30 次/run、注册补测 ≤5 次）、`exhausted_notes` | 耗尽列未完成项，不填充无证据文字 |
 | 状态机 | `meta.json.state.history`（PENDING→…→DONE / FAILED） | 失败原因留痕 |
 | 评价 | `review/evaluation/EVAL-*.json` 四状态 + 引用校验 + `.trace.jsonl` | PASS 只代表引用/版本/结构通过，**不代表结论内容正确**；模型观察只进 `observations` |
-| 质量门 | `review/truth_result_0_1_4.json`（84 判点，硬错 0 / 噪声 0） | 自评一致性，不是能力证明；`review/truth_result.json` 为 0.1.3 历史件，仅作前后对照 |
+| 质量门 | `review/truth_result.json`（0.1.7，84 判点，硬错 0 / 噪声 0） | 自评一致性，不是能力证明；产物带 `rule_pack`/`commit` 锚点 |
 
 **边界**：哈希证明完整性，不证明真实性；静态证据层级上限为 STATIC，报告不得暗示已完成动态验证；模型输出进入 `observations` 观察区，非结论、不计入三档。
 
@@ -184,7 +184,7 @@
 2. 抽查任一 RUN 的 `meta.json` ↔ `report.json` ↔ `channel_a/hits.jsonl`（均在 `evidence/RUN-<id>/` 下，见 §5）三处是否对得上；
 3. 抽查 `docs/decision-log.md` 任一行 → ADR → 支撑证据文件是否真实存在；
 4. 跑 `python scripts/truth_check.py --no-run`、`python scripts/eval_calibrate.py` 与
-   `python -m unittest discover -s tests` 复算（本仓库实测：84/84、K-1~K-6 6/6、53 用例全过）。
+  `python -m unittest discover -s tests` 复算（本仓库实测：84/84、K-1~K-6 6/6、93 用例全过）。
 
 ---
 

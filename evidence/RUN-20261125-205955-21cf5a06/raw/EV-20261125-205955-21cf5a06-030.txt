@@ -1,0 +1,1 @@
+{"verdict": "确认可疑", "reason": "命中位于 RecordingService（非交互的 Service 组件），且不仅有字段声明，还存在 MediaRecorder 构造函数及 setAudioSource/setOutputFormat/setAudioEncoder 等实际方法调用，不属于误报口径。", "observation": "命中片段跨 5 处，均围绕同一 MediaRecorder 实例的创建与配置流程，属于对敏感 API 的真实调用链。"}

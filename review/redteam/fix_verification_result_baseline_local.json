@@ -1,0 +1,725 @@
+{
+ "phase": "baseline",
+ "generated_at": "2026-11-25T12:13:27.417765+00:00",
+ "tool_root": "C:\\Users\\shixz\\Desktop\\study\\zhuan",
+ "note": "All runs use --no-evidence. Nothing is written into the counterpart's evidence/.",
+ "cases": [
+  {
+   "finding": "F-01",
+   "sample": "a13.apk",
+   "expected_sha256": "6d431e92d124466c299aa1fb17b9b498de47690b0c3fa6a17398d6850d359091",
+   "actual_sha256": "6d431e92d124466c299aa1fb17b9b498de47690b0c3fa6a17398d6850d359091",
+   "sha256_ok": true,
+   "expectation": "R-NET-01 notes must contain a checkServerTrusted entry",
+   "run": {
+    "run_id": "RUN-20261125-201327-6d431e92",
+    "toolchain": "java=openjdk version \"1.8.0_492\", apktool=apktool_3.0.3.jar",
+    "rule_pack": "0.1.6",
+    "channel_b_model": "mimo-v2.6-flash",
+    "conclusions": [
+     {
+      "criterion_id": "R-MAN-01",
+      "status": "无法判定",
+      "location": "",
+      "notes": [
+       "机械规则已执行、未命中。仅代表本规则集范围内未发现问题，不构成「安全」结论。"
+      ],
+      "missing_evidence": []
+     },
+     {
+      "criterion_id": "R-MAN-02",
+      "status": "已确认",
+      "location": "AndroidManifest.xml:5 [uses-permission] | AndroidManifest.xml:6 [uses-permission]",
+      "notes": [
+       "声明敏感权限：android.permission.RECORD_AUDIO（录音）",
+       "声明敏感权限：android.permission.ACCESS_FINE_LOCATION（精确定位）"
+      ],
+      "missing_evidence": []
+     },
+     {
+      "criterion_id": "R-MAN-03",
+      "status": "无法判定",
+      "location": "",
+      "notes": [
+       "机械规则已执行、未命中。仅代表本规则集范围内未发现问题，不构成「安全」结论。"
+      ],
+      "missing_evidence": []
+     },
+     {
+      "criterion_id": "R-MAN-04",
+      "status": "无法判定",
+      "location": "",
+      "notes": [
+       "机械规则已执行、未命中。仅代表本规则集范围内未发现问题，不构成「安全」结论。"
+      ],
+      "missing_evidence": []
+     },
+     {
+      "criterion_id": "R-MAN-05",
+      "status": "无法判定",
+      "location": "",
+      "notes": [
+       "机械规则已执行、未命中。仅代表本规则集范围内未发现问题，不构成「安全」结论。"
+      ],
+      "missing_evidence": []
+     },
+     {
+      "criterion_id": "R-PERM-01",
+      "status": "已确认",
+      "location": "smali/com/synth/bad03/MainActivity.smali:188（原始行 87） | smali/com/synth/bad03/MainActivity.smali:161（原始行 83） | smali/com/synth/bad03/RecordingService.smali:46（原始行 44）",
+      "notes": [
+       "定时/后台调度点：Landroid/app/AlarmManager;->set",
+       "调度目标组件：Lcom/synth/bad03/RecordingService;（该组件内存在敏感 API：录音）",
+       "敏感 API：录音（位于被调度的组件 Lcom/synth/bad03/RecordingService; 内）"
+      ],
+      "missing_evidence": []
+     },
+     {
+      "criterion_id": "R-PERM-02",
+      "status": "已确认",
+      "location": "smali/com/synth/bad03/RecordingService.smali:46（原始行 44） | smali/com/synth/bad03/RecordingService.smali:48（原始行 44） | smali/com/synth/bad03/RecordingService.smali:55（原始行 45） | smali/com/synth/bad03/RecordingService.smali:60（原始行 46） | smali/com/synth/bad03/RecordingService.smali:65（原始行 47） | smali/com/synth/bad03/RecordingService.smali:74（原始行 48） | smali/com/synth/bad03/RecordingService.smali:79（原始行 49） | smali/com/synth/bad03/RecordingService.smali:84（原始行 50） | smali/com/synth/bad03/RecordingService.smali:137（原始行 78） | smali/com/synth/bad03/RecordingService.smali:181（原始行 93） | smali/com/synth/bad03/RecordingService.smali:201（原始行 97）",
+      "notes": [
+       "非交互组件 com.synth.bad03.RecordingService（service）中调用敏感 API：录音",
+       "非交互组件 com.synth.bad03.RecordingService（service）中调用敏感 API：录音",
+       "非交互组件 com.synth.bad03.RecordingService（service）中调用敏感 API：录音",
+       "非交互组件 com.synth.bad03.RecordingService（service）中调用敏感 API：录音",
+       "非交互组件 com.synth.bad03.RecordingService（service）中调用敏感 API：录音",
+       "非交互组件 com.synth.bad03.RecordingService（service）中调用敏感 API：录音",
+       "非交互组件 com.synth.bad03.RecordingService（service）中调用敏感 API：录音",
+       "非交互组件 com.synth.bad03.RecordingService（service）中调用敏感 API：录音",
+       "非交互组件 com.synth.bad03.RecordingService（service）中调用敏感 API：定位",
+       "非交互组件 com.synth.bad03.RecordingService（service）中调用敏感 API：录音",
+       "非交互组件 com.synth.bad03.RecordingService（service）中调用敏感 API：录音"
+      ],
+      "missing_evidence": []
+     },
+     {
+      "criterion_id": "R-PERM-03",
+      "status": "无法判定",
+      "location": "",
+      "notes": [
+       "机械规则已执行、未命中。仅代表本规则集范围内未发现问题，不构成「安全」结论。"
+      ],
+      "missing_evidence": []
+     },
+     {
+      "criterion_id": "R-STR-01",
+      "status": "无法判定",
+      "location": "",
+      "notes": [
+       "机械规则已执行、未命中。仅代表本规则集范围内未发现问题，不构成「安全」结论。"
+      ],
+      "missing_evidence": []
+     },
+     {
+      "criterion_id": "R-STR-02",
+      "status": "无法判定",
+      "location": "",
+      "notes": [
+       "机械规则已执行、未命中。仅代表本规则集范围内未发现问题，不构成「安全」结论。"
+      ],
+      "missing_evidence": []
+     },
+     {
+      "criterion_id": "R-CODE-01",
+      "status": "已确认",
+      "location": "smali/com/synth/bad03/MainActivity.smali:82（原始行 69） | smali/com/synth/bad03/MainActivity.smali:101（原始行 73） | smali/com/synth/bad03/MainActivity.smali:106（原始行 74）",
+      "notes": [
+       "动态代码加载调用：Ldalvik/system/DexClassLoader;",
+       "动态代码加载调用：Ldalvik/system/DexClassLoader;",
+       "动态代码加载调用：Ldalvik/system/DexClassLoader;"
+      ],
+      "missing_evidence": []
+     },
+     {
+      "criterion_id": "R-CODE-02",
+      "status": "已确认",
+      "location": "smali/com/synth/bad03/MainActivity.smali:246（原始行 46） | smali/com/synth/bad03/MainActivity.smali:232（原始行 44） | smali/com/synth/bad03/MainActivity.smali:235（原始行 45）",
+      "notes": [
+       "WebView 危险组合要素：addJavascriptInterface",
+       "WebView 危险组合要素：setJavaScriptEnabled",
+       "WebView 危险组合要素：setAllowFileAccess"
+      ],
+      "missing_evidence": []
+     },
+     {
+      "criterion_id": "R-NET-01",
+      "status": "已确认",
+      "location": "smali/com/synth/bad03/InsecureTls$1.smali:35（原始行 32） | smali/com/synth/bad03/InsecureTls$1.smali:53（原始行 32） | smali/com/synth/bad03/InsecureTls$2.smali:35（原始行 53）",
+      "notes": [
+       "X509TrustManager.checkClientTrusted 空实现（证书校验被跳过）；检测到安装点 smali/com/synth/bad03/InsecureTls.smali:53（原始行 51）",
+       "X509TrustManager.getAcceptedIssuers 返回空数组",
+       "HostnameVerifier.verify 返回恒真（域名校验被跳过）"
+      ],
+      "missing_evidence": []
+     },
+     {
+      "criterion_id": "R-NET-02",
+      "status": "已确认",
+      "location": "smali/com/synth/bad03/InsecureWebViewClient.smali:45（原始行 20）",
+      "notes": [
+       "onReceivedSslError 忽略 SSL 错误（proceed）"
+      ],
+      "missing_evidence": []
+     }
+    ]
+   },
+   "observed": {
+    "rule": "R-NET-01",
+    "status": "已确认",
+    "notes": [
+     "X509TrustManager.checkClientTrusted 空实现（证书校验被跳过）；检测到安装点 smali/com/synth/bad03/InsecureTls.smali:53（原始行 51）",
+     "X509TrustManager.getAcceptedIssuers 返回空数组",
+     "HostnameVerifier.verify 返回恒真（域名校验被跳过）"
+    ],
+    "missing_evidence": []
+   },
+   "verdict": "REPRODUCED"
+  },
+  {
+   "finding": "F-02",
+   "sample": "a02.apk",
+   "expected_sha256": "cc1a7084243073914e3f236ca601b1ca94087bf6085291e8efbe29981390fb18",
+   "actual_sha256": "cc1a7084243073914e3f236ca601b1ca94087bf6085291e8efbe29981390fb18",
+   "sha256_ok": true,
+   "expectation": "R-MAN-02 notes must contain RECORD_AUDIO (uses-permission-sdk-23)",
+   "run": {
+    "run_id": "RUN-20261125-201501-cc1a7084",
+    "toolchain": "java=openjdk version \"1.8.0_492\", apktool=apktool_3.0.3.jar",
+    "rule_pack": "0.1.6",
+    "channel_b_model": "mimo-v2.6-flash",
+    "conclusions": [
+     {
+      "criterion_id": "R-MAN-01",
+      "status": "无法判定",
+      "location": "",
+      "notes": [
+       "机械规则已执行、未命中。仅代表本规则集范围内未发现问题，不构成「安全」结论。"
+      ],
+      "missing_evidence": []
+     },
+     {
+      "criterion_id": "R-MAN-02",
+      "status": "已确认",
+      "location": "AndroidManifest.xml:6 [uses-permission]",
+      "notes": [
+       "声明敏感权限：android.permission.ACCESS_FINE_LOCATION（精确定位）"
+      ],
+      "missing_evidence": []
+     },
+     {
+      "criterion_id": "R-MAN-03",
+      "status": "无法判定",
+      "location": "",
+      "notes": [
+       "机械规则已执行、未命中。仅代表本规则集范围内未发现问题，不构成「安全」结论。"
+      ],
+      "missing_evidence": []
+     },
+     {
+      "criterion_id": "R-MAN-04",
+      "status": "无法判定",
+      "location": "",
+      "notes": [
+       "机械规则已执行、未命中。仅代表本规则集范围内未发现问题，不构成「安全」结论。"
+      ],
+      "missing_evidence": []
+     },
+     {
+      "criterion_id": "R-MAN-05",
+      "status": "无法判定",
+      "location": "",
+      "notes": [
+       "机械规则已执行、未命中。仅代表本规则集范围内未发现问题，不构成「安全」结论。"
+      ],
+      "missing_evidence": []
+     },
+     {
+      "criterion_id": "R-PERM-01",
+      "status": "已确认",
+      "location": "smali/com/synth/bad03/MainActivity.smali:188（原始行 87） | smali/com/synth/bad03/MainActivity.smali:161（原始行 83） | smali/com/synth/bad03/RecordingService.smali:46（原始行 44）",
+      "notes": [
+       "定时/后台调度点：Landroid/app/AlarmManager;->set",
+       "调度目标组件：Lcom/synth/bad03/RecordingService;（该组件内存在敏感 API：录音）",
+       "敏感 API：录音（位于被调度的组件 Lcom/synth/bad03/RecordingService; 内）"
+      ],
+      "missing_evidence": []
+     },
+     {
+      "criterion_id": "R-PERM-02",
+      "status": "已确认",
+      "location": "smali/com/synth/bad03/RecordingService.smali:46（原始行 44） | smali/com/synth/bad03/RecordingService.smali:48（原始行 44） | smali/com/synth/bad03/RecordingService.smali:55（原始行 45） | smali/com/synth/bad03/RecordingService.smali:60（原始行 46） | smali/com/synth/bad03/RecordingService.smali:65（原始行 47） | smali/com/synth/bad03/RecordingService.smali:74（原始行 48） | smali/com/synth/bad03/RecordingService.smali:79（原始行 49） | smali/com/synth/bad03/RecordingService.smali:84（原始行 50） | smali/com/synth/bad03/RecordingService.smali:137（原始行 78） | smali/com/synth/bad03/RecordingService.smali:181（原始行 93） | smali/com/synth/bad03/RecordingService.smali:201（原始行 97）",
+      "notes": [
+       "非交互组件 com.synth.bad03.RecordingService（service）中调用敏感 API：录音",
+       "非交互组件 com.synth.bad03.RecordingService（service）中调用敏感 API：录音",
+       "非交互组件 com.synth.bad03.RecordingService（service）中调用敏感 API：录音",
+       "非交互组件 com.synth.bad03.RecordingService（service）中调用敏感 API：录音",
+       "非交互组件 com.synth.bad03.RecordingService（service）中调用敏感 API：录音",
+       "非交互组件 com.synth.bad03.RecordingService（service）中调用敏感 API：录音",
+       "非交互组件 com.synth.bad03.RecordingService（service）中调用敏感 API：录音",
+       "非交互组件 com.synth.bad03.RecordingService（service）中调用敏感 API：录音",
+       "非交互组件 com.synth.bad03.RecordingService（service）中调用敏感 API：定位",
+       "非交互组件 com.synth.bad03.RecordingService（service）中调用敏感 API：录音",
+       "非交互组件 com.synth.bad03.RecordingService（service）中调用敏感 API：录音"
+      ],
+      "missing_evidence": []
+     },
+     {
+      "criterion_id": "R-PERM-03",
+      "status": "无法判定",
+      "location": "",
+      "notes": [
+       "机械规则已执行、未命中。仅代表本规则集范围内未发现问题，不构成「安全」结论。"
+      ],
+      "missing_evidence": []
+     },
+     {
+      "criterion_id": "R-STR-01",
+      "status": "无法判定",
+      "location": "",
+      "notes": [
+       "机械规则已执行、未命中。仅代表本规则集范围内未发现问题，不构成「安全」结论。"
+      ],
+      "missing_evidence": []
+     },
+     {
+      "criterion_id": "R-STR-02",
+      "status": "无法判定",
+      "location": "",
+      "notes": [
+       "机械规则已执行、未命中。仅代表本规则集范围内未发现问题，不构成「安全」结论。"
+      ],
+      "missing_evidence": []
+     },
+     {
+      "criterion_id": "R-CODE-01",
+      "status": "已确认",
+      "location": "smali/com/synth/bad03/MainActivity.smali:82（原始行 69） | smali/com/synth/bad03/MainActivity.smali:101（原始行 73） | smali/com/synth/bad03/MainActivity.smali:106（原始行 74）",
+      "notes": [
+       "动态代码加载调用：Ldalvik/system/DexClassLoader;",
+       "动态代码加载调用：Ldalvik/system/DexClassLoader;",
+       "动态代码加载调用：Ldalvik/system/DexClassLoader;"
+      ],
+      "missing_evidence": []
+     },
+     {
+      "criterion_id": "R-CODE-02",
+      "status": "已确认",
+      "location": "smali/com/synth/bad03/MainActivity.smali:246（原始行 46） | smali/com/synth/bad03/MainActivity.smali:232（原始行 44） | smali/com/synth/bad03/MainActivity.smali:235（原始行 45）",
+      "notes": [
+       "WebView 危险组合要素：addJavascriptInterface",
+       "WebView 危险组合要素：setJavaScriptEnabled",
+       "WebView 危险组合要素：setAllowFileAccess"
+      ],
+      "missing_evidence": []
+     },
+     {
+      "criterion_id": "R-NET-01",
+      "status": "已确认",
+      "location": "smali/com/synth/bad03/InsecureTls$1.smali:35（原始行 32） | smali/com/synth/bad03/InsecureTls$1.smali:41（原始行 32） | smali/com/synth/bad03/InsecureTls$1.smali:47（原始行 32） | smali/com/synth/bad03/InsecureTls$2.smali:35（原始行 53）",
+      "notes": [
+       "X509TrustManager.checkClientTrusted 空实现（证书校验被跳过）；检测到安装点 smali/com/synth/bad03/InsecureTls.smali:53（原始行 51）",
+       "X509TrustManager.checkServerTrusted 空实现（证书校验被跳过）",
+       "X509TrustManager.getAcceptedIssuers 返回空数组",
+       "HostnameVerifier.verify 返回恒真（域名校验被跳过）"
+      ],
+      "missing_evidence": []
+     },
+     {
+      "criterion_id": "R-NET-02",
+      "status": "已确认",
+      "location": "smali/com/synth/bad03/InsecureWebViewClient.smali:45（原始行 20）",
+      "notes": [
+       "onReceivedSslError 忽略 SSL 错误（proceed）"
+      ],
+      "missing_evidence": []
+     },
+     {
+      "criterion_id": "R-B-001",
+      "status": "待复核",
+      "location": "自有代码 URL 列表（前 15 条）",
+      "notes": [
+       "B 侧疑点（LLM 提疑），未经确定性钉证据，不得升级措辞"
+      ],
+      "missing_evidence": [
+       "钉证据未通过：断言未被机械事实证实（候选规则 R-CODE-01 均无机械命中；claim 提及实体（https://example.com/app）未被机械命中覆盖）"
+      ]
+     }
+    ]
+   },
+   "observed": {
+    "rule": "R-MAN-02",
+    "status": "已确认",
+    "notes": [
+     "声明敏感权限：android.permission.ACCESS_FINE_LOCATION（精确定位）"
+    ],
+    "missing_evidence": []
+   },
+   "verdict": "REPRODUCED"
+  },
+  {
+   "finding": "F-03",
+   "sample": "a04.apk",
+   "expected_sha256": "c0fb952800ec19478072a42d233d46addb1b29cb1ad1b49a85649332e28523b0",
+   "actual_sha256": "c0fb952800ec19478072a42d233d46addb1b29cb1ad1b49a85649332e28523b0",
+   "sha256_ok": true,
+   "expectation": "enabled=false receiver must not stay plain '已确认' (downgrade or note the disabled flag)",
+   "run": {
+    "run_id": "RUN-20261125-201623-c0fb9528",
+    "toolchain": "java=openjdk version \"1.8.0_492\", apktool=apktool_3.0.3.jar",
+    "rule_pack": "0.1.6",
+    "channel_b_model": "mimo-v2.6-flash",
+    "conclusions": [
+     {
+      "criterion_id": "R-MAN-01",
+      "status": "无法判定",
+      "location": "",
+      "notes": [
+       "机械规则已执行、未命中。仅代表本规则集范围内未发现问题，不构成「安全」结论。"
+      ],
+      "missing_evidence": []
+     },
+     {
+      "criterion_id": "R-MAN-02",
+      "status": "已确认",
+      "location": "AndroidManifest.xml:5 [uses-permission] | AndroidManifest.xml:6 [uses-permission]",
+      "notes": [
+       "声明敏感权限：android.permission.RECORD_AUDIO（录音）",
+       "声明敏感权限：android.permission.ACCESS_FINE_LOCATION（精确定位）"
+      ],
+      "missing_evidence": []
+     },
+     {
+      "criterion_id": "R-MAN-03",
+      "status": "无法判定",
+      "location": "",
+      "notes": [
+       "机械规则已执行、未命中。仅代表本规则集范围内未发现问题，不构成「安全」结论。"
+      ],
+      "missing_evidence": []
+     },
+     {
+      "criterion_id": "R-MAN-04",
+      "status": "无法判定",
+      "location": "",
+      "notes": [
+       "机械规则已执行、未命中。仅代表本规则集范围内未发现问题，不构成「安全」结论。"
+      ],
+      "missing_evidence": []
+     },
+     {
+      "criterion_id": "R-MAN-05",
+      "status": "已确认",
+      "location": "AndroidManifest.xml:10-14 [receiver com.synth.bad03.BootReceiver]",
+      "notes": [
+       "静态注册监听敏感事件：android.intent.action.BOOT_COMPLETED（开机完成）"
+      ],
+      "missing_evidence": []
+     },
+     {
+      "criterion_id": "R-PERM-01",
+      "status": "已确认",
+      "location": "smali/com/synth/bad03/MainActivity.smali:188（原始行 87） | smali/com/synth/bad03/MainActivity.smali:161（原始行 83） | smali/com/synth/bad03/RecordingService.smali:46（原始行 44）",
+      "notes": [
+       "定时/后台调度点：Landroid/app/AlarmManager;->set",
+       "调度目标组件：Lcom/synth/bad03/RecordingService;（该组件内存在敏感 API：录音）",
+       "敏感 API：录音（位于被调度的组件 Lcom/synth/bad03/RecordingService; 内）"
+      ],
+      "missing_evidence": []
+     },
+     {
+      "criterion_id": "R-PERM-02",
+      "status": "已确认",
+      "location": "smali/com/synth/bad03/RecordingService.smali:46（原始行 44） | smali/com/synth/bad03/RecordingService.smali:48（原始行 44） | smali/com/synth/bad03/RecordingService.smali:55（原始行 45） | smali/com/synth/bad03/RecordingService.smali:60（原始行 46） | smali/com/synth/bad03/RecordingService.smali:65（原始行 47） | smali/com/synth/bad03/RecordingService.smali:74（原始行 48） | smali/com/synth/bad03/RecordingService.smali:79（原始行 49） | smali/com/synth/bad03/RecordingService.smali:84（原始行 50） | smali/com/synth/bad03/RecordingService.smali:137（原始行 78） | smali/com/synth/bad03/RecordingService.smali:181（原始行 93） | smali/com/synth/bad03/RecordingService.smali:201（原始行 97）",
+      "notes": [
+       "非交互组件 com.synth.bad03.RecordingService（service）中调用敏感 API：录音",
+       "非交互组件 com.synth.bad03.RecordingService（service）中调用敏感 API：录音",
+       "非交互组件 com.synth.bad03.RecordingService（service）中调用敏感 API：录音",
+       "非交互组件 com.synth.bad03.RecordingService（service）中调用敏感 API：录音",
+       "非交互组件 com.synth.bad03.RecordingService（service）中调用敏感 API：录音",
+       "非交互组件 com.synth.bad03.RecordingService（service）中调用敏感 API：录音",
+       "非交互组件 com.synth.bad03.RecordingService（service）中调用敏感 API：录音",
+       "非交互组件 com.synth.bad03.RecordingService（service）中调用敏感 API：录音",
+       "非交互组件 com.synth.bad03.RecordingService（service）中调用敏感 API：定位",
+       "非交互组件 com.synth.bad03.RecordingService（service）中调用敏感 API：录音",
+       "非交互组件 com.synth.bad03.RecordingService（service）中调用敏感 API：录音"
+      ],
+      "missing_evidence": []
+     },
+     {
+      "criterion_id": "R-PERM-03",
+      "status": "无法判定",
+      "location": "",
+      "notes": [
+       "机械规则已执行、未命中。仅代表本规则集范围内未发现问题，不构成「安全」结论。"
+      ],
+      "missing_evidence": []
+     },
+     {
+      "criterion_id": "R-STR-01",
+      "status": "无法判定",
+      "location": "",
+      "notes": [
+       "机械规则已执行、未命中。仅代表本规则集范围内未发现问题，不构成「安全」结论。"
+      ],
+      "missing_evidence": []
+     },
+     {
+      "criterion_id": "R-STR-02",
+      "status": "无法判定",
+      "location": "",
+      "notes": [
+       "机械规则已执行、未命中。仅代表本规则集范围内未发现问题，不构成「安全」结论。"
+      ],
+      "missing_evidence": []
+     },
+     {
+      "criterion_id": "R-CODE-01",
+      "status": "已确认",
+      "location": "smali/com/synth/bad03/MainActivity.smali:82（原始行 69） | smali/com/synth/bad03/MainActivity.smali:101（原始行 73） | smali/com/synth/bad03/MainActivity.smali:106（原始行 74）",
+      "notes": [
+       "动态代码加载调用：Ldalvik/system/DexClassLoader;",
+       "动态代码加载调用：Ldalvik/system/DexClassLoader;",
+       "动态代码加载调用：Ldalvik/system/DexClassLoader;"
+      ],
+      "missing_evidence": []
+     },
+     {
+      "criterion_id": "R-CODE-02",
+      "status": "已确认",
+      "location": "smali/com/synth/bad03/MainActivity.smali:246（原始行 46） | smali/com/synth/bad03/MainActivity.smali:232（原始行 44） | smali/com/synth/bad03/MainActivity.smali:235（原始行 45）",
+      "notes": [
+       "WebView 危险组合要素：addJavascriptInterface",
+       "WebView 危险组合要素：setJavaScriptEnabled",
+       "WebView 危险组合要素：setAllowFileAccess"
+      ],
+      "missing_evidence": []
+     },
+     {
+      "criterion_id": "R-NET-01",
+      "status": "已确认",
+      "location": "smali/com/synth/bad03/InsecureTls$1.smali:35（原始行 32） | smali/com/synth/bad03/InsecureTls$1.smali:41（原始行 32） | smali/com/synth/bad03/InsecureTls$1.smali:47（原始行 32） | smali/com/synth/bad03/InsecureTls$2.smali:35（原始行 53）",
+      "notes": [
+       "X509TrustManager.checkClientTrusted 空实现（证书校验被跳过）；检测到安装点 smali/com/synth/bad03/InsecureTls.smali:53（原始行 51）",
+       "X509TrustManager.checkServerTrusted 空实现（证书校验被跳过）",
+       "X509TrustManager.getAcceptedIssuers 返回空数组",
+       "HostnameVerifier.verify 返回恒真（域名校验被跳过）"
+      ],
+      "missing_evidence": []
+     },
+     {
+      "criterion_id": "R-NET-02",
+      "status": "已确认",
+      "location": "smali/com/synth/bad03/InsecureWebViewClient.smali:45（原始行 20）",
+      "notes": [
+       "onReceivedSslError 忽略 SSL 错误（proceed）"
+      ],
+      "missing_evidence": []
+     },
+     {
+      "criterion_id": "R-B-001",
+      "status": "待复核",
+      "location": "URL 列表",
+      "notes": [
+       "B 侧疑点（LLM 提疑），未经确定性钉证据，不得升级措辞"
+      ],
+      "missing_evidence": [
+       "钉证据未通过：未识别到可核查断言（claim 无法映射到任何规则）"
+      ]
+     }
+    ]
+   },
+   "observed": {
+    "rule": "R-MAN-05",
+    "status": "已确认",
+    "notes": [
+     "静态注册监听敏感事件：android.intent.action.BOOT_COMPLETED（开机完成）"
+    ],
+    "missing_evidence": []
+   },
+   "verdict": "REPRODUCED"
+  },
+  {
+   "finding": "F-05",
+   "sample": "v2_crossmethod.apk",
+   "expected_sha256": "3464015c37b913c544ffc4c210c8f39d22be5d97666e03b1d851e8add7290e93",
+   "actual_sha256": "3464015c37b913c544ffc4c210c8f39d22be5d97666e03b1d851e8add7290e93",
+   "sha256_ok": true,
+   "expectation": "Runnable cross-method chain: either upgraded to 已确认, or missing_evidence/notes declare the unresolved chain",
+   "run": {
+    "run_id": "RUN-20261125-201806-3464015c",
+    "toolchain": "java=openjdk version \"1.8.0_492\", apktool=apktool_3.0.3.jar",
+    "rule_pack": "0.1.6",
+    "channel_b_model": "mimo-v2.6-flash",
+    "conclusions": [
+     {
+      "criterion_id": "R-MAN-01",
+      "status": "无法判定",
+      "location": "",
+      "notes": [
+       "机械规则已执行、未命中。仅代表本规则集范围内未发现问题，不构成「安全」结论。"
+      ],
+      "missing_evidence": []
+     },
+     {
+      "criterion_id": "R-MAN-02",
+      "status": "已确认",
+      "location": "AndroidManifest.xml:5 [uses-permission] | AndroidManifest.xml:6 [uses-permission]",
+      "notes": [
+       "声明敏感权限：android.permission.RECORD_AUDIO（录音）",
+       "声明敏感权限：android.permission.ACCESS_FINE_LOCATION（精确定位）"
+      ],
+      "missing_evidence": []
+     },
+     {
+      "criterion_id": "R-MAN-03",
+      "status": "无法判定",
+      "location": "",
+      "notes": [
+       "机械规则已执行、未命中。仅代表本规则集范围内未发现问题，不构成「安全」结论。"
+      ],
+      "missing_evidence": []
+     },
+     {
+      "criterion_id": "R-MAN-04",
+      "status": "无法判定",
+      "location": "",
+      "notes": [
+       "机械规则已执行、未命中。仅代表本规则集范围内未发现问题，不构成「安全」结论。"
+      ],
+      "missing_evidence": []
+     },
+     {
+      "criterion_id": "R-MAN-05",
+      "status": "无法判定",
+      "location": "",
+      "notes": [
+       "机械规则已执行、未命中。仅代表本规则集范围内未发现问题，不构成「安全」结论。"
+      ],
+      "missing_evidence": []
+     },
+     {
+      "criterion_id": "R-PERM-01",
+      "status": "待复核",
+      "location": "smali/com/synth/bad03/MainActivity.smali:227（原始行 56） | smali/com/synth/bad03/RecordingService.smali:46（原始行 44）",
+      "notes": [
+       "调度原语：Landroid/os/Handler;->postDelayed",
+       "敏感 API：录音"
+      ],
+      "missing_evidence": []
+     },
+     {
+      "criterion_id": "R-PERM-02",
+      "status": "已确认",
+      "location": "smali/com/synth/bad03/RecordingService.smali:46（原始行 44） | smali/com/synth/bad03/RecordingService.smali:48（原始行 44） | smali/com/synth/bad03/RecordingService.smali:55（原始行 45） | smali/com/synth/bad03/RecordingService.smali:60（原始行 46） | smali/com/synth/bad03/RecordingService.smali:65（原始行 47） | smali/com/synth/bad03/RecordingService.smali:74（原始行 48） | smali/com/synth/bad03/RecordingService.smali:79（原始行 49） | smali/com/synth/bad03/RecordingService.smali:84（原始行 50） | smali/com/synth/bad03/RecordingService.smali:137（原始行 78） | smali/com/synth/bad03/RecordingService.smali:181（原始行 93） | smali/com/synth/bad03/RecordingService.smali:201（原始行 97）",
+      "notes": [
+       "非交互组件 com.synth.bad03.RecordingService（service）中调用敏感 API：录音",
+       "非交互组件 com.synth.bad03.RecordingService（service）中调用敏感 API：录音",
+       "非交互组件 com.synth.bad03.RecordingService（service）中调用敏感 API：录音",
+       "非交互组件 com.synth.bad03.RecordingService（service）中调用敏感 API：录音",
+       "非交互组件 com.synth.bad03.RecordingService（service）中调用敏感 API：录音",
+       "非交互组件 com.synth.bad03.RecordingService（service）中调用敏感 API：录音",
+       "非交互组件 com.synth.bad03.RecordingService（service）中调用敏感 API：录音",
+       "非交互组件 com.synth.bad03.RecordingService（service）中调用敏感 API：录音",
+       "非交互组件 com.synth.bad03.RecordingService（service）中调用敏感 API：定位",
+       "非交互组件 com.synth.bad03.RecordingService（service）中调用敏感 API：录音",
+       "非交互组件 com.synth.bad03.RecordingService（service）中调用敏感 API：录音"
+      ],
+      "missing_evidence": []
+     },
+     {
+      "criterion_id": "R-PERM-03",
+      "status": "无法判定",
+      "location": "",
+      "notes": [
+       "机械规则已执行、未命中。仅代表本规则集范围内未发现问题，不构成「安全」结论。"
+      ],
+      "missing_evidence": []
+     },
+     {
+      "criterion_id": "R-STR-01",
+      "status": "无法判定",
+      "location": "",
+      "notes": [
+       "机械规则已执行、未命中。仅代表本规则集范围内未发现问题，不构成「安全」结论。"
+      ],
+      "missing_evidence": []
+     },
+     {
+      "criterion_id": "R-STR-02",
+      "status": "无法判定",
+      "location": "",
+      "notes": [
+       "机械规则已执行、未命中。仅代表本规则集范围内未发现问题，不构成「安全」结论。"
+      ],
+      "missing_evidence": []
+     },
+     {
+      "criterion_id": "R-CODE-01",
+      "status": "已确认",
+      "location": "smali/com/synth/bad03/MainActivity.smali:82（原始行 69） | smali/com/synth/bad03/MainActivity.smali:101（原始行 73） | smali/com/synth/bad03/MainActivity.smali:106（原始行 74）",
+      "notes": [
+       "动态代码加载调用：Ldalvik/system/DexClassLoader;",
+       "动态代码加载调用：Ldalvik/system/DexClassLoader;",
+       "动态代码加载调用：Ldalvik/system/DexClassLoader;"
+      ],
+      "missing_evidence": []
+     },
+     {
+      "criterion_id": "R-CODE-02",
+      "status": "已确认",
+      "location": "smali/com/synth/bad03/MainActivity.smali:197（原始行 46） | smali/com/synth/bad03/MainActivity.smali:183（原始行 44） | smali/com/synth/bad03/MainActivity.smali:186（原始行 45）",
+      "notes": [
+       "WebView 危险组合要素：addJavascriptInterface",
+       "WebView 危险组合要素：setJavaScriptEnabled",
+       "WebView 危险组合要素：setAllowFileAccess"
+      ],
+      "missing_evidence": []
+     },
+     {
+      "criterion_id": "R-NET-01",
+      "status": "已确认",
+      "location": "smali/com/synth/bad03/InsecureTls$1.smali:35（原始行 32） | smali/com/synth/bad03/InsecureTls$1.smali:41（原始行 32） | smali/com/synth/bad03/InsecureTls$1.smali:47（原始行 32） | smali/com/synth/bad03/InsecureTls$2.smali:35（原始行 53）",
+      "notes": [
+       "X509TrustManager.checkClientTrusted 空实现（证书校验被跳过）；检测到安装点 smali/com/synth/bad03/InsecureTls.smali:53（原始行 51）",
+       "X509TrustManager.checkServerTrusted 空实现（证书校验被跳过）",
+       "X509TrustManager.getAcceptedIssuers 返回空数组",
+       "HostnameVerifier.verify 返回恒真（域名校验被跳过）"
+      ],
+      "missing_evidence": []
+     },
+     {
+      "criterion_id": "R-NET-02",
+      "status": "已确认",
+      "location": "smali/com/synth/bad03/InsecureWebViewClient.smali:45（原始行 20）",
+      "notes": [
+       "onReceivedSslError 忽略 SSL 错误（proceed）"
+      ],
+      "missing_evidence": []
+     },
+     {
+      "criterion_id": "R-B-001",
+      "status": "待复核",
+      "location": "自有代码 URL 列表: https://example.com/app",
+      "notes": [
+       "B 侧疑点（LLM 提疑），未经确定性钉证据，不得升级措辞"
+      ],
+      "missing_evidence": [
+       "钉证据未通过：未识别到可核查断言（claim 无法映射到任何规则）"
+      ]
+     }
+    ]
+   },
+   "observed": {
+    "rule": "R-PERM-01",
+    "status": "待复核",
+    "notes": [
+     "调度原语：Landroid/os/Handler;->postDelayed",
+     "敏感 API：录音"
+    ],
+    "missing_evidence": []
+   },
+   "verdict": "REPRODUCED"
+  }
+ ]
+}

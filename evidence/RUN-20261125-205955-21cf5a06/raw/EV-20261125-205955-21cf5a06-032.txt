@@ -1,0 +1,1 @@
+{"verdict": "确认可疑", "reason": "三要素齐备：setJavaScriptEnabled(true)（v1=0x1）、addJavascriptInterface 注入 nativeBridge 接口、setAllowFileAccess(true)（同一 v1=0x1），明显超出'仅启用 JS'的误报口径", "observation": "三处命中同属 MainActivity 同一方法内，v1 寄存器在 229 行被置为 1 后连续用于开启 JS 与文件访问；随后还创建了 JsBridge 对象与 InsecureWebViewClient，进一步印证接口注入路径"}

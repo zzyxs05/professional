@@ -18,7 +18,7 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 RUN = 'RUN-20261015-145536'
 SCHEMA_KEYS = ('criterion_id', 'status', 'evidence_level', 'evidence_ids',
                'finding', 'scope', 'missing_evidence', 'suggested_check',
-               'score_suggestion', 'human_signoff')
+               'score_suggestion')
 
 
 class TestAgentOffline(unittest.TestCase):
@@ -38,11 +38,23 @@ class TestAgentOffline(unittest.TestCase):
         self.assertTrue(res['coverage_note'])
         self.assertTrue(res['not_checked'])
         self.assertEqual(len(res['findings']), 10)
+        # 纯 harness：先产出证据包，分数待 harness 看过证据后主观给出；
+        # 机械层不猜分，不调用 API。
         self.assertIsNone(res['score_suggestion'])
-        self.assertEqual(res['human_signoff'], 'pending')
+        self.assertEqual(res['evaluation_scores'], [])
+        self.assertEqual(res['scoring_status'], 'pending_harness')
+        pack = res['evidence_pack']
+        self.assertEqual(len(pack['subcriteria']), 15)
+        self.assertTrue(all(s['evidence'] for s in pack['subcriteria']))
+        self.assertIn('S1-S4', res['scoring_framework'])
+        # 评价产物不含签署字段；项目治理台账的签署另行维护，不在此产物中
+        self.assertNotIn('human_signoff', res)
+        self.assertNotIn('signoff_chain', res)
         self.assertEqual(res['contract']['approved_by'], 'pending')
         self.assertTrue(os.path.isfile(res['out_path']))
         self.assertTrue(os.path.isfile(res['trace_path']))
+        self.assertTrue(res['verdict_digest'])
+        self.assertTrue(os.path.isfile(res['html_path']))
         for f in res['findings']:
             for key in SCHEMA_KEYS:
                 self.assertIn(key, f)
@@ -51,9 +63,12 @@ class TestAgentOffline(unittest.TestCase):
             self.assertEqual(json.load(fh)['eval_id'], res['eval_id'])
         with open(res['trace_path'], 'r', encoding='utf-8') as fh:
             trace = fh.read()
-        self.assertIn('tool_call', trace)
+        # 纯 harness：不调 API、不产生 tool_call；轨迹记录评分与判定
+        self.assertNotIn('tool_call', trace)
+        self.assertIn('evidence_pack_ready', trace)
         self.assertIn('verdict', trace)
-        self.assertIn('verify_claims', trace)
+        self.assertIn('field_check', trace)
+        self.assertIn('verdict', trace)
 
     def test_peer_without_contract_is_insufficient(self):
         res = run_agent(ROOT, ROOT, RUN, mode='peer', use_llm=False,

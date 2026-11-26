@@ -53,7 +53,7 @@ def _concl(cid, status, loc='AndroidManifest.xml:1', evs=None, channel='A'):
     return {
         'criterion_id': cid, 'status': status, 'channel': channel,
         'location': loc, 'evidence_ids': evs or [], 'scope': 'fixture',
-        'missing_evidence': [], 'human_signoff': 'pending', 'notes': [],
+        'missing_evidence': [], 'notes': [],
     }
 
 

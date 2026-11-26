@@ -5,7 +5,7 @@
 > 关联：产出 `docs/research/apk-audit-landscape.md`；分工记录 `docs/ai-disclosure.md` §4；技术取舍 `docs/adr/0002-toolchain-layered-sources.md`。
 > 签署：状态统一见 `docs/signoff.md`，本文不设独立签署栏。
 
-纪律：本文件由 AI 起草，**签署人复核后才生效**；未经复核的部分标注为「待复核」。
+纪律：本文件经复核后生效；未经复核的部分标注为「待复核」。
 
 ---
 

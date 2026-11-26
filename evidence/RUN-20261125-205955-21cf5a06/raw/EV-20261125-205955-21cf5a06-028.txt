@@ -1,0 +1,1 @@
+{"verdict": "确认可疑", "reason": "RECORD_AUDIO 与 ACCESS_FINE_LOCATION 均属 Android 危险（运行时）权限，不在仅 INTERNET 或自定义 com.* 权限的误报口径内。", "observation": "两条声明位于 AndroidManifest.xml 第 5、6 行，为标准 uses-permission 格式，未附带权限组或自定义前缀。"}

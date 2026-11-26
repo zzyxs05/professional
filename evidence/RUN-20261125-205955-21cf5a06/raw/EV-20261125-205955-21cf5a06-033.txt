@@ -1,0 +1,1 @@
+{"verdict": "确认可疑", "reason": "命中片段中的 checkClientTrusted/checkServerTrusted 均为空实现（仅 return-void），且 HostnameVerifier 的 verify 恒返回 true，既未委托系统默认校验也非非空实现，构成证书/主机名校验绕过结构", "observation": "InsecureTls$1 为自定义 X509TrustManager，InsecureTls$2 为自定义 HostnameVerifier；getAcceptedIssuers 返回空数组本身常见于宽松 TrustManager，与空校验方法一致"}

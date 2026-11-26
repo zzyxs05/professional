@@ -232,6 +232,14 @@ def build_conclusions(hits_by_rule, ev_map=None, b_result=None, pin_fn=None):
             elif verdict == '无法判断':
                 status = min_status(status, registry.STATUS_REVIEW)
 
+        # 0.1.7（F-05）：规则在 context 里声明的机械能力边界，
+        # 要进结论的 missing_evidence，让复核者看见"查过但未解析"。
+        gaps = []
+        for h in hits:
+            c = getattr(h, 'context', '') or ''
+            if c and c not in gaps:
+                gaps.append(c)
+
         concl_pos[rule_id] = len(conclusions)
         conclusions.append({
             'criterion_id': rule_id,
@@ -240,7 +248,7 @@ def build_conclusions(hits_by_rule, ev_map=None, b_result=None, pin_fn=None):
             'location': ' | '.join(h.location for h in hits),
             'evidence_ids': list(ev_map.get(rule_id, [])),
             'scope': meta['name'],
-            'missing_evidence': [],
+            'missing_evidence': gaps,
             'human_signoff': 'pending',
             'notes': [h.note for h in hits if h.note] + ([degrade_note] if degrade_note else []),
         })

@@ -1,0 +1,305 @@
+{
+  "run_id": "RUN-20261125-220237-232666b8",
+  "target": {
+    "apk_name": "bad02.apk",
+    "apk_sha256": "232666b8c0bf411dd454f5ec0922a5795a5c594e0eff56cbecce9f376a4f0d4c"
+  },
+  "versions": {
+    "rule_pack": "0.1.7",
+    "channel_b_model": "glm-5.3"
+  },
+  "conclusions": [
+    {
+      "criterion_id": "R-MAN-01",
+      "status": "无法判定",
+      "channel": "A",
+      "location": "",
+      "evidence_ids": [],
+      "scope": "导出组件无权限保护",
+      "missing_evidence": [],
+      "human_signoff": "pending",
+      "notes": [
+        "机械规则已执行、未命中。仅代表本规则集范围内未发现问题，不构成「安全」结论。"
+      ]
+    },
+    {
+      "criterion_id": "R-MAN-02",
+      "status": "无法判定",
+      "channel": "A",
+      "location": "",
+      "evidence_ids": [],
+      "scope": "危险权限声明",
+      "missing_evidence": [],
+      "human_signoff": "pending",
+      "notes": [
+        "机械规则已执行、未命中。仅代表本规则集范围内未发现问题，不构成「安全」结论。"
+      ]
+    },
+    {
+      "criterion_id": "R-MAN-03",
+      "status": "无法判定",
+      "channel": "A",
+      "location": "",
+      "evidence_ids": [],
+      "scope": "明文流量许可",
+      "missing_evidence": [],
+      "human_signoff": "pending",
+      "notes": [
+        "机械规则已执行、未命中。仅代表本规则集范围内未发现问题，不构成「安全」结论。"
+      ]
+    },
+    {
+      "criterion_id": "R-MAN-04",
+      "status": "无法判定",
+      "channel": "A",
+      "location": "",
+      "evidence_ids": [],
+      "scope": "调试与备份风险",
+      "missing_evidence": [],
+      "human_signoff": "pending",
+      "notes": [
+        "机械规则已执行、未命中。仅代表本规则集范围内未发现问题，不构成「安全」结论。"
+      ]
+    },
+    {
+      "criterion_id": "R-MAN-05",
+      "status": "无法判定",
+      "channel": "A",
+      "location": "",
+      "evidence_ids": [],
+      "scope": "敏感广播监听",
+      "missing_evidence": [],
+      "human_signoff": "pending",
+      "notes": [
+        "机械规则已执行、未命中。仅代表本规则集范围内未发现问题，不构成「安全」结论。"
+      ]
+    },
+    {
+      "criterion_id": "R-PERM-01",
+      "status": "无法判定",
+      "channel": "A",
+      "location": "",
+      "evidence_ids": [],
+      "scope": "定时/后台结构 × 敏感权限",
+      "missing_evidence": [],
+      "human_signoff": "pending",
+      "notes": [
+        "机械规则已执行、未命中。仅代表本规则集范围内未发现问题，不构成「安全」结论。"
+      ]
+    },
+    {
+      "criterion_id": "R-PERM-02",
+      "status": "无法判定",
+      "channel": "A",
+      "location": "",
+      "evidence_ids": [],
+      "scope": "非交互组件使用敏感 API",
+      "missing_evidence": [],
+      "human_signoff": "pending",
+      "notes": [
+        "机械规则已执行、未命中。仅代表本规则集范围内未发现问题，不构成「安全」结论。"
+      ]
+    },
+    {
+      "criterion_id": "R-PERM-03",
+      "status": "无法判定",
+      "channel": "A",
+      "location": "",
+      "evidence_ids": [],
+      "scope": "声明与使用不一致",
+      "missing_evidence": [],
+      "human_signoff": "pending",
+      "notes": [
+        "机械规则已执行、未命中。仅代表本规则集范围内未发现问题，不构成「安全」结论。"
+      ]
+    },
+    {
+      "criterion_id": "R-STR-01",
+      "status": "已确认",
+      "channel": "fusion",
+      "location": "classes.dex#str[3275] | classes.dex#str[7293] | classes.dex#str[8841] | classes.dex#str[8939] | res/values/strings.xml:4 [@string/backup_access_key] | res/values/strings.xml:6 [@string/payment_gateway_key]",
+      "evidence_ids": [
+        "EV-20261125-220237-232666b8-001",
+        "EV-20261125-220237-232666b8-002",
+        "EV-20261125-220237-232666b8-003",
+        "EV-20261125-220237-232666b8-004",
+        "EV-20261125-220237-232666b8-005",
+        "EV-20261125-220237-232666b8-006"
+      ],
+      "scope": "硬编码凭据",
+      "missing_evidence": [],
+      "human_signoff": "pending",
+      "notes": [
+        "凭据形式匹配：AWS Access Key（dex 字符串常量）",
+        "凭据形式匹配：AWS Access Key（dex 字符串常量）",
+        "凭据形式匹配：GitHub Token（dex 字符串常量）",
+        "凭据形式匹配：GitHub Token（dex 字符串常量）",
+        "凭据形式匹配：AWS Access Key（资源字符串）",
+        "凭据形式匹配：Stripe Key（资源字符串）"
+      ]
+    },
+    {
+      "criterion_id": "R-STR-02",
+      "status": "已确认",
+      "channel": "fusion",
+      "location": "classes.dex#str[8938] | classes.dex#str[8939] | res/values/strings.xml:5 [@string/internal_api_base]",
+      "evidence_ids": [
+        "EV-20261125-220237-232666b8-007",
+        "EV-20261125-220237-232666b8-008",
+        "EV-20261125-220237-232666b8-009"
+      ],
+      "scope": "内网/明文端点",
+      "missing_evidence": [],
+      "human_signoff": "pending",
+      "notes": [
+        "内网/明文端点（dex 字符串常量）",
+        "内网/明文端点（dex 字符串常量）",
+        "内网/明文端点（资源字符串）"
+      ]
+    },
+    {
+      "criterion_id": "R-CODE-01",
+      "status": "无法判定",
+      "channel": "A",
+      "location": "",
+      "evidence_ids": [],
+      "scope": "动态代码加载",
+      "missing_evidence": [],
+      "human_signoff": "pending",
+      "notes": [
+        "机械规则已执行、未命中。仅代表本规则集范围内未发现问题，不构成「安全」结论。"
+      ]
+    },
+    {
+      "criterion_id": "R-CODE-02",
+      "status": "无法判定",
+      "channel": "A",
+      "location": "",
+      "evidence_ids": [],
+      "scope": "WebView 危险组合",
+      "missing_evidence": [],
+      "human_signoff": "pending",
+      "notes": [
+        "机械规则已执行、未命中。仅代表本规则集范围内未发现问题，不构成「安全」结论。"
+      ]
+    },
+    {
+      "criterion_id": "R-NET-01",
+      "status": "无法判定",
+      "channel": "A",
+      "location": "",
+      "evidence_ids": [],
+      "scope": "证书校验绕过结构",
+      "missing_evidence": [],
+      "human_signoff": "pending",
+      "notes": [
+        "机械规则已执行、未命中。仅代表本规则集范围内未发现问题，不构成「安全」结论。"
+      ]
+    },
+    {
+      "criterion_id": "R-NET-02",
+      "status": "无法判定",
+      "channel": "A",
+      "location": "",
+      "evidence_ids": [],
+      "scope": "WebView SSL 错误忽略",
+      "missing_evidence": [],
+      "human_signoff": "pending",
+      "notes": [
+        "机械规则已执行、未命中。仅代表本规则集范围内未发现问题，不构成「安全」结论。"
+      ]
+    },
+    {
+      "criterion_id": "R-B-001",
+      "status": "待复核",
+      "channel": "B",
+      "location": "manifest 权限声明 + 自有代码 URL",
+      "evidence_ids": [
+        "EV-20261125-220237-232666b8-026"
+      ],
+      "scope": "声明了 INTERNET 权限且自有代码中存在携带凭据的网络请求 URL，确认应用具备并意图进行网络通信，建议核查该请求的触发时机与数据流向",
+      "missing_evidence": [
+        "钉证据未通过：断言未被机械事实证实（候选规则 R-MAN-02, R-STR-01 均无机械命中；claim 提及实体（INTERNET）未被机械命中覆盖）"
+      ],
+      "human_signoff": "pending",
+      "notes": [
+        "B 侧疑点（LLM 提疑），未经确定性钉证据，不得升级措辞"
+      ]
+    }
+  ],
+  "observations": [
+    {
+      "source": "B1",
+      "rule_id": "R-STR-01",
+      "claim": "str[8939] 中凭据以内网 URL（10.0.0.8:8080）查询参数 token= 形式出现，str[7293] 带 'aws key:' 标签，strings.xml 命中位于名为 backup_access_key 的资源项，提示这些值可能被代码实际引用而非纯注释残留；str[3275] 与 str[7293] 为同一示例密钥的重复出现。",
+      "location": "",
+      "confidence": "n/a",
+      "note": "B1 复核的补充观察（不构成判定），未经机械核查"
+    },
+    {
+      "source": "B1",
+      "rule_id": "R-STR-02",
+      "claim": "第二条 URL 的 query 中携带 ghp_ 前缀的 token 参数（值为全零占位样式），可能与其他凭据/密钥类规则相关，但不影响本条判定；第三条位于 strings.xml 的 internal_api_base 资源项，命名表明其为应用配置的内网 API 基址。",
+      "location": "",
+      "confidence": "n/a",
+      "note": "B1 复核的补充观察（不构成判定），未经机械核查"
+    }
+  ],
+  "coverage": {
+    "checked": [
+      "R-MAN-01(manifest)",
+      "R-MAN-02(manifest)",
+      "R-MAN-03(manifest+res_decoded)",
+      "R-MAN-04(manifest)",
+      "R-MAN-05(manifest)",
+      "R-PERM-01(smali_src)",
+      "R-PERM-02(manifest/smali_src)",
+      "R-PERM-03(manifest/smali_src)",
+      "R-STR-01(dex_strings)",
+      "R-STR-02(dex_strings)",
+      "R-CODE-01(dex_strings/smali_src)",
+      "R-CODE-02(smali_src)",
+      "R-NET-01(smali_src)",
+      "R-NET-02(smali_src)",
+      "通道B(模型:glm-5.3)"
+    ],
+    "not_checked": [],
+    "decode_failed": false,
+    "decode_note": "",
+    "decode_reused": true,
+    "notes": []
+  },
+  "state": [
+    [
+      "PENDING",
+      null
+    ],
+    [
+      "DECODING",
+      ""
+    ],
+    [
+      "RULE_A",
+      ""
+    ],
+    [
+      "CHANNEL_B",
+      ""
+    ],
+    [
+      "FUSION",
+      ""
+    ],
+    [
+      "REPORT",
+      ""
+    ]
+  ],
+  "budget": {
+    "llm_calls_used": 3,
+    "llm_calls_max": 30,
+    "registered_tests_used": 0,
+    "registered_tests_max": 5,
+    "exhausted_notes": []
+  }
+}

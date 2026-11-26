@@ -79,14 +79,44 @@ def ops_have_invoke(ops):
 
 
 def is_empty_method_body(ops):
-    """空实现：实质指令只有 return-void（可含 nop），且至少一个 return-void。"""
+    """无校验实现：没有实质校验逻辑的方法体（0.1.7 扩宽，F-01）。
+
+    除 return-void / nop 外，允许常量装配与日志/无返回值的调用
+    （Log.d、打印等只做记录、不做校验），但不放过真正的校验动作：
+    - 任何 throw / move-exception（抛异常型校验）
+    - 任何返回非 void（有判定结果）
+    - 对 TrustManager/证书/主机名相关对象的 invoke（实质校验委托）
+    - 条件跳转（if-*，做了判断）
+
+    这样"空方法体 + 一行 Log.d"仍判为空实现（对抗组 F-01 漏报），
+    而真实实现（委托校验、抛异常、条件判断）不会被误判。
+    """
     if not ops:
         return False
-    allowed = {'return-void', 'nop'}
     insns = [op for _, op in ops]
-    if not any(op == 'return-void' for op in insns):
+    if not any(op.startswith('return-void') for op in insns):
         return False
-    return all(op in allowed for op in insns)
+    benign_call_tokens = (
+        'Landroid/util/Log;->', 'Ljava/io/PrintStream;->',
+        'Ljava/lang/System;->out', 'Ljava/lang/StringBuilder;->',
+    )
+    for op in insns:
+        s = op.strip()
+        if s.startswith('return') and not s.startswith('return-void'):
+            return False
+        if 'throw' in s or 'move-exception' in s:
+            return False
+        if s.startswith('if-') or s.startswith('goto'):
+            return False
+        if 'invoke-' in s:
+            # 只放行记录类调用；涉及证书/校验对象的调用视为实质校验
+            if not any(tok in s for tok in benign_call_tokens):
+                return False
+            if any(tok in s for tok in ('TrustManager', 'X509', 'Certificate',
+                                        'checkServerTrusted', 'checkClientTrusted')):
+                return False
+        # const / new-instance / move-result 等装配指令允许
+    return True
 
 
 def is_empty_array_return(ops):

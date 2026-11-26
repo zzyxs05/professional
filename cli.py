@@ -136,7 +136,8 @@ def cmd_analyze(args):
 
         # ---- 通道 B
         runner.sm.advance('CHANNEL_B')
-        b_result = run_channel_b(ctx, hits_by_rule, runner, store)
+        b_result = run_channel_b(ctx, hits_by_rule, runner, store,
+                                 model_name=getattr(args, 'model', None))
         if b_result.ran:
             print('[channel B] 运行（模型：%s，调用 %d 次）' % (b_result.model, b_result.calls))
             coverage['checked'].append('通道B(模型:%s)' % b_result.model)
@@ -271,14 +272,27 @@ def cmd_register(args):
 # ------------------------------------------------------------------ evaluate
 def cmd_evaluate(args):
     from core.evidence import BadRunId
-    from evaluator.agent import run_agent
+    from evaluator.agent import run_agent, apply_scores
+    if args.apply_scores:
+        if not args.scores_file:
+            print('[error] --apply-scores 需要配合 --scores-file <分数.json>')
+            return 2
+        res = apply_scores(args.apply_scores, args.scores_file)
+        if not res.get('ok'):
+            print('[error] %s' % res.get('error'))
+            return 2
+        print('[scores] 已回填 %d 项，合计 %s' % (res['scored'], res['total']))
+        print('[evaluation] %s' % res['eval_path'])
+        print('[html] %s' % res['html_path'])
+        return 0
     target = os.path.abspath(args.target) if args.target else PROJECT_ROOT
     try:
         result = run_agent(PROJECT_ROOT, target, args.run,
                            mode=args.mode, contract_path=args.contract,
-                           use_llm=not args.no_llm,
+                           use_llm=args.llm,
                            max_model_calls=args.max_model_calls,
-                           out_dir=args.out_dir)
+                           out_dir=args.out_dir,
+                           want_html=not args.no_html)
     except BadRunId as e:
         print('[error] %s' % e)
         return 2
@@ -346,21 +360,30 @@ def main(argv=None):
     p_an.add_argument('--force-decode', action='store_true', help='强制重新解码')
     p_an.add_argument('--no-evidence', action='store_true',
                       help='演练模式：跑完整链路但不写入 evidence/（调准则/实验用，避免污染运行正本）')
+    p_an.add_argument('--model', default=None,
+                      help='按 key.txt 里的模型名指定 B 通道模型（默认第一行）；名字不存在即报错，不回退')
 
     p_rg = sub.add_parser('register', help='登记样本（打印待粘贴条目，不写 registry）')
     p_rg.add_argument('apk')
 
-    p_ev = sub.add_parser('evaluate', help='运行评价 Agent（默认启用模型，失败自动降级）')
-    p_ev.add_argument('--run', required=True, help='run_id（如 RUN-20261015-145536）')
+    p_ev = sub.add_parser('evaluate', help='运行评价器（默认纯 harness，不调用 API）')
+    p_ev.add_argument('--run', default=None, help='run_id（如 RUN-20261015-145536）；--apply-scores 模式可省略')
     p_ev.add_argument('--target', default=None,
                       help='目标仓库根目录（默认本仓库；互评指向对抗组只读快照）')
     p_ev.add_argument('--mode', choices=['self', 'peer'], default='self')
     p_ev.add_argument('--contract', default=None,
                       help='批准契约路径（互评必填，或目标仓库内 evaluation/contract.json）')
-    p_ev.add_argument('--no-llm', action='store_true', help='禁用模型，走确定性降级路径')
-    p_ev.add_argument('--llm', action='store_true', help='兼容旧参数：启用模型（默认已启用）')
+    p_ev.add_argument('--llm', action='store_true',
+                      help='可选：调用 API 由模型判读（默认不调用，评测分由字段三态机械计算）')
+    p_ev.add_argument('--no-llm', action='store_true', help='兼容旧参数：默认已是不调用模型')
     p_ev.add_argument('--max-model-calls', type=int, default=10)
     p_ev.add_argument('--out-dir', default=None, help='输出目录（默认 review/evaluation/）')
+    p_ev.add_argument('--no-html', action='store_true',
+                      help='不生成 HTML 报告（默认生成）')
+    p_ev.add_argument('--apply-scores', default=None, metavar='EVAL_JSON',
+                      help='回填评分模式：指定要更新的 EVAL JSON')
+    p_ev.add_argument('--scores-file', default=None, metavar='SCORES_JSON',
+                      help='配合 --apply-scores：harness 给出的分数文件')
 
     p_sm = sub.add_parser('summary', help='B3：六样本汇总报告（模型生成，失败自动降级模板）')
     p_sm.add_argument('--out', default=None, help='输出路径（默认 review/summary.md）')

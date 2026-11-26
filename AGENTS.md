@@ -20,19 +20,19 @@
 3. **静态疑点不许升级措辞**：只能说结构上存在什么，不能说这个应用实际在干什么。
 4. **模型只提疑，规则拿证据**：要升"已确认"，必须过 `pin_evidence`。
 5. **改规则就是改版本**：`RULE_PACK_VERSION` 加号 + 记 `docs/changes.md` + 重跑 84 判点。
-6. **人签署、人负责**：AI 不代签，不改别人的状态。
+6. **人签署、人负责**：签名归负责人，状态由负责人更新。
 
 ## 常用命令
 
 ```bash
-python cli.py analyze <apk>                  # 完整审计
-python cli.py analyze <apk> --no-evidence    # 演练，产物不进 evidence/
-python cli.py evaluate --run <RUN>           # 评价 Agent 自评（默认用 key.txt 的模型）
-python cli.py evaluate --run <RUN> --no-llm  # 只走确定性路径
-python scripts/truth_check.py --no-run       # 复算 84 个判点
-python scripts/eval_calibrate.py             # K-1~K-6 校准
-python scripts/e2e.py --no-evidence          # 端到端验收 A-01/A-09
-python -m unittest discover -s tests         # 61 个单测
+python cli.py analyze <apk>         # 完整审计
+python cli.py analyze <apk> --no-evidence  # 演练，产物不进 evidence/
+python cli.py evaluate --run <RUN>      # 评价 Agent 自评（默认用 key.txt 的模型）
+python cli.py evaluate --run <RUN> --no-llm # 只走确定性路径
+python scripts/truth_check.py --no-run    # 复算 84 个判点
+python scripts/eval_calibrate.py       # K-1~K-6 校准
+python scripts/e2e.py --no-evidence     # 端到端验收 A-01/A-09
+python -m unittest discover -s tests     # 93 个单测
 ```
 
 ## 不要做

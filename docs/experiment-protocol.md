@@ -75,7 +75,7 @@
 ## 8. 复算
 
 ```bash
-python scripts/exp_datasource_ab.py --runs 5                 # 全 6 样本
+python scripts/exp_datasource_ab.py --runs 5 # 全 6 样本
 python scripts/exp_datasource_ab.py --runs 5 --samples bad03 # 单样本复核
 ```
 

@@ -19,9 +19,9 @@
 ## 三条命令
 
 ```bash
-python cli.py analyze lab/apks/bad03.apk   # 审计一个样本，产物写进 evidence/RUN-<时间>/
-python -m unittest discover -s tests       # 61 个单元测试
-python scripts/truth_check.py --no-run     # 复算 84 个判点，不重跑样本
+python cli.py analyze lab/apks/bad03.apk # 审计一个样本，产物写进 evidence/RUN-<时间>/
+python -m unittest discover -s tests # 93 个单元测试
+python scripts/truth_check.py --no-run # 复算 84 个判点，不重跑样本
 ```
 
 完整命令和参数见 `总档.md` 第 6 节，交接说明见 `handoff/README.md`。

@@ -323,11 +323,13 @@ def _render(root, ns_prefixes):
 
 # ------------------------------------------------------------------ 事实提取
 class PermissionDecl(object):
-    __slots__ = ('name', 'line')
+    __slots__ = ('name', 'line', 'tag')
 
-    def __init__(self, name, line):
+    def __init__(self, name, line, tag='uses-permission'):
         self.name = name
         self.line = line
+        # 0.1.7（CHG-005）：记录真实标签，证据片段要与 manifest 原文一致。
+        self.tag = tag
 
 
 class ComponentFacts(object):
@@ -383,10 +385,13 @@ def extract_manifest_facts(doc):
         return name
 
     for child in root.children:
-        if child.tag == 'uses-permission':
+        # 0.1.7（F-02）：uses-permission-sdk-23 与 uses-permission 语义等价，
+        # 仅作用 API 23+，权限声明照样要收，否则敏感权限漏报。
+        if child.tag in ('uses-permission', 'uses-permission-sdk-23'):
             nm = child.attr('name')
             if nm:
-                facts.permissions.append(PermissionDecl(nm, child.line_start))
+                facts.permissions.append(
+                    PermissionDecl(nm, child.line_start, child.tag))
         elif child.tag == 'permission':
             nm = child.attr('name')
             if nm:

@@ -1,0 +1,253 @@
+{
+  "run_id": "RUN-20261125-220610-4cbacbdd",
+  "target": {
+    "apk_name": "good01.apk",
+    "apk_sha256": "4cbacbdd6f878f7128ee4938f311ebac9a65e54e53f809a1b9b61634c17355dc"
+  },
+  "versions": {
+    "rule_pack": "0.1.7",
+    "channel_b_model": "glm-5.3"
+  },
+  "conclusions": [
+    {
+      "criterion_id": "R-MAN-01",
+      "status": "无法判定",
+      "channel": "A",
+      "location": "",
+      "evidence_ids": [],
+      "scope": "导出组件无权限保护",
+      "missing_evidence": [],
+      "human_signoff": "pending",
+      "notes": [
+        "机械规则已执行、未命中。仅代表本规则集范围内未发现问题，不构成「安全」结论。"
+      ]
+    },
+    {
+      "criterion_id": "R-MAN-02",
+      "status": "无法判定",
+      "channel": "A",
+      "location": "",
+      "evidence_ids": [],
+      "scope": "危险权限声明",
+      "missing_evidence": [],
+      "human_signoff": "pending",
+      "notes": [
+        "机械规则已执行、未命中。仅代表本规则集范围内未发现问题，不构成「安全」结论。"
+      ]
+    },
+    {
+      "criterion_id": "R-MAN-03",
+      "status": "无法判定",
+      "channel": "A",
+      "location": "",
+      "evidence_ids": [],
+      "scope": "明文流量许可",
+      "missing_evidence": [],
+      "human_signoff": "pending",
+      "notes": [
+        "机械规则已执行、未命中。仅代表本规则集范围内未发现问题，不构成「安全」结论。"
+      ]
+    },
+    {
+      "criterion_id": "R-MAN-04",
+      "status": "无法判定",
+      "channel": "A",
+      "location": "",
+      "evidence_ids": [],
+      "scope": "调试与备份风险",
+      "missing_evidence": [],
+      "human_signoff": "pending",
+      "notes": [
+        "机械规则已执行、未命中。仅代表本规则集范围内未发现问题，不构成「安全」结论。"
+      ]
+    },
+    {
+      "criterion_id": "R-MAN-05",
+      "status": "无法判定",
+      "channel": "A",
+      "location": "",
+      "evidence_ids": [],
+      "scope": "敏感广播监听",
+      "missing_evidence": [],
+      "human_signoff": "pending",
+      "notes": [
+        "机械规则已执行、未命中。仅代表本规则集范围内未发现问题，不构成「安全」结论。"
+      ]
+    },
+    {
+      "criterion_id": "R-PERM-01",
+      "status": "无法判定",
+      "channel": "A",
+      "location": "",
+      "evidence_ids": [],
+      "scope": "定时/后台结构 × 敏感权限",
+      "missing_evidence": [],
+      "human_signoff": "pending",
+      "notes": [
+        "机械规则已执行、未命中。仅代表本规则集范围内未发现问题，不构成「安全」结论。"
+      ]
+    },
+    {
+      "criterion_id": "R-PERM-02",
+      "status": "无法判定",
+      "channel": "A",
+      "location": "",
+      "evidence_ids": [],
+      "scope": "非交互组件使用敏感 API",
+      "missing_evidence": [],
+      "human_signoff": "pending",
+      "notes": [
+        "机械规则已执行、未命中。仅代表本规则集范围内未发现问题，不构成「安全」结论。"
+      ]
+    },
+    {
+      "criterion_id": "R-PERM-03",
+      "status": "无法判定",
+      "channel": "A",
+      "location": "",
+      "evidence_ids": [],
+      "scope": "声明与使用不一致",
+      "missing_evidence": [],
+      "human_signoff": "pending",
+      "notes": [
+        "机械规则已执行、未命中。仅代表本规则集范围内未发现问题，不构成「安全」结论。"
+      ]
+    },
+    {
+      "criterion_id": "R-STR-01",
+      "status": "无法判定",
+      "channel": "A",
+      "location": "",
+      "evidence_ids": [],
+      "scope": "硬编码凭据",
+      "missing_evidence": [],
+      "human_signoff": "pending",
+      "notes": [
+        "机械规则已执行、未命中。仅代表本规则集范围内未发现问题，不构成「安全」结论。"
+      ]
+    },
+    {
+      "criterion_id": "R-STR-02",
+      "status": "无法判定",
+      "channel": "A",
+      "location": "",
+      "evidence_ids": [],
+      "scope": "内网/明文端点",
+      "missing_evidence": [],
+      "human_signoff": "pending",
+      "notes": [
+        "机械规则已执行、未命中。仅代表本规则集范围内未发现问题，不构成「安全」结论。"
+      ]
+    },
+    {
+      "criterion_id": "R-CODE-01",
+      "status": "无法判定",
+      "channel": "A",
+      "location": "",
+      "evidence_ids": [],
+      "scope": "动态代码加载",
+      "missing_evidence": [],
+      "human_signoff": "pending",
+      "notes": [
+        "机械规则已执行、未命中。仅代表本规则集范围内未发现问题，不构成「安全」结论。"
+      ]
+    },
+    {
+      "criterion_id": "R-CODE-02",
+      "status": "无法判定",
+      "channel": "A",
+      "location": "",
+      "evidence_ids": [],
+      "scope": "WebView 危险组合",
+      "missing_evidence": [],
+      "human_signoff": "pending",
+      "notes": [
+        "机械规则已执行、未命中。仅代表本规则集范围内未发现问题，不构成「安全」结论。"
+      ]
+    },
+    {
+      "criterion_id": "R-NET-01",
+      "status": "无法判定",
+      "channel": "A",
+      "location": "",
+      "evidence_ids": [],
+      "scope": "证书校验绕过结构",
+      "missing_evidence": [],
+      "human_signoff": "pending",
+      "notes": [
+        "机械规则已执行、未命中。仅代表本规则集范围内未发现问题，不构成「安全」结论。"
+      ]
+    },
+    {
+      "criterion_id": "R-NET-02",
+      "status": "无法判定",
+      "channel": "A",
+      "location": "",
+      "evidence_ids": [],
+      "scope": "WebView SSL 错误忽略",
+      "missing_evidence": [],
+      "human_signoff": "pending",
+      "notes": [
+        "机械规则已执行、未命中。仅代表本规则集范围内未发现问题，不构成「安全」结论。"
+      ]
+    }
+  ],
+  "observations": [],
+  "coverage": {
+    "checked": [
+      "R-MAN-01(manifest)",
+      "R-MAN-02(manifest)",
+      "R-MAN-03(manifest+res_decoded)",
+      "R-MAN-04(manifest)",
+      "R-MAN-05(manifest)",
+      "R-PERM-01(smali_src)",
+      "R-PERM-02(manifest/smali_src)",
+      "R-PERM-03(manifest/smali_src)",
+      "R-STR-01(dex_strings)",
+      "R-STR-02(dex_strings)",
+      "R-CODE-01(dex_strings/smali_src)",
+      "R-CODE-02(smali_src)",
+      "R-NET-01(smali_src)",
+      "R-NET-02(smali_src)",
+      "通道B(模型:glm-5.3)"
+    ],
+    "not_checked": [],
+    "decode_failed": false,
+    "decode_note": "",
+    "decode_reused": true,
+    "notes": []
+  },
+  "state": [
+    [
+      "PENDING",
+      null
+    ],
+    [
+      "DECODING",
+      ""
+    ],
+    [
+      "RULE_A",
+      ""
+    ],
+    [
+      "CHANNEL_B",
+      ""
+    ],
+    [
+      "FUSION",
+      ""
+    ],
+    [
+      "REPORT",
+      ""
+    ]
+  ],
+  "budget": {
+    "llm_calls_used": 1,
+    "llm_calls_max": 30,
+    "registered_tests_used": 0,
+    "registered_tests_max": 5,
+    "exhausted_notes": []
+  }
+}

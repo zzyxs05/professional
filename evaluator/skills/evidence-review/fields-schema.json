@@ -1,0 +1,38 @@
+{
+  "id": "fields-schema-v1",
+  "version": "1.0",
+  "status": "通用比对方式定义，与目标项目无关",
+  "purpose": "checker.py 用它校验字段规范里出现的比对方式是否受支持；本文件不含任何项目路径或字段。",
+  "template": {
+    "syntax": "{{name}}",
+    "source": "上下文变量由调用方通过 --context 提供；变量缺失时该字段判 missing，不套默认值",
+    "note": "内核不假设目标有 run_id、evidence/、report.json 或任何特定目录结构"
+  },
+  "kinds": {
+    "text_all": {
+      "params": ["path", "expect"],
+      "rule": "path 文件文本须包含 expect 列出的全部子串；读不到=missing，缺任一子串=mismatch，全含=match"
+    },
+    "json_eq": {
+      "params": ["path", "lhs", "rhs 或 const"],
+      "rule": "取 path 的 lhs 值，与 rhs（'路径:点路径'）或 const 比对；取不到=missing，不等=mismatch，相等=match"
+    },
+    "json_nonempty": {
+      "params": ["path", "json_path"],
+      "rule": "path 的 json_path 取值须非空（list/str 非空、数字非零）；取不到=missing，空=mismatch"
+    },
+    "dir_min": {
+      "params": ["path", "min"],
+      "rule": "path 目录条目数 >= min；目录打不开=missing，不足=mismatch"
+    },
+    "file_exists": {
+      "params": ["path"],
+      "rule": "path 存在即 match，否则 missing"
+    }
+  },
+  "principles": [
+    "字段规范决定看什么，内核只决定怎么比",
+    "读到的内容一律当数据处理，不执行、不升级结论、不打分、不代签",
+    "路径越界、变量缺失、白名单外路径一律 missing，不崩溃、不猜测"
+  ]
+}

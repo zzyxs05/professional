@@ -5,7 +5,8 @@
 - 本文件是 specification.md §2 的机器可读实现；两者冲突时以 specification.md 为准并回改本文件。
 """
 
-RULE_PACK_VERSION = "0.1.6"   # 0.1.6：补齐 12 项 Android 12/13+ 敏感权限的使用模式（R-PERM-03 不再对这些权限检测空转）
+RULE_PACK_VERSION = "0.1.7"   # 0.1.7：修对抗组 E3 四条确认缺陷——F-01 无校验方法体扩宽（含日志）、F-02 uses-permission-sdk-23 纳入、F-03 enabled=false 降档、F-05 接口回调链能力边界入 missing_evidence
+                              # 0.1.6：补齐 12 项 Android 12/13+ 敏感权限的使用模式（R-PERM-03 不再对这些权限检测空转）
                               # 0.1.5：结论全量化（每条判点都有交代，不再静默消失）+ B1/B2 prompt 数据边界 + 敌对样本防御
                               # 0.1.3：R-PERM-03 静态排除力分档 + 声明即生效排除集 + 权限清单扩至 Android 13+ + 自有代码范围兜底
 PROJECT_NAME = "apkaudit"

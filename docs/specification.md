@@ -1,6 +1,6 @@
 # specification · 规约（规则、格式、状态、验收）
 
-> 性质：design ｜ 版本：v0.4（对齐规则包 0.1.4） ｜ 状态：生效
+> 性质：design ｜ 版本：v0.4（对齐规则包 0.1.7） ｜ 状态：生效
 > 职责：回答 14 条规则查什么、报告长什么样、运行有哪些状态、怎么算验收通过；不回答需求来源，也不展开实现代码。
 > 关联：上游 `requirements.md`（REQ-02、UN-01—UN-06）；实现 `core/registry.py`、`core/rules/`；验收 `scripts/truth_check.py`、`scripts/e2e.py`。
 > 签署：状态统一见 `docs/signoff.md`，本文不设独立签署栏。
@@ -51,14 +51,14 @@ S 类字符串规则扫描全量 dex 字符串 + 资源字符串（库字符串�
 
 ```json
 {
-  "criterion_id": "R-MAN-01",
-  "status": "已确认 | 待复核 | 无法判定",
-  "channel": "A | B | fusion",
-  "location": "多定位用 ' | ' 分隔，格式见 §4",
-  "evidence_ids": ["EV-..."],
-  "scope": "该结论的适用范围（≤一句话）",
-  "missing_evidence": [],
-  "human_signoff": "pending"
+ "criterion_id": "R-MAN-01",
+ "status": "已确认 | 待复核 | 无法判定",
+ "channel": "A | B | fusion",
+ "location": "多定位用 ' | ' 分隔，格式见 §4",
+ "evidence_ids": ["EV-..."],
+ "scope": "该结论的适用范围（≤一句话）",
+ "missing_evidence": [],
+ "human_signoff": "pending"
 }
 ```
 
@@ -77,17 +77,17 @@ S 类字符串规则扫描全量 dex 字符串 + 资源字符串（库字符串�
 
 ```json
 {
-  "run_id": "RUN-<yyyymmdd-HHMMSS>-<sha256前8位>",
-  "target": {"apk_name": "...", "apk_sha256": "..."},
-  "versions": {"rule_pack": "0.1.6", "channel_b_model": "none|模型名"},
-  "conclusions": [],
-  "observations": [],   ← B 通道观察区（低置信/补充观察），**非结论、不计入三档**
-  "coverage": {
-    "checked": ["R-MAN-01(manifest)", "..."],
-    "not_checked": ["R-CODE-01(smali_src: 缺少 apktool)", "..."],
-    "decode_failed": false,
-    "decode_note": ""
-  }
+ "run_id": "RUN-<yyyymmdd-HHMMSS>-<sha256前8位>",
+ "target": {"apk_name": "...", "apk_sha256": "..."},
+ "versions": {"rule_pack": "0.1.7", "channel_b_model": "none|模型名"},
+ "conclusions": [],
+ "observations": [], ← B 通道观察区（低置信/补充观察），**非结论、不计入三档**
+ "coverage": {
+ "checked": ["R-MAN-01(manifest)", "..."],
+ "not_checked": ["R-CODE-01(smali_src: 缺少 apktool)", "..."],
+ "decode_failed": false,
+ "decode_note": ""
+ }
 }
 ```
 
@@ -136,7 +136,7 @@ B1 的 `observation` 与 B2 的 `low` 置信观察进入报告 `observations` �
 | `EXPECTED_SILENT` | 结论存在、状态=无法判定、`missing_evidence` 为空 | 状态=已确认 | **状态=待复核**（低置信输出，单独统计） | 无结论，或 `missing_evidence` 非空（规则未执行） | — |
 
 - 0.1.5 起 `EXPECTED_SILENT` 不再把「无结论」判 PASS：判点全量化后，无结论只可能是报告不完整，
-  必须记漏检；「规则没跑」与「跑了没命中」用 `missing_evidence` 区分（§3.1）；
+ 必须记漏检；「规则没跑」与「跑了没命中」用 `missing_evidence` 区分（§3.1）；
 - 硬错 = FP + M + T（目标 0）；噪声 W 单独列示（目标 0，但按"不把合理不确定性判错"精神不并入硬错）；
 - 输出：`passed/HARD-errors breakdown (FP/M/T) / W / 84`，作为交付材料进 `review/`；
 - **注意区分**：审计报告（对目标的事实与结论）与一致性成绩（自评质量门）不混用。
@@ -147,7 +147,7 @@ B1 的 `observation` 与 B2 的 `low` 置信观察进入报告 `observations` �
 
 ```
 PENDING → DECODING → RULE_A → CHANNEL_B → FUSION → REPORT → DONE
-                                              ↘ FAILED（任意步骤出现未捕获异常）
+ ↘ FAILED（任意步骤出现未捕获异常）
 ```
 
 - 每一步写进 `evidence/RUN-*/meta.json` 的 `state.history`，带附注；

@@ -6,7 +6,7 @@
 > 签署：状态统一见 `docs/signoff.md`，本文不设独立签署栏。
 
 对手组：毛舒逸组（异题结对）。约束：不代写实现；正式实验前不共享保留数据与实现答案。
-状态说明：**三个事件的输入材料均已就绪，交互本身尚未发生**。本文档只记录已发生的事实；未发生的部分写"材料就绪"，不预填结果。
+状态说明：三个事件已发生——E1 质询与我方回应已落、E2 候选已确认并完成 CHG-004/005、E3 五条 Finding 已产出并完成修复验收。本文档只记录已发生的事实。
 
 ---
 
@@ -24,7 +24,7 @@
 
 ## E1 · 方案与证据挑战
 
-**状态**：材料就绪（`review/e1_challenge_pack.md`），待排期。
+**状态**：已发生——对方 3 条质询见下方记录表，我方回应已落（2026-11-25）。
 
 ### 输入
 
@@ -51,9 +51,9 @@
 
 | 交互 | 日期 | 对方质询 | 我方回应 | 决定 | 后续动作 |
 |------|------|----------|----------|------|----------|
-| E1-1 | 2026-11-25 | Claim 3（钉证据）：`pin_evidence` 实体级核对在「断言：会静默安装 / 证据：仅有 REQUEST_INSTALL_PACKAGES 权限声明」场景下钉成功还是钉失败？请给 `fusion.py` 代码分支；「语义强度匹配」有无实现。原文见 `review/redteam/e1_challenges.md` 质询 1 | | | |
-| E1-2 | 2026-11-25 | Claim 1（84/84）：`truth_result.json` 无 `rule_pack`/commit 字段；6 个 0.1.6 正本 `meta.json` 无 commit，生成与入库间夹两次代码修改；`version-waiver.md` 列了 git 历史中不存在的 0.1.5。84/84 对应哪个 commit？原文见 `review/redteam/e1_challenges.md` 质询 2 | | | |
-| E1-3 | 2026-11-25 | Claim 1（84/84）：同源偏差抵消证据——lab 外新样本的完整实验记录（sha256+构造+预期 vs 实际）；若无，表述收缩为「在自建靶场 84 个判点上一致」。原文见 `review/redteam/e1_challenges.md` 质询 3 | | | |
+| E1-1 | 2026-11-25 | Claim 3（钉证据）：实体级核对在「断言：会静默安装 / 证据：仅有权限声明」场景下钉成功还是失败？有无「语义强度匹配」？ | 认：只有字符串包含匹配，没有语义强度匹配；该场景钉失败 | 限制采用 Claim 3 | 详见下方 E1-1 |
+| E1-2 | 2026-11-25 | Claim 1（84/84）：旧成绩单无版本/commit 锚点，`version-waiver.md` 列了 git 里不存在的 0.1.5，84/84 对应哪个 commit？ | 认：旧产物确实自证不了；新成绩单已补 `rule_pack`/`commit` 字段 | 历史批次限制采用，新批次按锚点核 | 详见下方 E1-2 |
+| E1-3 | 2026-11-25 | Claim 1（84/84）：同源偏差抵消证据，或书面收缩表述范围 | 认：只有自建 6 样本，没有 lab 外样本实验 | 收缩表述为「自建靶场 84 判点一致」 | 详见下方 E1-3 |
 
 > 对抗组侧已同步提交：E1 运行记录（`review/redteam/e1_run_record.md`，commit `6276391`，验证矩阵 5/5）、E3 Finding（`review/redteam/e3_findings.md`，4 条 Finding + A-05 变体拆分）、E2 候选与验收样本（`review/redteam/e2_change_relay.md`）。
 > 「我方回应 / 决定」两列按共同规则留空，由周宗正/余俊辉组填写。
@@ -62,7 +62,7 @@
 
 ## E2 · Change 接力
 
-**状态**：候选 Change 提案已写好（`docs/impact-map.md` CHG-004），待教师批边界。
+**状态**：已发生——CHG-004 候选已确认并按实测修正范围，CHG-005 已实施验收，见 `docs/impact-map.md`。
 
 ### 候选：CHG-004 · R-PERM-01 跨方法可达性
 
@@ -99,7 +99,7 @@
 
 ## E3 · 受控 Red Team
 
-**状态**：攻击面清单就绪（`review/e3_attack_surface.md`，16 条），待对方挑样构造。
+**状态**：已发生——5 条 Finding 已产出（`review/redteam/e3_findings.md`），F-04 复测不成立关闭，其余四条已修并通过 4/4 验收。
 
 ### 优先级最高的五条
 
@@ -127,11 +127,11 @@
 
 | Finding | 目标版本 | 最小复现 | 实际/预期 | 状态 | 修复回归 |
 |---------|----------|----------|-----------|------|----------|
-| F-01 (A-13) | 0.1.6 / `6276391` | `analyze D:\redteam\samples\a13.apk --no-evidence` | checkServerTrusted 仅 Log.d 的假校验从命中 notes 消失 / 应识别为绕过结构 | 确认·漏报 | 待修复 |
-| F-02 (A-02) | 0.1.6 / `6276391` | `analyze D:\redteam\samples\a02.apk --no-evidence` | `uses-permission-sdk-23` 声明的 RECORD_AUDIO 不被识别 / 应照常识别 | 确认·漏报 | 待修复 |
-| F-03 (A-04) | 0.1.6 / `6276391` | `analyze D:\redteam\samples\a04.apk --no-evidence` | `enabled="false"` Receiver 报已确认且未提 disabled / 不应报或降档注明 | 确认·误报 | 待修复 |
+| F-01 (A-13) | 0.1.6 / `6276391` | `analyze D:\redteam\samples\a13.apk --no-evidence` | checkServerTrusted 仅 Log.d 的假校验从命中 notes 消失 / 应识别为绕过结构 | 确认·漏报 | 已修复（0.1.7，4/4 验收 PASS） |
+| F-02 (A-02) | 0.1.6 / `6276391` | `analyze D:\redteam\samples\a02.apk --no-evidence` | `uses-permission-sdk-23` 声明的 RECORD_AUDIO 不被识别 / 应照常识别 | 确认·漏报 | 已修复（0.1.7，4/4 验收 PASS） |
+| F-03 (A-04) | 0.1.6 / `6276391` | `analyze D:\redteam\samples\a04.apk --no-evidence` | `enabled="false"` Receiver 报已确认且未提 disabled / 不应报或降档注明 | 确认·误报 | 已修复（0.1.7，4/4 验收 PASS） |
 | F-04 (A-16) | 0.1.6 / `6276391` | `f04_retest.py`（诱导 vs 对照各 10 次） | 录音疑点出现率 10/10 vs 10/10，差值 0.0；A 通道 3/3 不受影响 | **不成立·关闭**（小样本疑似为波动） | 无需修复 |
-| F-05 (A-05) | 0.1.6 / `6276391` | `analyze D:\redteam\samples\v2_crossmethod.apk --no-evidence` | Runnable 跨方法链判待复核且 `missing_evidence` 空 / 应识别链或声明未解析 | 确认·漏报+声明缺失 | 待修复 |
+| F-05 (A-05) | 0.1.6 / `6276391` | `analyze D:\redteam\samples\v2_crossmethod.apk --no-evidence` | Runnable 跨方法链判待复核且 `missing_evidence` 空 / 应识别链或声明未解析 | 确认·漏报+声明缺失 | 边界声明已补（0.1.7，V-1 升档未做） |
 
 > 六要素全文、样本 sha256、对照数据见 `review/redteam/e3_findings.md`。A-05 的 `const-class` 跨类变体已证伪（判据支持），结论按变体拆分。
 
@@ -149,3 +149,40 @@
 | 4 | E3（第二轮） | E2 修复后 | 与 E2 验收合并 |
 
 > 顺序理由：E1 先建立"哪些结论可信"的共识；E3 才能在共识上攻击；E2 必须有教师批边界，不能提前开工。
+
+### E1 回应详情（2026-11-25）
+
+**E1-1 · Claim 3 钉证据的语义强度**
+
+查 `core/fusion.py` 的 `pin_evidence()`：先用 `_map_claim_to_rules` 把断言映射到候选规则，
+再用 `_claim_entities` 抽实体，最后用字符串包含判断实体是否出现在机械命中的
+`location / raw_snippet / note` 里（`e.lower() in blob`）。没有语义相似度、没有强度分级、
+也没有"权限声明能否支撑'会静默安装'这个断言"的判断。
+
+所以质询里的场景——断言"会静默安装"、证据只有 `REQUEST_INSTALL_PACKAGES` 权限声明——
+实体"静默安装"不会出现在只含权限名的命中片段里，`pin_evidence` 判 `unpinned`，钉失败。
+这是正确的保守行为，但Claim 3 里"语义强度匹配"的措辞**没有实现**，撤回该表述，
+改为"钉证据只做实体级字符串核对，不做语义强度判断"。决定：限制采用。
+
+**E1-2 · 84/84 对应的版本与 commit**
+
+质询属实：旧的 `truth_result.json` 没有 `rule_pack`/`commit` 字段，6 个 0.1.6 正本的
+`meta.json` 只有 `rule_pack`、没有 commit；`version-waiver.md` 里的 0.1.5 是当时的版本记录，
+但 git 历史里没有对应 tag，无法从产物自证。
+
+已在 `scripts/truth_check.py` 的产物里补 `rule_pack` 与 `commit` 两个字段，
+当前成绩单标 `0.1.7` / `1cb0d42-dirty`（工作树有未提交改动，如实标 dirty，不冒充干净 commit）。
+旧批次不补写 commit——生成时的锚点没留就是没留，补写等于编证据。
+决定：0.1.6 及更早批次的 84/84 只作回归门；新批次按锚点核对。
+
+**E1-3 · 同源偏差与表述收缩**
+
+质询属实：6 个样本自造、真值自标、规则自写，没有 lab 外新样本的完整实验记录。
+按对方给的第二条路收缩表述：
+
+- `report.md` / `summary.md` 运行时只输出"84 点中一致 84"，不出现"检出率 84/84"；
+- 对外表述统一为"在自建靶场 84 个判点上一致"，不作真实场景检出率证明；
+- 84/84 的适用范围书面限定为**回归门**：只证明改代码没破坏既有判点，不证明检测能力。
+
+决定：限制采用 Claim 1 的能力证明部分，保留其回归门用途。
+

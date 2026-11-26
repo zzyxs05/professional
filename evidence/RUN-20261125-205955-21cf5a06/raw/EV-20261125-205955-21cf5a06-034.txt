@@ -1,0 +1,1 @@
+{"verdict": "确认可疑", "reason": "命中片段直接调用 SslErrorHandler.proceed()，且上下文中未见 handler.cancel()，不属于误报口径中'调用 cancel 的正确实现'或'无 proceed'两种豁免情形。", "observation": "命中位于方法末尾（45 行 proceed 后 47 行即 return-void），上下文未展示方法签名与前面的 SSL 错误判断逻辑，但 proceed 的存在本身已满足该规则的检测结构。"}

@@ -1,0 +1,27 @@
+{
+  "V-1": {
+    "run_id": "RUN-20261125-203101-3464015c",
+    "rule_pack": "0.1.7",
+    "status": "待复核",
+    "missing": [
+      "存在不可直接解析的调度目标（smali/com/synth/bad03/MainActivity.smali:227（原始行 56） 等），Runnable/接口回调/动态类名的跨方法链未解析"
+    ],
+    "notes": [
+      "调度原语：Landroid/os/Handler;->postDelayed",
+      "敏感 API：录音"
+    ]
+  },
+  "V-2": {
+    "run_id": "RUN-20261125-203222-63823c87",
+    "rule_pack": "0.1.7",
+    "status": "待复核",
+    "missing": [
+      "存在不可直接解析的调度目标（smali/com/synth/bad03/MainActivity.smali:227（原始行 56） 等），Runnable/接口回调/动态类名的跨方法链未解析"
+    ],
+    "notes": [
+      "调度原语：Landroid/os/Handler;->postDelayed",
+      "敏感 API：录音",
+      "敏感 API：录音"
+    ]
+  }
+}

@@ -160,9 +160,24 @@ def main():
           % (summary['total'], summary['pass'], summary['hard_errors'],
              summary['fp'], summary['miss'], summary['tier'], summary['noise'], summary['skip']))
 
+    # E1 质询 2：84/84 必须能回答"对应哪个版本/哪个 commit"。
+    # 读当前工作树 HEAD（未提交改动会带 dirty 标记，不假装是干净 commit）。
+    try:
+        head = subprocess.check_output(
+            ['git', 'rev-parse', '--short', 'HEAD'], cwd=PROJECT_ROOT,
+            stderr=subprocess.DEVNULL).decode('utf-8', 'replace').strip()
+        dirty = bool(subprocess.check_output(
+            ['git', 'status', '--porcelain'], cwd=PROJECT_ROOT,
+            stderr=subprocess.DEVNULL).strip())
+        commit = head + ('-dirty' if dirty else '')
+    except (OSError, subprocess.CalledProcessError):
+        commit = 'unavailable'
+
     os.makedirs(os.path.dirname(args.out), exist_ok=True)
     with open(args.out, 'w', encoding='utf-8', newline='\n') as f:
-        json.dump({'summary': summary, 'details': all_points}, f,
+        json.dump({'rule_pack': registry.RULE_PACK_VERSION,
+                   'commit': commit,
+                   'summary': summary, 'details': all_points}, f,
                   ensure_ascii=False, indent=2)
     print('[out] %s' % args.out)
     return 0 if summary['hard_errors'] == 0 else 1

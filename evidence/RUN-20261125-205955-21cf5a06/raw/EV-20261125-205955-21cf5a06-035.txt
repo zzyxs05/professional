@@ -1,0 +1,32 @@
+[
+  {
+    "claim": "MainActivity.smali 的第 82、101、106 行存在动态加载/反射调用点，摘要未给出具体加载的类名或方法名，无法判断是 DexClassLoader、Class.forName 还是普通反射",
+    "location": "smali/com/synth/bad03/MainActivity.smali:82, smali/com/synth/bad03/MainActivity.smali:101, smali/com/synth/bad03/MainActivity.smali:106",
+    "rule_guess": "dynamic_loading",
+    "confidence": "high"
+  },
+  {
+    "claim": "样本同时申请 RECORD_AUDIO 与 ACCESS_FINE_LOCATION 两类高敏权限，且伴随 INTERNET 权限，存在采集麦克风与定位数据后外发的风险，需核查数据是否在获得用户同意前被采集",
+    "location": "权限声明区（android.permission.RECORD_AUDIO, android.permission.ACCESS_FINE_LOCATION, android.permission.INTERNET）",
+    "rule_guess": "sensitive_permission_combo",
+    "confidence": "medium"
+  },
+  {
+    "claim": "RecordingService 为非导出服务但具备录音相关能力，需核查其启动时机（前台服务/后台自启）以及是否在用户未感知时持续录音",
+    "location": "com.synth.bad03.RecordingService (service; exported=False)",
+    "rule_guess": "background_collection",
+    "confidence": "medium"
+  },
+  {
+    "claim": "自有代码中唯一网络入口为 https://example.com/app，为占位示例域名，需确认实际通信域名是否通过动态加载点或运行时配置下发以规避静态检测",
+    "location": "URL 列表 https://example.com/app",
+    "rule_guess": "network_endpoint",
+    "confidence": "low"
+  },
+  {
+    "claim": "两个组件均设置 exported=False，导出面较小，但需确认是否通过隐式 Intent、PendingIntent 或 deeplink 间接暴露入口",
+    "location": "com.synth.bad03.MainActivity, com.synth.bad03.RecordingService",
+    "rule_guess": "component_exposure",
+    "confidence": "low"
+  }
+]

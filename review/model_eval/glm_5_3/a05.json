@@ -1,0 +1,387 @@
+{
+  "run_id": "RUN-20261125-221140-9cb29683",
+  "target": {
+    "apk_name": "a05.apk",
+    "apk_sha256": "9cb29683eaad746b36b4f36c53e87013221b25d5041d19e9a461d8cbeb45e69d"
+  },
+  "versions": {
+    "rule_pack": "0.1.7",
+    "channel_b_model": "glm-5.3"
+  },
+  "conclusions": [
+    {
+      "criterion_id": "R-MAN-01",
+      "status": "无法判定",
+      "channel": "A",
+      "location": "",
+      "evidence_ids": [],
+      "scope": "导出组件无权限保护",
+      "missing_evidence": [],
+      "human_signoff": "pending",
+      "notes": [
+        "机械规则已执行、未命中。仅代表本规则集范围内未发现问题，不构成「安全」结论。"
+      ]
+    },
+    {
+      "criterion_id": "R-MAN-02",
+      "status": "已确认",
+      "channel": "fusion",
+      "location": "AndroidManifest.xml:5 [uses-permission] | AndroidManifest.xml:6 [uses-permission]",
+      "evidence_ids": [
+        "EV-20261125-221140-9cb29683-001",
+        "EV-20261125-221140-9cb29683-002"
+      ],
+      "scope": "危险权限声明",
+      "missing_evidence": [],
+      "human_signoff": "pending",
+      "notes": [
+        "声明敏感权限：android.permission.RECORD_AUDIO（录音）",
+        "声明敏感权限：android.permission.ACCESS_FINE_LOCATION（精确定位）"
+      ]
+    },
+    {
+      "criterion_id": "R-MAN-03",
+      "status": "无法判定",
+      "channel": "A",
+      "location": "",
+      "evidence_ids": [],
+      "scope": "明文流量许可",
+      "missing_evidence": [],
+      "human_signoff": "pending",
+      "notes": [
+        "机械规则已执行、未命中。仅代表本规则集范围内未发现问题，不构成「安全」结论。"
+      ]
+    },
+    {
+      "criterion_id": "R-MAN-04",
+      "status": "无法判定",
+      "channel": "A",
+      "location": "",
+      "evidence_ids": [],
+      "scope": "调试与备份风险",
+      "missing_evidence": [],
+      "human_signoff": "pending",
+      "notes": [
+        "机械规则已执行、未命中。仅代表本规则集范围内未发现问题，不构成「安全」结论。"
+      ]
+    },
+    {
+      "criterion_id": "R-MAN-05",
+      "status": "无法判定",
+      "channel": "A",
+      "location": "",
+      "evidence_ids": [],
+      "scope": "敏感广播监听",
+      "missing_evidence": [],
+      "human_signoff": "pending",
+      "notes": [
+        "机械规则已执行、未命中。仅代表本规则集范围内未发现问题，不构成「安全」结论。"
+      ]
+    },
+    {
+      "criterion_id": "R-PERM-01",
+      "status": "待复核",
+      "channel": "fusion",
+      "location": "smali/com/synth/bad03/MainActivity.smali:188（原始行 87） | smali/com/synth/bad03/MainActivity.smali:161（原始行 83） | smali/com/synth/bad03/Worker.smali:20（原始行 ?）",
+      "evidence_ids": [
+        "EV-20261125-221140-9cb29683-003",
+        "EV-20261125-221140-9cb29683-004",
+        "EV-20261125-221140-9cb29683-005"
+      ],
+      "scope": "定时/后台结构 × 敏感权限",
+      "missing_evidence": [],
+      "human_signoff": "pending",
+      "notes": [
+        "定时/后台调度点：Landroid/app/AlarmManager;->set",
+        "调度目标组件：Lcom/synth/bad03/Worker;（该组件内存在敏感 API：录音）",
+        "敏感 API：录音（位于被调度的组件 Lcom/synth/bad03/Worker; 内）"
+      ]
+    },
+    {
+      "criterion_id": "R-PERM-02",
+      "status": "已确认",
+      "channel": "fusion",
+      "location": "smali/com/synth/bad03/RecordingService.smali:46（原始行 44） | smali/com/synth/bad03/RecordingService.smali:48（原始行 44） | smali/com/synth/bad03/RecordingService.smali:55（原始行 45） | smali/com/synth/bad03/RecordingService.smali:60（原始行 46） | smali/com/synth/bad03/RecordingService.smali:65（原始行 47） | smali/com/synth/bad03/RecordingService.smali:74（原始行 48） | smali/com/synth/bad03/RecordingService.smali:79（原始行 49） | smali/com/synth/bad03/RecordingService.smali:84（原始行 50） | smali/com/synth/bad03/RecordingService.smali:137（原始行 78） | smali/com/synth/bad03/RecordingService.smali:181（原始行 93） | smali/com/synth/bad03/RecordingService.smali:201（原始行 97）",
+      "evidence_ids": [
+        "EV-20261125-221140-9cb29683-006",
+        "EV-20261125-221140-9cb29683-007",
+        "EV-20261125-221140-9cb29683-008",
+        "EV-20261125-221140-9cb29683-009",
+        "EV-20261125-221140-9cb29683-010",
+        "EV-20261125-221140-9cb29683-011",
+        "EV-20261125-221140-9cb29683-012",
+        "EV-20261125-221140-9cb29683-013",
+        "EV-20261125-221140-9cb29683-014",
+        "EV-20261125-221140-9cb29683-015",
+        "EV-20261125-221140-9cb29683-016"
+      ],
+      "scope": "非交互组件使用敏感 API",
+      "missing_evidence": [],
+      "human_signoff": "pending",
+      "notes": [
+        "非交互组件 com.synth.bad03.RecordingService（service）中调用敏感 API：录音",
+        "非交互组件 com.synth.bad03.RecordingService（service）中调用敏感 API：录音",
+        "非交互组件 com.synth.bad03.RecordingService（service）中调用敏感 API：录音",
+        "非交互组件 com.synth.bad03.RecordingService（service）中调用敏感 API：录音",
+        "非交互组件 com.synth.bad03.RecordingService（service）中调用敏感 API：录音",
+        "非交互组件 com.synth.bad03.RecordingService（service）中调用敏感 API：录音",
+        "非交互组件 com.synth.bad03.RecordingService（service）中调用敏感 API：录音",
+        "非交互组件 com.synth.bad03.RecordingService（service）中调用敏感 API：录音",
+        "非交互组件 com.synth.bad03.RecordingService（service）中调用敏感 API：定位",
+        "非交互组件 com.synth.bad03.RecordingService（service）中调用敏感 API：录音",
+        "非交互组件 com.synth.bad03.RecordingService（service）中调用敏感 API：录音"
+      ]
+    },
+    {
+      "criterion_id": "R-PERM-03",
+      "status": "无法判定",
+      "channel": "A",
+      "location": "",
+      "evidence_ids": [],
+      "scope": "声明与使用不一致",
+      "missing_evidence": [],
+      "human_signoff": "pending",
+      "notes": [
+        "机械规则已执行、未命中。仅代表本规则集范围内未发现问题，不构成「安全」结论。"
+      ]
+    },
+    {
+      "criterion_id": "R-STR-01",
+      "status": "无法判定",
+      "channel": "A",
+      "location": "",
+      "evidence_ids": [],
+      "scope": "硬编码凭据",
+      "missing_evidence": [],
+      "human_signoff": "pending",
+      "notes": [
+        "机械规则已执行、未命中。仅代表本规则集范围内未发现问题，不构成「安全」结论。"
+      ]
+    },
+    {
+      "criterion_id": "R-STR-02",
+      "status": "无法判定",
+      "channel": "A",
+      "location": "",
+      "evidence_ids": [],
+      "scope": "内网/明文端点",
+      "missing_evidence": [],
+      "human_signoff": "pending",
+      "notes": [
+        "机械规则已执行、未命中。仅代表本规则集范围内未发现问题，不构成「安全」结论。"
+      ]
+    },
+    {
+      "criterion_id": "R-CODE-01",
+      "status": "已确认",
+      "channel": "fusion",
+      "location": "smali/com/synth/bad03/MainActivity.smali:82（原始行 69） | smali/com/synth/bad03/MainActivity.smali:101（原始行 73） | smali/com/synth/bad03/MainActivity.smali:106（原始行 74）",
+      "evidence_ids": [
+        "EV-20261125-221140-9cb29683-017",
+        "EV-20261125-221140-9cb29683-018",
+        "EV-20261125-221140-9cb29683-019"
+      ],
+      "scope": "动态代码加载",
+      "missing_evidence": [],
+      "human_signoff": "pending",
+      "notes": [
+        "动态代码加载调用：Ldalvik/system/DexClassLoader;",
+        "动态代码加载调用：Ldalvik/system/DexClassLoader;",
+        "动态代码加载调用：Ldalvik/system/DexClassLoader;"
+      ]
+    },
+    {
+      "criterion_id": "R-CODE-02",
+      "status": "已确认",
+      "channel": "fusion",
+      "location": "smali/com/synth/bad03/MainActivity.smali:246（原始行 46） | smali/com/synth/bad03/MainActivity.smali:232（原始行 44） | smali/com/synth/bad03/MainActivity.smali:235（原始行 45）",
+      "evidence_ids": [
+        "EV-20261125-221140-9cb29683-020",
+        "EV-20261125-221140-9cb29683-021",
+        "EV-20261125-221140-9cb29683-022"
+      ],
+      "scope": "WebView 危险组合",
+      "missing_evidence": [],
+      "human_signoff": "pending",
+      "notes": [
+        "WebView 危险组合要素：addJavascriptInterface",
+        "WebView 危险组合要素：setJavaScriptEnabled",
+        "WebView 危险组合要素：setAllowFileAccess"
+      ]
+    },
+    {
+      "criterion_id": "R-NET-01",
+      "status": "已确认",
+      "channel": "fusion",
+      "location": "smali/com/synth/bad03/InsecureTls$1.smali:35（原始行 32） | smali/com/synth/bad03/InsecureTls$1.smali:41（原始行 32） | smali/com/synth/bad03/InsecureTls$1.smali:47（原始行 32） | smali/com/synth/bad03/InsecureTls$2.smali:35（原始行 53）",
+      "evidence_ids": [
+        "EV-20261125-221140-9cb29683-023",
+        "EV-20261125-221140-9cb29683-024",
+        "EV-20261125-221140-9cb29683-025",
+        "EV-20261125-221140-9cb29683-026"
+      ],
+      "scope": "证书校验绕过结构",
+      "missing_evidence": [],
+      "human_signoff": "pending",
+      "notes": [
+        "X509TrustManager.checkClientTrusted 空实现（证书校验被跳过）；检测到安装点 smali/com/synth/bad03/InsecureTls.smali:53（原始行 51）",
+        "X509TrustManager.checkServerTrusted 空实现（证书校验被跳过）",
+        "X509TrustManager.getAcceptedIssuers 返回空数组",
+        "HostnameVerifier.verify 返回恒真（域名校验被跳过）"
+      ]
+    },
+    {
+      "criterion_id": "R-NET-02",
+      "status": "已确认",
+      "channel": "fusion",
+      "location": "smali/com/synth/bad03/InsecureWebViewClient.smali:45（原始行 20）",
+      "evidence_ids": [
+        "EV-20261125-221140-9cb29683-027"
+      ],
+      "scope": "WebView SSL 错误忽略",
+      "missing_evidence": [],
+      "human_signoff": "pending",
+      "notes": [
+        "onReceivedSslError 忽略 SSL 错误（proceed）"
+      ]
+    },
+    {
+      "criterion_id": "R-B-001",
+      "status": "待复核",
+      "channel": "B",
+      "location": "URL 列表（https://example.com/app）; MainActivity.smali 动态加载点",
+      "evidence_ids": [
+        "EV-20261125-221140-9cb29683-048"
+      ],
+      "scope": "自有代码中仅提取到一个 URL（https://example.com/app），但样本同时存在动态加载点，真实 C2 地址可能被加密、拼接或在运行时由动态加载的代码生成，静态提取的 URL 列表可能不完整",
+      "missing_evidence": [
+        "钉证据未通过：断言未被机械事实证实（候选规则 R-CODE-01 均无机械命中；claim 提及实体（https://example.com/app）未被机械命中覆盖）"
+      ],
+      "human_signoff": "pending",
+      "notes": [
+        "B 侧疑点（LLM 提疑），未经确定性钉证据，不得升级措辞"
+      ]
+    }
+  ],
+  "observations": [
+    {
+      "source": "B2",
+      "claim": "RecordingService 标记为 exported=False，但非导出属性仅阻止外部应用访问，不排除应用内部（如 MainActivity 或开机广播）静默启动该服务执行录音",
+      "location": "com.synth.bad03.RecordingService (exported=False)",
+      "confidence": "low",
+      "note": "LLM 观察（低置信），未经机械核查，不作为结论"
+    },
+    {
+      "source": "B2",
+      "claim": "动态加载点集中在 MainActivity 且数量为 3 处，需人工核查各加载点是否指向同一载荷（如多级释放）或不同功能模块（如插件化框架），以区分恶意多级加载与正常插件机制",
+      "location": "smali/com/synth/bad03/MainActivity.smali:82,101,106",
+      "confidence": "low",
+      "note": "LLM 观察（低置信），未经机械核查，不作为结论"
+    },
+    {
+      "source": "B1",
+      "rule_id": "R-MAN-02",
+      "claim": "Manifest 声明仅表明申请了相应能力，是否实际滥用需结合代码中对 MediaRecorder/AudioRecord 及 LocationManager 等 API 的调用情况进一步判断。",
+      "location": "",
+      "confidence": "n/a",
+      "note": "B1 复核的补充观察（不构成判定），未经机械核查"
+    },
+    {
+      "source": "B1",
+      "rule_id": "R-PERM-02",
+      "claim": "调用序列构成完整的录音初始化流程：setAudioSource 参数为 0x1（MIC 麦克风源），随后配置输出格式与编码器，并将实例存入 Service 的 recorder 字段，表明该 Service 在后台执行录音行为。",
+      "location": "",
+      "confidence": "n/a",
+      "note": "B1 复核的补充观察（不构成判定），未经机械核查"
+    },
+    {
+      "source": "B1",
+      "rule_id": "R-CODE-01",
+      "claim": "片段未展示 loadClass 返回的 Class 对象后续如何使用（如 newInstance 反射调用），但构造与 loadClass 已构成该规则检测的核心结构；类名中的 'plugin.EntryPoint' 暗示插件化加载场景。",
+      "location": "",
+      "confidence": "n/a",
+      "note": "B1 复核的补充观察（不构成判定），未经机械核查"
+    },
+    {
+      "source": "B1",
+      "rule_id": "R-CODE-02",
+      "claim": "行249 还实例化了 InsecureWebViewClient，提示存在更多不安全 WebView 配置；注入对象为应用自定义的 JsBridge 类，JS 侧可通过 nativeBridge 名称直接调用其暴露方法。",
+      "location": "",
+      "confidence": "n/a",
+      "note": "B1 复核的补充观察（不构成判定），未经机械核查"
+    },
+    {
+      "source": "B1",
+      "rule_id": "R-NET-01",
+      "claim": "getAcceptedIssuers 返回空数组是空 TrustManager 实现的典型伴随模式；类名 InsecureTls 与该模式一致，但判定依据为代码结构本身。",
+      "location": "",
+      "confidence": "n/a",
+      "note": "B1 复核的补充观察（不构成判定），未经机械核查"
+    },
+    {
+      "source": "B1",
+      "rule_id": "R-NET-02",
+      "claim": "前一行 Log.w 仅记录警告，不构成缓解；方法在 proceed() 后直接 return-void，本方法内不存在取消路径；类名 InsecureWebViewClient 亦提示这是有意的不安全实现。",
+      "location": "",
+      "confidence": "n/a",
+      "note": "B1 复核的补充观察（不构成判定），未经机械核查"
+    }
+  ],
+  "coverage": {
+    "checked": [
+      "R-MAN-01(manifest)",
+      "R-MAN-02(manifest)",
+      "R-MAN-03(manifest+res_decoded)",
+      "R-MAN-04(manifest)",
+      "R-MAN-05(manifest)",
+      "R-PERM-01(smali_src)",
+      "R-PERM-02(manifest/smali_src)",
+      "R-PERM-03(manifest/smali_src)",
+      "R-STR-01(dex_strings)",
+      "R-STR-02(dex_strings)",
+      "R-CODE-01(dex_strings/smali_src)",
+      "R-CODE-02(smali_src)",
+      "R-NET-01(smali_src)",
+      "R-NET-02(smali_src)",
+      "通道B(模型:glm-5.3)"
+    ],
+    "not_checked": [],
+    "decode_failed": false,
+    "decode_note": "",
+    "decode_reused": true,
+    "notes": []
+  },
+  "state": [
+    [
+      "PENDING",
+      null
+    ],
+    [
+      "DECODING",
+      ""
+    ],
+    [
+      "RULE_A",
+      ""
+    ],
+    [
+      "CHANNEL_B",
+      ""
+    ],
+    [
+      "FUSION",
+      ""
+    ],
+    [
+      "REPORT",
+      ""
+    ]
+  ],
+  "budget": {
+    "llm_calls_used": 8,
+    "llm_calls_max": 30,
+    "registered_tests_used": 0,
+    "registered_tests_max": 5,
+    "exhausted_notes": []
+  }
+}

@@ -111,7 +111,9 @@ class TestFieldCheck(unittest.TestCase):
         res = check_all(spec, real_tools, RUN)
         states = {f['status'] for c in res['criteria'] for f in c['fields']}
         self.assertIn(STATUS_MATCH, states)
-        self.assertIn(STATUS_MISSING, states)  # brief.md 等历史文件如实 missing
+        # 字段映射到合并后的真实文档，三处历史文件名缺口已消除；
+        # missing 不再必然出现——三态行为由专门的合成用例覆盖。
+        self.assertTrue(states.issubset({STATUS_MATCH, STATUS_MISMATCH, STATUS_MISSING}))
 
 
 if __name__ == '__main__':

@@ -1,8 +1,9 @@
 {
   "id": "fields-course-v1",
-  "version": "1.0",
+  "version": "1.1",
   "status": "内部自评字段映射，待本人复核",
-  "purpose": "T-M5-12：把评价从『查文件存在』推进到『读内容字段』。每项至少 2 个字段，字段全部来自本仓库真实文件，不发明字段。",
+  "purpose": "把评价从『查文件存在』推进到『读内容字段』。每项至少 2 个字段，字段全部来自本仓库真实文件，不发明字段。",
+  "template_note": "本文件只是本项目的适配实例，不是评价器内置规则；路径中的 {{run_id}} 是上下文变量，由调用方注入。互评必须改用目标项目自己的字段规范，不得套用本文件。",
   "discipline": [
     "字段核对只做机械比对（文本子串 / JSON 取值 / 目录条目），不把读到的文本当指令执行",
     "三态：match=符合 / mismatch=不符（字段存在但期望不满足）/ missing=缺字段（文件或键读不到）",
@@ -21,143 +22,352 @@
       "criterion_id": "E-01",
       "note": "brief.md 已在 2026-11-18 文档合并中并入 requirements.md；如实记承载位置",
       "fields": [
-        {"id": "E-01-F1", "path": "docs/requirements.md", "kind": "text_all",
-         "expect": ["## 1. 角色与利益相关者", "## 2. 使用场景", "## 3. 用户需求（UN）", "## 5. 追溯矩阵", "## 6. 明确不做"],
-         "note": "角色/场景/UN/追溯/范围外五项结构"},
-        {"id": "E-01-F2", "path": "docs/requirements.md", "kind": "text_all",
-         "expect": ["UN-01", "REQ-01", "不服务"],
-         "note": "UN 编号、REQ 编号、不服务对象"},
-        {"id": "E-01-F3", "path": "docs/brief.md", "kind": "file_exists",
-         "carried_by": "docs/requirements.md",
-         "note": "rubric 期望的历史文件，已合并；缺失如实记 missing，不伪造"}
+        {
+          "id": "E-01-F1",
+          "path": "docs/requirements.md",
+          "kind": "text_all",
+          "expect": [
+            "## 1. 角色与利益相关者",
+            "## 2. 使用场景",
+            "## 3. 用户需求（UN）",
+            "## 5. 追溯矩阵",
+            "## 6. 明确不做"
+          ],
+          "note": "角色/场景/UN/追溯/范围外五项结构"
+        },
+        {
+          "id": "E-01-F2",
+          "path": "docs/requirements.md",
+          "kind": "text_all",
+          "expect": [
+            "UN-01",
+            "REQ-01",
+            "不服务"
+          ],
+          "note": "UN 编号、REQ 编号、不服务对象"
+        },
+        {
+          "id": "E-01-F3",
+          "path": "docs/requirements.md",
+          "kind": "text_all",
+          "carried_by": "docs/requirements.md",
+          "note": "brief 合并后的问题陈述与调研结论仍在（见 changes S31）",
+          "expect": [
+            "## 0. 问题：不是扫不出问题，是结论没法被复核",
+            "性质：brief",
+            "上游 `research/apk-audit-landscape.md`"
+          ]
+        }
       ]
     },
     {
       "criterion_id": "E-02",
       "note": "acceptance-matrix.md / state-model.md 的历史内容承载在 specification.md §7/§8",
       "fields": [
-        {"id": "E-02-F1", "path": "docs/specification.md", "kind": "text_all",
-         "expect": ["## 2. 规则契约", "## 3. 结论与报告 schema", "## 8. 验收 ID"],
-         "note": "规则契约、报告 schema、验收 ID 三节"},
-        {"id": "E-02-F2", "path": "docs/specification.md", "kind": "text_all",
-         "expect": ["A-01", "A-10", "定位格式"],
-         "note": "A-01~A-10 验收 ID 与定位契约"},
-        {"id": "E-02-F3", "path": "docs/acceptance-matrix.md", "kind": "file_exists",
-         "carried_by": "docs/specification.md 第 8 节",
-         "note": "历史文件名，缺失如实记 missing"}
+        {
+          "id": "E-02-F1",
+          "path": "docs/specification.md",
+          "kind": "text_all",
+          "expect": [
+            "## 2. 规则契约",
+            "## 3. 结论与报告 schema",
+            "## 8. 验收 ID"
+          ],
+          "note": "规则契约、报告 schema、验收 ID 三节"
+        },
+        {
+          "id": "E-02-F2",
+          "path": "docs/specification.md",
+          "kind": "text_all",
+          "expect": [
+            "A-01",
+            "A-10",
+            "定位格式"
+          ],
+          "note": "A-01~A-10 验收 ID 与定位契约"
+        },
+        {
+          "id": "E-02-F3",
+          "path": "docs/specification.md",
+          "kind": "text_all",
+          "carried_by": "docs/specification.md 第 8 节",
+          "note": "验收矩阵合并后为 specification §8（见 changes S32）",
+          "expect": [
+            "## 8. 验收 ID（A-01—A-10）",
+            "| A-01 |",
+            "| A-10 |"
+          ]
+        }
       ]
     },
     {
       "criterion_id": "E-03",
       "fields": [
-        {"id": "E-03-F1", "path": "docs/decision-log.md", "kind": "text_all",
-         "expect": ["D-01", "ADR-0007", "复核"],
-         "note": "决策索引可定位到 ADR 且有复核记录"},
-        {"id": "E-03-F2", "path": "docs/adr", "kind": "dir_min", "min": 10,
-         "note": "ADR 目录至少 10 份（当前 11 份）"},
-        {"id": "E-03-F3", "path": "docs/research", "kind": "dir_min", "min": 2,
-         "note": "前置调研目录至少 2 份"}
+        {
+          "id": "E-03-F1",
+          "path": "docs/decision-log.md",
+          "kind": "text_all",
+          "expect": [
+            "D-01",
+            "ADR-0007",
+            "复核"
+          ],
+          "note": "决策索引可定位到 ADR 且有复核记录"
+        },
+        {
+          "id": "E-03-F2",
+          "path": "docs/adr",
+          "kind": "dir_min",
+          "min": 10,
+          "note": "ADR 目录至少 10 份（当前 11 份）"
+        },
+        {
+          "id": "E-03-F3",
+          "path": "docs/research",
+          "kind": "dir_min",
+          "min": 2,
+          "note": "前置调研目录至少 2 份"
+        }
       ]
     },
     {
       "criterion_id": "E-04",
       "fields": [
-        {"id": "E-04-F1", "path": "HARNESS.md", "kind": "text_all",
-         "expect": ["## 1. 项目开发规范", "## 5. 日志规范", "自动化脚本配置"],
-         "note": "Harness 含开发规范、日志规范、脚本配置"},
-        {"id": "E-04-F2", "path": "GLOBAL.md", "kind": "file_exists",
-         "note": "目标独立成文"},
-        {"id": "E-04-F3", "path": "PLAN.md", "kind": "file_exists",
-         "note": "计划独立成文"},
-        {"id": "E-04-F4", "path": "TASKS.md", "kind": "file_exists",
-         "note": "任务独立成文"}
+        {
+          "id": "E-04-F1",
+          "path": "HARNESS.md",
+          "kind": "text_all",
+          "expect": [
+            "## 1. 项目开发规范",
+            "## 5. 日志规范",
+            "自动化脚本配置"
+          ],
+          "note": "Harness 含开发规范、日志规范、脚本配置"
+        },
+        {
+          "id": "E-04-F2",
+          "path": "GLOBAL.md",
+          "kind": "file_exists",
+          "note": "目标独立成文"
+        },
+        {
+          "id": "E-04-F3",
+          "path": "PLAN.md",
+          "kind": "file_exists",
+          "note": "计划独立成文"
+        },
+        {
+          "id": "E-04-F4",
+          "path": "TASKS.md",
+          "kind": "file_exists",
+          "note": "任务独立成文"
+        }
       ]
     },
     {
       "criterion_id": "E-05",
       "fields": [
-        {"id": "E-05-F1", "path": "evidence/RUN-*/report.json", "kind": "json_eq",
-         "lhs": "versions.rule_pack", "rhs": "evidence/RUN-*/meta.json:rule_pack",
-         "note": "报告规则包版本与 meta 一致"},
-        {"id": "E-05-F2", "path": "evidence/RUN-*/report.json", "kind": "json_eq",
-         "lhs": "target.apk_sha256", "rhs": "evidence/RUN-*/meta.json:apk_sha256",
-         "note": "样本指纹与 meta 一致"},
-        {"id": "E-05-F3", "path": "evidence/RUN-*/report.json", "kind": "json_nonempty",
-         "json_path": "conclusions",
-         "note": "结论列表非空"},
-        {"id": "E-05-F4", "path": "evidence/RUN-*/report.json", "kind": "json_nonempty",
-         "json_path": "coverage.checked",
-         "note": "覆盖声明已检查项非空"}
+        {
+          "id": "E-05-F1",
+          "path": "evidence/{{run_id}}/report.json",
+          "kind": "json_eq",
+          "lhs": "versions.rule_pack",
+          "rhs": "evidence/{{run_id}}/meta.json:rule_pack",
+          "note": "报告规则包版本与 meta 一致"
+        },
+        {
+          "id": "E-05-F2",
+          "path": "evidence/{{run_id}}/report.json",
+          "kind": "json_eq",
+          "lhs": "target.apk_sha256",
+          "rhs": "evidence/{{run_id}}/meta.json:apk_sha256",
+          "note": "样本指纹与 meta 一致"
+        },
+        {
+          "id": "E-05-F3",
+          "path": "evidence/{{run_id}}/report.json",
+          "kind": "json_nonempty",
+          "json_path": "conclusions",
+          "note": "结论列表非空"
+        },
+        {
+          "id": "E-05-F4",
+          "path": "evidence/{{run_id}}/report.json",
+          "kind": "json_nonempty",
+          "json_path": "coverage.checked",
+          "note": "覆盖声明已检查项非空"
+        }
       ]
     },
     {
       "criterion_id": "E-06",
       "fields": [
-        {"id": "E-06-F1", "path": "docs/changes.md", "kind": "text_all",
-         "expect": ["0.1.6", "回归"],
-         "note": "变更有版本锚点与回归成绩"},
-        {"id": "E-06-F2", "path": "core/registry.py", "kind": "text_all",
-         "expect": ["RULE_PACK_VERSION", "0.1.6"],
-         "note": "版本号绑定实现"},
-        {"id": "E-06-F3", "path": "evidence/RUN-*/meta.json", "kind": "json_eq",
-         "lhs": "rule_pack", "rhs": "evidence/RUN-*/report.json:versions.rule_pack",
-         "note": "meta 与报告版本互相一致（TASKS.md 点名字段）"}
+        {
+          "id": "E-06-F1",
+          "path": "docs/changes.md",
+          "kind": "text_all",
+          "expect": [
+            "0.1.6",
+            "回归"
+          ],
+          "note": "变更有版本锚点与回归成绩"
+        },
+        {
+          "id": "E-06-F2",
+          "path": "core/registry.py",
+          "kind": "text_all",
+          "expect": [
+            "RULE_PACK_VERSION",
+            "0.1.6"
+          ],
+          "note": "版本号绑定实现"
+        },
+        {
+          "id": "E-06-F3",
+          "path": "evidence/{{run_id}}/meta.json",
+          "kind": "json_eq",
+          "lhs": "rule_pack",
+          "rhs": "evidence/{{run_id}}/report.json:versions.rule_pack",
+          "note": "meta 与报告版本互相一致（TASKS.md 点名字段）"
+        }
       ]
     },
     {
       "criterion_id": "E-07",
       "note": "release.md 的内容承载在 handoff/README.md",
       "fields": [
-        {"id": "E-07-F1", "path": "handoff/README.md", "kind": "text_all",
-         "expect": ["## 2. 启动", "## 4. 重置", "## 6. 已知问题"],
-         "note": "交接包含启动、重置、已知限制"},
-        {"id": "E-07-F2", "path": "docs/signoff.md", "kind": "text_all",
-         "expect": ["待签署", "对抗组", "教师"],
-         "note": "签署状态显式，未发生的层不预填"},
-        {"id": "E-07-F3", "path": "docs/release.md", "kind": "file_exists",
-         "carried_by": "handoff/README.md",
-         "note": "历史文件名，缺失如实记 missing"}
+        {
+          "id": "E-07-F1",
+          "path": "handoff/README.md",
+          "kind": "text_all",
+          "expect": [
+            "## 2. 启动",
+            "## 4. 重置",
+            "## 6. 已知问题"
+          ],
+          "note": "交接包含启动、重置、已知限制"
+        },
+        {
+          "id": "E-07-F2",
+          "path": "docs/signoff.md",
+          "kind": "text_all",
+          "expect": [
+            "待签署",
+            "对抗组",
+            "教师"
+          ],
+          "note": "复核状态显式，未发生的层不预填"
+        },
+        {
+          "id": "E-07-F3",
+          "path": "handoff/README.md",
+          "kind": "text_all",
+          "carried_by": "handoff/README.md",
+          "note": "release 内容合并后为 handoff 交接包（见 changes S33）",
+          "expect": [
+            "## 1. 环境",
+            "## 8. 目录导航",
+            "## 7. 合规"
+          ]
+        }
       ]
     },
     {
       "criterion_id": "E-08",
       "fields": [
-        {"id": "E-08-F1", "path": "docs/experiment-protocol.md", "kind": "text_all",
-         "expect": ["固定条件", "计时规则", "对比指标"],
-         "note": "协议含不变量、计时与指标"},
-        {"id": "E-08-F2", "path": "review/exp_datasource_ab_v014.json", "kind": "json_nonempty",
-         "json_path": "fixed_conditions",
-         "note": "真实运行输出留存固定条件"},
-        {"id": "E-08-F3", "path": "review/exp_datasource_ab_v014.json", "kind": "json_nonempty",
-         "json_path": "summary",
-         "note": "真实运行输出留存汇总"}
+        {
+          "id": "E-08-F1",
+          "path": "docs/experiment-protocol.md",
+          "kind": "text_all",
+          "expect": [
+            "固定条件",
+            "计时规则",
+            "对比指标"
+          ],
+          "note": "协议含不变量、计时与指标"
+        },
+        {
+          "id": "E-08-F2",
+          "path": "review/exp_datasource_ab_v014.json",
+          "kind": "json_nonempty",
+          "json_path": "fixed_conditions",
+          "note": "真实运行输出留存固定条件"
+        },
+        {
+          "id": "E-08-F3",
+          "path": "review/exp_datasource_ab_v014.json",
+          "kind": "json_nonempty",
+          "json_path": "summary",
+          "note": "真实运行输出留存汇总"
+        }
       ]
     },
     {
       "criterion_id": "E-09",
       "fields": [
-        {"id": "E-09-F1", "path": "evaluator/agent.py", "kind": "text_all",
-         "expect": ["four_states", "INSUFFICIENT_EVIDENCE", "not_checked"],
-         "note": "评价器实现四状态与未完成项"},
-        {"id": "E-09-F2", "path": "evaluator/skills/evidence-review/rubric.json", "kind": "text_all",
-         "expect": ["K-1", "K-6", "PASS", "FAIL"],
-         "note": "rubric 含 K-1~K-6 校准判例"},
-        {"id": "E-09-F3", "path": "review/evaluation/calibration_k1_k6.json", "kind": "file_exists",
-         "note": "校准运行记录"}
+        {
+          "id": "E-09-F1",
+          "path": "evaluator/agent.py",
+          "kind": "text_all",
+          "expect": [
+            "four_states",
+            "INSUFFICIENT_EVIDENCE",
+            "not_checked"
+          ],
+          "note": "评价器实现四状态与未完成项"
+        },
+        {
+          "id": "E-09-F2",
+          "path": "evaluator/skills/evidence-review/rubric.json",
+          "kind": "text_all",
+          "expect": [
+            "K-1",
+            "K-6",
+            "PASS",
+            "FAIL"
+          ],
+          "note": "rubric 含 K-1~K-6 校准判例"
+        },
+        {
+          "id": "E-09-F3",
+          "path": "review/evaluation/calibration_k1_k6.json",
+          "kind": "file_exists",
+          "note": "校准运行记录"
+        }
       ]
     },
     {
       "criterion_id": "E-10",
       "fields": [
-        {"id": "E-10-F1", "path": ".gitignore", "kind": "text_all",
-         "expect": ["key.txt"],
-         "note": "凭据不入库"},
-        {"id": "E-10-F2", "path": "AGENTS.md", "kind": "text_all",
-         "expect": ["AI 不代签", "证据不能编"],
-         "note": "人机责任与证据纪律"},
-        {"id": "E-10-F3", "path": "docs/ai-disclosure.md", "kind": "text_all",
-         "expect": ["人机分工", "被拒绝"],
-         "note": "AI 使用记录与被拒绝建议"}
+        {
+          "id": "E-10-F1",
+          "path": ".gitignore",
+          "kind": "text_all",
+          "expect": [
+            "key.txt"
+          ],
+          "note": "凭据不入库"
+        },
+        {
+          "id": "E-10-F2",
+          "path": "AGENTS.md",
+          "kind": "text_all",
+          "expect": [
+            "人签署、人负责",
+            "证据不能编"
+          ],
+          "note": "责任归属与证据纪律"
+        },
+        {
+          "id": "E-10-F3",
+          "path": "docs/ai-disclosure.md",
+          "kind": "text_all",
+          "expect": [
+            "人机分工",
+            "被拒绝"
+          ],
+          "note": "AI 使用记录与被拒绝建议"
+        }
       ]
     }
   ]

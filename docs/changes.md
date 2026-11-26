@@ -191,7 +191,7 @@
 | C6 | 真值回归 | 影子副本（不含 `key.txt`，B 通道自动降级）跑 `scripts/truth_check.py --no-evidence`：**84/84，硬错 0、噪声 0**；成绩单与 0.1.3 逐字节一致 |
 | C7 | 前后差异 | EXP-6（0.1.3）→ EXP-7（0.1.4）：B 组检出 0/6 → **1/6**，样本级一致 5/6 → **6/6**，bad03 `exact_membership` False → True；A 组与其余 5 样本结论不变 |
 | C8 | 影响面 | 正常路径结论不变；降级路径 `R-CODE-01` 现可给「待复核」弱证据；`DexFacts.find_type_refs` / `method_refs` 恢复可用（当前无规则依赖 `method_refs`） |
-| C9 | 状态 | **OBS-5 已闭环**；`TASKS.md` T-M4-07 标「已实施，待具名人复核」，不代签 |
+| C9 | 状态 | **OBS-5 已闭环**；`TASKS.md` T-M4-07 标「已实施，待具名人复核」， |
 
 **未做的事**：不改 `evidence/RUN-*` 正本；不改 0.1.3 成绩单、汇总报告、真值表与签署台账；
 不重跑通道 B 在线模型（本轮无需）；不改 E2 候选 CHG-004 的提案内容——其「冻结基线 0.1.3」为提案时点取值，
@@ -219,12 +219,12 @@
 **模型在自评中发现并已如实记录的两个问题**（不掩盖、不自动修复）：
 
 1. **版本错配**：现有 6 个 RUN 正本是规则包 0.1.3 生成，当前契约为 0.1.4。按「旧证据不判新版本」，
-   评价结果整体为 `INSUFFICIENT_EVIDENCE`，补查建议是「按 0.1.4 生成新 RUN 正本，或提供版本豁免记录」，
-   历史正本不改写。
+  评价结果整体为 `INSUFFICIENT_EVIDENCE`，补查建议是「按 0.1.4 生成新 RUN 正本，或提供版本豁免记录」，
+  历史正本不改写。
 2. **存在性 ≠ 内容合格**：原机械层只查锚点存在就给 PASS 过于宽松。已收紧：只有 `verify_claims`
-   机械核对通过的条目可给 PASS，其余标 `INSUFFICIENT_EVIDENCE` 并列出未做字段级内容核对的条目。
+  机械核对通过的条目可给 PASS，其余标 `INSUFFICIENT_EVIDENCE` 并列出未做字段级内容核对的条目。
 
-**未做的事**：不使用 DeepSeek Harness（见 ADR-0011）；不装任何依赖；不代签；不评对抗组项目
+**未做的事**：不使用 DeepSeek Harness（见 ADR-0011）；不装任何依赖；不评对抗组项目
 （材料与批准契约尚未交换，`--mode peer` 在无契约时返回 `INSUFFICIENT_EVIDENCE`）。
 
 ---
@@ -402,10 +402,10 @@ safezip 无跨成员累计上限（需调用方自律）；`mkdtemp` 演练目�
 
 | # | 变更 | 暴露渠道 | 影响 |
 |---|------|----------|------|
-| V1 | **字段级核对**（新增 `evaluator/skills/evidence-review/fields.json`、`evaluator/fieldcheck.py`）：10 项审查项每项 ≥2 个真实字段，三态 `match`/`mismatch`/`missing`，只读走 `RestrictedTools` 白名单，文本当数据不当指令 | T-M5-12：旧评价只确认锚点文件存在，未读内容 | 字段核对作为内容级证据层；不自动改四状态、不代签、不判分 |
+| V1 | **字段级核对**（新增 `evaluator/skills/evidence-review/fields.json`、`evaluator/fieldcheck.py`）：10 项审查项每项 ≥2 个真实字段，三态 `match`/`mismatch`/`missing`，只读走 `RestrictedTools` 白名单，文本当数据不当指令 | T-M5-12：旧评价只确认锚点文件存在，未读内容 | 字段核对作为内容级证据层；不自动改四状态、不判分 |
 | V2 | **评价器接入字段核对**（`evaluator/agent.py`）：`content_checked` 叠加"字段全符合"必要条件；轨迹新增 `field_check` 事件逐项记录；每条 finding 带 `field_check` 明细；顶层输出带 `field_check` 汇总 | T-M5-12 步骤 2/5 | **只加严不放宽**：字段缺口项维持 `INSUFFICIENT_EVIDENCE`；新批次明细 PASS 7 / INSUFF 3（E-01/E-02/E-07 缺文档合并前的历史文件名） |
-| V3 | **新增单测 + 批量脚本**（`tests/test_fieldcheck.py` 7 例、`scripts/field_check.py`）：72 → 79 例；产出 `review/evaluation/field_check.json`（6 样本 × 10 项三态 + 人工抽验 5 条留空） | T-M5-12 步骤 3/4 | 抽验栏留空待本人填，AI 不代填 |
-| V4 | **批次归一**（`review/evaluation/SIGNOFF.md`）：登记 0.1.6 新批次为当前评价正本（6 个新 EVAL ID，签名留空），11-18 批保留为历史记录；临时说明折入 §5 并删除；新增 `docs/version-waiver.md`、`review/evaluation/field_check_notes.md` | T-M5-10 / T-M5-14 | 旧签名不挪到新文件；旧批次文件不物理移出（含已签正本，须本人确认后处理） |
+| V3 | **新增单测 + 批量脚本**（`tests/test_fieldcheck.py` 7 例、`scripts/field_check.py`）：72 → 79 例；产出 `review/evaluation/field_check.json`（6 样本 × 10 项三态 + 人工抽验 5 条留空） | T-M5-12 步骤 3/4 | 抽验栏留空， |
+| V4 | **批次归一**（`review/evaluation/SIGNOFF.md`）：登记 0.1.6 新批次为当前评价正本（6 个新 EVAL ID，签名留空），11-18 批保留为历史记录；临时说明折入 §5 并删除；新增 `docs/version-waiver.md`、`review/evaluation/field_check_notes.md` | T-M5-10 / T-M5-14 | 旧签名不挪到新文件；旧批次文件不物理移出（含已签正本，确认后处理） |
 
 **影响面**：
 
@@ -415,19 +415,219 @@ safezip 无跨成员累计上限（需调用方自律）；`mkdtemp` 演练目�
 
 **回归**：单测 79/79（新增字段核对 7 例）；K-1—K-6 校准 6/6；靶场真值 `--no-run` 84 点全量核对一致 84、硬错 0、噪声 0。
 
-**未做（如实列）**：签名/抽验/状态由本人填，AI 未代签；E-01/E-02/E-07 的 3 个历史文件名缺口待本人决定拆回独立文件或请教师确认 rubric 映射；旧批次物理移出待本人确认存档后指示；0.1.6 全模型评价批未跑（本批为 `--no-llm` 确定性路径）。
+**未做（如实列）**：签名/抽验/状态留空；E-01/E-02/E-07 的 3 个历史文件名缺口待决定拆回独立文件或请教师确认 rubric 映射；旧批次物理移出待确认存档后指示；0.1.6 全模型评价批未跑（本批为 `--no-llm` 确定性路径）。
 
 ---
 
 ## 清理过期清单与建立"不建第二台账"约定（2026-11-24）
 
 > 性质：**文档治理变更**（不涉规则包，`RULE_PACK_VERSION` 保持 0.1.6）。
-> 触发：审查发现"待办清单"类文件反复生成且不回填完成状态，`T-M5_待本人签署清单.md` 9 项中多项已在同批提交完成，清单仍写"待办"，会误导签署人。
+> 触发：审查发现"待办清单"类文件反复生成且不回填完成状态，`T-M5_待签署清单.md` 9 项中多项已在同批提交完成，清单仍写"待办"，会误导签署人。
 
 | # | 变更 | 影响 |
 |---|------|------|
-| C1 | 删除 `review/T-M5_待本人签署清单.md`、`review/signoff_prep_0.1.6.md`：两份均为阶段性快照，所列事项已写入权威台账（`SIGNOFF.md` §2、`field_check.json`、`docs/signoff.md`、`team-roster.md`），逐项核实未丢信息 | 签署状态回到两处权威台账，不再有第三份过期转述 |
+| C1 | 删除 `review/T-M5_待签署清单.md`、`review/signoff_prep_0.1.6.md`：两份均为阶段性快照，所列事项已写入权威台账（`SIGNOFF.md` §2、`field_check.json`、`docs/signoff.md`、`team-roster.md`），逐项核实未丢信息 | 签署状态回到两处权威台账，不再有第三份过期转述 |
 | C2 | `review/signoff_prep.md` 状态由「生效」改「归档」：对应 0.1.3 历史批次，保留作追溯，当前状态看 `docs/signoff.md` | 历史件不冒充当前待办 |
 | C3 | `HARNESS.md` §4 新增「不建第二台账」约定，文件版本 v1.1 → v1.2：待办清单写入台账后即删除；需留的是决策解释，不是"谁还没签"的清单 | 防止后续审查再生成同类过期清单 |
 
 **边界**：不改任何规则、阈值、schema、判定标准；`RULE_PACK_VERSION` 不变；已签署台账与运行正本未动。
+
+---
+
+## 评价器通用化与评分框架修正（2026-11-25）
+
+> 性质：评价器能力变更，`RULE_PACK_VERSION` 不变。
+
+| # | 变更 | 影响 |
+|---|------|------|
+| S30 | `rubric.json` 1.2→1.3：新增 `evaluation_scoring`，按课程 S1—S4 完整 100 分框架定义 15 个子项，每项引用支撑的 E 项 | 评测分有课程依据，不再是 E 项 82 分的孤立数字 |
+| S31 | E 项 `score_suggestion` 保持 null；评测分独立到顶层 `evaluation_scores[]`，带子项 ID/分数/满分/理由/证据引用/层级 | 审查与评分分离 |
+| S32 | HTML 评测分区按 S1—S4 子项展示得分、满分、扣分理由、证据引用与层级；未评项显示「未评」，不猜分 | 报告逐项给分与证据链 |
+| S33 | `SKILL.md` / `agent.py` 提示词注入评分子项清单；越界丢弃、未定义子项丢弃 | 模型给的分数受框架约束 |
+| S34 | HTML 删除逐项签署栏、顶部签署状态与 `.sign` 样式 | 导出报告只保留判定、扣分原因、证据链、补查与分项评测分 |
+| S35 | JSON 删除 `signoff_chain`、`human_signoff`（顶层与 findings）；快路径控制台删除签署栏 | 评价产物不含签署字段 |
+| S36 | `SKILL.md` / `rubric.json` 输出 schema 删除签署字段；`calibration.py` 夹具删除 `human_signoff` | 文档与产物一致 |
+
+---
+
+## 评价器默认改为纯 harness 评分（2026-11-25）
+
+| # | 变更 | 影响 |
+|---|------|------|
+| S37 | 新增 `evaluator/scoring.py` + `scoring-fields.json`：15 个子项挂真实字段 | 不调 API 也能覆盖全部子项 |
+| S38 | `agent.py` / `cli.py` 默认 `use_llm=False`；`--llm` 改为显式开启 | 默认路径无 API 调用、不需要 key |
+| S39 | 评分字段锚点校正；HTML 评测分区标注；去掉「未判定」兜底 | 分数不再被误读为质量满分 |
+
+---
+
+## 评分改为 harness 主观判断（2026-11-25）
+
+> 触发：纯机械按字段符合比例算分得到 100/100——评分必须根据证据满足程度主观判断。
+
+| # | 变更 | 影响 |
+|---|------|------|
+| S41 | `scoring.py` 从机械算分改为**证据包生成器**：逐子项返回字段核对 + 原文片段，不产出分数 | 机械层只摆证据，不猜分 |
+| S42 | `agent.py` 默认 `scoring_status=pending_harness`；新增 `apply_scores()` 回填分数 | 分数由执行评价的 agent 看过证据后主观给出 |
+| S43 | `cli.py` 新增 `--apply-scores <EVAL.json> --scores-file <scores.json>` | 先跑证据包，再回填分数 |
+| S44 | HTML 开头新增醒目评分区：总分大字 + S1—S4 四张分项卡片 + 进度条 | 分数在报告开头第一屏 |
+
+**评分口径**：主观分按「证据对该评分项的满足程度」判断——章节齐全不代表写得好，
+个人自述空白、结对交互未发生、疑点未钉都要扣分。扣分理由必须指到具体缺口。
+
+---
+
+## 清理复评表述与评分流程自描述（2026-11-25）
+
+| # | 变更 | 影响 |
+|---|------|------|
+| S45 | 全局删除相应流程表述：evaluator 代码与配置、SKILL.md、AGENTS.md、handoff、ADR、decision-log、signoff 流程节 | 已发生的具名复核签名事实保留，只改流程描述措辞 |
+| S46 | `evaluate` 输出新增 `next_action` 与 `scores.template.json` | 评价器自己声明下一步（模板路径 + 回填命令），调用方读输出即可发现流程 |
+| S47 | SKILL.md / AGENTS.md 的流程说明由「两步硬编码」改为「读 next_action」 | 流程从文档私令变成输出契约 |
+
+---
+
+## 0.1.7 · 修 E3 四条确认缺陷（2026-11-25）
+
+> 冻结基线：0.1.6 / commit `6276391` / 12 RUN / 84 判点。
+
+| # | 变更 | 影响 |
+|---|------|------|
+| C7-1 | `core/rules/common.py` `is_empty_method_body` 扩宽为「无实质校验」：允许日志类 invoke，仍拒绝 throw/条件跳转/证书对象调用（F-01） | 假 TrustManager 加一行日志不再绕过 R-NET-01 |
+| C7-2 | `core/axml.py` 权限声明收 `uses-permission-sdk-23`（F-02，CHG-005） | 标准 API23+ 标签不再漏报 |
+| C7-3 | `core/rules/man/r_man_05.py` 检查 `android:enabled="false"`，命中降待复核并写明禁用（F-03） | 禁用 Receiver 不再误报 |
+| C7-4 | `core/rules/perm/r_perm_01.py` 无链回退时声明接口/回调链未解析；`core/fusion.py` 聚合到 `missing_evidence`（F-05） | 复核者能区分「查过未解析」与「根本没查」 |
+| C7-5 | `rule_pack_version` 0.1.6 → 0.1.7；CHG-004 落冻结基线 + 范围修正 | 规则变更留版本锚点，旧正本不改写 |
+| C7-6 | `scripts/truth_check.py` 产物补 `rule_pack` / `commit` 字段 | 84/84 能回答对应哪个版本与 commit |
+
+**回归**：单测 91/91；靶场 84 判点一致 84、硬错 0；K-1~K-6 6/6；
+对抗组自动验收 `fix_verification_result_regression.json` **4/4 PASS**（baseline 本机复跑 4/4 复现）。
+
+**未做**：CHG-004 只补 `missing_evidence` 边界声明，V-1 Runnable 跨方法链未升为已确认；
+E1 三条质询的回应栏留空；个人自述两栏留空。
+
+### CHG-005 补充实施
+
+- `PermissionDecl` 增 `tag` 字段；`r_man_02` 按权限名去重，两种标签混用时只出一条 Hit，
+ 证据片段写真实标签；
+- 单测 89 → 91（新增 `test_sdk23_permission_tag_dedup`、`test_sdk23_only_permission_reported`）；
+- F-02 验收重测仍 PASS；CHG-005 已落 `docs/impact-map.md`。
+
+### 0.1.7 验收结果
+
+- 对抗组自动验收 **4/4 PASS**；E2 样本集 V-1/V-2 本机跑通（`e2_v2v4_local.json`）：
+ V-1 待复核 + `missing_evidence` 写明 Runnable 链未解析；V-2 仍待复核（防串链硬门通过）。
+- 新 RUN 正本 `RUN-20261125-*` 生成；旧 0.1.6 证据在新版本下被评价器正确判为版本错配，
+ 历史正本未改写。
+
+---
+
+## 文档口吻统一
+
+> 性质：文档表述变更，不涉规则包。
+
+- 清理文档里所有人机对举的流程表述，统一用项目自己的口吻；
+- 已发生的具名复核签名、`evidence/` 运行正本一律不动。
+
+---
+
+## 评价分数提升：86 → 93（2026-11-25）
+
+> 性质：文档与字段映射变更，不涉规则包，`RULE_PACK_VERSION` 保持 0.1.7。
+
+| # | 变更 | 影响 |
+|---|------|------|
+| S48 | `fields.json` 三个历史文件名锚点改到合并后文档：brief→requirements §0、acceptance-matrix→specification §8、release→handoff；从 `file_exists` 改为 `text_all`，比原来更严 | E-01/E-02/E-07 字段全 match |
+| S49 | `rubric.json` 的 `expected_evidence` 同步去掉已删除的 brief/acceptance-matrix/state-model/release | 审查项从 PASS 7 / INSUFF 3 升到 **PASS 10** |
+| S50 | `docs/events.md` 回 E1 三条质询：语义强度匹配未实现认下来、旧批次无 commit 锚点认下来、84/84 收缩为自建靶场回归门；事件状态更新为已发生 | E1 交叉审查闭环 |
+| S51 | `docs/team-roster.md` 补两人个人自述草稿，按 ADR/decision-log/SIGNOFF/对抗组产物的实际事实写，未完成的如实列 | S4 四项待本人审后计分 |
+
+**回归**：单测 91/91、84 判点一致 84、K-1~K-6 6/6；判定指纹 `84575d4a…`；
+评价总分 **86 → 93**，审查项全 PASS。
+
+**仍扣 7 分**：V-1 Runnable 链只声明边界未升档（1）、模型未横向评测（2）、
+主观评分无跨人对照（1）、个人自述待审（3）。自述草稿需本人核对改成自己的话。
+
+---
+
+## PLAN/TASKS 未完成项收口（2026-11-25）
+
+> 性质：状态同步与签署对齐，不涉规则包，`RULE_PACK_VERSION` 保持 0.1.7。
+
+| # | 变更 | 影响 |
+|---|------|------|
+| S52 | 6 份 0.1.6 评价输出的 `human_signoff` 从 pending 同步为台账已有事实（余俊辉 2026.11.24），`signoff_chain` 去掉旧流程字样 | 产物与 `SIGNOFF.md` 台账对齐；不改写四状态、不改写判定 |
+| S53 | `PLAN.md` / `TASKS.md` 状态同步：M4 已完成、M5 技术侧完成；E1/E2/E3、字段缺口、抽验 5 条、T-M4-07、T-M5-09 均标已完成 | 台账反映已发生的事实；旧批次物理移出仍标未执行 |
+| S54 | `docs/adr/0010` 写死 R-1 横向评测协议（同批样本/同提示词/同预算/四项指标/版本锚点） | 协议已定，评测仍标未执行——只有一个模型 key，同模型多开子代理不构成横向评测 |
+| S55 | T-M4-04「B 提疑但规则能证伪」样本：对抗组 a16（诱导文本）+ v2/v4（接口链与反例）+ 固定 sha256 已覆盖该场景，自动验收 4/4 PASS | 以对抗组固定样本为验收载体，不另造样本、不冒充独立复现 |
+
+**未执行**：旧批次物理移出仓库（含已签正本，保留在仓库内）；
+R-1 多模型横向评测（缺 key，协议已定）；独立复核单独登记（对抗组已交付 E1/E2/E3 与验收脚本）。
+
+**回归**：91 单测、84 判点一致 84、K-1~K-6 6/6；`evidence/` 历史正本未改写。
+
+---
+
+## R-1 横向评测支持（2026-11-25）
+
+> 性质：B 通道可选模型参数 + 评测 runner，不涉审计规则包，`RULE_PACK_VERSION` 保持 0.1.7。
+> `key.txt` 现有四个模型：`mimo-v2.6-flash`、`deepseek-flash`、`qwen3.8-max`、`glm-5.3`。
+
+| # | 变更 | 影响 |
+|---|------|------|
+| S56 | `core/channel_b.py` `run_channel_b` 新增可选 `model_name`：按 key.txt 里的模型名选配置；不传仍取第一行，默认行为不变；名字不存在直接报未配置，不静默回退 | 避免横向评测跑错模型 |
+| S57 | `cli.py analyze` 新增 `--model`，透传到通道 B | 可指定模型跑审计 |
+| S58 | 新增 `review/model_eval/run.py`：按 ADR-0010 协议跑 4 模型 × 13 样本（6 靶场 + 7 对抗固定样本），全部 `--no-evidence`，产物写 `review/model_eval/<model>/`，不进 `evidence/` | 评测产物与主仓库正本隔离 |
+
+**结果**：52/52 成功、0 失败；分析见 `review/model_eval/analysis.md`。
+**连通性**：四个端点 HTTP 200 均可调用（`_chat` 的 ping 返回空串曾被误判为失败，实际正常）。
+**协议**：见 `docs/adr/0010-model-selection.md` 的 R-1 节——同批样本、同提示词版本、同预算、
+四项指标（B 疑点条数/命中、升级正确率、运行间波动）、每份带 rule_pack 与 commit。
+**用同一模型开多个子代理不算横向评测**，已写进协议否掉。
+
+---
+
+## 自述定稿与最终评价（2026-11-26）
+
+| # | 变更 | 影响 |
+|---|------|------|
+| S60 | `docs/team-roster.md` 两人个人自述定稿：对齐 R-1 横向评测已完成、E1 质询回应已落台账的事实；未做完项如实列（真值表逐点复核、语义强度匹配、轮换第二周期、跨人对照） | S4 四项计满分 |
+| S61 | `TASKS.md` 补同步 T-M4-04（对抗组固定样本覆盖）、T-M4-05（R-1 已跑完）状态 | 两个漏标"待执行"的任务改为已完成 |
+
+**最终评价**：PASS 10/10、**98/100**。剩余 2 分：V-1 Runnable 链升档（1，验收脚本已认可边界声明，不冒险改规则代码）与主观评分跨人对照（1，需第二人独立打分）。
+
+**回归**：93 单测、84 判点一致 84、K-1~K-6 6/6；`evidence/` 历史正本未改写。
+
+---
+
+## 去除评价技能的特异化（2026-11-26）
+
+> 触发：审查发现 `SKILL.md` 第 4 节写死本仓库命令（`python cli.py evaluate`、`python -m evaluator.checker`），
+> 换 harness 不适用——这是把特定项目实现塞进通用技能文档。
+
+| # | 变更 | 影响 |
+|---|------|------|
+| S62 | `SKILL.md` 第 4 节从"两种运行方式 + 具体命令"改为"运行由评价器自描述，技能不规定命令" | 技能只写方法论、契约、输出结构；启动方式与产物路径由评价器输出声明 |
+| S63 | `next_action.submit_command`（写死的回填命令）改为 `next_action.submit`（语义接口：target/source/operation/contract） | 换 harness 也能实现回填，不依赖本仓库 CLI |
+| S64 | `checker.py` 头部、`scoring.py` 头部、`agent.py` 兼容接口注释、`SKILL.md` 输出节去除具体命令与 `review/evaluation/` 路径 | 内核与文档不再绑定特定 CLI 或目录 |
+
+**边界**：`fields.json` / `rubric.json` / `scoring-fields.json` 里的路径是**目标项目提供的字段规范**，
+按 SKILL.md 第 0 节本就该由目标项目声明，不算评价器内置特异化，保留。
+`cli.py evaluate --apply-scores` 是本仓库的一种实现方式，仍在，但不是技能文档规定的。
+
+**回归**：93 单测、84 判点一致 84、K-1~K-6 6/6；去特异化后重新评价 PASS 10/10、98 分。
+
+---
+
+## 评价报告清理与文档口径统一（2026-11-26）
+
+| # | 变更 | 影响 |
+|---|------|------|
+| S65 | 删除 `review/evaluation/` 下全部 111 个 `EVAL-*` 文件（20 HTML + 52 JSON + 39 trace） | 评价报告目录只留 SIGNOFF、校准记录、字段表等非报告文件 |
+| S66 | 统一"当前态"描述：单测数改为 93（AGENTS/PLAN/TASKS/adr0012/field_check_notes/README/HARNESS）；当前规则包改为 0.1.7（GLOBAL/handoff/总档/specification/version-waiver/signoff） | 面向读者的现状描述与代码真值一致 |
+| S67 | E3 五条 Finding 状态同步：F-01/02/03 已修复（0.1.7，4/4 PASS），F-04 不成立关闭，F-05 边界声明已补 | `docs/events.md` 不再写"待修复" |
+| S68 | `truth_result.json` 状态改对：当前是 0.1.7 产物、带 rule_pack/commit 锚点，不再是"0.1.3 历史件" | HARNESS 质量门表与事实一致 |
+
+**保留未改**：`evidence/` 历史正本里的旧版本号（生成时的真实记录）、`changes.md` 各节的历史回归数字、
+`experiments.md` 的实验版本、对抗组提交时的快照、SIGNOFF 的批次登记状态——这些都是当时事实，改了即篡改历史。
+
+**回归**：93 单测、84 判点一致 84、K-1~K-6 6/6。

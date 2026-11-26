@@ -1,15 +1,19 @@
 # -*- coding: utf-8 -*-
-"""fieldcheck.py · 字段级内容核对（T-M5-12）
+"""fieldcheck.py · 字段级机械核对（通用内核，与目标项目无关）
 
-把评价从「查文件是否存在」推进到「读文件里的真实字段」。只读、机械比对：
-文本子串 / JSON 取值 / 目录条目数 / 文件存在。读到的内容一律当数据处理，
-不执行、不升级结论、不产生分数、不代签。
+字段规范决定「看什么文件、什么字段」，本模块只实现通用比对方式：
+text_all / json_eq / json_nonempty / dir_min / file_exists。
 
-三态：match=符合 / mismatch=不符（字段在但期望不满足）/ missing=缺字段（读不到）。
+路径中的 {{name}} 是可选上下文变量（如 {{snapshot}}），由调用方提供；
+变量缺失如实判 missing，不套默认值、不假设任何项目结构。
+
+三态：match=符合 / mismatch=不符（字段在但期望不满足）/ missing=缺字段或缺变量。
+读到的内容一律当数据处理，不执行、不升级结论、不产生分数、不代签。
 """
 
 import json
 import os
+import re
 
 STATUS_MATCH = 'match'
 STATUS_MISMATCH = 'mismatch'
@@ -19,20 +23,60 @@ VALID = (STATUS_MATCH, STATUS_MISMATCH, STATUS_MISSING)
 FIELDS_PATH = os.path.join(os.path.dirname(__file__), 'skills', 'evidence-review',
                            'fields.json')
 
+_VAR_RE = re.compile(r'\{\{\s*([A-Za-z_][A-Za-z0-9_]*)\s*\}\}')
+
 
 def load_fields(path=None):
     with open(path or FIELDS_PATH, 'r', encoding='utf-8') as f:
         return json.load(f)
 
 
-def _resolve(tools, rel, run_id):
-    """把 RUN-* 模板替换成具体 run_id，再走 tools 白名单校验。"""
-    if not isinstance(rel, str):
-        return None, rel
-    expanded = rel.replace('RUN-*', run_id)
+def expand_template(rel, context=None):
+    """展开 {{name}} 占位符，返回 (展开路径, 缺失变量名列表)。
+
+    无占位符时原样返回；变量缺失返回 (None, 缺失名)，由调用方判 missing。
+    绝对路径与 .. 穿越同样返回 None，不读取白名单外内容。
+    """
+    if not isinstance(rel, str) or not rel:
+        return None, []
+    ctx = context or {}
+    missing = []
+
+    def sub(m):
+        name = m.group(1)
+        if name in ctx and ctx[name] not in (None, ''):
+            return str(ctx[name])
+        missing.append(name)
+        return ''
+
+    expanded = _VAR_RE.sub(sub, rel)
+    if missing:
+        return None, missing
+    # 兼容存量字段规范里的 RUN-* 占位符（等价于 {{run_id}}），
+    # 不强制所有旧规范立刻改写；新规范统一用 {{name}}。
+    if 'RUN-*' in expanded and 'run_id' in ctx:
+        expanded = expanded.replace('RUN-*', str(ctx['run_id']))
+    expanded = expanded.replace('\\', '/').lstrip('/')
+    if expanded.startswith('/') or '..' in expanded.split('/'):
+        return None, ['路径越界']
+    return expanded, []
+
+
+def make_context(run_id=None, context=None):
+    """兼容旧调用：run_id 只是可注入的变量之一，不是本模块的前提。"""
+    ctx = dict(context or {})
+    if run_id is not None:
+        ctx.setdefault('run_id', run_id)
+    return ctx
+
+
+def _resolve(tools, rel, context):
+    """返回 (绝对路径, 展开后的相对路径, 缺失变量名)。"""
+    expanded, missing = expand_template(rel, context)
+    if expanded is None:
+        return None, None, missing
     full = tools._safe_path(expanded)
-    # 白名单拒绝时不把展开路径暴露到产物/轨迹里，只记 None。
-    return full, (expanded if full is not None else None)
+    return full, (expanded if full is not None else None), []
 
 
 def _read_text(full):
@@ -69,17 +113,22 @@ def _nonempty(value):
     return True
 
 
-def check_field(field, tools, run_id):
-    """核对单个字段定义，返回 {id, path, kind, status, observed, note}。
+def check_field(field, tools, run_id=None, context=None):
+    """核对单字段，返回 {id, path, kind, status, observed, note}。
 
-    tools 为 RestrictedTools 实例：路径越界一律 missing，不读取白名单外文件。
+    tools 为受限 reader：路径越界一律 missing，不读取白名单外文件。
+    run_id 仅为兼容旧调用保留，等价于注入 {{run_id}} 变量；不传也能工作。
     """
     out = {'id': field.get('id'), 'path': field.get('path'),
            'kind': field.get('kind'), 'status': STATUS_MISSING,
            'observed': None, 'note': field.get('note')}
     kind = field.get('kind')
-    full, expanded = _resolve(tools, field.get('path'), run_id)
+    ctx = make_context(run_id, context)
+    full, expanded, missing_vars = _resolve(tools, field.get('path'), ctx)
     out['path_expanded'] = expanded
+    if missing_vars:
+        out['observed'] = {'missing_context': missing_vars}
+        return out
 
     try:
         if kind == 'file_exists':
@@ -101,8 +150,7 @@ def check_field(field, tools, run_id):
             if full is None or not os.path.isdir(full):
                 out['status'] = STATUS_MISSING
             else:
-                n = len([e for e in os.listdir(full)
-                         if not e.startswith('.')])
+                n = len([e for e in os.listdir(full) if not e.startswith('.')])
                 out['observed'] = {'entries': n, 'min': field.get('min')}
                 out['status'] = (STATUS_MATCH if n >= field.get('min', 0)
                                  else STATUS_MISMATCH)
@@ -140,7 +188,10 @@ def check_field(field, tools, run_id):
                             out['observed'] = {'rhs_spec': rhs_spec}
                             return out
                         rhs_path, rhs_dotted = rhs_spec.split(':', 1)
-                        rhs_full, _ = _resolve(tools, rhs_path, run_id)
+                        rhs_full, _, rhs_missing = _resolve(tools, rhs_path, ctx)
+                        if rhs_missing:
+                            out['observed'] = {'rhs_missing_context': rhs_missing}
+                            return out
                         rhs_data = _read_json(rhs_full)
                         if rhs_data is None:
                             out['status'] = STATUS_MISSING
@@ -152,8 +203,7 @@ def check_field(field, tools, run_id):
                             out['observed'] = {'rhs_found': False}
                             return out
                     out['observed'] = {'lhs': lhs, 'rhs': rhs}
-                    out['status'] = (STATUS_MATCH if lhs == rhs
-                                     else STATUS_MISMATCH)
+                    out['status'] = (STATUS_MATCH if lhs == rhs else STATUS_MISMATCH)
         else:
             out['observed'] = {'error': '未知 kind：%s' % kind}
             out['status'] = STATUS_MISSING
@@ -163,9 +213,9 @@ def check_field(field, tools, run_id):
     return out
 
 
-def check_criterion(criterion, tools, run_id):
-    """核对一项审查项，返回三态汇总。"""
-    rows = [check_field(f, tools, run_id) for f in criterion.get('fields', [])]
+def check_criterion(criterion, tools, run_id=None, context=None):
+    ctx = make_context(run_id, context)
+    rows = [check_field(f, tools, context=ctx) for f in criterion.get('fields', [])]
     counts = {s: sum(1 for r in rows if r['status'] == s) for s in VALID}
     return {
         'criterion_id': criterion.get('criterion_id'),
@@ -180,12 +230,12 @@ def check_criterion(criterion, tools, run_id):
     }
 
 
-def check_all(spec, tools, run_id):
-    """核对全部审查项；spec 为 fields.json 内容。"""
+def check_all(spec, tools, run_id=None, context=None):
+    ctx = make_context(run_id, context)
     return {
         'fields_id': spec.get('id'),
         'fields_version': spec.get('version'),
-        'run_id': run_id,
-        'criteria': [check_criterion(c, tools, run_id)
+        'context': ctx,
+        'criteria': [check_criterion(c, tools, context=ctx)
                      for c in spec.get('criteria', [])],
     }
