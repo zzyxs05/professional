@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-11-26T10:15:53Z",
+  "generated_at": "2026-11-26T10:38:02Z",
   "evaluator": "evidence-review-agent v1.0",
   "path": "deterministic_quick_path",
   "rubric": "evaluator/skills/evidence-review/rubric.json",

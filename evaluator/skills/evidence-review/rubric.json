@@ -532,7 +532,8 @@
       "suggested_check": "指向最小补查",
       "score_suggestion": null
     },
-    "release_gate": "Release 关键安全要求未达标时修复、收缩范围或暂缓接受；不自动清零全部个人学习成绩；评分建议与 Release 判定分开。"
+    "release_gate": "Release 关键安全要求未达标时修复、收缩范围或暂缓接受；不自动清零全部个人学习成绩；评分建议与 Release 判定分开。",
+    "error_types_note": "以下类型是「一旦出现就要记录」的判断口径，不是必须逐项制造的实验。同快照重跑结论一致时 error_type 留空即为正确，不要求额外安排两人独立打分对照；人工纠正/费用/时长同理，没有就写未发生。"
   },
   "teacher_only": [
     "最终评分",
