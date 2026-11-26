@@ -1,0 +1,6 @@
+[
+  {"claim": "自有代码中存在硬编码的 URL，且 query 参数 token 中包含疑似 GitHub personal access token（ghp_ 前缀 + 36 位十六进制）的凭据明文", "location": "自有代码 URL 列表第 1 条：http://10.0.0.8:8080/api/profile?token=ghp_...", "rule_guess": "hardcoded_credentials", "confidence": "high"},
+  {"claim": "凭据通过 URL query 参数明文传输，未使用 HTTPS，且 query 参数易被中间人、代理日志、Referer 头泄露", "location": "http://10.0.0.8:8080/api/profile?token=...", "rule_guess": "insecure_transport", "confidence": "high"},
+  {"claim": "网络入口指向私网地址 10.0.0.8:8080，可能为调试/内网后端残留，需确认是否为测试环境遗留的调试端点", "location": "http://10.0.0.8:8080/api/profile", "rule_guess": "debug_endpoint", "confidence": "medium"},
+  {"claim": "MainActivity 为非导出组件，未见外部入口，但仍需确认该 token 是否在运行时被替换或用于身份认证", "location": "com.synth.bad02.MainActivity (exported=False)", "rule_guess": "", "confidence": "low"}
+]

@@ -1,0 +1,1 @@
+{"verdict": "确认可疑", "reason": "该 activity 声明 exported=\"true\" 且未设置 permission/readPermission/writePermission 任一组件级保护，不落入误报口径", "observation": "样本仅为 manifest 单行声明，未见 intent-filter 或其他补充信息；若后续存在调用方签名级权限限制需另行核对"}

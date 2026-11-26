@@ -1,0 +1,1 @@
+{"verdict": "确认可疑", "reason": "误报口径明确为无豁免——形式匹配即事实，示例值/占位值照报，因此这些 AWS access key 与 GitHub token 形态的字符串均构成硬编码凭据命中，不因看似示例或占位而降级", "observation": "命中包含典型的 AWS 示例 key（AKIAIOSFODNN7EXAMPLE，Amazon 官方文档示例值）、占位式 ghp_ token 以及资源文件中的 backup_access_key；其中 ghp_ token 还出现在完整 URL 查询参数中，属于内嵌凭据形态。按口径即便判定为示例/占位值也仍应上报"}

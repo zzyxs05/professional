@@ -1,0 +1,1 @@
+{"verdict": "确认可疑", "reason": "四处命中组件均显式 android:exported=\"true\" 且未携带 permission/readPermission/writePermission 任一组件级权限属性，全部落在规则检测范围内，不在误报口径内", "observation": "四个组件类型涵盖 activity/service/receiver/provider，provider 未设 readPermission/writePermission；receiver 声明了 BOOT_COMPLETED 等 intent-filter 但无 permission 保护；未见任何 manifest 级或组件级权限声明可用于豁免"}

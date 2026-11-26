@@ -1,0 +1,1 @@
+{"verdict": "确认可疑", "reason": "样本中 allowBackup 显式为 true 且 debuggable=true，两项均属该规则检测的风险配置，不满足误报口径（要求 allowBackup 显式为 false 且无 debuggable=true）", "observation": "两个命中点分别对应备份暴露与调试可调试风险，任一存在即构成 R-MAN-04 所检测的结构"}

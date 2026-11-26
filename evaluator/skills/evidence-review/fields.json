@@ -289,14 +289,14 @@
         },
         {
           "id": "E-08-F2",
-          "path": "review/exp_datasource_ab_v014.json",
+          "path": "review/exp_datasource_ab_v017.json",
           "kind": "json_nonempty",
           "json_path": "fixed_conditions",
           "note": "真实运行输出留存固定条件"
         },
         {
           "id": "E-08-F3",
-          "path": "review/exp_datasource_ab_v014.json",
+          "path": "review/exp_datasource_ab_v017.json",
           "kind": "json_nonempty",
           "json_path": "summary",
           "note": "真实运行输出留存汇总"

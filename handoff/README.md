@@ -21,7 +21,7 @@ python cli.py analyze lab/apks/bad03.apk # 完整审计，产物在 evidence/RUN
 python cli.py analyze <apk> --out <dir> # 报告另存一份
 python cli.py analyze <apk> --no-evidence # 演练：跑完整链路但不写 evidence/
 python cli.py register <apk> # 登记新样本，打印真值模板，不写 registry
-python cli.py evaluate --run <RUN> # 评价器：纯 harness 评分，不调 API、不需要 key
+python cli.py evaluate --run <RUN> # 评价器：产出证据包与 next_action，不调 API、不需要 key
 python cli.py evaluate --run <RUN> --llm # 可选：调用 API 由模型判读（默认不用）
 python cli.py summary [--no-llm] # 六样本汇总，无模型时用模板
 python cli.py reset # 清解码缓存，不动 evidence
@@ -36,7 +36,7 @@ python cli.py reset # 清解码缓存，不动 evidence
 | 结论和真值是否一致 | `python scripts/truth_check.py` | 84 个判点全一致，硬错 0，噪声 0 |
 | 端到端能不能跑通 | `python scripts/e2e.py` | A-01 全样本受理；A-09 两次运行一致 |
 | 评价器是否正常 | `python cli.py evaluate --run <RUN>` | 四状态之一 + 引用校验 |
-| 单元测试 | `python -m unittest discover -s tests` | 61 个全过 |
+| 单元测试 | `python -m unittest discover -s tests` | 93 个全过 |
 
 ## 4. 重置
 
@@ -62,11 +62,11 @@ python cli.py reset # 清解码缓存，不动 evidence
 | I-5 | 凭据按形式宽匹配，示例值也照报 | 会有"形式命中"的噪声 | 报告里注明模式名，人来判读 |
 | I-6 | B2 的疑点数量每次运行会波动（同一输入可能 0—N 条） | `R-B-*` 待复核条数每次都不同；14 条规则的结论不受影响 | 这是 LLM 生成的特点，已在报告里声明；要比对稳定性就看 A 通道 |
 | I-7 | 真实第三方应用只在本地分析，需教师批准 | — | 合规边界 |
-| I-8 | 模型没做横向评测，只验证了 `mimo-v2.6-flash` 能跑 | 不能说"选了最好的模型" | 表述限定为"当前可用"，待办 R-1（ADR-0010） |
+| I-8 | 做过 R-1 横向评测（4 模型 × 13 样本，见 `review/model_eval/`），但差异不足以选赢家 | 不能说"选了最好的模型" | 原选型 `mimo-v2.6-flash` 不推翻，只到"能用" |
 
 另外几条要提前知道：
 
-- 最终批次有 **9 条没钉住的 B 侧疑点**（bad01×2、bad02×1、good01×2、good02×4），全部停在"待复核"。这是 B 通道的正常输出，不是失败，也不是"清零"；
+- 0.1.3 历史批次有 9 条没钉住的 B 侧疑点，全部停在"待复核"；0.1.7 批次的 B 侧疑点按各 RUN 报告实际记录看。这是 B 通道的正常输出，不是失败，也不是"清零"；
 - **B 与规则冲突的场景还没覆盖**，B 的召回增量要用新样本检验（T-M4-04）；
 - bad04 是诱导对抗样本，good02 是边界陷阱样本，复现时核对它们分别"检出 2 条 / 全安静"；
 - 保留测试和实现答案不提前交换；对方给的文件不等于独立复现。

@@ -1,0 +1,1 @@
+[{"claim": "com.synth.bad04.MainActivity 被声明为 exported=True，为对外暴露的入口组件，需核查其是否缺少权限校验、是否可被外部任意拉起并触发内部逻辑", "location": "com.synth.bad04.MainActivity (activity; exported=True)", "rule_guess": "", "confidence": "medium"}]

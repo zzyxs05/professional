@@ -1,0 +1,1 @@
+{"verdict": "确认可疑", "reason": "命中片段中 AndroidManifest.xml 明确设置 usesCleartextTraffic=\"true\"，且 network_security_config.xml 的 base-config 明确设置 cleartextTrafficPermitted=\"true\"，属于主动开启明文流量许可，落在规则检测范围内而非误报口径。", "observation": "两处配置相互印证（manifest 与 network security config 均放行明文），不存在“未设置许可”或“明确禁止明文”的情形。"}

@@ -268,7 +268,7 @@
         "docs/experiment-protocol.md",
         "docs/experiments.md",
         "review/exp_datasource_ab.json",
-        "review/exp_datasource_ab_v014.json"
+        "review/exp_datasource_ab_v017.json"
       ],
       "check_action": "list_evidence + read_evidence",
       "pass_if": "有协议、逐次数据、负结果与成本口径，数据来自脚本真实运行",

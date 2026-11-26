@@ -1,0 +1,309 @@
+{
+  "run_id": "RUN-20261126-181812-710b457d",
+  "target": {
+    "apk_name": "good02.apk",
+    "apk_sha256": "710b457d51f2b960d63470001105522e5eea24d63c4d09d9696d549b3978b1f2"
+  },
+  "versions": {
+    "rule_pack": "0.1.7",
+    "channel_b_model": "mimo-v2.6-flash"
+  },
+  "conclusions": [
+    {
+      "criterion_id": "R-MAN-01",
+      "status": "无法判定",
+      "channel": "A",
+      "location": "",
+      "evidence_ids": [],
+      "scope": "导出组件无权限保护",
+      "missing_evidence": [],
+      "human_signoff": "余俊辉 复核 2026.11.26",
+      "notes": [
+        "机械规则已执行、未命中。仅代表本规则集范围内未发现问题，不构成「安全」结论。"
+      ]
+    },
+    {
+      "criterion_id": "R-MAN-02",
+      "status": "无法判定",
+      "channel": "A",
+      "location": "",
+      "evidence_ids": [],
+      "scope": "危险权限声明",
+      "missing_evidence": [],
+      "human_signoff": "余俊辉 复核 2026.11.26",
+      "notes": [
+        "机械规则已执行、未命中。仅代表本规则集范围内未发现问题，不构成「安全」结论。"
+      ]
+    },
+    {
+      "criterion_id": "R-MAN-03",
+      "status": "无法判定",
+      "channel": "A",
+      "location": "",
+      "evidence_ids": [],
+      "scope": "明文流量许可",
+      "missing_evidence": [],
+      "human_signoff": "余俊辉 复核 2026.11.26",
+      "notes": [
+        "机械规则已执行、未命中。仅代表本规则集范围内未发现问题，不构成「安全」结论。"
+      ]
+    },
+    {
+      "criterion_id": "R-MAN-04",
+      "status": "无法判定",
+      "channel": "A",
+      "location": "",
+      "evidence_ids": [],
+      "scope": "调试与备份风险",
+      "missing_evidence": [],
+      "human_signoff": "余俊辉 复核 2026.11.26",
+      "notes": [
+        "机械规则已执行、未命中。仅代表本规则集范围内未发现问题，不构成「安全」结论。"
+      ]
+    },
+    {
+      "criterion_id": "R-MAN-05",
+      "status": "无法判定",
+      "channel": "A",
+      "location": "",
+      "evidence_ids": [],
+      "scope": "敏感广播监听",
+      "missing_evidence": [],
+      "human_signoff": "余俊辉 复核 2026.11.26",
+      "notes": [
+        "机械规则已执行、未命中。仅代表本规则集范围内未发现问题，不构成「安全」结论。"
+      ]
+    },
+    {
+      "criterion_id": "R-PERM-01",
+      "status": "无法判定",
+      "channel": "A",
+      "location": "",
+      "evidence_ids": [],
+      "scope": "定时/后台结构 × 敏感权限",
+      "missing_evidence": [],
+      "human_signoff": "余俊辉 复核 2026.11.26",
+      "notes": [
+        "机械规则已执行、未命中。仅代表本规则集范围内未发现问题，不构成「安全」结论。"
+      ]
+    },
+    {
+      "criterion_id": "R-PERM-02",
+      "status": "无法判定",
+      "channel": "A",
+      "location": "",
+      "evidence_ids": [],
+      "scope": "非交互组件使用敏感 API",
+      "missing_evidence": [],
+      "human_signoff": "余俊辉 复核 2026.11.26",
+      "notes": [
+        "机械规则已执行、未命中。仅代表本规则集范围内未发现问题，不构成「安全」结论。"
+      ]
+    },
+    {
+      "criterion_id": "R-PERM-03",
+      "status": "无法判定",
+      "channel": "A",
+      "location": "",
+      "evidence_ids": [],
+      "scope": "声明与使用不一致",
+      "missing_evidence": [],
+      "human_signoff": "余俊辉 复核 2026.11.26",
+      "notes": [
+        "机械规则已执行、未命中。仅代表本规则集范围内未发现问题，不构成「安全」结论。"
+      ]
+    },
+    {
+      "criterion_id": "R-STR-01",
+      "status": "无法判定",
+      "channel": "A",
+      "location": "",
+      "evidence_ids": [],
+      "scope": "硬编码凭据",
+      "missing_evidence": [],
+      "human_signoff": "余俊辉 复核 2026.11.26",
+      "notes": [
+        "机械规则已执行、未命中。仅代表本规则集范围内未发现问题，不构成「安全」结论。"
+      ]
+    },
+    {
+      "criterion_id": "R-STR-02",
+      "status": "无法判定",
+      "channel": "A",
+      "location": "",
+      "evidence_ids": [],
+      "scope": "内网/明文端点",
+      "missing_evidence": [],
+      "human_signoff": "余俊辉 复核 2026.11.26",
+      "notes": [
+        "机械规则已执行、未命中。仅代表本规则集范围内未发现问题，不构成「安全」结论。"
+      ]
+    },
+    {
+      "criterion_id": "R-CODE-01",
+      "status": "无法判定",
+      "channel": "A",
+      "location": "",
+      "evidence_ids": [],
+      "scope": "动态代码加载",
+      "missing_evidence": [],
+      "human_signoff": "余俊辉 复核 2026.11.26",
+      "notes": [
+        "机械规则已执行、未命中。仅代表本规则集范围内未发现问题，不构成「安全」结论。"
+      ]
+    },
+    {
+      "criterion_id": "R-CODE-02",
+      "status": "无法判定",
+      "channel": "A",
+      "location": "",
+      "evidence_ids": [],
+      "scope": "WebView 危险组合",
+      "missing_evidence": [],
+      "human_signoff": "余俊辉 复核 2026.11.26",
+      "notes": [
+        "机械规则已执行、未命中。仅代表本规则集范围内未发现问题，不构成「安全」结论。"
+      ]
+    },
+    {
+      "criterion_id": "R-NET-01",
+      "status": "无法判定",
+      "channel": "A",
+      "location": "",
+      "evidence_ids": [],
+      "scope": "证书校验绕过结构",
+      "missing_evidence": [],
+      "human_signoff": "余俊辉 复核 2026.11.26",
+      "notes": [
+        "机械规则已执行、未命中。仅代表本规则集范围内未发现问题，不构成「安全」结论。"
+      ]
+    },
+    {
+      "criterion_id": "R-NET-02",
+      "status": "无法判定",
+      "channel": "A",
+      "location": "",
+      "evidence_ids": [],
+      "scope": "WebView SSL 错误忽略",
+      "missing_evidence": [],
+      "human_signoff": "余俊辉 复核 2026.11.26",
+      "notes": [
+        "机械规则已执行、未命中。仅代表本规则集范围内未发现问题，不构成「安全」结论。"
+      ]
+    },
+    {
+      "criterion_id": "R-B-001",
+      "status": "待复核",
+      "channel": "B",
+      "location": "com.synth.good02.ProtectedService",
+      "evidence_ids": [
+        "EV-20261126-181812-710b457d-002"
+      ],
+      "scope": "ProtectedService 被标记为 exported=True，依赖自定义 signature 权限 com.synth.good02.permission.INTERNAL 进行访问控制",
+      "missing_evidence": [
+        "钉证据未通过：断言未被机械事实证实（候选规则 R-MAN-02, R-PERM-02 均无机械命中；claim 提及实体（INTERNAL、PROTECTEDSERVICE、com.synth.good02.permission.INTERNAL）未被机械命中覆盖）"
+      ],
+      "human_signoff": "余俊辉 复核 2026.11.26",
+      "notes": [
+        "B 侧疑点（LLM 提疑），未经确定性钉证据，不得升级措辞"
+      ]
+    },
+    {
+      "criterion_id": "R-B-002",
+      "status": "待复核",
+      "channel": "B",
+      "location": "com.synth.good02.permission.INTERNAL (自定义权限声明)",
+      "evidence_ids": [
+        "EV-20261126-181812-710b457d-003"
+      ],
+      "scope": "自定义权限 protectionLevel 声明为 signature，需人工确认其在 AndroidManifest 中完整声明且未被降级或遗漏",
+      "missing_evidence": [
+        "钉证据未通过：断言未被机械事实证实（候选规则 R-MAN-02 均无机械命中）"
+      ],
+      "human_signoff": "余俊辉 复核 2026.11.26",
+      "notes": [
+        "B 侧疑点（LLM 提疑），未经确定性钉证据，不得升级措辞"
+      ]
+    }
+  ],
+  "observations": [
+    {
+      "source": "B2",
+      "claim": "SyncReceiver 使用自定义 action com.synth.good02.action.SYNC 但未导出，需确认该广播不会通过其他方式被外部触发或存在隐式意图泄露",
+      "location": "com.synth.good02.SyncReceiver",
+      "confidence": "low",
+      "note": "LLM 观察（低置信），未经机械核查，不作为结论"
+    },
+    {
+      "source": "B2",
+      "claim": "自有代码中包含两个 HTTPS URL（/api/profile 和 /secure），需人工确认 TLS 证书校验是否正确实现、是否使用了证书固定或至少未禁用主机名校验",
+      "location": "https://example.com/api/profile; https://example.com/secure",
+      "confidence": "low",
+      "note": "LLM 观察（低置信），未经机械核查，不作为结论"
+    },
+    {
+      "source": "B2",
+      "claim": "样本声明了 android.permission.INTERNET 权限，需确认网络请求仅指向预期域名且不存在硬编码凭据或明文传输敏感数据",
+      "location": "AndroidManifest 权限声明",
+      "confidence": "low",
+      "note": "LLM 观察（低置信），未经机械核查，不作为结论"
+    }
+  ],
+  "coverage": {
+    "checked": [
+      "R-MAN-01(manifest)",
+      "R-MAN-02(manifest)",
+      "R-MAN-03(manifest+res_decoded)",
+      "R-MAN-04(manifest)",
+      "R-MAN-05(manifest)",
+      "R-PERM-01(smali_src)",
+      "R-PERM-02(manifest/smali_src)",
+      "R-PERM-03(manifest/smali_src)",
+      "R-STR-01(dex_strings)",
+      "R-STR-02(dex_strings)",
+      "R-CODE-01(dex_strings/smali_src)",
+      "R-CODE-02(smali_src)",
+      "R-NET-01(smali_src)",
+      "R-NET-02(smali_src)",
+      "通道B(模型:mimo-v2.6-flash)"
+    ],
+    "not_checked": [],
+    "decode_failed": false,
+    "decode_note": "",
+    "decode_reused": true,
+    "notes": []
+  },
+  "state": [
+    [
+      "PENDING",
+      null
+    ],
+    [
+      "DECODING",
+      ""
+    ],
+    [
+      "RULE_A",
+      ""
+    ],
+    [
+      "CHANNEL_B",
+      ""
+    ],
+    [
+      "FUSION",
+      ""
+    ],
+    [
+      "REPORT",
+      ""
+    ]
+  ],
+  "budget": {
+    "llm_calls_used": 1,
+    "llm_calls_max": 30,
+    "registered_tests_used": 0,
+    "registered_tests_max": 5,
+    "exhausted_notes": []
+  }
+}

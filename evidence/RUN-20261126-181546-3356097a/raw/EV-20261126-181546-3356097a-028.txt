@@ -1,0 +1,52 @@
+```json
+[
+  {
+    "claim": "SyncService 声明为 exported=True，摘要中未显示任何 permission 或 permission 属性保护，外部应用可直接 start/bind 该服务",
+    "location": "com.synth.bad01.SyncService (service)",
+    "rule_guess": "exported_component_no_permission",
+    "confidence": "high"
+  },
+  {
+    "claim": "LeakyProvider 声明为 exported=True，摘要中未见 readPermission/writePermission/permission 属性，任何应用可能通过 ContentResolver 查询该 provider 泄露数据",
+    "location": "com.synth.bad01.LeakyProvider (provider)",
+    "rule_guess": "exported_provider_no_permission",
+    "confidence": "high"
+  },
+  {
+    "claim": "BootReceiver 同时注册 SMS_RECEIVED 和 PHONE_STATE 广播且 exported=True，可在设备启动后长期监听短信与来电状态，具备窃取通信内容的能力",
+    "location": "com.synth.bad01.BootReceiver (receiver; actions=[BOOT_COMPLETED, SMS_RECEIVED, PHONE_STATE])",
+    "rule_guess": "sensitive_broadcast_sms_phone_intercept",
+    "confidence": "high"
+  },
+  {
+    "claim": "同时申请 RECORD_AUDIO + CAMERA + ACCESS_FINE_LOCATION + READ_CONTACTS，构成典型的组合式监控权限集合（音视频录制、定位、联系人）",
+    "location": "权限声明列表",
+    "rule_guess": "sensitive_permission_combo_surveillance",
+    "confidence": "high"
+  },
+  {
+    "claim": "同时申请 SYSTEM_ALERT_WINDOW（悬浮窗覆盖）与 REQUEST_INSTALL_PACKAGES（安装包），可组合用于覆盖安装界面诱导用户安装未知 APK",
+    "location": "权限声明列表: SYSTEM_ALERT_WINDOW, REQUEST_INSTALL_PACKAGES",
+    "rule_guess": "overlay_plus_install_sideload",
+    "confidence": "medium"
+  },
+  {
+    "claim": "申请 QUERY_ALL_PACKAGES 可枚举设备上全部已安装应用，超出常规业务所需的包可见性范围",
+    "location": "权限声明: android.permission.QUERY_ALL_PACKAGES",
+    "rule_guess": "query_all_packages_overreach",
+    "confidence": "medium"
+  },
+  {
+    "claim": "申请 CALL_PHONE 但摘要中未显示配套的 CALL_PRIVILEGED 或用户交互确认机制，存在静默拨号风险",
+    "location": "权限声明: android.permission.CALL_PHONE",
+    "rule_guess": "dangerous_permission_call",
+    "confidence": "medium"
+  },
+  {
+    "claim": "MainActivity 声明为 exported=True 且摘要未显示 permission 属性或 intent-filter 限制，任何外部应用可启动主界面",
+    "location": "com.synth.bad01.MainActivity (activity)",
+    "rule_guess": "exported_activity_no_permission",
+    "confidence": "medium"
+  }
+]
+```

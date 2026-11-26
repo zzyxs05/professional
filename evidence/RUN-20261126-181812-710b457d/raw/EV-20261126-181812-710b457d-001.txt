@@ -1,0 +1,34 @@
+```json
+[
+  {
+    "claim": "ProtectedService 被标记为 exported=True，依赖自定义 signature 权限 com.synth.good02.permission.INTERNAL 进行访问控制",
+    "location": "com.synth.good02.ProtectedService",
+    "rule_guess": "exported-component-permission-check",
+    "confidence": "medium"
+  },
+  {
+    "claim": "自定义权限 protectionLevel 声明为 signature，需人工确认其在 AndroidManifest 中完整声明且未被降级或遗漏",
+    "location": "com.synth.good02.permission.INTERNAL (自定义权限声明)",
+    "rule_guess": "custom-permission-protection-level",
+    "confidence": "medium"
+  },
+  {
+    "claim": "SyncReceiver 使用自定义 action com.synth.good02.action.SYNC 但未导出，需确认该广播不会通过其他方式被外部触发或存在隐式意图泄露",
+    "location": "com.synth.good02.SyncReceiver",
+    "rule_guess": "broadcast-receiver-visibility",
+    "confidence": "low"
+  },
+  {
+    "claim": "自有代码中包含两个 HTTPS URL（/api/profile 和 /secure），需人工确认 TLS 证书校验是否正确实现、是否使用了证书固定或至少未禁用主机名校验",
+    "location": "https://example.com/api/profile; https://example.com/secure",
+    "rule_guess": "tls-certificate-validation",
+    "confidence": "low"
+  },
+  {
+    "claim": "样本声明了 android.permission.INTERNET 权限，需确认网络请求仅指向预期域名且不存在硬编码凭据或明文传输敏感数据",
+    "location": "AndroidManifest 权限声明",
+    "rule_guess": "network-data-exposure",
+    "confidence": "low"
+  }
+]
+```

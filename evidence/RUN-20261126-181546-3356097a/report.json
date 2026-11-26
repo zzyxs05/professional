@@ -1,0 +1,389 @@
+{
+  "run_id": "RUN-20261126-181546-3356097a",
+  "target": {
+    "apk_name": "bad01.apk",
+    "apk_sha256": "3356097a33fb044d848ee1930523924b2d08ba7bbfdf47f43c7dbad10aae1414"
+  },
+  "versions": {
+    "rule_pack": "0.1.7",
+    "channel_b_model": "mimo-v2.6-flash"
+  },
+  "conclusions": [
+    {
+      "criterion_id": "R-MAN-01",
+      "status": "已确认",
+      "channel": "fusion",
+      "location": "AndroidManifest.xml:16-16 [activity com.synth.bad01.MainActivity] | AndroidManifest.xml:17-17 [service com.synth.bad01.SyncService] | AndroidManifest.xml:18-24 [receiver com.synth.bad01.BootReceiver] | AndroidManifest.xml:25-25 [provider com.synth.bad01.LeakyProvider]",
+      "evidence_ids": [
+        "EV-20261126-181546-3356097a-001",
+        "EV-20261126-181546-3356097a-002",
+        "EV-20261126-181546-3356097a-003",
+        "EV-20261126-181546-3356097a-004"
+      ],
+      "scope": "导出组件无权限保护",
+      "missing_evidence": [],
+      "human_signoff": "余俊辉 复核 2026.11.26",
+      "notes": [
+        "导出组件 com.synth.bad01.MainActivity 无权限保护（android:exported=\"true\"）",
+        "导出组件 com.synth.bad01.SyncService 无权限保护（android:exported=\"true\"）",
+        "导出组件 com.synth.bad01.BootReceiver 无权限保护（android:exported=\"true\"）",
+        "导出组件 com.synth.bad01.LeakyProvider 无权限保护（android:exported=\"true\"）"
+      ]
+    },
+    {
+      "criterion_id": "R-MAN-02",
+      "status": "已确认",
+      "channel": "fusion",
+      "location": "AndroidManifest.xml:4 [uses-permission] | AndroidManifest.xml:5 [uses-permission] | AndroidManifest.xml:6 [uses-permission] | AndroidManifest.xml:7 [uses-permission] | AndroidManifest.xml:8 [uses-permission] | AndroidManifest.xml:9 [uses-permission] | AndroidManifest.xml:10 [uses-permission] | AndroidManifest.xml:11 [uses-permission] | AndroidManifest.xml:12 [uses-permission] | AndroidManifest.xml:13 [uses-permission] | AndroidManifest.xml:14 [uses-permission]",
+      "evidence_ids": [
+        "EV-20261126-181546-3356097a-005",
+        "EV-20261126-181546-3356097a-006",
+        "EV-20261126-181546-3356097a-007",
+        "EV-20261126-181546-3356097a-008",
+        "EV-20261126-181546-3356097a-009",
+        "EV-20261126-181546-3356097a-010",
+        "EV-20261126-181546-3356097a-011",
+        "EV-20261126-181546-3356097a-012",
+        "EV-20261126-181546-3356097a-013",
+        "EV-20261126-181546-3356097a-014",
+        "EV-20261126-181546-3356097a-015"
+      ],
+      "scope": "危险权限声明",
+      "missing_evidence": [],
+      "human_signoff": "余俊辉 复核 2026.11.26",
+      "notes": [
+        "声明敏感权限：android.permission.RECORD_AUDIO（录音）",
+        "声明敏感权限：android.permission.CAMERA（相机）",
+        "声明敏感权限：android.permission.ACCESS_FINE_LOCATION（精确定位）",
+        "声明敏感权限：android.permission.READ_CONTACTS（读取通讯录）",
+        "声明敏感权限：android.permission.RECEIVE_SMS（接收短信）",
+        "声明敏感权限：android.permission.READ_PHONE_STATE（读取电话状态）",
+        "声明敏感权限：android.permission.CALL_PHONE（拨打电话）",
+        "声明敏感权限：android.permission.SYSTEM_ALERT_WINDOW（悬浮窗）",
+        "声明敏感权限：android.permission.REQUEST_INSTALL_PACKAGES（请求安装应用）",
+        "声明敏感权限：android.permission.QUERY_ALL_PACKAGES（查询所有包）",
+        "声明敏感权限：android.permission.RECEIVE_BOOT_COMPLETED（开机自启动）"
+      ]
+    },
+    {
+      "criterion_id": "R-MAN-03",
+      "status": "已确认",
+      "channel": "fusion",
+      "location": "AndroidManifest.xml [application] | res/xml/network_security_config.xml:3 [base-config]",
+      "evidence_ids": [
+        "EV-20261126-181546-3356097a-016",
+        "EV-20261126-181546-3356097a-017"
+      ],
+      "scope": "明文流量许可",
+      "missing_evidence": [],
+      "human_signoff": "余俊辉 复核 2026.11.26",
+      "notes": [
+        "显式开启明文流量许可",
+        "networkSecurityConfig 允许明文流量"
+      ]
+    },
+    {
+      "criterion_id": "R-MAN-04",
+      "status": "已确认",
+      "channel": "fusion",
+      "location": "AndroidManifest.xml [application] | AndroidManifest.xml [application]",
+      "evidence_ids": [
+        "EV-20261126-181546-3356097a-018",
+        "EV-20261126-181546-3356097a-019"
+      ],
+      "scope": "调试与备份风险",
+      "missing_evidence": [],
+      "human_signoff": "余俊辉 复核 2026.11.26",
+      "notes": [
+        "应用显式开启调试标记",
+        "允许备份（未设置限制）"
+      ]
+    },
+    {
+      "criterion_id": "R-MAN-05",
+      "status": "已确认",
+      "channel": "fusion",
+      "location": "AndroidManifest.xml:18-24 [receiver com.synth.bad01.BootReceiver]",
+      "evidence_ids": [
+        "EV-20261126-181546-3356097a-020"
+      ],
+      "scope": "敏感广播监听",
+      "missing_evidence": [],
+      "human_signoff": "余俊辉 复核 2026.11.26",
+      "notes": [
+        "静态注册监听敏感事件：android.intent.action.BOOT_COMPLETED（开机完成）、android.provider.Telephony.SMS_RECEIVED（短信接收）、android.intent.action.PHONE_STATE（电话状态）"
+      ]
+    },
+    {
+      "criterion_id": "R-PERM-01",
+      "status": "无法判定",
+      "channel": "A",
+      "location": "",
+      "evidence_ids": [],
+      "scope": "定时/后台结构 × 敏感权限",
+      "missing_evidence": [],
+      "human_signoff": "余俊辉 复核 2026.11.26",
+      "notes": [
+        "机械规则已执行、未命中。仅代表本规则集范围内未发现问题，不构成「安全」结论。"
+      ]
+    },
+    {
+      "criterion_id": "R-PERM-02",
+      "status": "无法判定",
+      "channel": "A",
+      "location": "",
+      "evidence_ids": [],
+      "scope": "非交互组件使用敏感 API",
+      "missing_evidence": [],
+      "human_signoff": "余俊辉 复核 2026.11.26",
+      "notes": [
+        "机械规则已执行、未命中。仅代表本规则集范围内未发现问题，不构成「安全」结论。"
+      ]
+    },
+    {
+      "criterion_id": "R-PERM-03",
+      "status": "已确认",
+      "channel": "fusion",
+      "location": "AndroidManifest.xml:4-10 [uses-permission × 7]",
+      "evidence_ids": [
+        "EV-20261126-181546-3356097a-021"
+      ],
+      "scope": "声明与使用不一致",
+      "missing_evidence": [
+        "机械层已完成：扫描自有代码 7 个文件；检索 7 项权限对应的 API 使用模式（例：Landroid/media/MediaRecorder;->、Landroid/media/AudioRecord;->）均无命中；隐藏调用通道检测（反射/JNI/动态加载）：无"
+      ],
+      "human_signoff": "余俊辉 复核 2026.11.26",
+      "notes": [
+        "敏感权限声明后未发现使用：在当前 APK 自有代码范围内检索无对应调用，且样本未使用反射/JNI/动态加载等可隐藏调用的机制（不排除运行时动态下发的代码调用）"
+      ]
+    },
+    {
+      "criterion_id": "R-STR-01",
+      "status": "无法判定",
+      "channel": "A",
+      "location": "",
+      "evidence_ids": [],
+      "scope": "硬编码凭据",
+      "missing_evidence": [],
+      "human_signoff": "余俊辉 复核 2026.11.26",
+      "notes": [
+        "机械规则已执行、未命中。仅代表本规则集范围内未发现问题，不构成「安全」结论。"
+      ]
+    },
+    {
+      "criterion_id": "R-STR-02",
+      "status": "无法判定",
+      "channel": "A",
+      "location": "",
+      "evidence_ids": [],
+      "scope": "内网/明文端点",
+      "missing_evidence": [],
+      "human_signoff": "余俊辉 复核 2026.11.26",
+      "notes": [
+        "机械规则已执行、未命中。仅代表本规则集范围内未发现问题，不构成「安全」结论。"
+      ]
+    },
+    {
+      "criterion_id": "R-CODE-01",
+      "status": "无法判定",
+      "channel": "A",
+      "location": "",
+      "evidence_ids": [],
+      "scope": "动态代码加载",
+      "missing_evidence": [],
+      "human_signoff": "余俊辉 复核 2026.11.26",
+      "notes": [
+        "机械规则已执行、未命中。仅代表本规则集范围内未发现问题，不构成「安全」结论。"
+      ]
+    },
+    {
+      "criterion_id": "R-CODE-02",
+      "status": "无法判定",
+      "channel": "A",
+      "location": "",
+      "evidence_ids": [],
+      "scope": "WebView 危险组合",
+      "missing_evidence": [],
+      "human_signoff": "余俊辉 复核 2026.11.26",
+      "notes": [
+        "机械规则已执行、未命中。仅代表本规则集范围内未发现问题，不构成「安全」结论。"
+      ]
+    },
+    {
+      "criterion_id": "R-NET-01",
+      "status": "无法判定",
+      "channel": "A",
+      "location": "",
+      "evidence_ids": [],
+      "scope": "证书校验绕过结构",
+      "missing_evidence": [],
+      "human_signoff": "余俊辉 复核 2026.11.26",
+      "notes": [
+        "机械规则已执行、未命中。仅代表本规则集范围内未发现问题，不构成「安全」结论。"
+      ]
+    },
+    {
+      "criterion_id": "R-NET-02",
+      "status": "无法判定",
+      "channel": "A",
+      "location": "",
+      "evidence_ids": [],
+      "scope": "WebView SSL 错误忽略",
+      "missing_evidence": [],
+      "human_signoff": "余俊辉 复核 2026.11.26",
+      "notes": [
+        "机械规则已执行、未命中。仅代表本规则集范围内未发现问题，不构成「安全」结论。"
+      ]
+    },
+    {
+      "criterion_id": "R-B-001",
+      "status": "待复核",
+      "channel": "B",
+      "location": "权限声明列表: SYSTEM_ALERT_WINDOW, REQUEST_INSTALL_PACKAGES",
+      "evidence_ids": [
+        "EV-20261126-181546-3356097a-036"
+      ],
+      "scope": "同时申请 SYSTEM_ALERT_WINDOW（悬浮窗覆盖）与 REQUEST_INSTALL_PACKAGES（安装包），可组合用于覆盖安装界面诱导用户安装未知 APK",
+      "missing_evidence": [
+        "钉证据未通过：未识别到可核查断言（claim 无法映射到任何规则）"
+      ],
+      "human_signoff": "余俊辉 复核 2026.11.26",
+      "notes": [
+        "B 侧疑点（LLM 提疑），未经确定性钉证据，不得升级措辞"
+      ]
+    },
+    {
+      "criterion_id": "R-B-002",
+      "status": "待复核",
+      "channel": "B",
+      "location": "权限声明: android.permission.QUERY_ALL_PACKAGES",
+      "evidence_ids": [
+        "EV-20261126-181546-3356097a-037"
+      ],
+      "scope": "申请 QUERY_ALL_PACKAGES 可枚举设备上全部已安装应用，超出常规业务所需的包可见性范围",
+      "missing_evidence": [
+        "钉证据未通过：未识别到可核查断言（claim 无法映射到任何规则）"
+      ],
+      "human_signoff": "余俊辉 复核 2026.11.26",
+      "notes": [
+        "B 侧疑点（LLM 提疑），未经确定性钉证据，不得升级措辞"
+      ]
+    },
+    {
+      "criterion_id": "R-B-003",
+      "status": "待复核",
+      "channel": "B",
+      "location": "权限声明: android.permission.CALL_PHONE",
+      "evidence_ids": [
+        "EV-20261126-181546-3356097a-038"
+      ],
+      "scope": "申请 CALL_PHONE 但摘要中未显示配套的 CALL_PRIVILEGED 或用户交互确认机制，存在静默拨号风险",
+      "missing_evidence": [
+        "钉证据未通过：未识别到可核查断言（claim 无法映射到任何规则）"
+      ],
+      "human_signoff": "余俊辉 复核 2026.11.26",
+      "notes": [
+        "B 侧疑点（LLM 提疑），未经确定性钉证据，不得升级措辞"
+      ]
+    }
+  ],
+  "observations": [
+    {
+      "source": "B1",
+      "rule_id": "R-MAN-01",
+      "claim": "四个组件类型涵盖 activity/service/receiver/provider，provider 未设 readPermission/writePermission；receiver 声明了 BOOT_COMPLETED 等 intent-filter 但无 permission 保护；未见任何 manifest 级或组件级权限声明可用于豁免",
+      "location": "",
+      "confidence": "n/a",
+      "note": "B1 复核的补充观察（不构成判定），未经机械核查"
+    },
+    {
+      "source": "B1",
+      "rule_id": "R-MAN-03",
+      "claim": "两处配置相互印证（manifest 与 network security config 均放行明文），不存在“未设置许可”或“明确禁止明文”的情形。",
+      "location": "",
+      "confidence": "n/a",
+      "note": "B1 复核的补充观察（不构成判定），未经机械核查"
+    },
+    {
+      "source": "B1",
+      "rule_id": "R-MAN-04",
+      "claim": "两个命中点分别对应备份暴露与调试可调试风险，任一存在即构成 R-MAN-04 所检测的结构",
+      "location": "",
+      "confidence": "n/a",
+      "note": "B1 复核的补充观察（不构成判定），未经机械核查"
+    },
+    {
+      "source": "B1",
+      "rule_id": "R-MAN-05",
+      "claim": "receiver 设置了 android:exported=\"true\"，且同时监听开机、短信、通话状态三类敏感事件，进一步支持该命中成立。",
+      "location": "",
+      "confidence": "n/a",
+      "note": "B1 复核的补充观察（不构成判定），未经机械核查"
+    },
+    {
+      "source": "B1",
+      "rule_id": "R-PERM-03",
+      "claim": "在当前 APK 自有代码范围内未发现上述 7 项权限的使用；未见隐藏调用通道。",
+      "location": "",
+      "confidence": "n/a",
+      "note": "B1 复核的补充观察（不构成判定），未经机械核查"
+    }
+  ],
+  "coverage": {
+    "checked": [
+      "R-MAN-01(manifest)",
+      "R-MAN-02(manifest)",
+      "R-MAN-03(manifest+res_decoded)",
+      "R-MAN-04(manifest)",
+      "R-MAN-05(manifest)",
+      "R-PERM-01(smali_src)",
+      "R-PERM-02(manifest/smali_src)",
+      "R-PERM-03(manifest/smali_src)",
+      "R-STR-01(dex_strings)",
+      "R-STR-02(dex_strings)",
+      "R-CODE-01(dex_strings/smali_src)",
+      "R-CODE-02(smali_src)",
+      "R-NET-01(smali_src)",
+      "R-NET-02(smali_src)",
+      "通道B(模型:mimo-v2.6-flash)"
+    ],
+    "not_checked": [],
+    "decode_failed": false,
+    "decode_note": "",
+    "decode_reused": true,
+    "notes": []
+  },
+  "state": [
+    [
+      "PENDING",
+      null
+    ],
+    [
+      "DECODING",
+      ""
+    ],
+    [
+      "RULE_A",
+      ""
+    ],
+    [
+      "CHANNEL_B",
+      ""
+    ],
+    [
+      "FUSION",
+      ""
+    ],
+    [
+      "REPORT",
+      ""
+    ]
+  ],
+  "budget": {
+    "llm_calls_used": 7,
+    "llm_calls_max": 30,
+    "registered_tests_used": 0,
+    "registered_tests_max": 5,
+    "exhausted_notes": []
+  }
+}

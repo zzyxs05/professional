@@ -1,0 +1,1 @@
+{"verdict": "确认可疑", "reason": "命中片段中监听的 action 均为系统敏感广播（BOOT_COMPLETED、SMS_RECEIVED、PHONE_STATE），不属于自定义 action 或非敏感系统事件的误报口径。", "observation": "receiver 设置了 android:exported=\"true\"，且同时监听开机、短信、通话状态三类敏感事件，进一步支持该命中成立。"}
