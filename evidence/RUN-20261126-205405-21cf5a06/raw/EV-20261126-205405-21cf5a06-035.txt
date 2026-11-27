@@ -1,0 +1,1 @@
+{"verdict": "确认可疑", "reason": "三要素齐备：setJavaScriptEnabled(true)、addJavascriptInterface 注入 nativeBridge、setAllowFileAccess(true)（复用 v1=0x1），不属于仅启用 JS 的无害口径", "observation": "命中片段位于同一 onCreate/初始化流程中（行 232-246），紧邻创建 JsBridge 与 InsecureWebViewClient，属典型危险组合"}

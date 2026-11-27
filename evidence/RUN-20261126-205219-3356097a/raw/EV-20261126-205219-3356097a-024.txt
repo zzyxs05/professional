@@ -1,0 +1,1 @@
+{"verdict": "确认可疑", "reason": "两处命中均为显式开启明文流量许可（usesCleartextTraffic=\"true\" 与 cleartextTrafficPermitted=\"true\"），不属于未设置许可或明确禁止明文的误报口径。", "observation": "manifest 与 network_security_config 双重确认，许可效果一致且相互叠加，配置层面无法通过默认策略回退为禁止明文。"}

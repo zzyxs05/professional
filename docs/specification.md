@@ -1,6 +1,6 @@
 # specification · 规约（规则、格式、状态、验收）
 
-> 性质：design ｜ 版本：v0.4（对齐规则包 0.1.7） ｜ 状态：生效
+> 性质：design ｜ 版本：v0.5（对齐规则包 0.1.8） ｜ 状态：生效
 > 职责：回答 14 条规则查什么、报告长什么样、运行有哪些状态、怎么算验收通过；不回答需求来源，也不展开实现代码。
 > 关联：上游 `requirements.md`（REQ-02、UN-01—UN-06）；实现 `core/registry.py`、`core/rules/`；验收 `scripts/truth_check.py`、`scripts/e2e.py`。
 > 签署：状态统一见 `docs/signoff.md`，本文不设独立签署栏。
@@ -79,7 +79,7 @@ S 类字符串规则扫描全量 dex 字符串 + 资源字符串（库字符串�
 {
  "run_id": "RUN-<yyyymmdd-HHMMSS>-<sha256前8位>",
  "target": {"apk_name": "...", "apk_sha256": "..."},
- "versions": {"rule_pack": "0.1.7", "channel_b_model": "none|模型名"},
+ "versions": {"rule_pack": "0.1.8", "channel_b_model": "none|模型名"},
  "conclusions": [],
  "observations": [], ← B 通道观察区（低置信/补充观察），**非结论、不计入三档**
  "coverage": {

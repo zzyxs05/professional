@@ -1,0 +1,26 @@
+[
+  {
+    "claim": "自有代码中硬编码了一个以查询参数传递的访问令牌（形如 ghp_ 前缀的凭据），并随请求 URL 一同发出",
+    "location": "http://10.0.0.8:8080/api/profile?token=ghp_0000000000000000000000000000000000",
+    "rule_guess": "硬编码凭据/敏感信息泄露",
+    "confidence": "high"
+  },
+  {
+    "claim": "网络请求使用明文 HTTP（非 HTTPS）协议传输，且携带 token 参数，存在中间人窃取凭据的风险",
+    "location": "http://10.0.0.8:8080/api/profile",
+    "rule_guess": "明文网络传输/Cleartext Traffic",
+    "confidence": "high"
+  },
+  {
+    "claim": "请求目标为内网/私有地址 10.0.0.8 的固定端口 8080，需确认是否存在硬编码内网端点回连行为",
+    "location": "http://10.0.0.8:8080/api/profile",
+    "rule_guess": "硬编码网络端点",
+    "confidence": "medium"
+  },
+  {
+    "claim": "声明了 android.permission.INTERNET 权限，与上述外联 URL 相互印证，样本具备网络外联能力",
+    "location": "权限声明 android.permission.INTERNET",
+    "rule_guess": "网络权限",
+    "confidence": "medium"
+  }
+]

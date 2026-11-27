@@ -1,0 +1,1 @@
+{"verdict": "确认可疑", "reason": "该 activity 声明 android:exported=\"true\" 且未附带任何 permission/readPermission/writePermission 属性，不落入误报口径", "observation": "命中片段为完整的 Manifest 元素声明，导出标志显式设置为 true"}

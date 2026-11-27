@@ -1,0 +1,1 @@
+{"verdict": "确认可疑", "reason": "命中包含 DexClassLoader 的实例化、构造调用及 loadClass 完整调用链，属于动态代码加载结构本身，而非仅字符串中出现类名", "observation": "loadClass 的目标类名由 const-string 提供且随后 move-result-object，构成典型的动态加载并反射调用插件入口点的模式"}

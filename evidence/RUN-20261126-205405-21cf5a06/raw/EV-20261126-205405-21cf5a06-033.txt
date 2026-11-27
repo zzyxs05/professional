@@ -1,0 +1,1 @@
+{"verdict": "确认可疑", "reason": "命中位于 RecordingService（Service 类而非 Activity），且不仅有 new-instance/invoke-direct 的实例化，还有 setAudioSource/setOutputFormat/setAudioEncoder 等真实调用，不属于仅字段或 import 声明的无害情形", "observation": "MediaRecorder 用于音频录制，属敏感 API；调用发生在 Service 的非交互上下文中"}

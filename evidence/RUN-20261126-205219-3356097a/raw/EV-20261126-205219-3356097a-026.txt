@@ -1,0 +1,1 @@
+{"verdict": "确认可疑", "reason": "命中片段中的 action 均为系统敏感广播（BOOT_COMPLETED、SMS_RECEIVED、PHONE_STATE），不属于自定义 action 或非敏感系统事件的误报口径", "observation": "该 receiver 还被显式设为 exported=true，进一步扩大了外部触发面"}

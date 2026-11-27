@@ -1,0 +1,1 @@
+{"verdict": "确认可疑", "reason": "误报口径明确为无，形式匹配即事实，示例值/占位值照报，故所有片段均构成硬编码凭据命中", "observation": "命中值具有明显的示例/占位特征（AWS 官方 EXAMPLE key、全零 ghp_ token、FAKE 字样 key），且字符串 'aws key: ...' 与 URL 中附带 token 属于典型的硬编码凭据使用形态"}

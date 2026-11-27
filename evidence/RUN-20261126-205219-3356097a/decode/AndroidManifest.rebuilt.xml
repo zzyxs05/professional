@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest android:versionCode="1" android:versionName="1.0" android:compileSdkVersion="37" android:compileSdkVersionCodename="17" package="com.synth.bad01" platformBuildVersionCode="37" platformBuildVersionName="17">
+    <uses-sdk android:minSdkVersion="35" android:targetSdkVersion="37"/>
+    <uses-permission android:name="android.permission.RECORD_AUDIO"/>
+    <uses-permission android:name="android.permission.CAMERA"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.READ_CONTACTS"/>
+    <uses-permission android:name="android.permission.RECEIVE_SMS"/>
+    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+    <uses-permission android:name="android.permission.CALL_PHONE"/>
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
+    <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES"/>
+    <uses-permission android:name="android.permission.QUERY_ALL_PACKAGES"/>
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
+    <application android:theme="@0x01030237" android:label="@0x7f010000" android:debuggable="true" android:allowBackup="true" android:extractNativeLibs="false" android:usesCleartextTraffic="true" android:networkSecurityConfig="@0x7f020000">
+        <activity android:name="com.synth.bad01.MainActivity" android:exported="true"/>
+        <service android:name="com.synth.bad01.SyncService" android:exported="true"/>
+        <receiver android:name="com.synth.bad01.BootReceiver" android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED"/>
+                <action android:name="android.provider.Telephony.SMS_RECEIVED"/>
+                <action android:name="android.intent.action.PHONE_STATE"/>
+            </intent-filter>
+        </receiver>
+        <provider android:name="com.synth.bad01.LeakyProvider" android:exported="true" android:authorities="com.synth.bad01.provider"/>
+    </application>
+</manifest>

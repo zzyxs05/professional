@@ -1,0 +1,1 @@
+{"verdict": "确认可疑", "reason": "命中为 AWS 经典示例 Access Key 格式串 AKIAFODNN7EXAMPLE（AKIA 前缀+16位大写字母数字），且规则明确示例值/占位值照报、不因用途降级，故按形式匹配构成硬编码凭据结构", "observation": "该串是 AWS 官方文档公开示例键（EXAMPLE 后缀），并出现在 'storage access key in use' 的日志/提示文本中，实际泄露风险低，但依误报口径不作降级"}

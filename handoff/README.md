@@ -1,7 +1,7 @@
 # handoff · 交接包
 
 > 给对抗组和教师：在一台干净机器上复现本组的结论、跑评价器、提出挑战。
-> 规则包 0.1.7 ｜ 历史正本是 0.1.3/0.1.6，不改写，各 RUN 的 `meta.json` 里能看到生成时的版本。
+> 规则包 0.1.8 ｜ 历史正本是 0.1.3/0.1.6，不改写，各 RUN 的 `meta.json` 里能看到生成时的版本。
 
 ## 1. 环境
 
@@ -36,7 +36,7 @@ python cli.py reset # 清解码缓存，不动 evidence
 | 结论和真值是否一致 | `python scripts/truth_check.py` | 84 个判点全一致，硬错 0，噪声 0 |
 | 端到端能不能跑通 | `python scripts/e2e.py` | A-01 全样本受理；A-09 两次运行一致 |
 | 评价器是否正常 | `python cli.py evaluate --run <RUN>` | 四状态之一 + 引用校验 |
-| 单元测试 | `python -m unittest discover -s tests` | 93 个全过 |
+| 单元测试 | `python -m unittest discover -s tests` | 94 个全过 |
 
 ## 4. 重置
 

@@ -5,9 +5,9 @@
 > 关联：上游 ADR-0011、`总档.md` §2.6；实现 `evaluator/checker.py`、`evaluator/html_report.py`、`evaluator/skills/evidence-review/SKILL.md`；变更 `docs/changes.md` S23—S29。
 > 签署：状态统一见 `docs/signoff.md`，本文不设独立签署栏。
 
-- 状态：草案（技术实施已完成，待复核）
+- 状态：草案（技术实施已完成，本组已复核）
 - 日期：2026-11-25
-- 决策人：周宗正（起草，）、余俊辉（复核，未发生）
+- 决策人：周宗正（起草）、余俊辉（复核）
 
 ## 背景
 
@@ -51,8 +51,8 @@ ADR-0011 确定了「Python 受限多轮 Agent，不引入 DeepSeek Harness」�
 
 - 异题合成项目（无 run_id / 无 evidence / 无 report.json）评价 PASS；变量缺失如实判 missing（测试 2 例）。
 - 判定区同快照重跑逐字节一致，`verdict_digest` 相同。
-- 单测 93/93；K-1~K-6 6/6；靶场 84 判点一致 84、硬错 0。
-- 全模型批分项评测分未实跑验证（本轮为 `--no-llm` 确定性路径），如实列为未完成；HTML 渲染已用合成分数验证。
+- 单测 94/94；快路径与 llm 两套 K-1~K-6 各 6/6；靶场 84 判点一致 84、硬错 0。
+- 模型判读批已实跑（`--llm`，`scoring_status=scored`）；HTML 分数区状态矛盾已修复。
 
 
 ## 追加决策（2026-11-25）：默认不调用 API

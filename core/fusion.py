@@ -151,6 +151,32 @@ def pin_evidence(ctx, claim, location='', rule_guess=''):
             'locations': all_locs,
         }
 
+    # 结构事实核对：claim 里的硬实体是否都在样本实体池（manifest 声明）里。
+    # 这一层只证明"提到的权限/组件确实声明了"，不证明"组合意图成立"——
+    # 因此不升档为 pinned，也不冒充规则结论；只把缺口描述从"无法映射"改成
+    # "结构已核对、意图未证实"，让人知道查过什么、还差什么。
+    # 只认强实体：claim 显式写出的权限全名，或敏感权限短名。
+    # 不含"样本池里恰好有这个大写 token"的弱实体（如 INTERNET）——
+    # 那正是 test_pin_rejects_unrelated_entity 要防的"实体存在≠断言成立"。
+    strong = set()
+    upper = claim.upper()
+    for m in re.finditer(r'ANDROID\.PERMISSION\.[A-Z_]+', upper):
+        strong.add(m.group(0))
+    for perm in registry.SENSITIVE_PERMISSIONS:
+        short = perm.split('.')[-1]
+        if re.search(r'(?<![A-Z_])%s(?![A-Z_])' % re.escape(short), upper):
+            strong.add('ANDROID.PERMISSION.' + short)
+    pool = _sample_entity_pool(ctx)
+    if strong and all(e in pool for e in strong):
+        return {
+            'status': 'structural',
+            'detail': ('结构事实已核对：claim 提及的实体（%s）均在样本声明中；'
+                       '组合/意图类断言无对应规则，未证实')
+                      % '、'.join(sorted(strong)[:4]),
+            'rules': [], 'locations': [],
+            'structure_facts': sorted(strong)[:8],
+        }
+
     if not candidates:
         detail = '未识别到可核查断言（claim 无法映射到任何规则）'
     else:
@@ -311,9 +337,13 @@ def build_conclusions(hits_by_rule, ev_map=None, b_result=None, pin_fn=None):
             'location': pt.get('location', '')[:300],
             'evidence_ids': list(pin.get('evidence_ids', [])),
             'scope': claim[:200],
-            'missing_evidence': ['钉证据未通过：%s' % pin.get('detail', '')],
+            'missing_evidence': ['%s：%s' % (
+                '结构已核对、意图未证实' if pin.get('status') == 'structural'
+                else '钉证据未通过', pin.get('detail', ''))],
             'human_signoff': 'pending',
-            'notes': ['B 侧疑点（LLM 提疑），未经确定性钉证据，不得升级措辞'],
+            'notes': (['B 侧疑点（LLM 提疑），未经确定性钉证据，不得升级措辞']
+                      + (['结构事实：%s' % '、'.join(pin['structure_facts'])]
+                         if pin.get('structure_facts') else [])),
         })
 
     # ---- B1 的补充观察（判定之外的事实陈述）同样进观察区，保留其原始声音

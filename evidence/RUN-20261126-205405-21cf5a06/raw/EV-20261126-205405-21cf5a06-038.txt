@@ -1,0 +1,34 @@
+```json
+[
+  {
+    "claim": "MainActivity.smali 中存在 3 处动态加载/执行点（第 82、101、106 行），可能通过 DexClassLoader、Runtime.exec 或反射动态加载代码",
+    "location": "smali/com/synth/bad03/MainActivity.smali:82, :101, :106",
+    "rule_guess": "dynamic-code-loading",
+    "confidence": "high"
+  },
+  {
+    "claim": "样本同时声明 RECORD_AUDIO、ACCESS_FINE_LOCATION 与 INTERNET 权限，具备录音、定位并联网外传的组合能力",
+    "location": "AndroidManifest 权限声明",
+    "rule_guess": "sensitive-permission-combination",
+    "confidence": "high"
+  },
+  {
+    "claim": "自有代码中出现 https://example.com/app 网络入口，需核查其用途及是否与录音/定位数据外传相关",
+    "location": "代码内 URL 字符串",
+    "rule_guess": "hardcoded-endpoint",
+    "confidence": "medium"
+  },
+  {
+    "claim": "RecordingService 为后台服务且未导出，需核查其是否在无前台提示的情况下持续录音并上传",
+    "location": "com.synth.bad03.RecordingService",
+    "rule_guess": "background-service-abuse",
+    "confidence": "medium"
+  },
+  {
+    "claim": "组件均为 exported=False，导出面较小，需确认动态加载点是否用于加载外部/解密载荷以规避静态检测",
+    "location": "com.synth.bad03.MainActivity / RecordingService",
+    "rule_guess": "payload-obfuscation",
+    "confidence": "low"
+  }
+]
+```

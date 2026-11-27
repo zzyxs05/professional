@@ -20,7 +20,7 @@
 
 ```bash
 python cli.py analyze lab/apks/bad03.apk # 审计一个样本，产物写进 evidence/RUN-<时间>/
-python -m unittest discover -s tests # 93 个单元测试
+python -m unittest discover -s tests # 94 个单元测试
 python scripts/truth_check.py --no-run # 复算 84 个判点，不重跑样本
 ```
 

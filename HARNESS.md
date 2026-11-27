@@ -172,7 +172,7 @@
 | 预算与熔断 | `meta.json.budget`（LLM ≤30 次/run、注册补测 ≤5 次）、`exhausted_notes` | 耗尽列未完成项，不填充无证据文字 |
 | 状态机 | `meta.json.state.history`（PENDING→…→DONE / FAILED） | 失败原因留痕 |
 | 评价 | `review/evaluation/EVAL-*.json` 四状态 + 引用校验 + `.trace.jsonl` | PASS 只代表引用/版本/结构通过，**不代表结论内容正确**；模型观察只进 `observations` |
-| 质量门 | `review/truth_result.json`（0.1.7，84 判点，硬错 0 / 噪声 0） | 自评一致性，不是能力证明；产物带 `rule_pack`/`commit` 锚点 |
+| 质量门 | `review/truth_result.json`（0.1.8，84 判点，硬错 0 / 噪声 0） | 自评一致性，不是能力证明；产物带 `rule_pack`/`commit` 锚点 |
 
 **边界**：哈希证明完整性，不证明真实性；静态证据层级上限为 STATIC，报告不得暗示已完成动态验证；模型输出进入 `observations` 观察区，非结论、不计入三档。
 

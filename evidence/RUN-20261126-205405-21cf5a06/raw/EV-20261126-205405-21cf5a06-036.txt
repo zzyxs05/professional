@@ -1,0 +1,1 @@
+{"verdict": "确认可疑", "reason": "checkClientTrusted/checkServerTrusted 均为空实现直接 return-void，verify 恒返回 true，属于禁用证书与主机名校验的结构，不在“委托系统默认实现或非空实现”的豁免口径内", "observation": "getAcceptedIssuers 返回空数组，与上述空 TrustManager 一致，进一步表明该校验器不进行任何实际校验"}

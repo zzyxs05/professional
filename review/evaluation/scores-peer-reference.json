@@ -1,0 +1,115 @@
+{
+  "_meta": {
+    "purpose": "对照评分表：与 scores-subjective.json（82 分）并列，差异在 rationale 中逐项说明",
+    "role": "复核评分（周期 2：周宗正复核）",
+    "date": "2026-11-27",
+    "rubric": "evaluator/skills/evidence-review/rubric.json evaluation_scoring",
+    "basis": "0.1.8 / 24 正本 / 94 单测 / 84 判点 / 双模式校准 6/6 / CHG-006 实施 / 轮换周期 2 完成",
+    "total": 90
+  },
+  "S1.需求": {
+    "score": 6,
+    "max": 6,
+    "rationale": "6 条 UN 带痛点与满意条件、追溯矩阵、out-of-scope 六项齐全；满意条件虽偏定性但不影响可执行性。与旧表一致。",
+    "evidence_ids": ["docs/requirements.md"],
+    "evidence_level": "STATIC"
+  },
+  "S1.架构与约束": {
+    "score": 5,
+    "max": 5,
+    "rationale": "14 条规则逐条声明数据源、档位上限、误报口径；降级路径与子进程白名单写死，机器可验证。与旧表一致。",
+    "evidence_ids": ["docs/specification.md", "docs/adr/0001-dual-channel.md"],
+    "evidence_level": "STATIC"
+  },
+  "S1.功能与安全验证": {
+    "score": 12,
+    "max": 14,
+    "rationale": "94 单测全过、84 判点一致 84 硬错 0、e2e A-01/A-09 PASS、V-1 跨方法链升档已实施。旧表 11 → 12：CHG-006 补齐一项能力缺口。扣 2：B 侧仍有未钉疑点（结构事实第三态只解决部分）、6 样本同源，领域泛化未证明。",
+    "evidence_ids": ["review/truth_result.json", "docs/impact-map.md", "docs/events.md"],
+    "evidence_level": "STATIC"
+  },
+  "S1.变化修复": {
+    "score": 8,
+    "max": 8,
+    "rationale": "0.1.0→0.1.8 逐版有触发来源与回归，version-waiver 交代错配成因，CHG-004/005/006 都有提案与验收。旧表 7 → 8：CHG-006 与轮换周期 2 补齐。",
+    "evidence_ids": ["docs/changes.md", "docs/impact-map.md", "docs/version-waiver.md"],
+    "evidence_level": "STATIC"
+  },
+  "S1.交接发布": {
+    "score": 8,
+    "max": 8,
+    "rationale": "handoff/README 环境、启动、复现、重置、已知限制、合规齐全，命令可执行；signoff 台账 24 正本、对抗组签署齐。旧表 7 → 8：台账与签署现状已对齐。",
+    "evidence_ids": ["handoff/README.md", "docs/signoff.md"],
+    "evidence_level": "STATIC"
+  },
+  "S1.治理": {
+    "score": 4,
+    "max": 4,
+    "rationale": "六条纪律在 AGENTS，决策索引 14 条具名复核，签署单一台账。与旧表一致。",
+    "evidence_ids": ["AGENTS.md", "docs/decision-log.md", "docs/signoff.md"],
+    "evidence_level": "STATIC"
+  },
+  "S2.工程实验与取舍": {
+    "score": 13,
+    "max": 15,
+    "rationale": "实验协议先定不变量与计时，experiments.md 保留负结果，R-1 四模型×13 样本 52/52，exp_datasource_ab_v017 真实 JSON。扣 2：对照只覆盖 R-CODE-01、5 次计时无离散度。与旧表一致。",
+    "evidence_ids": ["docs/experiment-protocol.md", "docs/experiments.md", "review/model_eval/analysis.md"],
+    "evidence_level": "STATIC"
+  },
+  "S3.适配": {
+    "score": 4,
+    "max": 4,
+    "rationale": "评价器 checker.py 数据驱动、run_id 无前缀约束、list_evidence 可列目录；ADR-0012 记录异题合成项目 PASS。与旧表一致。",
+    "evidence_ids": ["docs/adr/0012-generic-evaluator.md", "evaluator/checker.py"],
+    "evidence_level": "STATIC"
+  },
+  "S3.校准与错误分析": {
+    "score": 5,
+    "max": 5,
+    "rationale": "快路径与 llm 两套 K-1~K-6 各 6/6，产物分盘；分歧口径已写清（出现才记，不要求制造）。旧表 4 → 5：llm 校准补齐、口径澄清。",
+    "evidence_ids": ["review/evaluation/calibration_k1_k6.json", "review/evaluation/calibration_k1_k6_llm.json", "evaluator/skills/evidence-review/SKILL.md"],
+    "evidence_level": "STATIC"
+  },
+  "S3.实际复核": {
+    "score": 3,
+    "max": 4,
+    "rationale": "本组抽验 5 条具名、E1/E2/E3 已落、对抗组签署齐（毛舒逸）。扣 1：教师栏未发生，且抽验底稿已按约定删除、只能靠台账与 field_check.json 支撑。旧表 2 → 3：对抗组签署补齐。",
+    "evidence_ids": ["docs/signoff.md", "review/evaluation/field_check.json", "docs/events.md"],
+    "evidence_level": "STATIC"
+  },
+  "S3.权限隐私": {
+    "score": 2,
+    "max": 2,
+    "rationale": "人机责任与证据纪律锚点已对齐（人签署、人负责），字段规范漂移已修。与旧表一致。",
+    "evidence_ids": ["AGENTS.md", "evaluator/skills/evidence-review/scoring-fields.json"],
+    "evidence_level": "STATIC"
+  },
+  "S4.路径解释": {
+    "score": 6,
+    "max": 8,
+    "rationale": "decision-log 14 条可定位 ADR 与证据，双通道/三档/钉证据/不引 DSH 有被否方案与理由。扣 2：无当场讲解或答辩记录，文档成文不等于能讲清。与旧表一致。",
+    "evidence_ids": ["docs/decision-log.md", "docs/adr/"],
+    "evidence_level": "STATIC"
+  },
+  "S4.独立小任务": {
+    "score": 6,
+    "max": 8,
+    "rationale": "两人自述各 5—10 行，按实际工作写（含 llm bug 修复、V-1 升档、0.1.8 正本），team-roster 7 项验证任务具名完成。旧表 5 → 6：自述已按工作更新。扣 2：缺第二人对独立程度的独立核对。",
+    "evidence_ids": ["docs/team-roster.md"],
+    "evidence_level": "CLAIM_ONLY"
+  },
+  "S4.取舍说明": {
+    "score": 4,
+    "max": 5,
+    "rationale": "ADR 一决策一文件，被否方案与理由具体（DSH 重写、一次性脚本+LLM、模型直接判四状态）。扣 1：缺现场解读。与旧表一致。",
+    "evidence_ids": ["docs/adr/0011-evaluation-agent.md", "docs/adr/0004-pin-evidence.md"],
+    "evidence_level": "STATIC"
+  },
+  "S4.轮换与责任": {
+    "score": 4,
+    "max": 4,
+    "rationale": "周期 1 余俊辉验证/周宗正复核，周期 2 余俊辉提 CHG-006/周宗正复核签署，双人角色互换具名。旧表 2 → 4：周期 2 已完成。",
+    "evidence_ids": ["docs/team-roster.md", "docs/impact-map.md"],
+    "evidence_level": "STATIC"
+  }
+}

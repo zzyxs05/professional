@@ -1,0 +1,4 @@
+[
+  {"claim": "样本声明并使用 android.permission.INTERNET 权限，但摘要中未列出任何 URL、网络入口或动态加载点，需核查实际网络访问行为是否存在及目标地址", "location": "权限声明 android.permission.INTERNET", "rule_guess": "", "confidence": "low"},
+  {"claim": "com.synth.good01.MainActivity 为唯一列出的组件且 exported=False，需进一步确认是否还有未导出但可被深链/Intent 触达的组件或未列出的接收器", "location": "com.synth.good1.MainActivity (activity; exported=False)", "rule_guess": "", "confidence": "low"}
+]

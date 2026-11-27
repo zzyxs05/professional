@@ -1,0 +1,13 @@
+```json
+[
+  {"claim": "SyncService 被声明为 exported=True，且摘要中未见任何自定义权限或 permission 属性保护，任何第三方应用可直接绑定或启动该服务", "location": "com.synth.bad01.SyncService (service; exported=True)", "rule_guess": "exported-service-no-permission", "confidence": "high"},
+  {"claim": "LeakyProvider 被声明为 exported=True，且未见 readPermission/writePermission 保护，存在跨应用读取 provider 数据的面", "location": "com.synth.bad01.LeakyProvider (provider; exported=True)", "rule_guess": "exported-provider-no-permission", "confidence": "high"},
+  {"claim": "BootReceiver 同时注册 SMS_RECEIVED 与 PHONE_STATE 两个系统广播，且组件 exported=True，可能在无用户交互下被动触发敏感逻辑", "location": "com.synth.bad01.BootReceiver (receiver; exported=True; actions=[BOOT_COMPLETED, SMS_RECEIVED, PHONE_STATE])", "rule_guess": "sensitive-broadcast-receiver", "confidence": "medium"},
+  {"claim": "申请 RECORD_AUDIO、CAMERA、ACCESS_FINE_LOCATION、READ_CONTACTS 组合，属于典型的音视频/位置/通讯录多维采集面", "location": "权限列表: RECORD_AUDIO, CAMERA, ACCESS_FINE_LOCATION, READ_CONTACTS", "rule_guess": "sensitive-permission-group", "confidence": "medium"},
+  {"claim": "申请 REQUEST_INSTALL_PACKAGES，具备拉起应用安装流程的能力，需核查是否配合网络下载来源使用", "location": "权限列表: android.permission.REQUEST_INSTALL_PACKAGES", "rule_guess": "sideload-install-permission", "confidence": "medium"},
+  {"claim": "申请 QUERY_ALL_PACKAGES，可枚举设备上全部已安装应用，常用于画像或环境探测", "location": "权限列表: android.permission.QUERY_ALL_PACKAGES", "rule_guess": "package-visibility-all", "confidence": "medium"},
+  {"claim": "申请 SYSTEM_ALERT_WINDOW 悬浮窗权限，可在其他应用上层叠加界面，存在覆盖欺骗风险", "location": "权限列表: android.permission.SYSTEM_ALERT_WINDOW", "rule_guess": "overlay-permission", "confidence": "medium"},
+  {"claim": "申请 RECEIVE_SMS 与 CALL_PHONE 组合，可监听短信并直接发起呼叫", "location": "权限列表: RECEIVE_SMS, CALL_PHONE", "rule_guess": "sms-and-call-permission", "confidence": "medium"},
+  {"claim": "MainActivity 被声明为 exported=True，若未设置权限保护或 intent-filter 限制，可被外部应用直接拉起", "location": "com.synth.bad01.MainActivity (activity; exported=True)", "rule_guess": "exported-activity-unprotected", "confidence": "low"}
+]
+```

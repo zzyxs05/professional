@@ -97,7 +97,7 @@
    冻结基线已落。
 - **状态（2026-11-25）**：**部分实施**——0.1.7 已补 `missing_evidence` 能力边界声明
    （`e2_v2v4_local.json` 实测 v2/v4 均写明链未解析），满足 fix_verify 的 F-05 验收条件；
-   V-1「升为已确认」的功能门**未做**，需另立变更解析接口链，v4 反例须保持不升。
+   V-1「升为已确认」的功能门当时**未做**（该段为 2026-11-25 状态）；已于 0.1.8 由 CHG-006 实施，见本文末节。
 
 ## 证据保留说明（补充）
 
@@ -134,3 +134,35 @@
 - **回滚**：解析处恢复仅匹配 `uses-permission`、去掉 `PermissionDecl.tag` 与 r_man_02 去重；
    `a02.apk` 的 R-MAN-02 回到只报 LOCATION。
 - **状态：已实施并验收。**
+
+---
+
+## CHG-006（已实施，0.1.8）：R-PERM-01 跨方法 Runnable 链解析（V-1）
+
+- **来源**：对抗组 E2 变更请求 V-1（`review/redteam/e2_change_relay.md` §3）；
+  CHG-004 当时只补了能力边界声明，未做升档，本次补齐。
+- **提出人**：余俊辉（轮换周期 2：验证 → 实现）
+- **复核人**：周宗正（独立复核实现与回归），2026.11.26
+- **触发样本**：`review/redteam/samples/v2_crossmethod.apk`（sha256 `3464015c…`）。
+- **现状（0.1.7）**：`MainActivity.onCreate` 的 `postDelayed(new MainActivity$1)` 与
+  `const-class RecordingService` 分处不同方法；规则只在单方法块内找目标，链断 →
+  R-PERM-01 待复核，`missing_evidence` 声明"跨方法链未解析"（0.1.7 的 F-05 边界声明）。
+- **改动边界**：仅 `core/rules/perm/r_perm_01.py`——建全 app 方法索引 + 类索引；
+  从调度点往上找实际传入的匿名 Runnable 类 → 该类 `run()` → 静态 invoke 目标方法
+  （剥 `-$$Nest$m` bridge 前缀）→ 目标方法里的 `const-class` → 目标类含敏感 API。
+- **防误报约束**：只追 `invoke-static/direct/virtual`，遇 `invoke-interface` 立即停；
+  最多 2 跳；找不到静态目标就退回原待复核路径，不猜链。
+- **验收结果（按证据链判定，不按书面预期判定）**：
+  - V-1：R-PERM-01 **待复核 → 已确认**，notes 写明跨方法链与敏感 API 位置；
+  - V-2（`v4_isolated.apk`）：书面期望保持待复核，但实测样本与 V-1 的链**逐字相同**
+    （同样 `MainActivity$1 → startRecordingService → RecordingService`），
+    多出的孤立类 Worker 未被本实现引用；因此 R-PERM-01 也升为已确认。
+    **结论**：按"证据支持什么就判什么"的纪律处理，不为迎合书面预期扭曲判定逻辑；
+    样本与期望的偏差如实记录，交对抗组确认。
+  - 既有 6 样本 84/84 判点逐点不变；94 单测全过；双模式校准各 6/6。
+- **回归**：`python scripts/truth_check.py --no-run` 一致 84、硬错 0；
+  `python -m unittest discover -s tests` 94 全过；
+  `python scripts/eval_calibrate.py` 与 `--llm` 均 6/6。
+- **回滚**：移除 `_method_index` / `_resolve_cross_method` 与 `if not linked` 分支里的
+  跨方法尝试，恢复单方法块内判定；版本回退需同步降回 0.1.7 并记 changes.md。
+- **状态：已实施；V-2 样本与书面期望的偏差待对抗组确认。**

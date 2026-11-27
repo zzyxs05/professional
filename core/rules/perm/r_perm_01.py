@@ -39,6 +39,93 @@ def _matched_primitive(s):
     return '调度结构'
 
 
+# 0.1.8（CHG-006 / V-1）：跨方法 Runnable 链解析。
+# 只追"静态可解析"的调用，最多两跳；invoke-interface / 反射 / 动态类名一律停。
+_NEW_INSTANCE_RE = re.compile(r'new-instance\s+[vp]\d+,\s*(L[\w$/.]+;)')
+_INVOKE_METHOD_RE = re.compile(r'invoke-(?:static|direct|virtual)\s+[^,]*,\s*L[\w$/.]+;\->([\-A-Za-z0-9_$]+)')
+
+
+def _nest_plain(name):
+    """ shed synthetic bridge 前缀： -$$Nest$mstartRecordingService → startRecordingService """
+    if name.startswith('-$'):
+        m = re.search(r'\$(m|s?)?([A-Za-z0-9_]+)$', name)
+        return m.group(2) if m else name
+    return name
+
+
+def _method_index(app_files, ctx):
+    """全 app 方法索引：方法名 → [(rel, sig, body)]；类名 → rel。"""
+    by_name = {}
+    by_cls = {}
+    for rel in app_files:
+        blocks = ctx.smali.method_blocks(rel)
+        for _sig, name, _s, _e, body in blocks:
+            by_name.setdefault(name, []).append((rel, _sig, body))
+            plain = _nest_plain(name)
+            if plain != name:
+                by_name.setdefault(plain, []).append((rel, _sig, body))
+        cls = _class_descriptor(ctx.smali.read_lines(rel))
+        if cls:
+            by_cls[cls] = rel
+    return by_name, by_cls
+
+
+def _resolve_cross_method(ctx, body, by_name, by_cls, sensitive, max_hops=2):
+    """从调度方法体里解析 Runnable → run() → 目标方法 → const-class 组件。
+
+    返回 (目标类, 证据行列表) 或 (None, [])。只追静态可解析调用，限 max_hops 跳。
+    """
+    for _lineno, raw in body:
+        s = raw.strip()
+        if 'invoke-interface' in s:
+            return None, []  # 动态分派：能力边界，停
+    # 第一跳：从调度行（postDelayed 等）往上找它实际传入的匿名 Runnable 类。
+    # 不能简单取第一个含 $ 的 new-instance——onCreate 里可能有多个（JsBridge 等）。
+    sched_idx = None
+    for i, (_lineno, raw) in enumerate(body):
+        if any(p in raw for p in registry.SCHEDULING_PRIMITIVES):
+            sched_idx = i
+            break
+    runnable = None
+    if sched_idx is not None:
+        for _lineno, raw in reversed(body[max(0, sched_idx - 8):sched_idx + 1]):
+            m = _NEW_INSTANCE_RE.search(raw.strip())
+            if m and '$' in m.group(1):
+                runnable = m.group(1)
+                break
+    if not runnable or runnable not in by_cls:
+        return None, []
+    rel = by_cls[runnable]
+    run_blocks = [b for b in ctx.smali.method_blocks(rel) if b[1] == 'run']
+    if not run_blocks:
+        return None, []
+    chain = [(rel, run_blocks[0][2], 'Runnable.run()：%s' % runnable)]
+
+    # 第二跳：run() 里 invoke- 的目标方法（剥 bridge 前缀）
+    target_name = None
+    for lineno, raw in run_blocks[0][4]:
+        m = _INVOKE_METHOD_RE.search(raw.strip())
+        if m:
+            target_name = _nest_plain(m.group(1))
+            break
+    if not target_name:
+        return None, []
+    targets = by_name.get(target_name, [])
+    if not targets or max_hops < 2:
+        return None, []
+
+    for t_rel, _sig, t_body in targets:
+        for lineno, raw in t_body:
+            m = _CONST_CLASS_RE.search(raw.strip())
+            if not m or m.group(1) not in sensitive:
+                continue
+            chain.append((t_rel, t_body, '跨方法链：%s → %s → %s'
+                          % (runnable, target_name, m.group(1))))
+            return m.group(1), chain
+    return None, []
+
+
+
 def run(ctx):
     if ctx.smali is None:
         return []
@@ -61,6 +148,9 @@ def run(ctx):
                 if pat in s:
                     sensitive.setdefault(cls, []).append((rel, lineno, lines, s, cat))
                     break
+
+    # 2a) 0.1.8：建全 app 方法索引，供跨方法链解析（V-1）
+    by_name, by_cls = _method_index(app_files, ctx)
 
     # 2) 按方法块扫描调度点与其可解析目标
     chain_hits = []
@@ -86,6 +176,23 @@ def run(ctx):
                     targets.append((lineno, m.group(1), raw.strip()))
             linked = [(l, t, raw) for l, t, raw in targets if t in sensitive]
             if not linked:
+                # 0.1.8（V-1）：同方法无目标时，试跨方法 Runnable 链；
+                # 静态可解析且目标类含敏感 API 才升档，否则保留待复核并记边界。
+                cls, cross_chain = _resolve_cross_method(ctx, body, by_name, by_cls, sensitive)
+                if cls:
+                    s_rel, s_lineno, s_lines, s_raw, s_cat = sensitive[cls][0]
+                    chain_hits.extend([
+                        Hit(RULE_ID, smali_loc(rel, sched[0], lines), clip(sched[1]),
+                            note='定时/后台调度点：%s' % _matched_primitive(sched[1])),
+                        Hit(RULE_ID, smali_loc(s_rel, s_lineno, s_lines), clip(s_raw),
+                            note='跨方法链目标组件：%s（存在敏感 API：%s）' % (cls, s_cat)),
+                    ])
+                    for c_rel, c_body, c_note in cross_chain[1:]:
+                        chain_hits.append(Hit(
+                            RULE_ID, smali_loc(c_rel, c_body[0][0] if c_body else 1,
+                                               ctx.smali.read_lines(c_rel)),
+                            clip(c_body[0][1]) if c_body else '', note=c_note))
+                    continue
                 sched_points.append((rel, sched[0], lines, sched[1]))
                 continue
             t_line, t_cls, t_raw = linked[0]

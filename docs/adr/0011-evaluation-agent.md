@@ -68,7 +68,8 @@ Trajectory append-only 会话日志、沙箱、多种 preset）。
 ## 校准与验证
 
 `scripts/eval_calibrate.py` 跑 K-1~K-6 快路径 → 6/6；`--llm` 走完整 AgentLoop → 6/6，
-产物 `calibration_k1_k6{,_llm}.json` 各自落盘；全库 93 例全过。
+产物 `calibration_k1_k6{,_llm}.json` 各自落盘；全库 94 例全过。
 夹具版本跟随当前规则包并补齐 14 条判点，两套校准口径一致。
-模型主样本自评暴露「历史正本 0.1.3 / 当前契约 0.1.4」版本错配，已按
-「旧证据不判新版本」输出 `INSUFFICIENT_EVIDENCE` 与最小补查，不掩盖。
+当时模型主样本自评曾暴露「历史正本 0.1.3 / 契约 0.1.4」版本错配，按
+「旧证据不判新版本」输出 `INSUFFICIENT_EVIDENCE` 与最小补查；该问题已通过
+0.1.6/0.1.7 重跑新正本消除（见 `docs/version-waiver.md`）。

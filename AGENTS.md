@@ -33,7 +33,7 @@ python scripts/truth_check.py --no-run    # 复算 84 个判点
 python scripts/eval_calibrate.py       # K-1~K-6 快路径校准
 python scripts/eval_calibrate.py --llm   # K-1~K-6 llm 模式校准
 python scripts/e2e.py --no-evidence     # 端到端验收 A-01/A-09
-python -m unittest discover -s tests     # 93 个单测
+python -m unittest discover -s tests     # 94 个单测
 ```
 
 ## 不要做

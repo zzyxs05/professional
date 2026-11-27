@@ -1,0 +1,1 @@
+{"verdict": "确认可疑", "reason": "命中片段在 WebView 回调中直接调用 SslErrorHandler.proceed() 且无 handler.cancel() 分支，正好落在 R-NET-02 所检测的忽略 SSL 错误结构内，不属于误报口径。", "observation": "该方法在 proceed() 后直接 return-void，且此前仅有 Log.w 调用，没有对错误进行任何拒绝处理。"}

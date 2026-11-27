@@ -1,0 +1,1 @@
+{"verdict": "确认可疑", "reason": "命中片段包含 RECORD_AUDIO、CAMERA、ACCESS_FINE_LOCATION、READ_CONTACTS、RECEIVE_SMS，均为 Android 危险权限，不属于误报口径中的非敏感权限或自定义 com.* 权限", "observation": "五个权限均需运行时用户授权，其中 RECEIVE_SMS 属于高危短信类权限"}

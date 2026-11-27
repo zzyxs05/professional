@@ -1,0 +1,1 @@
+{"verdict": "确认可疑", "reason": "命中片段显示 android:debuggable=\"true\" 且 android:allowBackup=\"true\"，与误报口径（allowBackup 显式为 false 且无 debuggable=true）不符，构成该规则检测的调试与备份风险结构", "observation": "两个属性均在 [application] 节点显式声明为 true，属于规则直接覆盖的高风险配置"}
