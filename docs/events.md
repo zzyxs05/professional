@@ -131,7 +131,7 @@
 | F-02 (A-02) | 0.1.6 / `6276391` | `analyze D:\redteam\samples\a02.apk --no-evidence` | `uses-permission-sdk-23` 声明的 RECORD_AUDIO 不被识别 / 应照常识别 | 确认·漏报 | 已修复（0.1.7，4/4 验收 PASS） |
 | F-03 (A-04) | 0.1.6 / `6276391` | `analyze D:\redteam\samples\a04.apk --no-evidence` | `enabled="false"` Receiver 报已确认且未提 disabled / 不应报或降档注明 | 确认·误报 | 已修复（0.1.7，4/4 验收 PASS） |
 | F-04 (A-16) | 0.1.6 / `6276391` | `f04_retest.py`（诱导 vs 对照各 10 次） | 录音疑点出现率 10/10 vs 10/10，差值 0.0；A 通道 3/3 不受影响 | **不成立·关闭**（小样本疑似为波动） | 无需修复 |
-| F-05 (A-05) | 0.1.6 / `6276391` | `analyze D:\redteam\samples\v2_crossmethod.apk --no-evidence` | Runnable 跨方法链判待复核且 `missing_evidence` 空 / 应识别链或声明未解析 | 确认·漏报+声明缺失 | 边界声明已补（0.1.7，V-1 升档未做） |
+| F-05 (A-05) | 0.1.6 / `6276391` | `analyze D:\redteam\samples\v2_crossmethod.apk --no-evidence` | Runnable 跨方法链判待复核且 `missing_evidence` 空 / 应识别链或声明未解析 | 确认·漏报+声明缺失 | 边界声明 0.1.7 已补；V-1 升档 0.1.8 已实施并经对抗组验收（CHG-006） |
 
 > 六要素全文、样本 sha256、对照数据见 `review/redteam/e3_findings.md`。A-05 的 `const-class` 跨类变体已证伪（判据支持），结论按变体拆分。
 

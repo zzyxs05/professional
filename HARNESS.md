@@ -97,7 +97,7 @@
 | 规则实现 | 一条规则一文件：`core/rules/<类>/r_<类>_<序号>.py`；统一输出命中三元组 `{rule_id, location, raw_snippet}` |
 | 依赖 | 仅标准库；模型调用用标准库 HTTP，不引 SDK |
 | 子进程 | 一律经 `Runner.run_subprocess` 走白名单，不直接 `subprocess.run` |
-| 测试 | `unittest`，合成夹具放 `tests/fixtures/`，不依赖真实 APK；当前 93 用例（含 8 个 OBS-5、评价 Agent 与 R-1 回归），`python -m unittest discover -s tests` |
+| 测试 | `unittest`，合成夹具放 `tests/fixtures/`，不依赖真实 APK；当前 94 用例（含 8 个 OBS-5、评价 Agent 与 R-1 回归），`python -m unittest discover -s tests` |
 | 质量门 | `scripts/truth_check.py`（84 判点）、`scripts/e2e.py`（A-01/A-09）；改规则后必须复跑 |
 
 ---
@@ -161,7 +161,7 @@
 ## 6. 观测性约定
 
 > 字段规则：本节 `meta.json` / `report.json` 为 `evidence/RUN-*/` 下的产物（路径见 §5）；
-> 评价产物在 `review/evaluation/`，成绩单 `review/truth_result_0_1_4.json` 相对仓库根。
+> 评价产物在 `review/evaluation/`，成绩单 `review/truth_result.json` 相对仓库根。
 
 | 可观测对象 | 字段 / 位置 | 判定规则 |
 |------------|-------------|----------|
@@ -184,7 +184,7 @@
 2. 抽查任一 RUN 的 `meta.json` ↔ `report.json` ↔ `channel_a/hits.jsonl`（均在 `evidence/RUN-<id>/` 下，见 §5）三处是否对得上；
 3. 抽查 `docs/decision-log.md` 任一行 → ADR → 支撑证据文件是否真实存在；
 4. 跑 `python scripts/truth_check.py --no-run`、`python scripts/eval_calibrate.py` 与
-  `python -m unittest discover -s tests` 复算（本仓库实测：84/84、K-1~K-6 6/6、93 用例全过）。
+  `python -m unittest discover -s tests` 复算（本仓库实测：84/84、K-1~K-6 双模式各 6/6、94 用例全过）。
 
 ---
 
@@ -195,8 +195,8 @@
 | 项 | 承办位置 |
 |----|------|
 | 13 条关键决策复核签字 | `docs/decision-log.md` |
-| 6 份报告本组签署、对抗组复核、教师复评 | `docs/signoff.md` |
-| 评价 Agent 输出 | 测试产物，不签署、不留台账 |
+| 6 份报告本组签署、对抗组复核（已完成）；教师复评未开始 | `docs/signoff.md` |
+| 评价 Agent 输出 | 测试产物：不进签署台账（评价器不是交付物、不签字担责），但作为证据留存于 `review/evaluation/` |
 | E1 / E2 / E3 结对交互 | `docs/events.md` |
 | 验证任务与角色轮换 | `docs/team-roster.md` |
 | 模型横向评测（R-1） | `docs/adr/0010-model-selection.md`、`handoff/README.md` I-8 |
