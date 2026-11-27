@@ -19,5 +19,8 @@ evidence/raw/
 .vscode/
 .idea/
 
+# 对抗组本地提案（未批准的 Change 草案，不随仓库分发）
+review/redteam/change_proposals.md
+
 # 本机 AI 工具配置与项目级 skill（不随仓库分发）
 .workbuddy/

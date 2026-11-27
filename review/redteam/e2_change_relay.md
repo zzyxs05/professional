@@ -55,6 +55,8 @@ CHG-004 验收需要 **3 个样本**，均已造好并跑过基线：
 
 **V-2 是硬门**：如果 CHG-004 把"同包共存"误判成链，这个样本必须拦住。当前实现在此样本上干净（未串链），改动后不许变脏。
 
+> **2026-11-27 偏差更正**：旧 V-2（`v4_isolated.apk`）样本构造有缺陷——从 V-1 目录复制时保留了 `RecordingService` 真实链，升「已确认」是正确判定、非串链误报。**防串链硬门已移交 `v2bis_isolated.apk`**（断链 + 空壳 RecordingService + 孤立 Worker，0.1.8 实测待复核 + missing 声明，通过）。详见 `reply_v2_deviation.md` 与 `e2_acceptance_samples.md` §1.1。
+
 ---
 
 ## 4. 验收三判断（对方实施后我方跑）

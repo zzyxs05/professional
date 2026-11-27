@@ -1,7 +1,7 @@
 {
  "phase": "regression",
- "generated_at": "2026-11-25T12:19:36.869385+00:00",
- "tool_root": "C:\\Users\\shixz\\Desktop\\study\\zhuan",
+ "generated_at": "2026-11-27T11:08:48.229690+00:00",
+ "tool_root": "D:\\大学材料\\课程文件\\专业能力提升\\professional",
  "note": "All runs use --no-evidence. Nothing is written into the counterpart's evidence/.",
  "cases": [
   {
@@ -12,10 +12,10 @@
    "sha256_ok": true,
    "expectation": "R-NET-01 notes must contain a checkServerTrusted entry",
    "run": {
-    "run_id": "RUN-20261125-201937-6d431e92",
-    "toolchain": "java=openjdk version \"1.8.0_492\", apktool=apktool_3.0.3.jar",
-    "rule_pack": "0.1.7",
-    "channel_b_model": "mimo-v2.6-flash",
+    "run_id": "RUN-20261127-190848-6d431e92",
+    "toolchain": "java=openjdk version \"11.0.0.2\" 2024-07-02, apktool=apktool_3.0.3.jar",
+    "rule_pack": "0.1.8",
+    "channel_b_model": "deepseek-flash",
     "conclusions": [
      {
       "criterion_id": "R-MAN-01",
@@ -65,12 +65,15 @@
      },
      {
       "criterion_id": "R-PERM-01",
-      "status": "已确认",
-      "location": "smali/com/synth/bad03/MainActivity.smali:188（原始行 87） | smali/com/synth/bad03/MainActivity.smali:161（原始行 83） | smali/com/synth/bad03/RecordingService.smali:46（原始行 44）",
+      "status": "待复核",
+      "location": "smali/com/synth/bad03/MainActivity.smali:188（原始行 87） | smali/com/synth/bad03/MainActivity.smali:161（原始行 83） | smali/com/synth/bad03/RecordingService.smali:46（原始行 44） | smali/com/synth/bad03/MainActivity.smali:278（原始行 56） | smali/com/synth/bad03/RecordingService.smali:46（原始行 44） | smali/com/synth/bad03/MainActivity.smali:194（原始行 87）",
       "notes": [
        "定时/后台调度点：Landroid/app/AlarmManager;->set",
        "调度目标组件：Lcom/synth/bad03/RecordingService;（该组件内存在敏感 API：录音）",
-       "敏感 API：录音（位于被调度的组件 Lcom/synth/bad03/RecordingService; 内）"
+       "敏感 API：录音（位于被调度的组件 Lcom/synth/bad03/RecordingService; 内）",
+       "定时/后台调度点：Landroid/os/Handler;->postDelayed",
+       "跨方法链目标组件：Lcom/synth/bad03/RecordingService;（存在敏感 API：录音）",
+       "跨方法链：Lcom/synth/bad03/MainActivity$1; → startRecordingService → Lcom/synth/bad03/RecordingService;"
       ],
       "missing_evidence": []
      },
@@ -166,12 +169,13 @@
      {
       "criterion_id": "R-B-001",
       "status": "待复核",
-      "location": "自有代码 URL 列表",
+      "location": "permissions: android.permission.ACCESS_FINE_LOCATION, android.permission.INTERNET",
       "notes": [
-       "B 侧疑点（LLM 提疑），未经确定性钉证据，不得升级措辞"
+       "B 侧疑点（LLM 提疑），未经确定性钉证据，不得升级措辞",
+       "结构事实：ANDROID.PERMISSION.ACCESS_FINE_LOCATION"
       ],
       "missing_evidence": [
-       "钉证据未通过：未识别到可核查断言（claim 无法映射到任何规则）"
+       "结构已核对、意图未证实：结构事实已核对：claim 提及的实体（ANDROID.PERMISSION.ACCESS_FINE_LOCATION）均在样本声明中；组合/意图类断言无对应规则，未证实"
       ]
      }
     ]
@@ -197,10 +201,10 @@
    "sha256_ok": true,
    "expectation": "R-MAN-02 notes must contain RECORD_AUDIO (uses-permission-sdk-23)",
    "run": {
-    "run_id": "RUN-20261125-202106-cc1a7084",
-    "toolchain": "java=openjdk version \"1.8.0_492\", apktool=apktool_3.0.3.jar",
-    "rule_pack": "0.1.7",
-    "channel_b_model": "mimo-v2.6-flash",
+    "run_id": "RUN-20261127-190916-cc1a7084",
+    "toolchain": "java=openjdk version \"11.0.0.2\" 2024-07-02, apktool=apktool_3.0.3.jar",
+    "rule_pack": "0.1.8",
+    "channel_b_model": "deepseek-flash",
     "conclusions": [
      {
       "criterion_id": "R-MAN-01",
@@ -214,7 +218,7 @@
      {
       "criterion_id": "R-MAN-02",
       "status": "已确认",
-      "location": "AndroidManifest.xml:5 [uses-permission] | AndroidManifest.xml:6 [uses-permission]",
+      "location": "AndroidManifest.xml:5 [uses-permission-sdk-23] | AndroidManifest.xml:6 [uses-permission]",
       "notes": [
        "声明敏感权限：android.permission.RECORD_AUDIO（录音）",
        "声明敏感权限：android.permission.ACCESS_FINE_LOCATION（精确定位）"
@@ -251,11 +255,14 @@
      {
       "criterion_id": "R-PERM-01",
       "status": "已确认",
-      "location": "smali/com/synth/bad03/MainActivity.smali:188（原始行 87） | smali/com/synth/bad03/MainActivity.smali:161（原始行 83） | smali/com/synth/bad03/RecordingService.smali:46（原始行 44）",
+      "location": "smali/com/synth/bad03/MainActivity.smali:188（原始行 87） | smali/com/synth/bad03/MainActivity.smali:161（原始行 83） | smali/com/synth/bad03/RecordingService.smali:46（原始行 44） | smali/com/synth/bad03/MainActivity.smali:278（原始行 56） | smali/com/synth/bad03/RecordingService.smali:46（原始行 44） | smali/com/synth/bad03/MainActivity.smali:194（原始行 87）",
       "notes": [
        "定时/后台调度点：Landroid/app/AlarmManager;->set",
        "调度目标组件：Lcom/synth/bad03/RecordingService;（该组件内存在敏感 API：录音）",
-       "敏感 API：录音（位于被调度的组件 Lcom/synth/bad03/RecordingService; 内）"
+       "敏感 API：录音（位于被调度的组件 Lcom/synth/bad03/RecordingService; 内）",
+       "定时/后台调度点：Landroid/os/Handler;->postDelayed",
+       "跨方法链目标组件：Lcom/synth/bad03/RecordingService;（存在敏感 API：录音）",
+       "跨方法链：Lcom/synth/bad03/MainActivity$1; → startRecordingService → Lcom/synth/bad03/RecordingService;"
       ],
       "missing_evidence": []
      },
@@ -347,17 +354,6 @@
        "onReceivedSslError 忽略 SSL 错误（proceed）"
       ],
       "missing_evidence": []
-     },
-     {
-      "criterion_id": "R-B-001",
-      "status": "待复核",
-      "location": "自有代码 URL 列表第 1 条：https://example.com/app",
-      "notes": [
-       "B 侧疑点（LLM 提疑），未经确定性钉证据，不得升级措辞"
-      ],
-      "missing_evidence": [
-       "钉证据未通过：未识别到可核查断言（claim 无法映射到任何规则）"
-      ]
      }
     ]
    },
@@ -380,10 +376,10 @@
    "sha256_ok": true,
    "expectation": "enabled=false receiver must not stay plain '已确认' (downgrade or note the disabled flag)",
    "run": {
-    "run_id": "RUN-20261125-202533-c0fb9528",
-    "toolchain": "java=openjdk version \"1.8.0_492\", apktool=apktool_3.0.3.jar",
-    "rule_pack": "0.1.7",
-    "channel_b_model": "mimo-v2.6-flash",
+    "run_id": "RUN-20261127-190945-c0fb9528",
+    "toolchain": "java=openjdk version \"11.0.0.2\" 2024-07-02, apktool=apktool_3.0.3.jar",
+    "rule_pack": "0.1.8",
+    "channel_b_model": "deepseek-flash",
     "conclusions": [
      {
       "criterion_id": "R-MAN-01",
@@ -434,11 +430,14 @@
      {
       "criterion_id": "R-PERM-01",
       "status": "已确认",
-      "location": "smali/com/synth/bad03/MainActivity.smali:188（原始行 87） | smali/com/synth/bad03/MainActivity.smali:161（原始行 83） | smali/com/synth/bad03/RecordingService.smali:46（原始行 44）",
+      "location": "smali/com/synth/bad03/MainActivity.smali:188（原始行 87） | smali/com/synth/bad03/MainActivity.smali:161（原始行 83） | smali/com/synth/bad03/RecordingService.smali:46（原始行 44） | smali/com/synth/bad03/MainActivity.smali:278（原始行 56） | smali/com/synth/bad03/RecordingService.smali:46（原始行 44） | smali/com/synth/bad03/MainActivity.smali:194（原始行 87）",
       "notes": [
        "定时/后台调度点：Landroid/app/AlarmManager;->set",
        "调度目标组件：Lcom/synth/bad03/RecordingService;（该组件内存在敏感 API：录音）",
-       "敏感 API：录音（位于被调度的组件 Lcom/synth/bad03/RecordingService; 内）"
+       "敏感 API：录音（位于被调度的组件 Lcom/synth/bad03/RecordingService; 内）",
+       "定时/后台调度点：Landroid/os/Handler;->postDelayed",
+       "跨方法链目标组件：Lcom/synth/bad03/RecordingService;（存在敏感 API：录音）",
+       "跨方法链：Lcom/synth/bad03/MainActivity$1; → startRecordingService → Lcom/synth/bad03/RecordingService;"
       ],
       "missing_evidence": []
      },
@@ -530,17 +529,6 @@
        "onReceivedSslError 忽略 SSL 错误（proceed）"
       ],
       "missing_evidence": []
-     },
-     {
-      "criterion_id": "R-B-001",
-      "status": "待复核",
-      "location": "权限声明 android.permission.RECORD_AUDIO / ACCESS_FINE_LOCATION / INTERNET",
-      "notes": [
-       "B 侧疑点（LLM 提疑），未经确定性钉证据，不得升级措辞"
-      ],
-      "missing_evidence": [
-       "钉证据未通过：断言未被机械事实证实（候选规则 R-PERM-01 均无机械命中；claim 提及实体（ACCESS_FINE_LOCATION、ANDROID.PERMISSION.ACCESS_FINE_LOCATION、ANDROID.PERMISSION.RECORD_AUDIO）未被机械命中覆盖）"
-      ]
      }
     ]
    },
@@ -562,10 +550,10 @@
    "sha256_ok": true,
    "expectation": "Runnable cross-method chain: either upgraded to 已确认, or missing_evidence/notes declare the unresolved chain",
    "run": {
-    "run_id": "RUN-20261125-202917-3464015c",
-    "toolchain": "java=openjdk version \"1.8.0_492\", apktool=apktool_3.0.3.jar",
-    "rule_pack": "0.1.7",
-    "channel_b_model": "mimo-v2.6-flash",
+    "run_id": "RUN-20261127-191020-3464015c",
+    "toolchain": "java=openjdk version \"11.0.0.2\" 2024-07-02, apktool=apktool_3.0.3.jar",
+    "rule_pack": "0.1.8",
+    "channel_b_model": "deepseek-flash",
     "conclusions": [
      {
       "criterion_id": "R-MAN-01",
@@ -615,15 +603,14 @@
      },
      {
       "criterion_id": "R-PERM-01",
-      "status": "待复核",
-      "location": "smali/com/synth/bad03/MainActivity.smali:227（原始行 56） | smali/com/synth/bad03/RecordingService.smali:46（原始行 44）",
+      "status": "已确认",
+      "location": "smali/com/synth/bad03/MainActivity.smali:227（原始行 56） | smali/com/synth/bad03/RecordingService.smali:46（原始行 44） | smali/com/synth/bad03/MainActivity.smali:145（原始行 77）",
       "notes": [
-       "调度原语：Landroid/os/Handler;->postDelayed",
-       "敏感 API：录音"
+       "定时/后台调度点：Landroid/os/Handler;->postDelayed",
+       "跨方法链目标组件：Lcom/synth/bad03/RecordingService;（存在敏感 API：录音）",
+       "跨方法链：Lcom/synth/bad03/MainActivity$1; → startRecordingService → Lcom/synth/bad03/RecordingService;"
       ],
-      "missing_evidence": [
-       "存在不可直接解析的调度目标（smali/com/synth/bad03/MainActivity.smali:227（原始行 56） 等），Runnable/接口回调/动态类名的跨方法链未解析"
-      ]
+      "missing_evidence": []
      },
      {
       "criterion_id": "R-PERM-02",
@@ -713,19 +700,30 @@
        "onReceivedSslError 忽略 SSL 错误（proceed）"
       ],
       "missing_evidence": []
+     },
+     {
+      "criterion_id": "R-B-001",
+      "status": "待复核",
+      "location": "权限声明：android.permission.RECORD_AUDIO, android.permission.ACCESS_FINE_LOCATION, android.permission.INTERNET",
+      "notes": [
+       "B 侧疑点（LLM 提疑），未经确定性钉证据，不得升级措辞",
+       "结构事实：ANDROID.PERMISSION.ACCESS_FINE_LOCATION、ANDROID.PERMISSION.RECORD_AUDIO"
+      ],
+      "missing_evidence": [
+       "结构已核对、意图未证实：结构事实已核对：claim 提及的实体（ANDROID.PERMISSION.ACCESS_FINE_LOCATION、ANDROID.PERMISSION.RECORD_AUDIO）均在样本声明中；组合/意图类断言无对应规则，未证实"
+      ]
      }
     ]
    },
    "observed": {
     "rule": "R-PERM-01",
-    "status": "待复核",
+    "status": "已确认",
     "notes": [
-     "调度原语：Landroid/os/Handler;->postDelayed",
-     "敏感 API：录音"
+     "定时/后台调度点：Landroid/os/Handler;->postDelayed",
+     "跨方法链目标组件：Lcom/synth/bad03/RecordingService;（存在敏感 API：录音）",
+     "跨方法链：Lcom/synth/bad03/MainActivity$1; → startRecordingService → Lcom/synth/bad03/RecordingService;"
     ],
-    "missing_evidence": [
-     "存在不可直接解析的调度目标（smali/com/synth/bad03/MainActivity.smali:227（原始行 56） 等），Runnable/接口回调/动态类名的跨方法链未解析"
-    ]
+    "missing_evidence": []
    },
    "verdict": "PASS"
   }

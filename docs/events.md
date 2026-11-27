@@ -91,8 +91,8 @@
 | 候选提出 | 2026-11-25 | 对抗组已确认（认 CHG-004 + 范围修正：目标收窄为不可解析调度目标的链路识别） | `review/redteam/e2_change_relay.md` |
 | 教师批边界 | 2026-11-25 | 默认已批准（用户指令） | 用户 2026-11-25 指令 |
 | 冻结 Baseline | 2026-11-25 | 已冻结：规则包 0.1.6 + commit `6276391` + 12 个既有 RUN | `review/redteam/e2_change_relay.md` §2 |
-| 实施与回归 | | 未开始（我方） | — |
-| 对抗组验收 | 2026-11-25 | 验收样本已备好（v2_crossmethod / v4_isolated / 既有 6 样本），待实施后跑 | `review/redteam/e2_change_relay.md` §3 |
+| 实施与回归 | 2026-11-27 | 我方已实施（0.1.8 / `3c7a371`，CHG-006 跨方法 Runnable 链解析） | `docs/impact-map.md`、`handoff/to-redteam-v2-deviation.md` |
+| 对抗组验收 | 2026-11-27 | **验收通过**：V-1 升档、V-2bis 防串链、84/84 保持、F-01/02/03/05 回归 4/4 PASS；旧 V-2 样本缺陷已重做（偏差确认 `review/redteam/reply_v2_deviation.md`） | `review/redteam/e2_acceptance_samples.md` §4 |
 | 教师复核 | | 未开始 | — |
 
 ---
