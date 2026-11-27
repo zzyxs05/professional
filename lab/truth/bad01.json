@@ -2,7 +2,7 @@
   "apk": "lab/apks/bad01.apk",
   "sha256": "3356097a33fb044d848ee1930523924b2d08ba7bbfdf47f43c7dbad10aae1414",
   "designed_by": "AI 草稿（待 周宗正/余俊辉 复核）",
-  "reviewed_by": "",
+  "reviewed_by": "余俊辉 逐点复核 2026.11.27",
   "expected": {
     "R-MAN-01": "EXPECTED_HIT:CONFIRMED",
     "R-MAN-02": "EXPECTED_HIT:CONFIRMED",

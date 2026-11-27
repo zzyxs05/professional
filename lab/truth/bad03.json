@@ -2,7 +2,7 @@
   "apk": "lab/apks/bad03.apk",
   "sha256": "21cf5a06cc615b6e8ce71b66dbcda9386a136f63d861fcc258a195b98c4728aa",
   "designed_by": "AI 草稿（待 周宗正/余俊辉 复核）",
-  "reviewed_by": "",
+  "reviewed_by": "余俊辉 逐点复核 2026.11.27",
   "expected": {
     "R-MAN-01": "EXPECTED_SILENT",
     "R-MAN-02": "EXPECTED_HIT:CONFIRMED",

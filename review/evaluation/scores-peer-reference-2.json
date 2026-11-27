@@ -1,0 +1,115 @@
+{
+  "_meta": {
+    "purpose": "独立复核评分表：与 scores-peer-reference.json（周宗正 90）对照，按 rubric 独立判断，差异处见 rationale",
+    "role": "复核评分（周期 1：余俊辉独立复核）",
+    "date": "2026-11-27",
+    "rubric": "evaluator/skills/evidence-review/rubric.json evaluation_scoring",
+    "basis": "0.1.8 / 24 正本 / 94 单测 / 84 判点（真值表余俊辉已逐点复核）/ 双模式校准 6/6 / V-2 偏差闭环",
+    "total": 88
+  },
+  "S1.需求": {
+    "score": 6,
+    "max": 6,
+    "rationale": "6 条 UN 带痛点与满意条件、追溯矩阵、out-of-scope。与另一份一致。",
+    "evidence_ids": ["docs/requirements.md"],
+    "evidence_level": "STATIC"
+  },
+  "S1.架构与约束": {
+    "score": 5,
+    "max": 5,
+    "rationale": "14 条规则逐条声明数据源、档位上限、误报口径，契约机器可验。一致。",
+    "evidence_ids": ["docs/specification.md", "docs/adr/0001-dual-channel.md"],
+    "evidence_level": "STATIC"
+  },
+  "S1.功能与安全验证": {
+    "score": 11,
+    "max": 14,
+    "rationale": "94 单测、84 判点一致 84、V-1 链升档通过。给 11 而非 12：B 侧疑点仍有未钉的（结构事实第三态只覆盖敏感实体），且 6 样本同源、领域泛化无外部样本支撑（对抗组新给的 v2bis 仍是同源构造）。扣 3 比另一份更严。",
+    "evidence_ids": ["review/truth_result.json", "docs/impact-map.md", "review/redteam/reply_v2_deviation.md"],
+    "evidence_level": "STATIC"
+  },
+  "S1.变化修复": {
+    "score": 8,
+    "max": 8,
+    "rationale": "0.1.0→0.1.8 逐版有触发来源与回归，CHG-004/005/006 提案验收齐全，V-2 偏差闭环。一致。",
+    "evidence_ids": ["docs/changes.md", "docs/impact-map.md"],
+    "evidence_level": "STATIC"
+  },
+  "S1.交接发布": {
+    "score": 8,
+    "max": 8,
+    "rationale": "handoff 可执行、台账 24 正本、对抗组签署齐。一致。",
+    "evidence_ids": ["handoff/README.md", "docs/signoff.md"],
+    "evidence_level": "STATIC"
+  },
+  "S1.治理": {
+    "score": 4,
+    "max": 4,
+    "rationale": "六条纪律、决策索引具名复核、签署单一台账。一致。",
+    "evidence_ids": ["AGENTS.md", "docs/decision-log.md"],
+    "evidence_level": "STATIC"
+  },
+  "S2.工程实验与取舍": {
+    "score": 13,
+    "max": 15,
+    "rationale": "实验协议、负结果、R-1 四模型、v017 真实 JSON。扣 2：单一规则对照、计时无离散度。一致。",
+    "evidence_ids": ["docs/experiment-protocol.md", "docs/experiments.md"],
+    "evidence_level": "STATIC"
+  },
+  "S3.适配": {
+    "score": 4,
+    "max": 4,
+    "rationale": "评价器数据驱动、异题项目 PASS（ADR-0012）。一致。",
+    "evidence_ids": ["docs/adr/0012-generic-evaluator.md"],
+    "evidence_level": "STATIC"
+  },
+  "S3.校准与错误分析": {
+    "score": 5,
+    "max": 5,
+    "rationale": "双模式各 6/6、分歧口径澄清。一致。",
+    "evidence_ids": ["review/evaluation/calibration_k1_k6.json", "review/evaluation/calibration_k1_k6_llm.json"],
+    "evidence_level": "STATIC"
+  },
+  "S3.实际复核": {
+    "score": 3,
+    "max": 4,
+    "rationale": "本组抽验、对抗组签署齐、真值表余俊辉逐点复核签名已落。扣 1：教师栏未发生。与另一份一致。",
+    "evidence_ids": ["docs/signoff.md", "lab/truth/"],
+    "evidence_level": "STATIC"
+  },
+  "S3.权限隐私": {
+    "score": 2,
+    "max": 2,
+    "rationale": "锚点对齐、字段规范无漂移。一致。",
+    "evidence_ids": ["AGENTS.md", "evaluator/skills/evidence-review/scoring-fields.json"],
+    "evidence_level": "STATIC"
+  },
+  "S4.路径解释": {
+    "score": 5,
+    "max": 8,
+    "rationale": "decision-log 14 条可定位、被否方案齐全。给 5 而非 6：真值表逐点复核虽签名，但复核过程无独立记录（只签了名，没写逐点结论），加上无答辩记录，扣 3。比另一份严 1。",
+    "evidence_ids": ["docs/decision-log.md", "lab/truth/"],
+    "evidence_level": "STATIC"
+  },
+  "S4.独立小任务": {
+    "score": 6,
+    "max": 8,
+    "rationale": "两人自述按实际工作写、验证任务具名。扣 2：独立程度无第二人核对。一致。",
+    "evidence_ids": ["docs/team-roster.md"],
+    "evidence_level": "CLAIM_ONLY"
+  },
+  "S4.取舍说明": {
+    "score": 4,
+    "max": 5,
+    "rationale": "ADR 被否方案与理由具体，缺现场解读。一致。",
+    "evidence_ids": ["docs/adr/0011-evaluation-agent.md"],
+    "evidence_level": "STATIC"
+  },
+  "S4.轮换与责任": {
+    "score": 4,
+    "max": 4,
+    "rationale": "周期 1/2 角色互换具名，CHG-006 提案与复核签署齐。一致。",
+    "evidence_ids": ["docs/team-roster.md", "docs/impact-map.md"],
+    "evidence_level": "STATIC"
+  }
+}

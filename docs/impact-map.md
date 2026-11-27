@@ -165,4 +165,14 @@
   `python scripts/eval_calibrate.py` 与 `--llm` 均 6/6。
 - **回滚**：移除 `_method_index` / `_resolve_cross_method` 与 `if not linked` 分支里的
   跨方法尝试，恢复单方法块内判定；版本回退需同步降回 0.1.7 并记 changes.md。
-- **状态：已实施；V-2 样本与书面期望的偏差待对抗组确认。**
+- **偏差闭环（2026-11-27）**：对抗组回执 `review/redteam/reply_v2_deviation.md` 确认分析属实、
+  偏差责任在旧 V-2 样本构造（从 V-1 复制时未拆干净 RecordingService 链），
+  明确同意不加"有孤立敏感类就降档"的规则。
+  - 旧 V-2（`v4_isolated.apk`）书面期望作废，改判"已确认（正确）"，保留作对照、不再作硬门；
+  - 防串链硬门移交新反例 `review/redteam/samples/v2bis_isolated.apk`
+    （sha256 `867c78d2…`）：断开 Runnable 链、RecordingService 清空壳、保留孤立 Worker；
+    对抗组独立复验 R-PERM-01 **保持待复核** + `missing_evidence` 声明未解析链，**通过**；
+  - V-1 功能门对抗组复验通过（待复核 → 已确认）；F-01/02/03/05 回归 4/4；84/84、94/94。
+  - 补充观察：旧 V-2 开 B 通道时 B1 会把档位压回待复核，纯 A 通道为已确认；
+    两者均真实，复跑时注意 B 是否启用。
+- **状态：已实施并闭环（对抗组 2026-11-27 回执确认）。**
